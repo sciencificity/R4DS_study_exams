@@ -1,0 +1,64 @@
+---
+title: "Chapter 1 - Data Viz with ggplot"
+author: "Data Analytics"
+date: "10/08/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+### Do cars with big engines use more fuel than cars with small engines?
+
+Hypothesis: Cars with bigger engines use more fuel, i.e. the fuel efficiency declines as the engine size gets bigger. If `miles per gallon` was on the y-axis and `engine size` on the x-axis we would see a decreasing trend.
+
+```{r}
+ggplot2::mpg
+
+# create coordinate system
+ggplot(data = mpg, aes(x = displ,
+                       y = hwy))
+
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ,
+                           y = hwy))
+```
+
+My hypothesis has been confirmed.
+
+```{r}
+num_rows <- nrow(mtcars)
+num_cols <- ncol(mtcars)
+ex4_plot <- ggplot(data = mpg,
+                   aes(x = hwy,
+                       y = cyl)) +
+  geom_point()
+```
+
+#### Exercises
+1. Run `ggplot(data = mpg)`. What do you see? <br>
+Ans: An empty canvas of a plot. If you add the `aes(x = xx, y = yy)` you will see an empty canvas with the axes drawn.
+1. How many `rows` are there in `mtcars`? Columns? <br>
+Ans: Number of rows is `r num_rows`, cols is `r num_cols`.
+1. What does the `drv` variable describe?
+Ans: 'The type of drive train, where f = front-wheel drive, r = rear wheel drive, 4 = 4wd'
+1. Make a scatterplot of hwy versus cyl.
+
+```{r}
+ex4_plot
+```
+
+1. What happens if you make a scatterplot of `class` versus `drv`? Why is this plot not useful?
+
+```{r}
+ggplot(data = mpg, aes(x = class, 
+                       y = drv)) +
+  geom_point()
+```
+
+These are 2 categorical variables here so this isn't very useful.
+
+
+
