@@ -6,11 +6,12 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 library(tidyverse)
+library(flair)
 ```
 
-### Do cars with big engines use more fuel than cars with small engines?
+#### Do cars with big engines use more fuel than cars with small engines?
 
 Hypothesis: Cars with bigger engines use more fuel, i.e. the fuel efficiency declines as the engine size gets bigger. If `miles per gallon` was on the y-axis and `engine size` on the x-axis we would see a decreasing trend.
 
@@ -37,7 +38,7 @@ ex4_plot <- ggplot(data = mpg,
   geom_point()
 ```
 
-#### Exercises
+##### Exercises
 1. Run `ggplot(data = mpg)`. What do you see? <br>
 Ans: An empty canvas of a plot. If you add the `aes(x = xx, y = yy)` you will see an empty canvas with the axes drawn.
 1. How many `rows` are there in `mtcars`? Columns? <br>
@@ -59,6 +60,160 @@ ggplot(data = mpg, aes(x = class,
 ```
 
 These are 2 categorical variables here so this isn't very useful.
+
+
+You can give extra information about your dataset by mapping data to aesthetics like `size`, `colour`, `shape`.
+
+```{r aes1, include=FALSE}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, 
+                           colour = class))
+```
+
+```{r, echo = FALSE}
+decorate("aes1") %>% 
+  flair("colour = class", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+When you put a feature against an aesthetic `ggplot` will assign a unique `level` (here <span style="color: #008080;background-color:#9FDDBA">colour</span> to each <span style="color: #008080;background-color:#9FDDBA">class</span> of the feature) -> this process is called `scaling`.
+
+```{r size_aes, include=FALSE}
+ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy,
+                 size = class))
+```
+
+```{r, echo=FALSE}
+decorate("size_aes") %>% 
+  flair("size = class", background = "#800000", 
+        color = "#FFE4E1")
+```
+
+Mapping a unordered variable like `class` to an <span style="color: #FFE4E1;background-color:#800000">ordered aesthetic</span> like `size` is not a good idea, and we get a <span style="color: #FFE4E1;background-color:#800000">warning</span> here.
+
+```{r alpha_aes, include=FALSE}
+ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy,
+                 alpha = class))
+```
+
+```{r, echo=FALSE}
+decorate("alpha_aes") %>% 
+  flair("alpha = class", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+<span style="color: #008080;background-color:#9FDDBA">`alpha`</span> is another aesthetic that we can use.
+
+```{r shape_aes, include=FALSE, warning=TRUE}
+ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy,
+                 shape = class))
+```
+
+```{r, echo=FALSE}
+decorate("shape_aes") %>% 
+  flair("shape = class", background = "#800000", 
+        color = "#FFE4E1")
+```
+
+`ggplot` only uses **6** <span style="color: #FFE4E1;background-color:#800000">`shape`</span>s at a time, so we're missing `suv`! When mapping to aesthetics think carefully about which aesthetic makes sense.
+
+If you look at the `colour = class` plot vs the `shape = class` plot you may well think - it looks like previously labelled `suv` is now being considered to be `pickup`!? There are many points and the points get plotted on top of each other - if you look near `displ = 5 and hwy = 12` notice that there is an `pickup` point there ... previously there was an `suv` point there. Let's jitter the data so that the points lie a little away from each other to show that there's not any issue with `ggplot`, instead the data lying on top of each other shows the last `class`.
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy,
+                 colour = class))
+
+ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy,
+                 shape = class))
+
+ggplot(data = mpg) +
+  geom_jitter(aes(x = displ, y = hwy,
+                 colour = class))
+
+ggplot(data = mpg) +
+  geom_jitter(aes(x = displ, y = hwy,
+                 shape = class))
+```
+
+Occassionally you may want to change all the points sizes uniformly (irrespective of any other data feature) - in this case you may put the aesthetic on the outside of the `aes()`.
+
+```{r uniform_col, include=FALSE}
+ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy),
+             colour = "blue")
+```
+
+```{r, echo = FALSE}
+decorate('uniform_col') %>% 
+  flair('colour = "blue"', 
+        background = "#e5989b", 
+        color = "#6d6875")
+
+```
+
+```{r uniform_size, include=FALSE}
+ggplot(data = mpg) +
+  geom_point(aes(x = displ, 
+                 y = hwy),
+             size = 4)
+```
+
+```{r, echo = FALSE}
+decorate('uniform_size') %>% 
+  flair("size = 4", 
+        background = "#e5989b", 
+        color = "#6d6875")
+
+```
+
+##### Exercises
+1. What’s gone wrong with this code? Why are the points not blue?
+
+```{r ex1, include=FALSE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, 
+                           y = hwy, color = "blue"))
+```
+
+```{r, echo=FALSE}
+decorate("ex1") %>% 
+  flair('color = "blue"',
+        background = "#800000", 
+        color = "#FFE4E1")
+```
+
+
+The <span style="color: #FFE4E1;background-color:#800000">`color`</span> attribute maps to a static colour and yet appears within `aes()`.
+
+1. Which variables in mpg are categorical? Which variables are continuous? (Hint: type ?mpg to read the documentation for the dataset). How can you see this information when you run mpg?
+
+`manufacturer`, `model`, `cyl`, `trans`, `drv`, `fl` and `class` are categories; `displ`, `year`, `cty`, `hwy` are continuous. You can convert `mpg` to a tibble (if it is not already) and check the types using `glimpse()`.
+
+```{r}
+glimpse(mpg)
+```
+
+1. Map a continuous variable to color, size, and shape. How do these aesthetics behave differently for categorical vs. continuous variables?
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy, 
+                 colour = cyl))
+
+ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy, 
+                 colour = cty))
+```
+
+The colours are kinda scaled from the lowest to the highest.
+
+
+
 
 
 
