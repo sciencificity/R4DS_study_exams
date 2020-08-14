@@ -496,16 +496,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree6c088b57fc20330341fdc84ff5ce8079ebb2939atargetblank6c088b5a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/6c088b57fc20330341fdc84ff5ce8079ebb2939a" target="_blank">6c088b5</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree82f2e942d08254f2e3e746ff589197fc1d00ff56targetblank82f2e94a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/82f2e942d08254f2e3e746ff589197fc1d00ff56" target="_blank">82f2e94</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree6c088b57fc20330341fdc84ff5ce8079ebb2939atargetblank6c088b5a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree82f2e942d08254f2e3e746ff589197fc1d00ff56targetblank82f2e94a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/6c088b57fc20330341fdc84ff5ce8079ebb2939a" target="_blank">6c088b5</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/82f2e942d08254f2e3e746ff589197fc1d00ff56" target="_blank">82f2e94</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -556,6 +556,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/82f2e942d08254f2e3e746ff589197fc1d00ff56/analysis/ch1_ggplot.Rmd" target="_blank">82f2e94</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-08-14
+</td>
+<td>
+Add Chapter 1
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/e2cdeb50d0fb85499f3667853bb42e71c893a1dc/docs/ch1_ggplot.html" target="_blank">e2cdeb5</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-08-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/sciencificity/R4DS_study_exams/blob/6c088b57fc20330341fdc84ff5ce8079ebb2939a/analysis/ch1_ggplot.Rmd" target="_blank">6c088b5</a>
 </td>
 <td>
@@ -575,8 +609,8 @@ Add Chapter 1
 </div>
 </div>
 </div>
-<div id="do-cars-with-big-engines-use-more-fuel-than-cars-with-small-engines" class="section level3">
-<h3>Do cars with big engines use more fuel than cars with small engines?</h3>
+<div id="do-cars-with-big-engines-use-more-fuel-than-cars-with-small-engines" class="section level4">
+<h4>Do cars with big engines use more fuel than cars with small engines?</h4>
 <p>Hypothesis: Cars with bigger engines use more fuel, i.e. the fuel efficiency declines as the engine size gets bigger. If <code>miles per gallon</code> was on the y-axis and <code>engine size</code> on the x-axis we would see a decreasing trend.</p>
 <pre class="r"><code>ggplot2::mpg</code></pre>
 <pre><code># A tibble: 234 x 11
@@ -608,8 +642,8 @@ ex4_plot &lt;- ggplot(data = mpg,
                    aes(x = hwy,
                        y = cyl)) +
   geom_point()</code></pre>
-<div id="exercises" class="section level4">
-<h4>Exercises</h4>
+<div id="exercises" class="section level5">
+<h5>Exercises</h5>
 <ol style="list-style-type: decimal">
 <li>Run <code>ggplot(data = mpg)</code>. What do you see? <br> Ans: An empty canvas of a plot. If you add the <code>aes(x = xx, y = yy)</code> you will see an empty canvas with the axes drawn.</li>
 <li>How many <code>rows</code> are there in <code>mtcars</code>? Columns? <br> Ans: Number of rows is 32, cols is 11.</li>
@@ -626,6 +660,88 @@ ex4_plot &lt;- ggplot(data = mpg,
   geom_point()</code></pre>
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>These are 2 categorical variables here so this isn’t very useful.</p>
+<p>You can give extra information about your dataset by mapping data to aesthetics like <code>size</code>, <code>colour</code>, <code>shape</code>.</p>
+<pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ, y = hwy, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>colour = class</span>))</code></code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>When you put a feature against an aesthetic <code>ggplot</code> will assign a unique <code>level</code> (here <span style="color: #008080;background-color:#9FDDBA">colour</span> to each <span style="color: #008080;background-color:#9FDDBA">class</span> of the feature) -&gt; this process is called <code>scaling</code>.</p>
+<pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(aes(x = displ, y = hwy,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#800000;color:#FFE4E1'>size = class</span>))</code></code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Mapping a unordered variable like <code>class</code> to an <span style="color: #FFE4E1;background-color:#800000">ordered aesthetic</span> like <code>size</code> is not a good idea, and we get a <span style="color: #FFE4E1;background-color:#800000">warning</span> here.</p>
+<pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(aes(x = displ, y = hwy,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>alpha = class</span>))</code></code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><span style="color: #008080;background-color:#9FDDBA"><code>alpha</code></span> is another aesthetic that we can use.</p>
+<pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(aes(x = displ, y = hwy,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#800000;color:#FFE4E1'>shape = class</span>))</code></code></pre>
+<pre><code>
+Warning: The shape palette can deal with a maximum of 6 discrete values because
+more than 6 becomes difficult to discriminate; you have 7. Consider
+specifying shapes manually if you must have them.
+</code></pre>
+<pre><code>
+Warning: Removed 62 rows containing missing values (geom_point).
+</code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><code>ggplot</code> only uses <strong>6</strong> <span style="color: #FFE4E1;background-color:#800000"><code>shape</code></span>s at a time, so we’re missing <code>suv</code>! When mapping to aesthetics think carefully about which aesthetic makes sense.</p>
+<p>If you look at the <code>colour = class</code> plot vs the <code>shape = class</code> plot you may well think - it looks like previously labelled <code>suv</code> is now being considered to be <code>pickup</code>!? There are many points and the points get plotted on top of each other - if you look near <code>displ = 5 and hwy = 12</code> notice that there is an <code>pickup</code> point there … previously there was an <code>suv</code> point there. Let’s jitter the data so that the points lie a little away from each other to show that there’s not any issue with <code>ggplot</code>, instead the data lying on top of each other shows the last <code>class</code>.</p>
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy,
+                 colour = class))</code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy,
+                 shape = class))</code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-9-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_jitter(aes(x = displ, y = hwy,
+                 colour = class))</code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-9-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_jitter(aes(x = displ, y = hwy,
+                 shape = class))</code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-9-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Occassionally you may want to change all the points sizes uniformly (irrespective of any other data feature) - in this case you may put the aesthetic on the outside of the <code>aes()</code>.</p>
+<pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(aes(x = displ, y = hwy),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#e5989b;color:#6d6875'>colour = "blue"</span>)</code></code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(aes(x = displ, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = hwy),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#e5989b;color:#6d6875'>size = 4</span>)</code></code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="exercises-1" class="section level5">
+<h5>Exercises</h5>
+<ol style="list-style-type: decimal">
+<li>What’s gone wrong with this code? Why are the points not blue?</li>
+</ol>
+<pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = hwy, <span style='background-color:#800000;color:#FFE4E1'>color = "blue"</span>))</code></code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The <span style="color: #FFE4E1;background-color:#800000"><code>color</code></span> attribute maps to a static colour and yet appears within <code>aes()</code>.</p>
+<ol style="list-style-type: decimal">
+<li>Which variables in mpg are categorical? Which variables are continuous? (Hint: type ?mpg to read the documentation for the dataset). How can you see this information when you run mpg?</li>
+</ol>
+<p><code>manufacturer</code>, <code>model</code>, <code>cyl</code>, <code>trans</code>, <code>drv</code>, <code>fl</code> and <code>class</code> are categories; <code>displ</code>, <code>year</code>, <code>cty</code>, <code>hwy</code> are continuous. You can convert <code>mpg</code> to a tibble (if it is not already) and check the types using <code>glimpse()</code>.</p>
+<pre class="r"><code>glimpse(mpg)</code></pre>
+<pre><code>Rows: 234
+Columns: 11
+$ manufacturer &lt;chr&gt; &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;, &quot;audi&quot;...
+$ model        &lt;chr&gt; &quot;a4&quot;, &quot;a4&quot;, &quot;a4&quot;, &quot;a4&quot;, &quot;a4&quot;, &quot;a4&quot;, &quot;a4&quot;, &quot;a4 quattro&quot;...
+$ displ        &lt;dbl&gt; 1.8, 1.8, 2.0, 2.0, 2.8, 2.8, 3.1, 1.8, 1.8, 2.0, 2.0,...
+$ year         &lt;int&gt; 1999, 1999, 2008, 2008, 1999, 1999, 2008, 1999, 1999, ...
+$ cyl          &lt;int&gt; 4, 4, 4, 4, 6, 6, 6, 4, 4, 4, 4, 6, 6, 6, 6, 6, 6, 8, ...
+$ trans        &lt;chr&gt; &quot;auto(l5)&quot;, &quot;manual(m5)&quot;, &quot;manual(m6)&quot;, &quot;auto(av)&quot;, &quot;a...
+$ drv          &lt;chr&gt; &quot;f&quot;, &quot;f&quot;, &quot;f&quot;, &quot;f&quot;, &quot;f&quot;, &quot;f&quot;, &quot;f&quot;, &quot;4&quot;, &quot;4&quot;, &quot;4&quot;, &quot;4&quot;,...
+$ cty          &lt;int&gt; 18, 21, 20, 21, 16, 18, 18, 18, 16, 20, 19, 15, 17, 17...
+$ hwy          &lt;int&gt; 29, 29, 31, 30, 26, 26, 27, 26, 25, 28, 27, 25, 25, 25...
+$ fl           &lt;chr&gt; &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;,...
+$ class        &lt;chr&gt; &quot;compact&quot;, &quot;compact&quot;, &quot;compact&quot;, &quot;compact&quot;, &quot;compact&quot;,...</code></pre>
+<ol style="list-style-type: decimal">
+<li>Map a continuous variable to color, size, and shape. How do these aesthetics behave differently for categorical vs. continuous variables?</li>
+</ol>
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy, 
+                 colour = cyl))</code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy, 
+                 colour = cty))</code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-14-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The colours are kinda scaled from the lowest to the highest.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -649,9 +765,9 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.0   stringr_1.4.0   dplyr_1.0.0     purrr_0.3.4    
- [5] readr_1.3.1     tidyr_1.1.0     tibble_3.0.3    ggplot2_3.3.0  
- [9] tidyverse_1.3.0 workflowr_1.6.2
+ [1] flair_0.0.2     forcats_0.5.0   stringr_1.4.0   dplyr_1.0.0    
+ [5] purrr_0.3.4     readr_1.3.1     tidyr_1.1.0     tibble_3.0.3   
+ [9] ggplot2_3.3.0   tidyverse_1.3.0 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
  [1] tidyselect_1.1.0 xfun_0.13        haven_2.2.0      lattice_0.20-38 
