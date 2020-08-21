@@ -433,6 +433,11 @@ From the help page these are the main aspects that alter your visuals.
 6. When using facet_grid() you should usually put the variable with more unique levels in the columns. Why? <br>
 I would think this orientation makes best use of the screen real estate available.
 
+```{r}
+
+```
+
+
 
 
 
