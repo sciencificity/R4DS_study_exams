@@ -270,7 +270,8 @@ ggplot(mtcars, aes(wt, mpg)) +
 ggplot(mtcars, aes(wt, mpg)) +
   geom_point(shape = 23, colour = "black", fill = "white", size = 5, stroke = 3)
 ```
-<img src = assets/shape.png>
+
+<img src = assets/shape.PNG>
 
 Stroke changes the border width as described in the example comment, and works with any shape that has a border hence will work with shapes `0-14`, and `21-24`. An example of each is above.
 
