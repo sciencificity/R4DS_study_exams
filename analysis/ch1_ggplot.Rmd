@@ -334,7 +334,7 @@ decorate("facet2") %>%
 
 #### Exercises
 
-1. What happens if you facet on a continuous variable?
+1.  What happens if you facet on a continuous variable?
 
 ```{r facet_ex1, include=FALSE}
 ggplot(data = mpg) +
@@ -350,78 +350,88 @@ decorate("facet_ex1") %>%
         color = "#FFE4E1")
 ```
 
-The plot is created but it doesn't make sense to split our data by a continuous variable. 
+    The plot is created but it doesn't make sense to split our data 
+    by a continuous variable. 
 
-2. What do the empty cells in plot with `facet_grid(drv ~ cyl)` mean? How do they relate to this plot?
+1. What do the empty cells in plot with `facet_grid(drv ~ cyl)` mean? How do they relate to this plot?
 
-The empty spots refer to that `drv and cyl combination` being missing.
+    The empty spots refer to that `drv and cyl combination` being missing.
+    
+    ```
+    ggplot(data = mpg) + <br>
+      geom_point(mapping = aes(x = drv, y = cyl))
+      
+    ```  
+    
+    ```{r facet_ex2}
+    ggplot(data = mpg) + 
+      geom_point(mapping = aes(x = drv, y = cyl))
+    ```
 
-> ggplot(data = mpg) + 
->   geom_point(mapping = aes(x = drv, y = cyl))
+    It relates to the above in that you can see that the 
+    `drv = 4; cyl = 5` combination has no observations. 
+    This is also the case in the faceted plot.
 
-```{r facet_ex2}
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = drv, y = cyl))
-```
+1. What plots does the following code make? What does . do?
 
-It relates to the above in that you can see that the `drv = 4; cyl = 5` combination has no observations. This is also the case in the faceted plot.
+    ```{r fct3_1, include=FALSE}
+    ggplot(data = mpg) + 
+      geom_point(mapping = aes(x = displ, y = hwy)) +
+      facet_grid(drv ~ .)
+    
+    ```
+    
+    ```{r fct3_2, include=FALSE}
+    ggplot(data = mpg) + 
+      geom_point(mapping = aes(x = displ, y = hwy)) +
+      facet_grid(. ~ cyl)
+    ```
+    
+    ```{r, echo=FALSE}
+    decorate("fct3_1") %>% 
+      flair("facet_grid(drv ~ .)", 
+            background = "#9FDDBA", 
+            color = "#008080")
+    ```
 
-3.What plots does the following code make? What does . do?
+    The <span style="color: #008080;background-color:#9FDDBA">`facet_grid
+    (drv ~ .)`</span> facets the `drv` categories into rows. It says 
+    facet this plot by `drv` as row panels but I don't want anything 
+    as column panels (hence the `.`).
+  
+    ```{r, echo=FALSE}
+    decorate("fct3_2") %>% 
+      flair("facet_grid(. ~ cyl)", 
+            background = "#9FDDBA", 
+            color = "#008080")
+    ```
 
-```{r fct3_1, include=FALSE}
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy)) +
-  facet_grid(drv ~ .)
+    The <span style="color: #008080;background-color:#9FDDBA">`facet_grid(. ~ cyl)`</span> facets the `cyl` categories into columns. It says facet this plot by `cyl` as column panels but I don't want anything as row panels (hence the `.`).
+    
+1. Take the first faceted plot in this section:
 
-```
+    ```
+    ggplot(data = mpg) + 
+      geom_point(mapping = aes(x = displ, y = hwy)) + 
+      facet_wrap(~ class, nrow = 2)
+    
+    ```
+    What are the advantages to using faceting instead of the colour aesthetic? What are the disadvantages? How might the balance change if you had a larger dataset?
+    
+    ```{r}
+    ggplot(data = mpg) + 
+      geom_point(mapping = aes(x = displ, y = hwy)) + 
+      facet_wrap(~ class, nrow = 2)
+    ```
+    
+    * What are the advantages to using faceting instead of the colour aesthetic? <br>
+    You can see the patterns in each class much easier.
 
-```{r fct3_2, include=FALSE}
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy)) +
-  facet_grid(. ~ cyl)
-```
+    * What are the disadvantages? <br>
+    You may lose sight of the overall trend across all observations, and comparing categories becomes more "work".
 
-```{r, echo=FALSE}
-decorate("fct3_1") %>% 
-  flair("facet_grid(drv ~ .)", 
-        background = "#9FDDBA", 
-        color = "#008080")
-```
-
-The <span style="color: #008080;background-color:#9FDDBA">`facet_grid(drv ~ .)`</span> facets the `drv` categories into rows. It says facet this plot by `drv` as row panels but I don't want anything as column panels (hence the `.`).
-
-```{r, echo=FALSE}
-decorate("fct3_2") %>% 
-  flair("facet_grid(. ~ cyl)", 
-        background = "#9FDDBA", 
-        color = "#008080")
-```
-
-The <span style="color: #008080;background-color:#9FDDBA">`facet_grid(. ~ cyl)`</span> facets the `cyl` categories into columns. It says facet this plot by `cyl` as column panels but I don't want anything as row panels (hence the `.`).
-4. Take the first faceted plot in this section:
-
-```
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy)) + 
-  facet_wrap(~ class, nrow = 2)
-
-```
-What are the advantages to using faceting instead of the colour aesthetic? What are the disadvantages? How might the balance change if you had a larger dataset?
-
-```{r}
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy)) + 
-  facet_wrap(~ class, nrow = 2)
-```
-
-* What are the advantages to using faceting instead of the colour aesthetic? <br>
-You can see the patterns in each class much easier.
-
-* What are the disadvantages? <br>
-You may lose sight of the overall trend across all observations, and comparing categories becomes more "work".
-
-* How might the balance change if you had a larger dataset? <br>
-If you have many categories it becomes overwhelming.
+    * How might the balance change if you had a larger dataset? <br>
+    If you have many categories it becomes overwhelming.
 
 5. Read ?facet_wrap. What does nrow do? What does ncol do? What other options control the layout of the individual panels? Why doesn’t facet_grid() have nrow and ncol arguments? <br>
 From the help page these are the main aspects that alter your visuals.
@@ -434,9 +444,164 @@ From the help page these are the main aspects that alter your visuals.
 6. When using facet_grid() you should usually put the variable with more unique levels in the columns. Why? <br>
 I would think this orientation makes best use of the screen real estate available.
 
-```{r}
+### Geometric Objects
+
+```{r, echo = FALSE, out.width = "50%", fig.align="default", message = FALSE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+ggplot(data = mpg) + 
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+```
+
+```{r plots, echo = FALSE, out.width = "50%", fig.align="default", message = FALSE, include=FALSE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+ggplot(data = mpg) + 
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+```
+
+```{r, echo=FALSE}
+decorate("plots") %>% 
+  flair("geom_point",
+        background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("geom_smooth",
+        background = "#9FDDBA", 
+        color = "#008080")
 
 ```
+
+
+The above plots are made using the same data, but the <span style="color: #008080;background-color:#9FDDBA">`geoms`</span> are different. To change the plot type i.e. `bar`, `boxplot`, `line` etc. you just <span style="color: #008080;background-color:#9FDDBA">change the `geom` you add to `ggplot`.</span> The `aesthetics` that work with each `geom` is different however. E.g. you may set the <span style="color: #008080;background-color:#9FDDBA">`linetype`</span> of a line, but you __can't__ change the <span style="color: #FFE4E1;background-color:#800000">`shape` of a line.</span>
+
+```{r linetype1, include=FALSE}
+ggplot(data = mpg) +
+  geom_line(aes(x = displ, y = hwy, linetype = drv))
+```
+
+```{r, echo=FALSE}
+decorate("linetype1") %>% 
+  flair("linetype = drv",
+        background = "#9FDDBA", 
+        color = "#008080")
+```
+
+
+```{r linetype2, include=FALSE}
+ggplot(data = mpg) +
+  geom_smooth(aes(x = displ, y = hwy, linetype = drv))
+```
+
+```{r, echo=FALSE}
+decorate("linetype2") %>% 
+  flair("linetype = drv",
+        background = "#9FDDBA", 
+        color = "#008080")
+```
+
+```{r two_geoms1, include=FALSE}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = drv)) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv, colour = drv))
+
+```
+
+```{r, echo=FALSE}
+decorate("two_geoms1") %>% 
+  flair("geom_point(mapping = aes(x = displ, y = hwy, colour = drv))",
+        background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv, colour = drv))",
+        background = "#9FDDBA", 
+        color = "#008080")
+```
+
+We are also able to add more than <span style="color: #008080;background-color:#9FDDBA">one geom</span> on a plot. In the above we show both the <span style="color: #008080;background-color:#9FDDBA">raw data points</span> coloured by the drive type - e.g. 4 wheel, rear drive or front wheel, as well as each drive types <span style="color: #008080;background-color:#9FDDBA">smoothing line</span>. But the downside to the above is that I had to specify the `mapping` twice with many repeated elements. To avoid this `ggplot` provides a handy alternate - you may set the `mapping` in the `ggplot()` call itself - the `mapping` is treated as __global__ to all subsequent `geoms` unless you specifically override these.
+
+```{r two_geoms2, include=FALSE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, colour = drv)) +
+  geom_point() +
+  geom_smooth(mapping = aes(linetype = drv))
+```
+
+```{r, echo = FALSE}
+decorate("two_geoms2") %>% 
+  flair("mapping = aes(x = displ, y = hwy, colour = drv)", 
+        background = "#9FDDBA", 
+        color = "#008080") 
+```
+
+Also in the above you may have noticed that <span style="color: #008080;background-color:#9FDDBA">`geom_smooth()`</span> included it's own mapping. This basically says _'Hey, take all the attributes as per the ggplot mapping BUT replace these components (if it exists) as described in this geom'._
+
+```{r spec_override1, include=FALSE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point(mapping = aes(colour = class)) +
+  geom_smooth()
+```
+
+```{r, echo = FALSE}
+decorate("spec_override1") %>% 
+  flair("mapping = aes(x = displ, y = hwy)",
+        background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("mapping = aes(colour = class)",
+        background = "#9FDDBA", 
+        color = "#008080")
+```
+For example here when it gets to the <span style="color: #008080;background-color:#9FDDBA">__geom_point(mapping = aes(colour = class))__</span> line it asks:
+
+1. Does this mapping specify a new `x`? It doesn't, so `x = displ` is set, as per the `ggplot()` `mapping()`.
+1. Does this mapping specify a new `y`? It doesn't, so `y = hwy` is set, as per the `ggplot()` `mapping()`.
+1. Is there anything extra set? Yip, `colour = class` is set, so let me apply that to this `geom_point`'s only, hence the scatterpoint plots are coloured by the `class` of the vehicle.
+
+You may also __even__ change the __data__ for each layer! Here the `smoothing` function is included but for a subset of the data.
+
+```{r spec_override2, include=FALSE}
+ggplot(data = mpg, aes(x = displ, y = hwy)) +
+  geom_point(mapping = aes(colour = class)) +
+  geom_smooth(
+    data = filter(mpg, class == "subcompact"),
+    se = FALSE # remove the error bands that display around the line
+  )
+```
+
+```{r, echo = FALSE}
+decorate("spec_override2") %>% 
+  flair('data = filter(mpg, class == "subcompact")', 
+        background = "#9FDDBA", 
+        color = "#008080")
+```
+
+#### Exercises
+
+1.  What geom would you use to draw a line chart? A boxplot? 
+    A histogram? An area chart?
+    
+    * line chart: geom_line()
+    * boxplot: geom_boxplot()
+    * histogram: geom_histogram()
+    * Area chart: geom_area()
+    
+1.  Run this code in your head and predict what the output will look like.
+    Then, run the code in R and check your predictions.
+    
+    ```{r, eval = FALSE}
+    ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+      geom_point() + 
+      geom_smooth(se = FALSE)
+    ```    
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
