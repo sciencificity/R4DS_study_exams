@@ -589,7 +589,97 @@ decorate("spec_override2") %>%
     ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
       geom_point() + 
       geom_smooth(se = FALSE)
+    ```
+    In my head this will produce a scatterplot with `displ` on the x-axis,
+    `hwy` on the y-axis where each point is coloured by the 
+    type of `drive` the vehicle is (4 wheel, front-wheel, rear-wheel). 
+    The plot will also contain smoothing lines (with no error bands) 
+    for each drive type (since `colour` is set in the `ggplot` 
+    mapping layer, and is applicable for both points, and the 
+    smoothing lines).
+    
+    ```{r, eval = TRUE}
+    ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+      geom_point() + 
+      geom_smooth(se = FALSE)
     ```    
+1.  What does `show.legend = FALSE` do?  What happens if you remove it?  
+    Why do you think I used it earlier in the chapter?   
+    
+    It removes the legend that shows up when we add certain aesthetics
+    such as `colour`, `shape` etc.
+    
+    If we remove it the legend will show by the fact that a certain non-xy 
+    aesthetic has been added.
+    
+    It was used to remove the legend earlier which would have shown up due to
+    the `colour = drv` aesthetic.
+
+1.  What does the `se` argument to `geom_smooth()` do?
+    It sets the errors bands on the smoothing function to either on or off.
+    
+
+1.  Will these two graphs look different? Why/why not?
+
+    ```{r, eval = FALSE}
+    ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+      geom_point() + 
+      geom_smooth()
+    
+    ggplot() + 
+      geom_point(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+      geom_smooth(data = mpg, mapping = aes(x = displ, y = hwy))
+    ```
+    They will look the same. In the first plot the `data = mpg, mapping = aes(x = displ, y = hwy)`
+    will be inherited by both `geom_point()` and `geom_smooth()`.
+    In the second plot the `data = mpg, mapping = aes(x = displ, y = hwy)` is repeated 
+    in each geom and hence both plots will be the same.
+    
+    ```{r, out.width = "50%", fig.align="default", message = FALSE}
+    ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+      geom_point() + 
+      geom_smooth()
+    
+    ggplot() + 
+      geom_point(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+      geom_smooth(data = mpg, mapping = aes(x = displ, y = hwy))
+    ```
+    
+1.  Recreate the R code necessary to generate the following graphs.
+        
+    ```{r}
+    ggplot(data = mpg, aes(x = displ, y = hwy)) +
+      geom_point(size = 2) +
+      geom_smooth(se = FALSE)
+    ```
+    ```{r}
+    ggplot(data = mpg, aes(x = displ, y = hwy)) +
+      geom_point(size = 2) +
+      geom_smooth(aes(group = drv), se = FALSE)
+    ```
+    ```{r}
+    ggplot(data = mpg, aes(x = displ, y = hwy, colour = drv)) +
+      geom_point(size = 2) +
+      geom_smooth(se = FALSE)
+    ```
+    ```{r}
+    ggplot(data = mpg, aes(x = displ, y = hwy)) +
+      geom_point(aes(colour = drv)) +
+      geom_smooth(se = FALSE)
+    ```
+    ```{r}
+    ggplot(data = mpg, aes(x = displ, y = hwy)) +
+      geom_point(aes(colour = drv)) +
+      geom_smooth(aes(linetype = drv), se = FALSE)
+    ```
+    ```{r}
+    ggplot(data = mpg, aes(x = displ, y = hwy)) +
+      geom_point(size = 3, colour = "white") +
+      geom_point(aes(colour = drv))
+    ```
+
+
+
 
 
 

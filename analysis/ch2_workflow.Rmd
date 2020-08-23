@@ -1,0 +1,17 @@
+---
+title: "Chapter 2 - Workflow basics"
+author: "Data Analytics"
+date: "23/08/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(flair)
+```
+
+### Workflow ...
+
+
+

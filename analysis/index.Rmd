@@ -11,4 +11,5 @@ editor_options:
 Welcome to my exam prep website.
 
 [Chapter 1](ch1_ggplot.html)
+[Chapter 2](ch2_workflow.html)
 
