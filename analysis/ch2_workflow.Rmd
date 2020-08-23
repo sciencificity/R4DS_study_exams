@@ -1,6 +1,6 @@
 ---
 title: "Chapter 2 - Workflow basics"
-author: "Data Analytics"
+author: "Vebash Naidoo"
 date: "23/08/2020"
 output: html_document
 ---
@@ -11,7 +11,29 @@ library(tidyverse)
 library(flair)
 ```
 
-### Workflow ...
+## Workflow ...
+
+<span style="color: #008080;background-color:#9FDDBA">`object_name <- value`</span> can be read as "object name __gets__ value"
+
+Find the `<-` tedious to enter? RStudio has a shortcut `Alt + -` to enter it for you.
+
+<image src = assets/alt_enter.gif>
+
+Alternately there's the great {styler} package that you may use to convert your code to the preferred style.
+
+1. Go to Tools -> Install Packages and install `styler`
+1. Else go to the [Github page](https://github.com/r-lib/styler) to install.
+1. In your code select the section you want to format (not necessary if you want to do for the entire file).
+
+    * Go to Addins
+    * STYLER
+    * Choose `Style selection` or the option appropriate for your task.
+  
+<image src = assets/styler.gif>  
+
+
+```{r}
 
 
 
+```

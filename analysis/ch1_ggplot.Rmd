@@ -1,6 +1,6 @@
 ---
 title: "Chapter 1 - Data Viz with ggplot"
-author: "Data Analytics"
+author: "Vebash Naidoo"
 date: "10/08/2020"
 output: html_document
 ---
@@ -11,7 +11,7 @@ library(tidyverse)
 library(flair)
 ```
 
-### Do cars with big engines use more fuel than cars with small engines?
+## Do cars with big engines use more fuel than cars with small engines?
 
 Hypothesis: Cars with bigger engines use more fuel, i.e. the fuel efficiency declines as the engine size gets bigger. If `miles per gallon` was on the y-axis and `engine size` on the x-axis we would see a decreasing trend.
 
@@ -38,9 +38,7 @@ ex4_plot <- ggplot(data = mpg,
   geom_point()
 ```
 
-### Aesthetics
-
-#### Exercises
+### Exercises
 1. Run `ggplot(data = mpg)`. What do you see? <br>
 Ans: An empty canvas of a plot. If you add the `aes(x = xx, y = yy)` you will see an empty canvas with the axes drawn.
 1. How many `rows` are there in `mtcars`? Columns? <br>
@@ -63,6 +61,7 @@ ggplot(data = mpg, aes(x = class,
 
 These are 2 categorical variables here so this isn't very useful.
 
+## Aesthetics
 
 You can give extra information about your dataset by mapping data to aesthetics like `size`, `colour`, `shape`.
 
@@ -173,7 +172,7 @@ decorate('uniform_size') %>%
 
 ```
 
-#### Exercises
+### Exercises
 
 1. What’s gone wrong with this code? Why are the points not blue?
 
@@ -292,7 +291,7 @@ decorate("ex6_gg") %>%
 
 Points are split according to the criteria <span style="color: #008080;background-color:#9FDDBA">`displ < 5`</span> and are coloured differently depending on what value they have for displacement.
 
-### Facets
+## Facets
 Another way to add information on your plot is to use `facets`. 
 
 - `facet_wrap()` allows faceting by a single variable
@@ -332,7 +331,7 @@ decorate("facet2") %>%
         color = "#008080")
 ```
 
-#### Exercises
+### Exercises
 
 1.  What happens if you facet on a continuous variable?
 
@@ -444,7 +443,7 @@ From the help page these are the main aspects that alter your visuals.
 6. When using facet_grid() you should usually put the variable with more unique levels in the columns. Why? <br>
 I would think this orientation makes best use of the screen real estate available.
 
-### Geometric Objects
+## Geometric Objects
 
 ```{r, echo = FALSE, out.width = "50%", fig.align="default", message = FALSE}
 ggplot(data = mpg) + 
@@ -572,7 +571,7 @@ decorate("spec_override2") %>%
         color = "#008080")
 ```
 
-#### Exercises
+### Exercises
 
 1.  What geom would you use to draw a line chart? A boxplot? 
     A histogram? An area chart?
