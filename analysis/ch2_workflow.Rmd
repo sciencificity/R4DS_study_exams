@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 library(tidyverse)
 library(flair)
 ```
@@ -31,9 +31,85 @@ Alternately there's the great {styler} package that you may use to convert your 
   
 <image src = assets/styler.gif>  
 
+Sometime you have an assignment, but you also want to print your variable to view its contents. Do this by surrounding the <span style="color: #008080;background-color:#9FDDBA">assignment</span> with <span style="color: #008080;background-color:#9FDDBA">()</span>.
 
-```{r}
-
-
-
+```{r save_and_out, include = FALSE}
+( y <- seq(1, 10, length.out = 5) ) 
 ```
+```{r, echo = FALSE}
+decorate("save_and_out") %>% 
+  flair("( ",
+        background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair(" )",
+        background = "#9FDDBA", 
+        color = "#008080")
+```
+
+### Exercises
+
+1.  Why does this code not work?
+
+    ```{r, error = TRUE}
+    my_variable <- 10
+    my_varıable
+    ```
+    
+    Look carefully! (This may seem like an exercise in pointlessness, but
+    training your brain to notice even the tiniest difference will pay off
+    when programming.)
+    
+    It doesn't work because the `i` in the `my_variable` has been replaced by another character `ı`.
+    
+1.  Tweak each of the following R commands so that they run correctly:
+
+    ```{r, eval = FALSE}
+    library(tidyverse)
+    ggplot(dota = mpg) + 
+      geom_point(mapping = aes(x = displ, y = hwy))
+    
+    fliter(mpg, cyl = 8)
+    filter(diamond, carat > 3)
+    ```    
+    
+  ```{r ex2_1, include = FALSE}
+  library(tidyverse)
+  ggplot(data = mpg) +
+    geom_point(mapping = aes(x = displ, y = hwy))
+  ```
+    ```{r ex2_2, include = FALSE}
+    filter(mpg, cyl == 8)
+    ```
+    ```{r ex2_3, include = FALSE}
+    filter(diamonds, carat > 3)
+    ```
+    
+    ```{r, echo=FALSE}
+    decorate("ex2_1") %>% 
+      flair("data", 
+            background = "#9FDDBA", 
+            color = "#008080")
+    ```
+    ```{r, echo=FALSE}
+    decorate("ex2_2") %>% 
+      flair("==", 
+            background = "#9FDDBA", 
+            color = "#008080") %>%       
+      flair("filter(",
+            background = "#9FDDBA", 
+            color = "#008080")
+    ```    
+    ```{r, echo=FALSE}
+    decorate("ex2_3") %>% 
+      flair("diamonds",
+            background = "#9FDDBA", 
+            color = "#008080")      
+    ```        
+1.  Press Alt + Shift + K. What happens? How can you get to the same place
+    using the menus?
+    
+    It opens the shortcuts popup page. You may _close_ the page 
+    by pressing __`ESC`__. 
+    
+    To get there through the menus go to Tools -> Keyboard Shortcuts 
+    -> Help
