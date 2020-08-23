@@ -495,16 +495,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreeb96b2ff8d99a41d8406be4515de3d681fb9819e6targetblankb96b2ffa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/b96b2ff8d99a41d8406be4515de3d681fb9819e6" target="_blank">b96b2ff</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreee6848319be99a7af497ebf2d20d1f7739fa41db8targetblanke684831a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/e6848319be99a7af497ebf2d20d1f7739fa41db8" target="_blank">e684831</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreeb96b2ff8d99a41d8406be4515de3d681fb9819e6targetblankb96b2ffa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreee6848319be99a7af497ebf2d20d1f7739fa41db8targetblanke684831a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/b96b2ff8d99a41d8406be4515de3d681fb9819e6" target="_blank">b96b2ff</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/e6848319be99a7af497ebf2d20d1f7739fa41db8" target="_blank">e684831</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -554,6 +554,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/e6848319be99a7af497ebf2d20d1f7739fa41db8/analysis/ch2_workflow.Rmd" target="_blank">e684831</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-08-23
+</td>
+<td>
+Added latest learnings
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/6373aef674a3f94db47e5b2545fb6c20c9e72690/docs/ch2_workflow.html" target="_blank">6373aef</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-08-23
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -646,6 +680,67 @@ Ch1 more complete, plus started Ch2
 </ul></li>
 </ol>
 <p><image src = assets/styler.gif></p>
+<p>Sometime you have an assignment, but you also want to print your variable to view its contents. Do this by surrounding the <span style="color: #008080;background-color:#9FDDBA">assignment</span> with <span style="color: #008080;background-color:#9FDDBA">()</span>.</p>
+<pre><code class='language-r'><code><span style='background-color:#9FDDBA;color:#008080'>( </span>y <- seq(1, 10, length.out = 5)<span style='background-color:#9FDDBA;color:#008080'> )</span></code></code></pre>
+<pre><code>
+[1]  1.00  3.25  5.50  7.75 10.00
+</code></pre>
+<div id="exercises" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Why does this code not work?</p>
+<pre class="r"><code>my_variable &lt;- 10
+my_varıable</code></pre>
+<pre><code>[1] 10</code></pre>
+<p>Look carefully! (This may seem like an exercise in pointlessness, but training your brain to notice even the tiniest difference will pay off when programming.)</p>
+<p>It doesn’t work because the <code>i</code> in the <code>my_variable</code> has been replaced by another character <code>ı</code>.</p></li>
+<li><p>Tweak each of the following R commands so that they run correctly:</p>
+<pre class="r"><code>library(tidyverse)
+ggplot(dota = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+
+fliter(mpg, cyl = 8)
+filter(diamond, carat &gt; 3)</code></pre>
+<pre><code class='language-r'><code>library(tidyverse)<br>&nbsp;&nbsp;ggplot(<span style='background-color:#9FDDBA;color:#008080'>data</span> = mpg) +<br>&nbsp;&nbsp;&nbsp;&nbsp;geom_point(mapping = aes(x = displ, y = hwy))</code></code></pre>
+<p><img src="figure/ch2_workflow.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code><span style='background-color:#9FDDBA;color:#008080'>filter(</span>mpg, cyl <span style='background-color:#9FDDBA;color:#008080'>==</span> 8)</code></code></pre>
+<pre><code>
+    # A tibble: 70 x 11
+       manufacturer model     displ  year   cyl trans  drv     cty   hwy fl    class
+       &lt;chr&gt;        &lt;chr&gt;     &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+     1 audi         a6 quatt~   4.2  2008     8 auto(~ 4        16    23 p     mids~
+     2 chevrolet    c1500 su~   5.3  2008     8 auto(~ r        14    20 r     suv  
+     3 chevrolet    c1500 su~   5.3  2008     8 auto(~ r        11    15 e     suv  
+     4 chevrolet    c1500 su~   5.3  2008     8 auto(~ r        14    20 r     suv  
+     5 chevrolet    c1500 su~   5.7  1999     8 auto(~ r        13    17 r     suv  
+     6 chevrolet    c1500 su~   6    2008     8 auto(~ r        12    17 r     suv  
+     7 chevrolet    corvette    5.7  1999     8 manua~ r        16    26 p     2sea~
+     8 chevrolet    corvette    5.7  1999     8 auto(~ r        15    23 p     2sea~
+     9 chevrolet    corvette    6.2  2008     8 manua~ r        16    26 p     2sea~
+    10 chevrolet    corvette    6.2  2008     8 auto(~ r        15    25 p     2sea~
+    # ... with 60 more rows
+</code></pre>
+<pre><code class='language-r'><code>filter(<span style='background-color:#9FDDBA;color:#008080'>diamonds</span>, carat > 3)</code></code></pre>
+<pre><code>
+    # A tibble: 32 x 10
+       carat cut     color clarity depth table price     x     y     z
+       &lt;dbl&gt; &lt;ord&gt;   &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+     1  3.01 Premium I     I1       62.7    58  8040  9.1   8.97  5.67
+     2  3.11 Fair    J     I1       65.9    57  9823  9.15  9.02  5.98
+     3  3.01 Premium F     I1       62.2    56  9925  9.24  9.13  5.73
+     4  3.05 Premium E     I1       60.9    58 10453  9.26  9.25  5.66
+     5  3.02 Fair    I     I1       65.2    56 10577  9.11  9.02  5.91
+     6  3.01 Fair    H     I1       56.1    62 10761  9.54  9.38  5.31
+     7  3.65 Fair    H     I1       67.1    53 11668  9.53  9.48  6.38
+     8  3.24 Premium H     I1       62.1    58 12300  9.44  9.4   5.85
+     9  3.22 Ideal   I     I1       62.6    55 12545  9.49  9.42  5.92
+    10  3.5  Ideal   H     I1       62.8    57 12587  9.65  9.59  6.03
+    # ... with 22 more rows
+</code></pre></li>
+<li><p>Press Alt + Shift + K. What happens? How can you get to the same place using the menus?</p>
+<p>It opens the shortcuts popup page. You may <em>close</em> the page by pressing <strong><code>ESC</code></strong>.</p>
+<p>To get there through the menus go to Tools -&gt; Keyboard Shortcuts -&gt; Help</p></li>
+</ol>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -676,19 +771,20 @@ other attached packages:
 loaded via a namespace (and not attached):
  [1] tidyselect_1.1.0 xfun_0.13        haven_2.2.0      lattice_0.20-38 
  [5] colorspace_1.4-1 vctrs_0.3.2      generics_0.0.2   htmltools_0.4.0 
- [9] yaml_2.2.1       rlang_0.4.7      later_1.0.0      pillar_1.4.6    
-[13] withr_2.2.0      glue_1.4.1       DBI_1.1.0        dbplyr_1.4.3    
-[17] modelr_0.1.6     readxl_1.3.1     lifecycle_0.2.0  munsell_0.5.0   
-[21] gtable_0.3.0     cellranger_1.1.0 rvest_0.3.5      evaluate_0.14   
-[25] knitr_1.28       httpuv_1.5.2     fansi_0.4.1      broom_0.5.6     
-[29] Rcpp_1.0.4.6     promises_1.1.0   backports_1.1.6  scales_1.1.0    
-[33] jsonlite_1.7.0   fs_1.4.1         hms_0.5.3        digest_0.6.25   
-[37] stringi_1.4.6    grid_3.6.3       rprojroot_1.3-2  cli_2.0.2       
-[41] tools_3.6.3      magrittr_1.5     crayon_1.3.4     whisker_0.4     
-[45] pkgconfig_2.0.3  ellipsis_0.3.1   xml2_1.3.2       reprex_0.3.0    
-[49] lubridate_1.7.8  rstudioapi_0.11  assertthat_0.2.1 rmarkdown_2.1   
-[53] httr_1.4.2       R6_2.4.1         nlme_3.1-144     git2r_0.26.1    
-[57] compiler_3.6.3  </code></pre>
+ [9] yaml_2.2.1       utf8_1.1.4       rlang_0.4.7      later_1.0.0     
+[13] pillar_1.4.6     withr_2.2.0      glue_1.4.1       DBI_1.1.0       
+[17] dbplyr_1.4.3     modelr_0.1.6     readxl_1.3.1     lifecycle_0.2.0 
+[21] munsell_0.5.0    gtable_0.3.0     cellranger_1.1.0 rvest_0.3.5     
+[25] evaluate_0.14    labeling_0.3     knitr_1.28       httpuv_1.5.2    
+[29] fansi_0.4.1      broom_0.5.6      Rcpp_1.0.4.6     promises_1.1.0  
+[33] backports_1.1.6  scales_1.1.0     jsonlite_1.7.0   farver_2.0.3    
+[37] fs_1.4.1         hms_0.5.3        digest_0.6.25    stringi_1.4.6   
+[41] grid_3.6.3       rprojroot_1.3-2  cli_2.0.2        tools_3.6.3     
+[45] magrittr_1.5     crayon_1.3.4     whisker_0.4      pkgconfig_2.0.3 
+[49] ellipsis_0.3.1   xml2_1.3.2       reprex_0.3.0     lubridate_1.7.8 
+[53] rstudioapi_0.11  assertthat_0.2.1 rmarkdown_2.1    httr_1.4.2      
+[57] R6_2.4.1         nlme_3.1-144     git2r_0.26.1     compiler_3.6.3  </code></pre>
+</div>
 </div>
 </div>
 
