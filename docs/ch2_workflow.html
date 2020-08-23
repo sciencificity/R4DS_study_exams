@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Data Analytics" />
+<meta name="author" content="Vebash Naidoo" />
 
 
 <title>Chapter 2 - Workflow basics</title>
@@ -378,7 +378,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Chapter 2 - Workflow basics</h1>
-<h4 class="author">Data Analytics</h4>
+<h4 class="author">Vebash Naidoo</h4>
 <h4 class="date">23/08/2020</h4>
 
 </div>
@@ -495,16 +495,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreefd94013040b770b9731d621d23d1178cc5e5a20etargetblankfd94013a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/fd94013040b770b9731d621d23d1178cc5e5a20e" target="_blank">fd94013</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreeb96b2ff8d99a41d8406be4515de3d681fb9819e6targetblankb96b2ffa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/b96b2ff8d99a41d8406be4515de3d681fb9819e6" target="_blank">b96b2ff</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreefd94013040b770b9731d621d23d1178cc5e5a20etargetblankfd94013a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreeb96b2ff8d99a41d8406be4515de3d681fb9819e6targetblankb96b2ffa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/fd94013040b770b9731d621d23d1178cc5e5a20e" target="_blank">fd94013</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/b96b2ff8d99a41d8406be4515de3d681fb9819e6" target="_blank">b96b2ff</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -556,6 +556,40 @@ Message
 <tbody>
 <tr>
 <td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/b96b2ff8d99a41d8406be4515de3d681fb9819e6/analysis/ch2_workflow.Rmd" target="_blank">b96b2ff</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-08-23
+</td>
+<td>
+Latest additions
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/28dbedfcb6ea3a77a40d20df427f18908df746ad/docs/ch2_workflow.html" target="_blank">28dbedf</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-08-23
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
 html
 </td>
 <td>
@@ -595,8 +629,23 @@ Ch1 more complete, plus started Ch2
 </div>
 </div>
 </div>
-<div id="workflow" class="section level3">
-<h3>Workflow …</h3>
+<div id="workflow" class="section level2">
+<h2>Workflow …</h2>
+<p><span style="color: #008080;background-color:#9FDDBA"><code>object_name &lt;- value</code></span> can be read as “object name <strong>gets</strong> value”</p>
+<p>Find the <code>&lt;-</code> tedious to enter? RStudio has a shortcut <code>Alt + -</code> to enter it for you.</p>
+<p><image src = assets/alt_enter.gif></p>
+<p>Alternately there’s the great {styler} package that you may use to convert your code to the preferred style.</p>
+<ol style="list-style-type: decimal">
+<li>Go to Tools -&gt; Install Packages and install <code>styler</code></li>
+<li>Else go to the <a href="https://github.com/r-lib/styler">Github page</a> to install.</li>
+<li><p>In your code select the section you want to format (not necessary if you want to do for the entire file).</p>
+<ul>
+<li>Go to Addins</li>
+<li>STYLER</li>
+<li>Choose <code>Style selection</code> or the option appropriate for your task.</li>
+</ul></li>
+</ol>
+<p><image src = assets/styler.gif></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
