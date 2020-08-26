@@ -112,4 +112,4 @@ decorate("save_and_out") %>%
     by pressing __`ESC`__. 
     
     To get there through the menus go to Tools -> Keyboard Shortcuts 
-    -> Help
+    Help

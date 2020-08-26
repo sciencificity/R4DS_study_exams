@@ -39,27 +39,34 @@ ex4_plot <- ggplot(data = mpg,
 ```
 
 ### Exercises
-1. Run `ggplot(data = mpg)`. What do you see? <br>
-Ans: An empty canvas of a plot. If you add the `aes(x = xx, y = yy)` you will see an empty canvas with the axes drawn.
-1. How many `rows` are there in `mtcars`? Columns? <br>
-Ans: Number of rows is `r num_rows`, cols is `r num_cols`.
-1. What does the `drv` variable describe?
-Ans: 'The type of drive train, where f = front-wheel drive, r = rear wheel drive, 4 = 4wd'
-1. Make a scatterplot of hwy versus cyl.
 
-```{r}
-ex4_plot
-```
+1.  Run `ggplot(data = mpg)`. What do you see? <br>
+    Ans: An empty canvas of a plot. If you add the 
+    `aes(x = xx, y = yy)` you will see an empty canvas with 
+    the axes drawn.
 
-1. What happens if you make a scatterplot of `class` versus `drv`? Why is this plot not useful?
+1.  How many rows are in `mtcars`? How many columns? <br>
+    Ans: Number of rows is `r num_rows`, cols is `r num_cols`.
+  
+1.  What does the `drv` variable describe?  Read the help 
+    for `?mpg` to find out. <br>
+    Ans: 'The type of drive train, where f = front-wheel drive, 
+    r = rear wheel drive, 4 = 4wd'
+    
+1.  Make a scatterplot of `hwy` vs `cyl`.
+    ```{r}
+    ex4_plot
+    ```
 
-```{r}
-ggplot(data = mpg, aes(x = class, 
-                       y = drv)) +
-  geom_point()
-```
-
-These are 2 categorical variables here so this isn't very useful.
+1.  What happens if you make a scatterplot of `class` vs `drv`? Why is
+    the plot not useful?
+    
+    ```{r}
+    ggplot(data = mpg, aes(x = class, 
+                         y = drv)) +
+    geom_point()    
+    ```
+    These are 2 categorical variables here so this isn't very useful.
 
 ## Aesthetics
 
@@ -174,24 +181,24 @@ decorate('uniform_size') %>%
 
 ### Exercises
 
-1. What’s gone wrong with this code? Why are the points not blue?
+#### Exercise 1
 
+What's gone wrong with this code? Why are the points not blue?
+    
 ```{r ex1, include=FALSE}
 ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, 
-                           y = hwy, color = "blue"))
+  geom_point(mapping = aes(x = displ, y = hwy, color = "blue"))
 ```
-
 ```{r, echo=FALSE}
 decorate("ex1") %>% 
   flair('color = "blue"',
         background = "#800000", 
         color = "#FFE4E1")
 ```
-
-
-The <span style="color: #FFE4E1;background-color:#800000">`color`</span> attribute maps to a static colour and yet appears within `aes()`.
-
+The <span style="color:#FFE4E1;background-color:#800000">`color`
+</span> attribute maps to a static colour `blue` and yet 
+appears within
+`aes()`.
 To correct, put `colour = 'blue'` outside the `aes()`
 
 ```{r ex1_correct, include=FALSE}
@@ -200,7 +207,6 @@ ggplot(data = mpg) +
                            y = hwy), 
              color = "blue")
 ```
-
 ```{r, echo=FALSE}
 decorate("ex1_correct") %>% 
   flair('color = "blue"',
@@ -208,15 +214,29 @@ decorate("ex1_correct") %>%
         color = "#6d6875")
 ```
 
-2. Which variables in mpg are categorical? Which variables are continuous? (Hint: type ?mpg to read the documentation for the dataset). How can you see this information when you run mpg?
+<br><br>
 
-`manufacturer`, `model`, `trans`, `drv`, `fl` and `class` are categories (I also think `cyl` may be considered a category since it takes on 4 values based on a limited number of cylinders); `displ`, `year`, `cty`, `hwy`, `cyl` are continuous. You can convert `mpg` to a tibble (if it is not already) and check the types using `glimpse()`.
+#### Exercise 2
 
+Which variables in `mpg` are categorical? Which variables are continuous? 
+(Hint: type `?mpg` to read the documentation for the dataset). How
+can you see this information when you run `mpg`?
+
+  `manufacturer`, `model`, `trans`, `drv`, `fl` and `class` are
+    categories (I also think `cyl` may be considered a category since it
+    takes on 4 values based on a limited number of cylinders); `displ`,
+    `year`, `cty`, `hwy`, `cyl` are continuous. You can convert `mpg` to a
+    tibble (if it is not already) and check the types using `glimpse()`.
 ```{r}
 glimpse(mpg)
 ```
+<br><br>
 
-3. Map a continuous variable to color, size, and shape. How do these aesthetics behave differently for categorical vs. continuous variables?
+#### Exercise 3
+
+Map a continuous variable to `color`, `size`, and `shape`. How do
+these aesthetics behave differently for categorical vs. continuous
+variables? 
 
 ```{r}
 ggplot(data = mpg) +
@@ -228,10 +248,13 @@ ggplot(data = mpg) +
                  colour = cty))
 ```
 
-The colours are scaled from the lowest to the highest value using dark to light blue.
+The colours are scaled from the lowest to the highest value 
+using dark to light blue.
+<br><br>
 
-4. What happens if you map the same variable to multiple aesthetics?
+#### Exercise 4
 
+What happens if you map the same variable to multiple aesthetics? 
 ```{r ex4_gg, include = FALSE}
 ggplot(data = mpg) +
   geom_point(aes(x = displ, y = hwy,
@@ -248,14 +271,27 @@ decorate("ex4_gg") %>%
         background = "#9FDDBA", 
         color = "#008080")
 ```
+Here we have both 
+<span style="color:#008080;background-color:#9FDDBA">`colour` and
+`size`</span> mapped to `class`. The plot offers no new information
+with the second aesthetic so I'd consider it a poor plot. You should
+use aesthetics mapped to different features in your data to meet with
+the **Axiom** that _'The greatest value of a picture is when it 
+forces us to notice what we never expected to see. 
+--John Tukey'_ as mentioned in the beginning of the 
+__Aesthetic Mappings__ section!
+<br><br>
 
-Here we have both <span style="color: #008080;background-color:#9FDDBA">`colour` and `size`</span> mapped to `class`. The plot offers no new information with the second aesthetic so I'd consider it a poor plot. You should use aesthetics mapped to different features in your data to meet with the **Axiom** that _'The greatest value of a picture is when it forces us to notice what we never expected to see. --John Tukey'_ as mentioned in the beginning of the __Aesthetic Mappings__ section!
+#### Exercise 5
 
-5. What does the stroke aesthetic do? What shapes does it work with? (Hint: use ?geom_point)
+What does the `stroke` aesthetic do? What shapes does it work with?
+(Hint: use `?geom_point`)
 
-__Tip: Did you know that when you call `?geom_point` you can go to an example and highlight it, press 'Ctrl + Enter' and it will place that example in your console and run it?__
+__Tip: Did you know that when you call `?geom_point` you can go to an
+example and highlight it, press 'Ctrl + Enter' and it will place that
+example in your console and run it?__ <br>
 
-<img src = assets/help_ctrl_enter.PNG width = 250px>
+<img src = assets/help_ctrl_enter.PNG width = 250px> <br>
 
 <img src = assets/ctrl_enter_example_help_file2.gif>
 
@@ -272,24 +308,45 @@ ggplot(mtcars, aes(wt, mpg)) +
 
 <img src = assets/shape.PNG>
 
-Stroke changes the border width as described in the example comment, and works with any shape that has a border hence will work with shapes `0-14`, and `21-24`. An example of each is above.
+Stroke changes the border width as described in the example comment,
+and works with any shape that has a border hence will work with shapes
+`0-14`, and `21-24`. An example of each is above.
+<br><br>
 
-6. What happens if you map an aesthetic to something other than a variable name, like aes(colour = displ < 5)? Note, you’ll also need to specify x and y.
+#### Exercise 6
+
+What happens if you map an aesthetic to something other than a variable 
+name, like `aes(colour = displ < 5)`?  Note, you'll also need to specify x and y.
 
 ```{r ex6_gg, include = FALSE}
 ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy, 
-            colour = displ < 5))
+  geom_point(mapping = 
+    aes(x = displ, 
+        y = hwy, 
+        colour = 
+          (displ < 5)
+        )
+  )
 ```
 
 ```{r, echo=FALSE}
 decorate("ex6_gg") %>% 
-  flair("colour = displ < 5",
+  flair("colour =",
         background = "#9FDDBA", 
-        color = "#008080")
+        color = "#008080") %>% 
+  flair("(displ", 
+          background = "#9FDDBA", 
+          color = "#008080") %>% 
+  flair_rx(" \\< 5\\)", 
+          background = "#9FDDBA", 
+          color = "#008080")
 ```
 
-Points are split according to the criteria <span style="color: #008080;background-color:#9FDDBA">`displ < 5`</span> and are coloured differently depending on what value they have for displacement.
+Points are split according to the criteria 
+<span style="color: #008080;background-color:#9FDDBA">`displ < 5`</span>
+and are coloured differently depending on what value they have 
+for displacement.
+<br><br>
 
 ## Facets
 Another way to add information on your plot is to use `facets`. 
@@ -333,7 +390,8 @@ decorate("facet2") %>%
 
 ### Exercises
 
-1.  What happens if you facet on a continuous variable?
+#### Facets: Exercise 1
+What happens if you facet on a continuous variable?
 
 ```{r facet_ex1, include=FALSE}
 ggplot(data = mpg) +
@@ -349,90 +407,89 @@ decorate("facet_ex1") %>%
         color = "#FFE4E1")
 ```
 
-    The plot is created but it doesn't make sense to split our data 
-    by a continuous variable. 
+The plot is created but it doesn't make sense to split our data 
+by a continuous variable. 
+<br><br>
 
-1. What do the empty cells in plot with `facet_grid(drv ~ cyl)` mean? How do they relate to this plot?
+#### Facets: Exercise 2
+What do the empty cells in plot with `facet_grid(drv ~ cyl)` mean? How do they relate to this plot?
 
-    The empty spots refer to that `drv and cyl combination` being missing.
+The empty spots refer to that `drv and cyl combination` being missing.
+
+```{r facet_ex2}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = drv, y = cyl))
+```
+
+It relates to the above in that you can see that the 
+`drv = 4; cyl = 5` combination has no observations. 
+This is also the case in the faceted plot.
+
+#### Facets: Exercise 3
+What plots does the following code make? What does . do?
+
+```{r fct3_1, include=FALSE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+
+```
     
-    ```
-    ggplot(data = mpg) + <br>
-      geom_point(mapping = aes(x = drv, y = cyl))
-      
-    ```  
+```{r fct3_2, include=FALSE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl)
+```
     
-    ```{r facet_ex2}
-    ggplot(data = mpg) + 
-      geom_point(mapping = aes(x = drv, y = cyl))
-    ```
+```{r, echo=FALSE}
+decorate("fct3_1") %>% 
+  flair("facet_grid(drv ~ .)", 
+        background = "#9FDDBA", 
+        color = "#008080")
+```
 
-    It relates to the above in that you can see that the 
-    `drv = 4; cyl = 5` combination has no observations. 
-    This is also the case in the faceted plot.
-
-1. What plots does the following code make? What does . do?
-
-    ```{r fct3_1, include=FALSE}
-    ggplot(data = mpg) + 
-      geom_point(mapping = aes(x = displ, y = hwy)) +
-      facet_grid(drv ~ .)
-    
-    ```
-    
-    ```{r fct3_2, include=FALSE}
-    ggplot(data = mpg) + 
-      geom_point(mapping = aes(x = displ, y = hwy)) +
-      facet_grid(. ~ cyl)
-    ```
-    
-    ```{r, echo=FALSE}
-    decorate("fct3_1") %>% 
-      flair("facet_grid(drv ~ .)", 
-            background = "#9FDDBA", 
-            color = "#008080")
-    ```
-
-    The <span style="color: #008080;background-color:#9FDDBA">`facet_grid
-    (drv ~ .)`</span> facets the `drv` categories into rows. It says 
-    facet this plot by `drv` as row panels but I don't want anything 
-    as column panels (hence the `.`).
+The <span style="color: #008080;background-color:#9FDDBA">`facet_grid
+(drv ~ .)`</span> facets the `drv` categories into rows. It says 
+facet this plot by `drv` as row panels but I don't want anything 
+as column panels (hence the `.`).
   
-    ```{r, echo=FALSE}
-    decorate("fct3_2") %>% 
-      flair("facet_grid(. ~ cyl)", 
-            background = "#9FDDBA", 
-            color = "#008080")
-    ```
+```{r, echo=FALSE}
+decorate("fct3_2") %>% 
+  flair("facet_grid(. ~ cyl)", 
+        background = "#9FDDBA", 
+        color = "#008080")
+```
 
-    The <span style="color: #008080;background-color:#9FDDBA">`facet_grid(. ~ cyl)`</span> facets the `cyl` categories into columns. It says facet this plot by `cyl` as column panels but I don't want anything as row panels (hence the `.`).
-    
-1. Take the first faceted plot in this section:
+The <span style="color: #008080;background-color:#9FDDBA">`facet_grid(. ~ cyl)`</span> facets the `cyl` categories into columns. It says facet this plot by `cyl` as column panels but I don't want anything as row panels (hence the `.`).
+  
+#### Facets: Exercise 4  
+Take the first faceted plot in this section:
 
-    ```
-    ggplot(data = mpg) + 
-      geom_point(mapping = aes(x = displ, y = hwy)) + 
-      facet_wrap(~ class, nrow = 2)
-    
-    ```
-    What are the advantages to using faceting instead of the colour aesthetic? What are the disadvantages? How might the balance change if you had a larger dataset?
-    
-    ```{r}
-    ggplot(data = mpg) + 
-      geom_point(mapping = aes(x = displ, y = hwy)) + 
-      facet_wrap(~ class, nrow = 2)
-    ```
-    
-    * What are the advantages to using faceting instead of the colour aesthetic? <br>
-    You can see the patterns in each class much easier.
+```
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class, nrow = 2)
 
-    * What are the disadvantages? <br>
-    You may lose sight of the overall trend across all observations, and comparing categories becomes more "work".
+```
+What are the advantages to using faceting instead of the colour aesthetic? What are the disadvantages? How might the balance change if you had a larger dataset?
 
-    * How might the balance change if you had a larger dataset? <br>
-    If you have many categories it becomes overwhelming.
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class, nrow = 2)
+```
 
-5. Read ?facet_wrap. What does nrow do? What does ncol do? What other options control the layout of the individual panels? Why doesn’t facet_grid() have nrow and ncol arguments? <br>
+* What are the advantages to using faceting instead of the colour aesthetic? <br>
+You can see the patterns in each class much easier.
+
+* What are the disadvantages? <br>
+You may lose sight of the overall trend across all observations, and comparing categories becomes more "work".
+
+* How might the balance change if you had a larger dataset? <br>
+If you have many categories it becomes overwhelming.
+
+#### Facets: Exercise 5
+Read ?facet_wrap. What does nrow do? What does ncol do? What other options control the layout of the individual panels? Why doesn’t facet_grid() have nrow and ncol arguments? <br>
 From the help page these are the main aspects that alter your visuals.
 
 * `nrow` and `ncol` specify the number of rows or columns you're looking for in your plot.
@@ -440,8 +497,10 @@ From the help page these are the main aspects that alter your visuals.
 * Use the `labeller` option to control how labels are printed.
 * Use `strip.position` to display the facet labels at the side of your choice. Setting it to `bottom` makes it act as a subtitle for the axis. This is typically used with free scales and a theme without boxes around strip labels.
 
-6. When using facet_grid() you should usually put the variable with more unique levels in the columns. Why? <br>
+#### Facets: Exercise 6
+When using facet_grid() you should usually put the variable with more unique levels in the columns. Why? <br>
 I would think this orientation makes best use of the screen real estate available.
+<br><br>
 
 ## Geometric Objects
 
