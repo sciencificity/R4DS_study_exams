@@ -405,7 +405,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-08-23
+<strong>Last updated:</strong> 2020-08-26
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -496,16 +496,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreee6848319be99a7af497ebf2d20d1f7739fa41db8targetblanke684831a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/e6848319be99a7af497ebf2d20d1f7739fa41db8" target="_blank">e684831</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree50ff8a514c5864a0c233e4e298fe6115afd443a4targetblank50ff8a5a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/50ff8a514c5864a0c233e4e298fe6115afd443a4" target="_blank">50ff8a5</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreee6848319be99a7af497ebf2d20d1f7739fa41db8targetblanke684831a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree50ff8a514c5864a0c233e4e298fe6115afd443a4targetblank50ff8a5a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/e6848319be99a7af497ebf2d20d1f7739fa41db8" target="_blank">e684831</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/50ff8a514c5864a0c233e4e298fe6115afd443a4" target="_blank">50ff8a5</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -555,6 +555,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/50ff8a514c5864a0c233e4e298fe6115afd443a4/analysis/ch1_ggplot.Rmd" target="_blank">50ff8a5</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-08-26
+</td>
+<td>
+Corrected page flow
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/b3395ae2306a4bd2331198e7dc2bfa6db1fce804/docs/ch1_ggplot.html" target="_blank">b3395ae</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-08-23
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -921,21 +955,18 @@ ex4_plot &lt;- ggplot(data = mpg,
 <div id="exercises" class="section level3">
 <h3>Exercises</h3>
 <ol style="list-style-type: decimal">
-<li>Run <code>ggplot(data = mpg)</code>. What do you see? <br> Ans: An empty canvas of a plot. If you add the <code>aes(x = xx, y = yy)</code> you will see an empty canvas with the axes drawn.</li>
-<li>How many <code>rows</code> are there in <code>mtcars</code>? Columns? <br> Ans: Number of rows is 32, cols is 11.</li>
-<li>What does the <code>drv</code> variable describe? Ans: ‘The type of drive train, where f = front-wheel drive, r = rear wheel drive, 4 = 4wd’</li>
-<li>Make a scatterplot of hwy versus cyl.</li>
-</ol>
+<li><p>Run <code>ggplot(data = mpg)</code>. What do you see? <br> Ans: An empty canvas of a plot. If you add the <code>aes(x = xx, y = yy)</code> you will see an empty canvas with the axes drawn.</p></li>
+<li><p>How many rows are in <code>mtcars</code>? How many columns? <br> Ans: Number of rows is 32, cols is 11.</p></li>
+<li><p>What does the <code>drv</code> variable describe? Read the help for <code>?mpg</code> to find out. <br> Ans: ‘The type of drive train, where f = front-wheel drive, r = rear wheel drive, 4 = 4wd’</p></li>
+<li><p>Make a scatterplot of <code>hwy</code> vs <code>cyl</code>.</p>
 <pre class="r"><code>ex4_plot</code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
-<ol style="list-style-type: decimal">
-<li>What happens if you make a scatterplot of <code>class</code> versus <code>drv</code>? Why is this plot not useful?</li>
-</ol>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p></li>
+<li><p>What happens if you make a scatterplot of <code>class</code> vs <code>drv</code>? Why is the plot not useful?</p>
 <pre class="r"><code>ggplot(data = mpg, aes(x = class, 
-                       y = drv)) +
-  geom_point()</code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>These are 2 categorical variables here so this isn’t very useful.</p>
+                     y = drv)) +
+geom_point()    </code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /> These are 2 categorical variables here so this isn’t very useful.</p></li>
+</ol>
 </div>
 </div>
 <div id="aesthetics" class="section level2">
@@ -985,18 +1016,18 @@ Warning: Removed 62 rows containing missing values (geom_point).
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-48-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="exercises-1" class="section level3">
 <h3>Exercises</h3>
-<ol style="list-style-type: decimal">
-<li>What’s gone wrong with this code? Why are the points not blue?</li>
-</ol>
-<pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = hwy, <span style='background-color:#800000;color:#FFE4E1'>color = "blue"</span>))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-49-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>The <span style="color: #FFE4E1;background-color:#800000"><code>color</code></span> attribute maps to a static colour and yet appears within <code>aes()</code>.</p>
-<p>To correct, put <code>colour = 'blue'</code> outside the <code>aes()</code></p>
+<div id="exercise-1" class="section level4">
+<h4>Exercise 1</h4>
+<p>What’s gone wrong with this code? Why are the points not blue?</p>
+<pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ, y = hwy, <span style='background-color:#800000;color:#FFE4E1'>color = "blue"</span>))</code></code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-49-1.png" width="672" style="display: block; margin: auto;" /> The <span style="color:#FFE4E1;background-color:#800000"><code>color</code> </span> attribute maps to a static colour <code>blue</code> and yet appears within <code>aes()</code>. To correct, put <code>colour = 'blue'</code> outside the <code>aes()</code></p>
 <pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = hwy), <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#e5989b;color:#6d6875'>color = "blue"</span>)</code></code></pre>
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-50-1.png" width="672" style="display: block; margin: auto;" /></p>
-<ol start="2" style="list-style-type: decimal">
-<li>Which variables in mpg are categorical? Which variables are continuous? (Hint: type ?mpg to read the documentation for the dataset). How can you see this information when you run mpg?</li>
-</ol>
+<p><br><br></p>
+</div>
+<div id="exercise-2" class="section level4">
+<h4>Exercise 2</h4>
+<p>Which variables in <code>mpg</code> are categorical? Which variables are continuous? (Hint: type <code>?mpg</code> to read the documentation for the dataset). How can you see this information when you run <code>mpg</code>?</p>
 <p><code>manufacturer</code>, <code>model</code>, <code>trans</code>, <code>drv</code>, <code>fl</code> and <code>class</code> are categories (I also think <code>cyl</code> may be considered a category since it takes on 4 values based on a limited number of cylinders); <code>displ</code>, <code>year</code>, <code>cty</code>, <code>hwy</code>, <code>cyl</code> are continuous. You can convert <code>mpg</code> to a tibble (if it is not already) and check the types using <code>glimpse()</code>.</p>
 <pre class="r"><code>glimpse(mpg)</code></pre>
 <pre><code>Rows: 234
@@ -1012,9 +1043,11 @@ $ cty          &lt;int&gt; 18, 21, 20, 21, 16, 18, 18, 18, 16, 20, 19, 15, 17, 1
 $ hwy          &lt;int&gt; 29, 29, 31, 30, 26, 26, 27, 26, 25, 28, 27, 25, 25, 25...
 $ fl           &lt;chr&gt; &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;, &quot;p&quot;,...
 $ class        &lt;chr&gt; &quot;compact&quot;, &quot;compact&quot;, &quot;compact&quot;, &quot;compact&quot;, &quot;compact&quot;,...</code></pre>
-<ol start="3" style="list-style-type: decimal">
-<li>Map a continuous variable to color, size, and shape. How do these aesthetics behave differently for categorical vs. continuous variables?</li>
-</ol>
+<p><br><br></p>
+</div>
+<div id="exercise-3" class="section level4">
+<h4>Exercise 3</h4>
+<p>Map a continuous variable to <code>color</code>, <code>size</code>, and <code>shape</code>. How do these aesthetics behave differently for categorical vs. continuous variables?</p>
 <pre class="r"><code>ggplot(data = mpg) +
   geom_point(aes(x = displ, y = hwy, 
                  colour = cyl))</code></pre>
@@ -1023,18 +1056,19 @@ $ class        &lt;chr&gt; &quot;compact&quot;, &quot;compact&quot;, &quot;compa
   geom_point(aes(x = displ, y = hwy, 
                  colour = cty))</code></pre>
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-15-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>The colours are scaled from the lowest to the highest value using dark to light blue.</p>
-<ol start="4" style="list-style-type: decimal">
-<li>What happens if you map the same variable to multiple aesthetics?</li>
-</ol>
+<p>The colours are scaled from the lowest to the highest value using dark to light blue. <br><br></p>
+</div>
+<div id="exercise-4" class="section level4">
+<h4>Exercise 4</h4>
+<p>What happens if you map the same variable to multiple aesthetics?</p>
 <pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(aes(x = displ, y = hwy,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>colour = class</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>size = class</span>))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-51-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Here we have both <span style="color: #008080;background-color:#9FDDBA"><code>colour</code> and <code>size</code></span> mapped to <code>class</code>. The plot offers no new information with the second aesthetic so I’d consider it a poor plot. You should use aesthetics mapped to different features in your data to meet with the <strong>Axiom</strong> that <em>‘The greatest value of a picture is when it forces us to notice what we never expected to see. –John Tukey’</em> as mentioned in the beginning of the <strong>Aesthetic Mappings</strong> section!</p>
-<ol start="5" style="list-style-type: decimal">
-<li>What does the stroke aesthetic do? What shapes does it work with? (Hint: use ?geom_point)</li>
-</ol>
-<p><strong>Tip: Did you know that when you call <code>?geom_point</code> you can go to an example and highlight it, press ‘Ctrl + Enter’ and it will place that example in your console and run it?</strong></p>
-<p><img src = assets/help_ctrl_enter.PNG width = 250px></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-51-1.png" width="672" style="display: block; margin: auto;" /> Here we have both <span style="color:#008080;background-color:#9FDDBA"><code>colour</code> and <code>size</code></span> mapped to <code>class</code>. The plot offers no new information with the second aesthetic so I’d consider it a poor plot. You should use aesthetics mapped to different features in your data to meet with the <strong>Axiom</strong> that <em>‘The greatest value of a picture is when it forces us to notice what we never expected to see. –John Tukey’</em> as mentioned in the beginning of the <strong>Aesthetic Mappings</strong> section! <br><br></p>
+</div>
+<div id="exercise-5" class="section level4">
+<h4>Exercise 5</h4>
+<p>What does the <code>stroke</code> aesthetic do? What shapes does it work with? (Hint: use <code>?geom_point</code>)</p>
+<p><strong>Tip: Did you know that when you call <code>?geom_point</code> you can go to an example and highlight it, press ‘Ctrl + Enter’ and it will place that example in your console and run it?</strong> <br></p>
+<p><img src = assets/help_ctrl_enter.PNG width = 250px> <br></p>
 <p><img src = assets/ctrl_enter_example_help_file2.gif></p>
 <pre class="r"><code># For shapes that have a border (like 21), you can colour the inside and
 # outside separately. Use the stroke aesthetic to modify the width of the
@@ -1046,13 +1080,15 @@ ggplot(mtcars, aes(wt, mpg)) +
   geom_point(shape = 23, colour = &quot;black&quot;, fill = &quot;white&quot;, size = 5, stroke = 3)</code></pre>
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-17-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p><img src = assets/shape.PNG></p>
-<p>Stroke changes the border width as described in the example comment, and works with any shape that has a border hence will work with shapes <code>0-14</code>, and <code>21-24</code>. An example of each is above.</p>
-<ol start="6" style="list-style-type: decimal">
-<li>What happens if you map an aesthetic to something other than a variable name, like aes(colour = displ &lt; 5)? Note, you’ll also need to specify x and y.</li>
-</ol>
-<pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ, y = hwy, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;colour = displ</code></code></pre>
+<p>Stroke changes the border width as described in the example comment, and works with any shape that has a border hence will work with shapes <code>0-14</code>, and <code>21-24</code>. An example of each is above. <br><br></p>
+</div>
+<div id="exercise-6" class="section level4">
+<h4>Exercise 6</h4>
+<p>What happens if you map an aesthetic to something other than a variable name, like <code>aes(colour = displ &lt; 5)</code>? Note, you’ll also need to specify x and y.</p>
+<pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;geom_point(mapping = <br>&nbsp;&nbsp;&nbsp;&nbsp;aes(x = displ, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = hwy, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>colour =</span> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>(displ</span></code></code></pre>
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-52-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Points are split according to the criteria <span style="color: #008080;background-color:#9FDDBA"><code>displ &lt; 5</code></span> and are coloured differently depending on what value they have for displacement.</p>
+<p>Points are split according to the criteria <span style="color: #008080;background-color:#9FDDBA"><code>displ &lt; 5</code></span> and are coloured differently depending on what value they have for displacement. <br><br></p>
+</div>
 </div>
 </div>
 <div id="facets" class="section level2">
@@ -1075,31 +1111,35 @@ ggplot(mtcars, aes(wt, mpg)) +
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-54-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="exercises-2" class="section level3">
 <h3>Exercises</h3>
-<ol style="list-style-type: decimal">
-<li>What happens if you facet on a continuous variable?</li>
-</ol>
+<div id="facets-exercise-1" class="section level4">
+<h4>Facets: Exercise 1</h4>
+<p>What happens if you facet on a continuous variable?</p>
 <pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(aes(x = displ,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = hwy)) +<br>&nbsp;&nbsp;<span style='background-color:#800000;color:#FFE4E1'>facet_wrap(~ cty)</span></code></code></pre>
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-55-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>The plot is created but it doesn&#39;t make sense to split our data 
-by a continuous variable. </code></pre>
-<ol style="list-style-type: decimal">
-<li><p>What do the empty cells in plot with <code>facet_grid(drv ~ cyl)</code> mean? How do they relate to this plot?</p>
+<p>The plot is created but it doesn’t make sense to split our data by a continuous variable. <br><br></p>
+</div>
+<div id="facets-exercise-2" class="section level4">
+<h4>Facets: Exercise 2</h4>
+<p>What do the empty cells in plot with <code>facet_grid(drv ~ cyl)</code> mean? How do they relate to this plot?</p>
 <p>The empty spots refer to that <code>drv and cyl combination</code> being missing.</p>
-<pre><code>ggplot(data = mpg) + &lt;br&gt;
-  geom_point(mapping = aes(x = drv, y = cyl))
-</code></pre>
 <pre class="r"><code>ggplot(data = mpg) + 
   geom_point(mapping = aes(x = drv, y = cyl))</code></pre>
 <p><img src="figure/ch1_ggplot.Rmd/facet_ex2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>It relates to the above in that you can see that the <code>drv = 4; cyl = 5</code> combination has no observations. This is also the case in the faceted plot.</p></li>
-<li><p>What plots does the following code make? What does . do?</p>
-<pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;geom_point(mapping = aes(x = displ, y = hwy)) +<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>facet_grid(drv ~ .)</span></code></code></pre>
-<pre><code> &lt;img src=&quot;figure/ch1_ggplot.Rmd/unnamed-chunk-56-1.png&quot; width=&quot;672&quot; style=&quot;display: block; margin: auto;&quot; /&gt;</code></pre>
-<p>The <span style="color: #008080;background-color:#9FDDBA"><code>facet_grid  (drv ~ .)</code></span> facets the <code>drv</code> categories into rows. It says facet this plot by <code>drv</code> as row panels but I don’t want anything as column panels (hence the <code>.</code>).</p>
-<pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;geom_point(mapping = aes(x = displ, y = hwy)) +<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>facet_grid(. ~ cyl)</span></code></code></pre>
-<pre><code> &lt;img src=&quot;figure/ch1_ggplot.Rmd/unnamed-chunk-57-1.png&quot; width=&quot;672&quot; style=&quot;display: block; margin: auto;&quot; /&gt;</code></pre>
-<p>The <span style="color: #008080;background-color:#9FDDBA"><code>facet_grid(. ~ cyl)</code></span> facets the <code>cyl</code> categories into columns. It says facet this plot by <code>cyl</code> as column panels but I don’t want anything as row panels (hence the <code>.</code>).</p></li>
-<li><p>Take the first faceted plot in this section:</p>
+<p>It relates to the above in that you can see that the <code>drv = 4; cyl = 5</code> combination has no observations. This is also the case in the faceted plot.</p>
+</div>
+<div id="facets-exercise-3" class="section level4">
+<h4>Facets: Exercise 3</h4>
+<p>What plots does the following code make? What does . do?</p>
+<pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ, y = hwy)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>facet_grid(drv ~ .)</span></code></code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-56-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The <span style="color: #008080;background-color:#9FDDBA"><code>facet_grid (drv ~ .)</code></span> facets the <code>drv</code> categories into rows. It says facet this plot by <code>drv</code> as row panels but I don’t want anything as column panels (hence the <code>.</code>).</p>
+<pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ, y = hwy)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>facet_grid(. ~ cyl)</span></code></code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-57-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The <span style="color: #008080;background-color:#9FDDBA"><code>facet_grid(. ~ cyl)</code></span> facets the <code>cyl</code> categories into columns. It says facet this plot by <code>cyl</code> as column panels but I don’t want anything as row panels (hence the <code>.</code>).</p>
+</div>
+<div id="facets-exercise-4" class="section level4">
+<h4>Facets: Exercise 4</h4>
+<p>Take the first faceted plot in this section:</p>
 <pre><code>ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy)) + 
   facet_wrap(~ class, nrow = 2)
@@ -1113,18 +1153,22 @@ by a continuous variable. </code></pre>
 <li><p>What are the advantages to using faceting instead of the colour aesthetic? <br> You can see the patterns in each class much easier.</p></li>
 <li><p>What are the disadvantages? <br> You may lose sight of the overall trend across all observations, and comparing categories becomes more “work”.</p></li>
 <li><p>How might the balance change if you had a larger dataset? <br> If you have many categories it becomes overwhelming.</p></li>
-</ul></li>
-<li><p>Read ?facet_wrap. What does nrow do? What does ncol do? What other options control the layout of the individual panels? Why doesn’t facet_grid() have nrow and ncol arguments? <br> From the help page these are the main aspects that alter your visuals.</p></li>
-</ol>
+</ul>
+</div>
+<div id="facets-exercise-5" class="section level4">
+<h4>Facets: Exercise 5</h4>
+<p>Read ?facet_wrap. What does nrow do? What does ncol do? What other options control the layout of the individual panels? Why doesn’t facet_grid() have nrow and ncol arguments? <br> From the help page these are the main aspects that alter your visuals.</p>
 <ul>
 <li><code>nrow</code> and <code>ncol</code> specify the number of rows or columns you’re looking for in your plot.</li>
 <li><code>scales</code>: Should scales be fixed (“fixed”, the default), free (“free”), or free in one dimension (“free_x”, “free_y”)?</li>
 <li>Use the <code>labeller</code> option to control how labels are printed.</li>
 <li>Use <code>strip.position</code> to display the facet labels at the side of your choice. Setting it to <code>bottom</code> makes it act as a subtitle for the axis. This is typically used with free scales and a theme without boxes around strip labels.</li>
 </ul>
-<ol start="6" style="list-style-type: decimal">
-<li>When using facet_grid() you should usually put the variable with more unique levels in the columns. Why? <br> I would think this orientation makes best use of the screen real estate available.</li>
-</ol>
+</div>
+<div id="facets-exercise-6" class="section level4">
+<h4>Facets: Exercise 6</h4>
+<p>When using facet_grid() you should usually put the variable with more unique levels in the columns. Why? <br> I would think this orientation makes best use of the screen real estate available. <br><br></p>
+</div>
 </div>
 </div>
 <div id="geometric-objects" class="section level2">
