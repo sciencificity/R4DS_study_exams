@@ -1,0 +1,44 @@
+---
+title: "HTML Essentials"
+author: "Data Analytics"
+date: "02/09/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The web was built to allow humans to share content even though our computers are different from each other.
+
+This is made possible by 3 different programming languages each doing a part of the job.
+
+
+<h2>HTML</h2>
+
+HTML marks up the content of a site. 
+
+- It tells the users computer what things are.
+- It gives access to built in functionality of the browser that you can harness as a developer.
+- Its all declarations.
+- HTML can take a lot of abuse but still work.
+
+
+## CSS
+
+CSS stands for `Cascading Style Sheets` 
+
+- Provides visual styling and layout for everything on a web page.
+- Makes each page look the way it looks - colour, typography and size. 
+- Can add simple interactions and animations through CSS.
+- If something goes wrong in CSS the browser will skip just that section of code and not apply that styling, but it will apply all the rest.
+
+## JavaScript
+
+JavaScript is a programming language that provides the ability to create more powerful interactivity.
+
+- Most powerful
+- Used to make more interactive sites
+- Also most fragile - if something goes wrong / browser too old to know what the code means the browser will stop. It gives up. It does not guess what to do.
+
+

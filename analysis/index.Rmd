@@ -10,6 +10,13 @@ editor_options:
 
 Welcome to my exam prep website.
 
+### Chapter Exercises
+
 [Chapter 1](ch1_ggplot.html) <br>
-[Chapter 2](ch2_workflow.html)
+[Chapter 2](ch2_workflow.html) <br>
+
+
+### Miscellaneous
+
+[Publish Xaringan Slides to GitHub Pages](misc_add_xaringan_slides_github.html) <br>
 

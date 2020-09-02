@@ -1,0 +1,43 @@
+---
+title: "Publishing Xaringan Slides to GitHub Pages"
+author: "Vebash Naidoo"
+date: "02/09/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(emo)
+```
+
+## So you've got a set of Xaringan slides ...
+### ... but don't know how to share it ...
+
+##### Disclaimer: This works for a single slide deck
+
+1. Create your slides like normal, but if you can, name it `index.Rmd`.
+1. Knit your slides.
+1. If you have not named your markdown document `index.Rmd` you do need to rename the `.html` file created from the knitting process into `index.html` once you're ready to publish them.
+1. Create a git repo on GitHub.
+1. Initialise a git repo in your slide directory (I use Anaconda Prompt for my Git commands):
+<pre>
+  > cd C:\Personal\RLadies\talk_XXX
+  (base) C:\Personal\RLadies\talk_XXX> git init
+  (base) C:\Personal\RLadies\talk_XXX> git add .
+  (base) C:\Personal\RLadies\talk_XXX> git commit -m "first commit"
+  (base) C:\Personal\RLadies\talk_XXX> git branch -M master
+  (base) C:\Personal\RLadies\talk_XXX> git remote add origin https://github.com/user_name/repo.git
+  (base) C:\Personal\RLadies\talk_XXX> git push -u origin master
+</pre>
+1. If you have your index.Rmd, css\ folder etc. in a subfolder, move all the contents to the main folder - `index.html` should be in the main folder.
+1. Create a new branch to be able to host the slides called `gh-pages`.
+<pre>
+  (base) C:\Personal\RLadies\talk_XXX> git checkout -b gh-pages
+  (base) C:\Personal\RLadies\talk_XXX> git add .
+  (base) C:\Personal\RLadies\talk_XXX> git commit -m "msg"
+  (base) C:\Personal\RLadies\talk_XXX> git push origin gh-pages
+</pre>
+1. In GitHub navigate to your repo, and change the branch to the `gh-pages` one. 
+1. Under settings you will get your GitHub Pages website name.
+1. Click the URL, and do your final checks.
+1. Share as you'd like `r emo::ji('smile')`
