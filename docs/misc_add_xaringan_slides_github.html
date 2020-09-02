@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Vebash Naidoo" />
 
+<meta name="date" content="2020-02-09" />
 
-<title>About</title>
+<title>Publishing Xaringan Slides to GitHub Pages</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +21,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -256,6 +261,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -263,6 +331,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -300,7 +378,9 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">About</h1>
+<h1 class="title toc-ignore">Publishing Xaringan Slides to GitHub Pages</h1>
+<h4 class="author">Vebash Naidoo</h4>
+<h4 class="date">02/09/2020</h4>
 
 </div>
 
@@ -328,7 +408,7 @@ $(document).ready(function () {
 <strong>Last updated:</strong> 2020-09-02
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>r4ds_book/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -350,6 +430,66 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
 <p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200814code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200814)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200814code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200814)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
@@ -391,7 +531,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/about.Rmd</code>) and HTML (<code>docs/about.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/misc_add_xaringan_slides_github.Rmd</code>) and HTML (<code>docs/misc_add_xaringan_slides_github.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -417,223 +557,19 @@ Message
 <tbody>
 <tr>
 <td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/d627f04f54250399381f24742655d9eb831d3a98/docs/about.html" target="_blank">d627f04</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-26
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/b3395ae2306a4bd2331198e7dc2bfa6db1fce804/docs/about.html" target="_blank">b3395ae</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-23
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/6373aef674a3f94db47e5b2545fb6c20c9e72690/docs/about.html" target="_blank">6373aef</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-23
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/28dbedfcb6ea3a77a40d20df427f18908df746ad/docs/about.html" target="_blank">28dbedf</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-23
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/5c5ee455b97833904f6cfbdef06fd4549ddb3e01/docs/about.html" target="_blank">5c5ee45</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-23
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/051fc23191428d2dfd311b8d374cf2eb671b6c66/docs/about.html" target="_blank">051fc23</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-22
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/404509011bffaa50a4297b2298334c5f6d34e632/docs/about.html" target="_blank">4045090</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-21
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/f8f5ce118d1773e949b5e104d56c012a40713af2/docs/about.html" target="_blank">f8f5ce1</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-21
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/589a0cab5736950bd10a3bec233a4aa8db394d49/docs/about.html" target="_blank">589a0ca</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-18
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/801c1d7e74a88cf74b6c2760f0a1e99463d4625c/docs/about.html" target="_blank">801c1d7</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-18
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/9ea828099cb28c2857df68af0bf91167f59a3f7e/docs/about.html" target="_blank">9ea8280</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-14
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/e2cdeb50d0fb85499f3667853bb42e71c893a1dc/docs/about.html" target="_blank">e2cdeb5</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-14
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
 Rmd
 </td>
 <td>
-<a href="https://github.com/sciencificity/R4DS_study_exams/blob/9a6e95f957fb6dab45157cbc612c1e9f9c75743f/analysis/about.Rmd" target="_blank">9a6e95f</a>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/7305596b2376631a1c2e3ae3613d5cccbc1481ba/analysis/misc_add_xaringan_slides_github.Rmd" target="_blank">7305596</a>
 </td>
 <td>
 sciencificity
 </td>
 <td>
-2020-08-14
+2020-09-02
 </td>
 <td>
-Start workflowr project.
+added new misc section
 </td>
 </tr>
 </tbody>
@@ -643,7 +579,78 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<p>Describe your project.</p>
+<div id="so-youve-got-a-set-of-xaringan-slides" class="section level2">
+<h2>So you’ve got a set of Xaringan slides …</h2>
+<div id="but-dont-know-how-to-share-it" class="section level3">
+<h3>… but don’t know how to share it …</h3>
+<div id="disclaimer-this-works-for-a-single-slide-deck" class="section level5">
+<h5>Disclaimer: This works for a single slide deck</h5>
+<ol style="list-style-type: decimal">
+<li>Create your slides like normal, but if you can, name it <code>index.Rmd</code>.</li>
+<li>Knit your slides.</li>
+<li>If you have not named your markdown document <code>index.Rmd</code> you do need to rename the <code>.html</code> file created from the knitting process into <code>index.html</code> once you’re ready to publish them.</li>
+<li>Create a git repo on GitHub.</li>
+<li>Initialise a git repo in your slide directory (I use Anaconda Prompt for my Git commands):
+<pre>
+  > cd C:\Personal\RLadies\talk_XXX
+  (base) C:\Personal\RLadies\talk_XXX> git init
+  (base) C:\Personal\RLadies\talk_XXX> git add .
+  (base) C:\Personal\RLadies\talk_XXX> git commit -m "first commit"
+  (base) C:\Personal\RLadies\talk_XXX> git branch -M master
+  (base) C:\Personal\RLadies\talk_XXX> git remote add origin https://github.com/user_name/repo.git
+  (base) C:\Personal\RLadies\talk_XXX> git push -u origin master
+</pre></li>
+<li>If you have your index.Rmd, css folder etc. in a subfolder, move all the contents to the main folder - <code>index.html</code> should be in the main folder.</li>
+<li>Create a new branch to be able to host the slides called <code>gh-pages</code>.
+<pre>
+  (base) C:\Personal\RLadies\talk_XXX> git checkout -b gh-pages
+  (base) C:\Personal\RLadies\talk_XXX> git add .
+  (base) C:\Personal\RLadies\talk_XXX> git commit -m "msg"
+  (base) C:\Personal\RLadies\talk_XXX> git push origin gh-pages
+</pre></li>
+<li>In GitHub navigate to your repo, and change the branch to the <code>gh-pages</code> one.</li>
+<li>Under settings you will get your GitHub Pages website name.</li>
+<li>Click the URL, and do your final checks.</li>
+<li>Share as you’d like 😄</li>
+</ol>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.3 (2020-02-29)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 18363)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_South Africa.1252  LC_CTYPE=English_South Africa.1252   
+[3] LC_MONETARY=English_South Africa.1252 LC_NUMERIC=C                         
+[5] LC_TIME=English_South Africa.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] emo_0.0.0.9000  workflowr_1.6.2
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.4.6     knitr_1.28       whisker_0.4      magrittr_1.5    
+ [5] R6_2.4.1         rlang_0.4.7      stringr_1.4.0    tools_3.6.3     
+ [9] xfun_0.13        git2r_0.26.1     htmltools_0.5.0  yaml_2.2.1      
+[13] digest_0.6.25    rprojroot_1.3-2  assertthat_0.2.1 crayon_1.3.4    
+[17] purrr_0.3.4      later_1.0.0      promises_1.1.0   fs_1.4.1        
+[21] glue_1.4.1       evaluate_0.14    rmarkdown_2.1    stringi_1.4.6   
+[25] compiler_3.6.3   generics_0.0.2   backports_1.1.6  lubridate_1.7.8 
+[29] httpuv_1.5.2    </code></pre>
+</div>
+</div>
+</div>
+</div>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
@@ -659,6 +666,8 @@ footer is added to webpages before the MathJax javascript. -->
 </script>
 
 
+</div>
+</div>
 
 </div>
 
@@ -691,6 +700,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
