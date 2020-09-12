@@ -41,4 +41,66 @@ JavaScript is a programming language that provides the ability to create more po
 - Used to make more interactive sites
 - Also most fragile - if something goes wrong / browser too old to know what the code means the browser will stop. It gives up. It does not guess what to do.
 
+### Tags
+
+1. Tags come in pairs `<opening tag> xxxx </closing tag>`
+
+<pre>
+  <p>This is a paragraph</p>
+  <h1>This is a headline</h1>
+  <article>This is a paragraph</article>
+  <p>This is a paragraph with some <em>text that is 
+  emphasised</em> for effect.</p>
+</pre>
+
+### Bold and Italics
+
+There are `2` tags for `bold` and `2` tags for `italics`. But why?
+
+#### Italics
+Take the sentence:
+
+My _favourite show_ is _Sesame Street_. 
+
+- `favourite show` is emphasised here because it has a strong sentiment attached. __Verbally emphasised__ `<em>` tag here for `emphasis italics`. 
+- `Sesame Street` is however emphasised because it is the name of the show. __Visually emphasised__ `<i>` tag here for `visual-only italics`.
+
+We're conveying semantic meaning here, and these provide very different results for anyone listening to the content.
+
+My <em>favourite</em> character from <i>Sesame Street</i> is Grover.
+
+#### Bold
+
+1. The `<strong>` suggests importance, urgency, or seriousness. Like the `<em>` tag it conveys meaning, there is an alternative voice / mood here.
+1. The `<b>` tag is instead like the `<i>` tag, it is used for visual emphasis. There isn't a change in mood when using this tag.
+
+<h3><strong>WARNING!</strong> Do not be late.</h3>
+
+<p>This is a paragraph of text. We want people to be
+able to scan it relatively quickly, but we also <b>want to 
+mark certain sections with some boldness</b> so that it
+has some visual attention for the reader.</p>
+
+### Lists
+
+There are 3 types of lists. We use lists on the web for things that don't even look like lists - e.g. Navigation bars is a list of links.
+
+1. Unordered lists
+1. Ordered lists
+1. Definition lists
+
+- `<li>` stands for list item
+- `<ul>` stands for unordered list and we wrap the entire
+list of items in this tag.
+- 
+
+<li>
+
+
+
+
+
+
+
+
 

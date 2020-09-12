@@ -12,8 +12,8 @@ Welcome to my exam prep website.
 
 ### Chapter Exercises
 
-[Chapter 1](ch1_ggplot.html) <br>
-[Chapter 2](ch2_workflow.html) <br>
+[Chapter 1: Data Viz with ggplot](ch1_ggplot.html) <br>
+[Chapter 2:  Workflow Basics](ch2_workflow.html) <br>
 
 
 ### Miscellaneous

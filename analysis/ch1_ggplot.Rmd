@@ -9,6 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 library(tidyverse)
 library(flair)
+library(tidyquant)
+theme_set(theme_tq())
 ```
 
 ## Do cars with big engines use more fuel than cars with small engines?
@@ -736,22 +738,501 @@ decorate("spec_override2") %>%
       geom_point(aes(colour = drv))
     ```
 
-## Statistical Transformations
+## Statistical Transformations or `stat`
+
+Some plots do statistical transforms in the background. 
+
+- For example `bar charts`, `histograms`
+and `frequency plots` count or bin the data. 
+- There's also `boxplots` which computes the
+distribution and plots them.
+- Smoothing functions which we've see fit a model to the
+data and plots that.
+
+Want to check what transform happens behind the scene? Call up the help page.
+
+- `?geom_boxplot` shows that the `stat = boxplot`
+- `?geom_bar` shows that the `stat = count`
+
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut))
+```
+
+You can recreate the above by using the `stat`:
+
+```{r}
+ggplot(data = diamonds) +
+  stat_count(mapping = aes(x = cut))
+```
+
+You may want to override the default mapping. For example here we
+get the proportion.
+
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(
+    mapping = aes(x = cut, y = ..prop.., group = 1)
+  )
+```
+
+```{r}
+ggplot(data = diamonds) +
+  stat_summary(mapping = aes(x = cut, y = depth),
+               fun.min = min,
+               fun.max = max,
+               fun = median)
+```
+
+### Exercises
+
+1.  What is the default geom associated with `stat_summary()`? How could
+    you rewrite the previous plot to use that geom function instead of the 
+    stat function?
+    
+    `geom_pointrange`. <br>
+    We can use the geom, the summary statistics need to be computed however.
+    You can either do this in the function by using `stat = 'summary'` or
+    you can summarise the data first and then pass it in as arguments. The
+    reason for this is because the `stat` of `geom_pointrange` is
+    [`identity`](https://ggplot2.tidyverse.org/reference/stat_identity.html)
+    which does __NOT__ change the data.
+    
+    ```{r}
+    ggplot(data = diamonds) +
+      geom_pointrange(mapping = aes(x = cut, y = depth),
+                      stat = 'summary',
+                      fun.min = min,
+                      fun.max = max,
+                      fun = median)
+    ```
+    ```{r}
+    diamonds_amended <- diamonds %>% 
+      group_by(cut) %>% 
+      summarise(y_med = median(depth),
+                y_min = min(depth),
+                y_max = max(depth)) %>% 
+      ungroup()
+    
+    ggplot(data = diamonds_amended) +
+      geom_pointrange(mapping = aes(x = cut, y = y_med, ymin = y_min,
+                      ymax = y_max))
+    ```    
+      
+
+1.  What does `geom_col()` do? How is it different to `geom_bar()`? <br>
+    Whereas `geom_bar()` bins the data - i.e. it counts how many occurrences
+    there are for each value of `x`, `geom_col()` has `stat_identity()` as 
+    its `stat` and therefore plots the actual y value - it leaves the data as is.
+
+1.  Most geoms and stats come in pairs that are almost always used in 
+    concert. Read through the documentation and make a list of all the 
+    pairs. What do they have in common? <br>
+    
+    [Info here](https://ggplot2.tidyverse.org/reference/)
+    
+
+1.  What variables does `stat_smooth()` compute? What parameters control
+    its behaviour? <br>
+    It computes the predicted value of y etc. 
+    [More info here](https://www.rdocumentation.org/packages/ggplot2/versions/0.9.0/topics/stat_smooth).
+
+1.  In our proportion bar chart, we need to set `group = 1`. Why? In other
+    words what is the problem with these two graphs?
+    
+    ```{r, eval = FALSE}
+    ggplot(data = diamonds) + 
+      geom_bar(mapping = aes(x = cut, y = ..prop..))
+    ggplot(data = diamonds) + 
+      geom_bar(mapping = aes(x = cut, fill = color, y = ..prop..))
+    ```
+    ```{r, eval = TRUE}
+    plt1 <- ggplot(data = diamonds) + 
+      geom_bar(mapping = aes(x = cut, y = ..prop..))
+    plt1_int <- ggplot_build(plt1)
+    plt1_int$data[[1]]
+    plt1
+    plt2 <- ggplot(data = diamonds) + 
+      geom_bar(mapping = aes(x = cut, fill = color, y = ..prop..))
+    plt2_int <- ggplot_build(plt2)
+    as_tibble(plt2_int$data[[1]])
+    plt2
+    ``` 
+    
+    In the first graph above each individual `cut` is considered as an 
+    individual  group. 
+    This means that the proportion = 1 since sum(count) over the group = count.
+    
+    In the second graph each individual `color` and `cut` is considered 
+    as an individual group and the same occurs.
+    
+    In order to get the proportion using `..prop..` we need to tell ggplot
+    how it must group our data. If we provide `group = 1` we're telling ggplot to 
+    consider the data as one group. Now proportions are correctly created.
+    
+    ```{r, eval = TRUE}
+    plt1 <- ggplot(data = diamonds) + 
+      geom_bar(mapping = aes(x = cut, y = ..prop.., group = 1))
+    plt1_int <- ggplot_build(plt1)
+    plt1_int$data[[1]]
+    plt1
+    ```     
+    
+  
+## Position Arguments - Bar Charts
+
+With bar charts you may colour the bar chart with the
+<span style="color: #008080;background-color:#9FDDBA">`colour`</span>  or 
+<span style="color: #008080;background-color:#9FDDBA">`fill`</span> argument.
+
+```{r, echo = TRUE, eval = FALSE, message = FALSE}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, colour = cut))
+
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, fill = cut))
+```
+
+```{r, echo = FALSE, out.width = "50%", fig.align="default", message = FALSE}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, colour = cut))
+
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, fill = cut))
+```
+
+That's not really useful. The power of using the <span style="color: #008080;background-color:#9FDDBA">`fill`</span> aesthetic is when
+we fill the bar with <span style="color: #008080;background-color:#9FDDBA">another variable!</span> 
+
+```{r fill1, include=FALSE}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity))
+```
+    
+```{r, echo=FALSE}
+decorate("fill1") %>% 
+  flair("fill = clarity", 
+        background = "#9FDDBA", 
+        color = "#008080")
+```
+
+The `position` argument does the stacking (the default). You can change this
+by using: 
+
+- identity
+- dodge
+- fill
+
+#### position = 'identity'
+Places the object exactly where it falls on the graph. 
+Bars overlap in this case which is not too useful.
+We can see the overlap by setting <span style="color: #008080;background-color:#9FDDBA">`alpha = some_small_value`</span> or
+<span style="color: #008080;background-color:#9FDDBA">`fill = NA`</span>.
+
+*Useful for 2d geoms like points where it's the default.*
+
+```{r pos1, include=FALSE}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity),
+           alpha = 1/5, position = 'identity')
+```
+    
+```{r, echo=FALSE}
+decorate("pos1") %>% 
+  flair("alpha = 1/5, position = 'identity'", 
+        background = "#9FDDBA", 
+        color = "#008080")
+```
+
+```{r pos2, include=FALSE}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, colour = clarity),
+           fill = NA, position = 'identity')
+```
+    
+```{r, echo=FALSE}
+decorate("pos2") %>% 
+  flair("fill = NA, position = 'identity'", 
+        background = "#9FDDBA", 
+        color = "#008080")
+```
+
+#### position = 'fill'
+
+Similar to stacking but it makes all bars the same height,
+and is thus good for comparisons.
+
+```{r pos3, include=FALSE}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity),
+           position = 'fill')
+```
+    
+```{r, echo=FALSE}
+decorate("pos3") %>% 
+  flair("position = 'fill'", 
+        background = "#9FDDBA", 
+        color = "#008080")
+```
+
+#### position = 'dodge'
+
+Instead of stacked bars each individual fill variable is plotted in
+its own bar - i.e. objects are placed alongside each other.
 
 
+```{r pos4, include=FALSE}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity),
+           position = 'dodge')
+```
+    
+```{r, echo=FALSE}
+decorate("pos4") %>% 
+  flair("position = 'dodge'", 
+        background = "#9FDDBA", 
+        color = "#008080")
+```
+
+## Position Arguments - Scatterplot
+
+Remember that points have a default position of identity - i.e. plot it
+where it falls. When there are many points though this gets hidden as
+points are plotted on top of each other and we see this as a single point
+when in fact there may be multiple points that fall in that exact x, y spot.
+
+Enter <span style="color: #008080;background-color:#9FDDBA">`position = 'jitter'`</span>  which provides a slight displacement of a point
+so that the viewer can see the individual points. You can also get this sometimes
+with setting `alpha` if the points are concentrated in some pockets.
+
+```{r pos5, include=FALSE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+    
+```{r, echo=FALSE}
+decorate("pos5") %>% 
+  flair("geom_point", 
+        background = "#9FDDBA", 
+        color = "#008080")
+```
+
+```{r pos6, include=FALSE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy),
+             position = 'jitter')
+```
+    
+```{r, echo=FALSE}
+decorate("pos6") %>% 
+  flair("geom_point", 
+        background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("position = 'jitter'", 
+        background = "#9FDDBA", 
+        color = "#008080")   
+```
+
+```{r pos7, include=FALSE}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy),
+             alpha = 0.2)
+```
+    
+```{r, echo=FALSE}
+decorate("pos7") %>% 
+  flair("geom_point", 
+        background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("alpha = 0.2", 
+        background = "#9FDDBA", 
+        color = "#008080")   
+```
+
+### Exercises
+
+<ol>
+
+<li> What is the problem with this plot? How could you improve it?
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + 
+  geom_point()
+```
+    It is overplotting: where points fall in the same x, y spot, or close enough.
+    We can try jittering the points.
+    
+```{r pos8, include=FALSE}
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + 
+  geom_jitter()
+```
+    
+```{r, echo=FALSE}
+decorate("pos8") %>% 
+  flair("geom_jitter()", 
+        background = "#9FDDBA", 
+        color = "#008080") 
+```
+</li>
+
+<li> What parameters to `geom_jitter()` control the amount of jittering? <br>
+    `width` and `height` tell ggplot how much of jitter in the horizontal
+    and vertical position should be added.
+</li>
+<li>Compare and contrast `geom_jitter()` with `geom_count()`.<br>
+    `geom_count()` counts the number of observations at each location 
+    and adds the count at the position.<br>
+    `geom_jitter()` adds some random noise to each point so that we can
+    see the individual points better but the points don't actually fall at
+    that location.
+```{r pos9, include=FALSE}
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + 
+  geom_jitter()
+```
+    
+```{r, echo=FALSE}
+decorate("pos9") %>% 
+  flair("geom_jitter()", 
+        background = "#9FDDBA", 
+        color = "#008080") 
+```
+
+    
+```{r pos10, include=FALSE}
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + 
+  geom_count()
+```
+    
+```{r, echo=FALSE}
+decorate("pos10") %>% 
+  flair("geom_count()", 
+        background = "#9FDDBA", 
+        color = "#008080") 
+```
+</li>
+<li> 
+What's the default position adjustment for `geom_boxplot()`? Create
+a visualisation of the `mpg` dataset that demonstrates it. <br>
+    
+  `position = "dodge2"`  
+  Dodging usually introduces adjustments along the horizontal axis.
+  This position allows vertical adjustments too for boxplots.
+    
+```{r pos11, include=FALSE}
+# examples from geom_boxplot help page
+ggplot(mpg, aes(hwy, manufacturer)) + geom_boxplot()
+p <- ggplot(mpg, aes(hwy, class))
+p + geom_boxplot()
+# Boxplots are automatically dodged when any aesthetic is a factor
+p + geom_boxplot(aes(colour = drv))
+```
+
+```{r, echo=FALSE}
+decorate("pos11") %>% 
+  flair("geom_boxplot()", 
+        background = "#9FDDBA", 
+        color = "#008080") 
+```
+
+</li>
+</ol>
+
+## Coordinate systems
+
+The default coordinate system is the Cartesian Plane. 
+There are few other types of coordinate systems. 
+
+<ol>
+<li>
+`coord_flip()` - not needed really since `ggplot version 3.0.0`.
+
+<img src = assets/no_longer_coord_flip1.PNG width = 500px> <br> 
+
+<img src = assets/no_longer_coord_flip2.PNG width = 500px> <br> 
+
+</li>
+<li>
+`coord_quickmap()` - sets correct aspect ratio for maps.
+```{r}
+nz <- map_data("nz")
+ggplot(nz, aes(long, lat, group = group)) +
+  geom_polygon(fill = "white", colour = "black")
+ggplot(nz, aes(long, lat, group = group)) +
+  geom_polygon(fill = "white", colour = "black") +
+  coord_quickmap()
+```
+</li>
+
+<li>
+`coord_polar()` - uses polar coords - useful for pie charts.
+```{r}
+bar <- ggplot(data = diamonds) + 
+  geom_bar(
+    mapping = aes(x = cut, fill = cut), 
+    show.legend = FALSE,
+    width = 1
+  ) + 
+  theme(aspect.ratio = 1) +
+  labs(x = NULL, y = NULL)
+
+bar + coord_flip()
+bar + coord_polar()
+```
+</li>
+</ol>
+
+### Exercises
+
+1.  Turn a stacked bar chart into a [pie chart](https://www.displayr.com/how-to-make-a-pie-chart-in-r/) using `coord_polar()`.<br>
+    ```{r}
+    ggplot(data = mpg) +
+      geom_bar(mapping = aes(x = class))
+    ```
+    
+    ```{r}
+    ggplot(data = mpg) +
+      geom_bar(mapping = aes(x = "", fill = class)) +
+      coord_polar(theta = 'y')
+    ```
+
+1.  What does `labs()` do? Read the documentation. <br>
+    Adds labels to a plot for things like title, x-axis etc.
+
+1.  What's the difference between `coord_quickmap()` and `coord_map()`?<br>
+    From help page of coord_map: <br>
+    coord_map projects a portion of the earth, which is approximately 
+    spherical, onto a flat 2D plane using any projection defined by the mapproj
+    package. Map projections do not, in general, preserve straight lines, so this
+    requires considerable computation. coord_quickmap is a quick approximation
+    that does preserve straight lines. It works best for smaller areas closer to
+    the equator.
+    ```{r}
+    ggplot(nz, aes(long, lat, group = group)) +
+      geom_polygon(fill = "white", colour = "black") +
+      coord_quickmap()
+    ```
+    
+    ```{r}
+    ggplot(nz, aes(long, lat, group = group)) +
+      geom_polygon(fill = "white", colour = "black") +
+      coord_map()
+    ```
 
 
-
-
-
-
-
-
-
-
-
-
-
+1.  What does the plot below tell you about the relationship between city
+    and highway mpg? Why is `coord_fixed()` important? What does 
+    `geom_abline()` do?
+    
+    ```{r, fig.asp = 1, out.width = "50%"}
+    ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
+      geom_point() + 
+      geom_abline() +
+      coord_fixed()
+    ```
+    The `geom_abline()` adds a 45 degree line to the plot. 
+    The `coord_fixed()` with no arguments sets the ratio 
+    between y and x to 1. This means that the y:x representation is 1:1.
+    
 
 
 
