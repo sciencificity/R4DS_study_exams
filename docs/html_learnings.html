@@ -405,7 +405,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-09-02
+<strong>Last updated:</strong> 2020-09-12
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -496,16 +496,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree6a6f465eeeaf04cb6851931f41543bb85b0d618atargetblank6a6f465a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/6a6f465eeeaf04cb6851931f41543bb85b0d618a" target="_blank">6a6f465</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreea47f1a3f928f750e872acc21cd8703faf2e084cbtargetblanka47f1a3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/a47f1a3f928f750e872acc21cd8703faf2e084cb" target="_blank">a47f1a3</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree6a6f465eeeaf04cb6851931f41543bb85b0d618atargetblank6a6f465a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreea47f1a3f928f750e872acc21cd8703faf2e084cbtargetblanka47f1a3a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/6a6f465eeeaf04cb6851931f41543bb85b0d618a" target="_blank">6a6f465</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/a47f1a3f928f750e872acc21cd8703faf2e084cb" target="_blank">a47f1a3</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -555,6 +555,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/a47f1a3f928f750e872acc21cd8703faf2e084cb/analysis/html_learnings.Rmd" target="_blank">a47f1a3</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-09-12
+</td>
+<td>
+completed ggplot exercises
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/720a89b0311d91cb4f2479429627207efe894384/docs/html_learnings.html" target="_blank">720a89b</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-09-02
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -626,6 +660,61 @@ HTML
 <li>Used to make more interactive sites</li>
 <li>Also most fragile - if something goes wrong / browser too old to know what the code means the browser will stop. It gives up. It does not guess what to do.</li>
 </ul>
+<div id="tags" class="section level3">
+<h3>Tags</h3>
+<ol style="list-style-type: decimal">
+<li>Tags come in pairs <code>&lt;opening tag&gt; xxxx &lt;/closing tag&gt;</code></li>
+</ol>
+<pre>
+  <p>This is a paragraph</p>
+  <h1>This is a headline</h1>
+  <article>This is a paragraph</article>
+  <p>This is a paragraph with some <em>text that is 
+  emphasised</em> for effect.</p>
+</pre>
+</div>
+<div id="bold-and-italics" class="section level3">
+<h3>Bold and Italics</h3>
+<p>There are <code>2</code> tags for <code>bold</code> and <code>2</code> tags for <code>italics</code>. But why?</p>
+<div id="italics" class="section level4">
+<h4>Italics</h4>
+<p>Take the sentence:</p>
+<p>My <em>favourite show</em> is <em>Sesame Street</em>.</p>
+<ul>
+<li><code>favourite show</code> is emphasised here because it has a strong sentiment attached. <strong>Verbally emphasised</strong> <code>&lt;em&gt;</code> tag here for <code>emphasis italics</code>.</li>
+<li><code>Sesame Street</code> is however emphasised because it is the name of the show. <strong>Visually emphasised</strong> <code>&lt;i&gt;</code> tag here for <code>visual-only italics</code>.</li>
+</ul>
+<p>We’re conveying semantic meaning here, and these provide very different results for anyone listening to the content.</p>
+<p>My <em>favourite</em> character from <i>Sesame Street</i> is Grover.</p>
+</div>
+<div id="bold" class="section level4">
+<h4>Bold</h4>
+<ol style="list-style-type: decimal">
+<li>The <code>&lt;strong&gt;</code> suggests importance, urgency, or seriousness. Like the <code>&lt;em&gt;</code> tag it conveys meaning, there is an alternative voice / mood here.</li>
+<li>The <code>&lt;b&gt;</code> tag is instead like the <code>&lt;i&gt;</code> tag, it is used for visual emphasis. There isn’t a change in mood when using this tag.</li>
+</ol>
+<h3>
+<strong>WARNING!</strong> Do not be late.
+</h3>
+<p>
+This is a paragraph of text. We want people to be able to scan it relatively quickly, but we also <b>want to mark certain sections with some boldness</b> so that it has some visual attention for the reader.
+</p>
+</div>
+</div>
+<div id="lists" class="section level3">
+<h3>Lists</h3>
+<p>There are 3 types of lists. We use lists on the web for things that don’t even look like lists - e.g. Navigation bars is a list of links.</p>
+<ol style="list-style-type: decimal">
+<li>Unordered lists</li>
+<li>Ordered lists</li>
+<li>Definition lists</li>
+</ol>
+<ul>
+<li><code>&lt;li&gt;</code> stands for list item</li>
+<li><code>&lt;ul&gt;</code> stands for unordered list and we wrap the entire list of items in this tag.</li>
+<li></li>
+</ul>
+<li>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -658,6 +747,7 @@ loaded via a namespace (and not attached):
 [13] promises_1.1.0  whisker_0.4     rmarkdown_2.1   tools_3.6.3    
 [17] stringr_1.4.0   glue_1.4.1      httpuv_1.5.2    xfun_0.13      
 [21] yaml_2.2.1      compiler_3.6.3  htmltools_0.5.0 knitr_1.28     </code></pre>
+</div>
 </div>
 </div>
 
