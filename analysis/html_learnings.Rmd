@@ -1,6 +1,7 @@
 ---
 title: "HTML Essentials"
-author: "Data Analytics"
+subtitle: "Learnings from Jen Simmons course on LinkedIn Learning"
+author: "Vebash Naidoo"
 date: "02/09/2020"
 output: html_document
 ---
@@ -45,6 +46,14 @@ JavaScript is a programming language that provides the ability to create more po
 
 1. Tags come in pairs `<opening tag> xxxx </closing tag>`
 
+&lt;pre&gt;<br>
+  &lt;p&gt;This is a paragraph&lt;/p&gt;<br>
+  &lt;h1&gt;This is a headline&lt;/h1&gt;<br>
+  &lt;article&gt;This is a paragraph&lt;/article&gt;<br>
+  &lt;p&gt;This is a paragraph with some &lt;em&gt;text that is 
+  emphasised&lt;/em&gt; for effect.&lt;/p&gt;<br>
+&lt;/pre&gt;<br>
+
 <pre>
   <p>This is a paragraph</p>
   <h1>This is a headline</h1>
@@ -67,14 +76,27 @@ My _favourite show_ is _Sesame Street_.
 
 We're conveying semantic meaning here, and these provide very different results for anyone listening to the content.
 
+
+> My &lt;em&gt;favourite&lt;/em&gt; character from &lt;i&gt;Sesame Street&lt;/i&gt; is Grover. gets translated as:
+
 My <em>favourite</em> character from <i>Sesame Street</i> is Grover.
+
 
 #### Bold
 
 1. The `<strong>` suggests importance, urgency, or seriousness. Like the `<em>` tag it conveys meaning, there is an alternative voice / mood here.
 1. The `<b>` tag is instead like the `<i>` tag, it is used for visual emphasis. There isn't a change in mood when using this tag.
 
+> &lt;h3&gt;&lt;strong&gt;WARNING!&lt;/strong&gt; Do not be late.&lt;/h3&gt;
+gets translated as:
+
 <h3><strong>WARNING!</strong> Do not be late.</h3>
+
+
+> &lt;p&gt;This is a paragraph of text. We want people to be
+able to scan it relatively quickly, but we also &lt;b&gt;want to 
+mark certain sections with some boldness&lt;/b&gt; so that it
+has some visual attention for the reader.&lt;/p&gt; gets translated as:
 
 <p>This is a paragraph of text. We want people to be
 able to scan it relatively quickly, but we also <b>want to 
@@ -83,7 +105,7 @@ has some visual attention for the reader.</p>
 
 ### Lists
 
-There are 3 types of lists. We use lists on the web for things that don't even look like lists - e.g. Navigation bars is a list of links.
+There are 3 types of lists. We use lists on the web for things that don't even look like lists - e.g. Navigation bars is a list of links. Lists can be used to markup navigation. While lists are normally used to present content, their structured and nestable semantics also make them good for navigation menus.
 
 1. Unordered lists
 1. Ordered lists
@@ -91,16 +113,442 @@ There are 3 types of lists. We use lists on the web for things that don't even l
 
 - `<li>` stands for list item
 - `<ul>` stands for unordered list and we wrap the entire
-list of items in this tag.
-- 
+list of items in this tag to mark where the list starts and where it ends.
+- `<ol>` stands for ordered list, and we use this for steps in a recipe
+for example. 1, then 2, then 3 etc.
+- `<dl>` is used for kind of _key-value_ pairs where we have an item / term 
+and then we have a description for that term.
 
-<li>
+  * `<dt>` is used for the term
+  * `<dd>` is used for the definition / decription of the term.
+
+<pre>
+&lt;br&gt;
+&lt;ul&gt;
+  &lt;li&gt;flour&lt;/li&gt;
+  &lt;li&gt;sugar&lt;/li&gt;
+  &lt;li&gt;baking soda&lt;/li&gt;
+  &lt;li&gt;vanilla essence&lt;/li&gt;
+  &lt;li&gt;2 eggs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;br&gt;
+</pre>
+
+Gets translated as:
+
+<br>
+<ul>
+  <li>flour</li>
+  <li>sugar</li>
+  <li>baking soda</li>
+  <li>vanilla essence</li>
+  <li>2 eggs</li>
+</ul>
+<br>
+
+<pre>
+&lt;ol&gt;
+&lt;li&gt;Mix the dry ingredients.&lt;/li&gt;
+&lt;li&gt;In a separate bowl mix the eggs and the vanilla essence.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;br&gt;
+</pre>
+
+Gets translated as:
+
+<ol>
+<li>Mix the dry ingredients.</li>
+<li>In a separate bowl mix the eggs and the vanilla essence.</li>
+</ol>
+<br>
+
+<pre>
+&lt;dl&gt;
+&lt;dt&gt;Unordered list&lt;/dt&gt;
+&lt;dd&gt;For grouping a collection of items that do
+not have numerical ordering. Their order in the list is meaningless.&lt;/dd&gt;
+
+&lt;dt&gt;Ordered list&lt;/dt&gt;
+&lt;dd&gt;For an ordered list of items, typically rendered as a numbered list.
+Here order is meaningful.&lt;/dd&gt;
+
+&lt;dt&gt;Definition list&lt;/dt&gt;
+&lt;dd&gt;For creating a group of terms and descriptions.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;br&gt;
+</pre>
 
 
+Gets translated as:
+
+<dl>
+<dt>Unordered list</dt>
+<dd>For grouping a collection of items that do
+not have numerical ordering. Their order in the list is meaningless.</dd>
+
+<dt>Ordered list</dt>
+<dd>For an ordered list of items, typically rendered as a numbered list.
+Here order is meaningful.</dd>
+
+<dt>Definition list</dt>
+<dd>For creating a group of terms and descriptions.</dd>
+</dl>
+<br>
+
+### Quotes
+
+Let's turn this paragraph into a quote:
+
+    We’ve gone from having 21 elements in HTML tags, that first document, to having 100 more elements now, and yet it’s still the same language. I find that amazing. It’s still the same language that was created 25 years ago. It’s grown an extra 100 elements in there, and yet it’s still the same language.  — Jeremy Keith
+
+- We can put everything in `<p>` tags because it's a paragraph.
+- We can add _Jeremy Keith_ as the author of the quote by wrapping his
+name in `<cite>`.
+- We can add everything in a `<blockquote>` to indent it nicely.
+- If you just want to quote someone in the middle of a piece of text - i.e.
+not a blockquote you can do that by adding `<q>` around the quote.
 
 
+> &lt;blockquote&gt;
+> &lt;p&gt;
+> We’ve gone from having 21 elements in HTML tags, that first document, to having 100 more elements now, and yet it’s still the same language. I find that amazing. It’s still the same language that was created 25 years ago. It’s grown an extra 100 elements in there, and yet it’s still the same language. 
+> &lt;/p&gt;
+> &lt;cite&gt;— Jeremy Keith&lt;/cite&gt;
+> &lt;/blockquote&gt;
+
+Gets translated as:
+
+<blockquote>
+<p>
+We’ve gone from having 21 elements in HTML tags, that first document, to having 100 more elements now, and yet it’s still the same language. I find that amazing. It’s still the same language that was created 25 years ago. It’s grown an extra 100 elements in there, and yet it’s still the same language. 
+</p>
+<cite>— Jeremy Keith</cite>
+</blockquote>
+
+> &lt;p&gt;Jeremy Keith said, &lt;q&gt;You could open an HTML document from back then in a browser today.&lt;/q&gt;&lt;/p&gt;
+
+Gets translated as:
+
+<p>Jeremy Keith said, <q>You could open an HTML document from back then in a browser today.</q></p>
+
+#### Inline elements
+
+There are some HTML that is meant to be `inline`. They're meant to be wrapped
+around phrases of content that is inline with other content. Goes inside bigger
+things.
+
+- `<q>`
+- `<strong>`
+- `<b>`
+- `<i>`
+- `<em>`
+
+#### Block-level elements
+
+These are HTML elements that start a new block. These are the bigger things.
+
+- `<blockquote>`
+- `<p>`
+- `<ol>`, `<ul>`, `<dl>`
 
 
+### Dates
+
+- HTML has one element to mark a date, datetime, span of time.
+- `<time>` element.
+- [Example](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time).
+- We can use any human readable format.
+- The whole point of the tag is to convey to the computer what
+date and time this is. For this we use an __HTML attribute__.
+- For datetime elements that a computer can then understand we use
+`<elementname attributename="">` e.g. here `<time datetime="2025-05-08">` as an
+example.
+- The time inside the `<time datetime = "">` attribute needs to be in a 
+specific format.
+- Machine readable version of Date: YYYY-MM-DD e.g. `<time datetime="2021-10-05">`
+- Machine readable version of Time: hh:mm:ss.ddd in 24 hr clock format e.g.
+`<time datetime="20:15">`
+- Machine readable version of Time with TZ: hh:mm:ss.ddd+-hh:mm e.g. 
+`<time datetime="15:45-05:00">` which means 3:45pm in the TZ that is -5 hours
+from GMT (UTC).
+- Both date and time: `<time datetime="2021-11-04 15:45-05:00>`, with or without
+a _T_ in between [`<time datetime="2021-11-04T15:45-05:00>`]
+
+&lt;time datetime="2021-05-08"&gt;on the 8th of May next year&lt;/time&gt; renders as <br>
+
+<time>on the 8th of May next year</time>
+
+### Code
+
+- Sometimes you want some code to stand out. Use `<code>` to make 
+a bit of text styling change.
+
+In the below text &lt;code&gt;{color:green;}&lt;/code&gt; will change that
+part of the text.
+
+<p>
+  We can write <code>{color:green;}</code>
+  in our CSS, and it will apply to anything marked up as an <code>&lt;H4&gt;</code> element.
+</p>
+
+### Aside: HTML Entities
+
+- Sometimes we want to write about HTML but we don't want it to
+be interpreted. 
+- Need to print out the `<` sign instead of having it be interpreted.
+We can do this by using the `&lt;` entity.
+- For `>` we use `&gt;`.
+- `<pre>` keeps the formatting as you specified.
+- <br> inserts a line break.
+
+### Superscripts, Subscripts and Small Text
+
+- `<sub>` for subscript.
+- `<sup>` for superscript.
+
+<p>H2O looks wrong like this.</p>
+
+> &lt;p&gt;H&lt;sub&gt;2&lt;/sub&gt;O looks wrong like this.&lt;/p&gt;
+
+If we use the `<sub>` tag we get:
+
+<p>H<sub>2</sub>O looks correct now.</p>
 
 
+> &lt;p&gt;Something that has a footnote&lt;sup&gt;2&lt;/sup&gt;
+
+
+<p>Something that has a footnote<sup>2</sup></p>
+
+The `<pre>` element is used for listings where line breaks and other white space need to be preserved, while `<code>` is more for short snippets inside of other content.
+
+<sub> is for subscripts, like numbers in chemical formulas, and <sup> is for superscripts, like footnote markers.
+
+### Attributes
+
+- Some attributes only work on certain elements e.g. `datetime` only used with
+`time` tag
+- Other attributes work on several elements. 
+- And yet others are __global attributes__ and may be applied to any HTML
+element.
+
+  * `class`: Gives us a way to attach a reusable name to any element. 
+  Then we can target _all elements with that class_ in our CSS or JavaScript.
+  It allows us to name certain elements and refer to them in other parts of our
+  code.
+  <pre>
+    &lt;p <span style="color: #008080;background-color:#9FDDBA">class ="intro"</span>&gt;
+      This is the introduction
+    &lt;/p&gt;
+  </pre>
+  * `id`: Similar to `class` but we're only allowed to use unique names
+  once in an entire HTML page. We can use an ID for targeting CSS or JavaScript
+  for a unique element with that `id`, but because it is so specific most of the times developers stick to `class`. It is particularly useful to target with JS or a 
+  targeted link. It also allows us to name certain elements and refer to them in other parts of our code.
+  <pre>
+    &lt;p class ="intro" <span style="color: #008080;background-color:#9FDDBA">id="article-intro"</span>&gt;
+      This is the introduction
+    &lt;/p&gt;
+  </pre>
+  * `contenteditable`: Let's a user do things. Here `contenteditable = true`
+  allows a visitor to a page to edit the contents. When the visitor does change
+  something it doesn't last (e.g. refreshing the browser will change it back to
+  the original). That's because HTML allows you to edit the content but
+  more work is needed to capture and save the content the user enters.
+  <pre>
+    &lt;blockquote <span style="color: #008080;background-color:#9FDDBA">contenteditable="true"</span>&gt;
+      Edit this content to add your own quote.
+    &lt;/blockquote&gt;
+  </pre>  
+<blockquote contenteditable="true">
+  Edit this content to add your own quote.
+</blockquote>
+  * `lang` and `dir`: `lang` tells the browser what language the content is in.
+    <pre>
+    &lt;p <span style="color: #008080;background-color:#9FDDBA">lang="en-GB"</span>&gt;
+      We say colour, and visualisation when using British english :)
+    &lt;/p&gt;
+    &lt;p <span style="color: #008080;background-color:#9FDDBA">lang="fr"</span>&gt;
+      Nous disons couleur et visualisation lors de l'utilisation de l'anglais britannique :)
+    &lt;/p&gt;
+    &lt;p <span style="color: #008080;background-color:#9FDDBA">dir="ltr"</span>&gt;
+      In english the paragraph flows from left to right.
+    &lt;/p&gt;
+    &lt;p <span style="color: #008080;background-color:#9FDDBA">dir="rtl"</span>&gt;
+      في اللغة العربية تتدفق الفقرة من اليمين إلى اليسار.
+    &lt;/p&gt;
+  </pre>  
+  
+### ARIA roles
+
+ARIA roles are another type of attribute that can be added to any HTML element
+to give it more meaning and to ensure the browser understands what something is.
+Ideally we won't need an ARIA role, if we use the right elements we'll communicate
+the right message about the semantics of the content.
+
+Sometimes we make compromises in our markup and then we need to be cognisant
+of people using our site, especially people with a disability - we want our
+site to be accessible by all people.
+
+ARIA roles are HTML attributes that provide accessible info about that
+specific element. It tells screen readers, braille displays, magnifiers
+and other assistive technology things they need to know to make a site 
+fully accessible.
+
+ARIA is used to clarify to the accessibility tree what is happening with a particular element, set of elements, or interface. If something is broken, ARIA can be a way to fix it.
+
+<img src = assets/aria_role.PNG width = 500px> <br>
+
+Jen built the above webpage that says "Hello World" but due to the targeted
+CSS each letter is in its own text box. The experience for a person using a
+screen reader will be particularly bad (have a look at the __Accessibility__ window in the inspector to see the issue). Instead of saying "Hello World" it will say 
+"H" "E" "L" "L" "O" "W" "O" "R" "L" "D".
+
+<pre>
+&lt;h1&gt;
+  &lt;div class="grid"&gt;
+    &lt;span&gt;H&lt;/span&gt;
+    &lt;span&gt;e&lt;/span&gt;
+    &lt;span&gt;l&lt;/span&gt;
+    &lt;span&gt;l&lt;/span&gt;
+    &lt;span&gt;o&lt;/span&gt;
+
+    &lt;span&gt;w&lt;/span&gt;
+    &lt;span&gt;o&lt;/span&gt;
+    &lt;span&gt;r&lt;/span&gt;
+    &lt;span&gt;l&lt;/span&gt;
+    &lt;span&gt;d&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/h1&gt;
+</pre>
+
+She fixed it by adding an ARIA role to the headline so that a screen
+reader can read "Hello World", and then she hid the individual letters by
+setting `aria-hidden="true"` which hides that element and all its children
+from the accessibility tree. It's still in the DOM tree.
+
+We want the headline to be seen by the Accessibility tree, but we don't want the 
+individual letters to be seen and read by the Accessibility tree. Hence wrap
+all the spans in a div and add the `aria-hidden="true"` on the div.
+
+<pre>
+&lt;h1 <span style="color: #008080;background-color:#9FDDBA">aria-label="Hello World"</span>&gt;
+  &lt;div class="grid" <span style="color: #008080;background-color:#9FDDBA">aria-hidden="true"</span>&gt;
+    &lt;span&gt;H&lt;/span&gt;
+    &lt;span&gt;e&lt;/span&gt;
+    &lt;span&gt;l&lt;/span&gt;
+    &lt;span&gt;l&lt;/span&gt;
+    &lt;span&gt;o&lt;/span&gt;
+
+    &lt;span&gt;w&lt;/span&gt;
+    &lt;span&gt;o&lt;/span&gt;
+    &lt;span&gt;r&lt;/span&gt;
+    &lt;span&gt;l&lt;/span&gt;
+    &lt;span&gt;d&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/h1&gt;
+</pre>
+
+
+### Formatting HTML
+
+1. Comments are between `<!--` and `-->` tags e.g.
+<pre>
+<span style="color: #008080;background-color:#9FDDBA">&lt;!--</span>This is a comment and will be ignored<span style="color: #008080;background-color:#9FDDBA">--&gt;</span>
+</pre>
+
+<!-- This is a comment -->
+
+- `&lt;`: &lt;
+- `&gt;`: &gt;
+- `&amp;`: &amp;
+- `&copy;`: the copyright symbol &copy;
+- `&trade;`: the trademark symbol &trade;
+- `&star;`: the star symbol &star;
+- `&nbsp;`: insert a non-breaking space (usually the browser views any space)
+as a place it can wrap text. This tells the browser - hey, don't break here.
+
+
+### Links
+
+To make a link we use the `<a>` element as in `<a href="https://link-ref.co.za"></a>` which stands for anchor. On the opening tag
+we need an `href="link address"` to tell the browser where we want it to go. _href_
+stands for HyperText reference. 
+
+The `href` can have:
+
+- Absolute URL which includes `http://` or `https://`.
+- Links into other parts of your site can have absolute path.
+- On the same site - we can use relative URL because it is easier for testing
+etc. 
+- To use relative path to things in our own site we need to understand the
+structure of our folders.
+- Imagine we have our images in its own folder. We can access an image through
+either:
+
+  * `/images/logo.gif` : Start at root and go to images and get the gif.
+  * `../images/logo.gif` : From where we are go up to the folder I am in,
+  then go up again. Ok, now go to images and get the gif.
+  
+- Everytime a browser is given a URL that points to go to a folder e.g.
+`https://myawesomeweb.co.za/team/` the browser automatically looks for and loads 
+`index.html`. `index.html` is a special file and makes it so we can have different
+folders with an `index.html` file in each of them.
+
+All of these will link to the same place:
+
+<pre>
+&lt;li&gt;&lt;a href="/people/index.html"&gt;People&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="/people/"&gt;People&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="/people"&gt;People&lt;/a&gt;&lt;/li&gt;
+</pre>
+
+### Navigation
+
+We often would like a navigation bar for our site.
+
+- We add each reference in an `<a href="some-link">`
+- We add each `<a href` to a list item `<li>`
+- We then add the list items into an unordered list `<ul>`
+- Finally we wrap the `<ul>` in a `<nav>` element which marks up navigation.
+It tells the browser which set of links are part of the site navigation.
+- `<nav role="navigation">` is an Aria role that tells the browser that
+this is the site navigation.
+- `<nav role="navigation" aria-label="main menu">` the aria-label is for the 
+screen reader to tell people what this is.
+
+<pre>
+&lt;nav role="navigation" aria-label="main menu"&gt;
+  &lt;ul class="navbar"&gt;
+    &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/people"&gt;People&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/prices"&gt;Prices&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</pre>
+
+### Images
+
+- We use the `<img` tag.
+- &lt;img <span style="color: #008080;background-color:#9FDDBA">src=</span>xxx.jpg" <span style="color: #008080;background-color:#9FDDBA">alt=</span>"description of img" width="400" height="300">
+- There are a few attributes we'd like with this: `src` which is source attribute
+tells the browser which image to display.
+- The `alt` attribute describes the picture and acts as a substitute when the
+image can't be seen. It also helps for people who have visual disabilities to
+understand what the picture is showing. Blind people may use a screen reader
+that reads the alt text aloud to them.
+- The `width` and `height` attributes tell the browser the size of the picture
+in pixels. This allows the browser to have a headstart in defining the layout
+of the page. Otherwise the browser first has to load the image and then needs to
+figure out how big it must be. If we tell the browser these element sizes 
+that helps with the rendering of the page.
+
+<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/maggie.jpg" alt="shiny black dog looking pensive" width="400" height="300">
+
+- Goal for images: High quality + small size images. Aim is to make them 
+download as fast as possible.
+- If you have JPG files you should resize them for the web since they
+are big and will take a long time to load.
+- PNG: Good at compression, and good for pictures that need transparency.
 
