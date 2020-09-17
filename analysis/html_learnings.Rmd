@@ -552,3 +552,281 @@ download as fast as possible.
 are big and will take a long time to load.
 - PNG: Good at compression, and good for pictures that need transparency.
 
+### Pictures
+
+When you want the image to be shown to be different
+depending on the screen the user is using you can
+wrap the data in an `<picture>` tag with a `<srcset>`.
+
+The `<picture>` element gives you the flexibility you need to change content as well as image size.
+The srcset attribute lets the browser choose from options that fit the specific situation, minimizing bandwidth consumption while producing attractive results.
+
+<pre>
+&lt;picture&gt;
+  &lt;source media="(min-width:600px)"
+  srcset = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/dog-960.jpg"&gt;
+  &lt;source srcset = https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/dog-480.jpg&gt;
+  &lt;img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/dog-480.jpg" 
+     alt="shiny black dog looking pensive" 
+     width="480" height="360"&gt;
+&lt;/picture&gt;
+</pre>  
+
+<picture>
+  <source media="(min-width:600px)"
+  srcset = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/dog-960.jpg">
+  <source srcset = https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/dog-480.jpg>
+  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/dog-480.jpg" 
+     alt="shiny black dog looking pensive" 
+     width="480" height="360">
+</picture>
+
+### Caption images
+
+- We can caption an image if we use `<figcaption>` tag.
+- We can wrap the entire img and figcaption in a
+`<figure>` tag.
+
+<pre>
+&lt;figure&gt;
+  &lt;img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/maggie2.png" width="960" height="720" alt="shiny black dog in the sun"&gt;
+
+  &lt;figcaption&gt;Maggie the dog enjoys resting in a field, after a long day of chasing squirrels.&lt;/figcaption&gt;
+&lt;/figure&gt;
+</pre>
+
+<figure>
+  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/maggie2.png" width="960" height="720" alt="shiny black dog in the sun">
+
+  <figcaption>Maggie the dog enjoys resting in a field, after a long day of chasing squirrels.</figcaption>
+</figure>
+
+### Audio
+
+- We can use the `<audio></audio>` element to put audio on a page.
+- Can trigger the browser to create an audio player 
+interface for us.
+- Just like with `<img>` use the `src` attribute to provide the link to the file e.g. `src="file.mp3"`.
+- We use the `controls` attribute to tell the browser
+that we'd like it to provide some controls such as 
+volume, play btn etc.
+- We may also provide our own custom controls instead
+of those in built into the browser.
+- loop: will cause the audio to play again from the
+beginning `<audio controls src="some_file.format" loop></audio>`
+- autoplay: causes audio to be played as soon as
+the page loads. __BE CAREFUL WITH THIS ONE: Most people hate autoplaying audio, myself included!!__ <br>
+`<audio controls src="some_file.format" loop autoplay></audio>`
+
+<pre>
+      &lt;audio controls
+      src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/birds.mp3"&gt;
+      &lt;/audio&gt;
+</pre>
+
+<audio controls src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/birds.mp3"></audio>
+
+- We can use the source element to specify more than one audio file. The browser will use the first file
+in the list that it understands. The last line is some fallback text that is only displayed if the 
+browser has no idea how to play any of the supplied
+audio alternatives.
+
+<pre>
+&lt;audio controls&gt;
+  &lt;source 
+      src="http://example.com/birds.ogg" 
+  		type="audio/ogg; codec=opus"&gt;
+	&lt;source 
+      src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/birds.mp3" 
+  		type="audio/mpeg"&gt;
+  Sorry your browser doesn't not support audio.
+&lt;/audio&gt;
+</pre>
+
+<audio controls>
+  <source 
+      src="http://example.com/birds.ogg" 
+  		type="audio/ogg; codec=opus">
+	<source 
+      src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/birds.mp3" 
+  		type="audio/mpeg">
+  Sorry your browser doesn't not support audio.
+</audio>
+
+### Video
+
+- We can use the `<video></video>` element to put video on a page.
+- Can trigger the browser to create a video player 
+interface for us.
+- Just like with `<img>` use the `src` attribute to provide the link to the file e.g. `src="file.mp4"`.
+- We use the `controls` attribute to tell the browser
+that we'd like it to provide some controls such as 
+volume, play btn etc.
+
+<pre>
+      &lt;video controls
+      src="xxx.mp4"&gt;
+      &lt;/video&gt;
+</pre>
+
+- There are a few things we need to do because of how
+video is encoded. 
+- H.264 codec is the most widely supported across
+different browsers but it is <em>not open source</em>. It is
+owned by a consortium that <em>charges fees</em> whenever you
+use that codec on a device, on a page etc.
+- AV1 is royalty free but it is still new. 
+- We can use `<source>` in video as well.
+- We don't have a `srcset` attribute for video though.
+- That's because we don't want the browser to make a choice only once between standard def and high def for example. We want it to make that choice over and over again.
+- YouTube etc. works this way using a technique called _adaptive bitrate streaming_ whereby it keeps switching the resolution based on the connection attributes at the time. 
+- When we put video on a page we more likely will use an embedding hosting service instead of putting video via the `<video></video>` tag.
+
+### Captioning
+
+- Not everyone can hear or understand the audio.
+- Occassionally people may be in a place they can't actually use the speakers.
+- Or perhaps the speakers cadence is different to what you're accustomed to (perhaps they're speaking too fast for you to keep up), or they're speaking in 
+English, but that is not your mother tongue.
+- We can provide content in multiple ways simultaneously.
+- To make our video / audio more accessible we can use the `<track>` element and point to a text file.
+- The video player provides the functionality so that a user can turn captioning on and off, or can switch between languages.
+- We use webvtt (web video text tracks) which is a plain text file with a vtt extension.
+
+  * kind: tells browser this is captions.
+  * label: tells browser what the label for this
+  choice should be e.g. `label="english"`.
+  * srclang: tells browser what the captioning
+  language is e.g. `srclang="en"`
+  * default: tells browser that these are the default
+  captions to use when a user turns on captioning.
+
+
+<pre>
+&lt;video controls&gt;
+  &lt;source src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/moonwalk.480p.vp9.webm" 
+    type="video/webm"&gt;
+  &lt;source src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/moonwalk.480p.h264.mp4" 
+    type="video/mp4"&gt;
+  
+  &lt;track src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/moonwalk.vtt"
+         kind="captions"
+         label="English"
+         srclang="en"
+         default&gt;
+  
+   &lt;track src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/moonwalk.es-la.es.vtt"
+         kind="subtitles"
+         label="Español"
+         srclang="es"&gt;
+  
+  &lt;p&gt;This would be a video of a moonwalk, if your device supported playing this video.&lt;/p&gt;
+&lt;/video&gt;
+
+</pre>
+
+### Embedding using iframes
+
+- Go to someone elses toolkit and use that and embed
+it in your website.
+- Go to a video - click Share and then Embed. 
+- Below we go to a YouTube video to get the code to embed here. <em>Note: The `Enable privacy-enhanced mode.` does not allow the video to be displayed in Rmd</em>
+
+<img src="assets/iframe.gif" alt="how-to for embedding content from elsewhere in your site" width="550" height="480">
+
+<br><br>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0Gr1XSyxZy0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+### Target part of the DOM
+
+- Sometimes you just want a way to target an area of
+your HTML with CSS or JS but no other element makes sense...enter the `<div>` and `<span>` elements.
+- `<div>`: block level element.
+- `<span>`: inline element.
+- They both do the same thing - nothing - until you point JS or CSS at them.
+- The div and span elements make it easy to create containers or labeled content for styling.
+
+### HTML Page
+
+- To tell the browser this is a modern HTML document
+we use the `<!doctype html>` element right at the top of our page.
+- To tell the browser we've got an HTML page we use the `<html></html>` tags around our entire content e.g. `<html dir="ltr" lang="en-us">`. Remember that `dir=` tells the browser which direction the text flows, and `lang=` tells the browser what language your page is in.
+- Meta data, for example your information about your character set (`charset=`) goes in the `<head></head>` element.
+- `title` in head: is not content, but rather is what shows up on the browser tab, or the bookmarked site name.
+- `meta name="viewport"`: Tells the browser that content has been morphed to fit smaller screens (i.e. it is a responsive website).
+- `meta name="description"`: Is what shows up in search engine results.
+- `link rel="stylesheet" href="main.css"`: Tells the browser where to link to for other assets we want to load like CSS files, fonts, favicons etc. `rel` tells the browser what type of asset it is. `href` provides the URL to the asset.
+- The browser will load things in the order they are listed so put things you want to load first at the top.
+- `<script src="my-js-file.js"></script>`: Tells the browser to load a JS file. This is <em>often put at the end of the document instead of in the head</em> so that the JS is loaded last. 
+
+<pre>
+  &lt;head&gt;
+    &lt;title&gt;An Important Title :)&lt;/title&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;meta name="description" content="A description that'll show up on search engines results."&gt;
+    &lt;link rel="stylesheet" href="css/S11-02.css"&gt;
+  &lt;/head&gt;
+</pre>
+
+### Structuring content
+
+- The `<main>` element wraps around the main content of the page. Only used once per page.
+- The `<header>` and `<footer>` elements are used to mark content that is a header or footer. `<header>` is used usually for logo, site name etc.
+- The `<footer>` element does not have to go at the bottom of the page - it is used to convey additional info - _hey, we have a few extra things to say about this_.
+- `<article>` is wrapped around things like a blog post, or it may even be a short snip. It could be used for teaser cards. It's semantic meaning is _hey this by itself is a unit of content_.
+- `<section>` is for sections of content. If we have a long essay for example with different sub-headlines we may have sections around segments of them. We may also have _zones_ on our website. It's semantic meaning is _hey let's just start with another thing_.
+- `<aside>`: used to markup something that is off to the side, content that is not the main attraction. Its semantic meaning is _hey, this thing is useful but not the main attraction_.
+
+### Forms
+
+Check out [Chapter 9 here](https://github.com/jensimmons/html).
+
+- What's the difference between the value attribute and the placeholder attribute? The value attribute fills the field with a value that will be submitted with the form. The placeholder shows a suggestion, but doesn't really enter it.
+
+
+### Table
+
+<table class="styled">
+  <tr>
+    <th>Element</th>
+    <th>Name</th>
+    <th>Purpose</th>
+    <th>Attributes</th>
+  </tr>
+  <br>
+  <tr>
+    <td>&lt;table&gt;<br>&lt;/table&gt;</td>
+    <td>Table</td>
+    <td>&nbsp;&nbsp;Wraps the whole table</td>
+    <td></td>
+  </tr>
+  <br>
+  <tr>
+    <td>&lt;tr&gt;&lt;/tr&gt;</td>  
+    <td>TR - <br>table row</td>
+    <td>Wraps around a set of elements,<br>
+    defining them as belonging <br>
+    to the same row</td>
+    <td>colspan, rowspan, <br>
+    headers</td>
+  </tr>
+  <br>
+  <tr>
+    <td>&lt;th&gt;&lt;/th&gt;</td> 
+    <td>TH - <br>table header</td>
+    <td>Defines a header for a column</td>
+    <td>colspan, rowspan, <br>
+    scope</td>
+  </tr>
+  <br>
+  <tr>
+    <td>&lt;td&gt;&lt;/td&gt;</td>  
+    <td>TD - <br>table data</td>
+    <td>Marks the actual bits of data</td>
+    <td></td>
+  </tr>
+</table>
+
