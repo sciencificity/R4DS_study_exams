@@ -406,7 +406,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-09-13
+<strong>Last updated:</strong> 2020-09-17
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -497,16 +497,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree4747fc8743d1811fd947777a918391c47ad23e28targetblank4747fc8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/4747fc8743d1811fd947777a918391c47ad23e28" target="_blank">4747fc8</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreefd25a9a42db1299c9e1736f47d3529149a28334btargetblankfd25a9aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/fd25a9a42db1299c9e1736f47d3529149a28334b" target="_blank">fd25a9a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree4747fc8743d1811fd947777a918391c47ad23e28targetblank4747fc8a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreefd25a9a42db1299c9e1736f47d3529149a28334btargetblankfd25a9aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/4747fc8743d1811fd947777a918391c47ad23e28" target="_blank">4747fc8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/fd25a9a42db1299c9e1736f47d3529149a28334b" target="_blank">fd25a9a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -516,6 +516,7 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Untracked files:
+    Untracked:  VideoDecodeStats/
     Untracked:  analysis/images/
     Untracked:  code_snipp.txt
 
@@ -556,6 +557,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/fd25a9a42db1299c9e1736f47d3529149a28334b/analysis/html_learnings.Rmd" target="_blank">fd25a9a</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-09-17
+</td>
+<td>
+added html learnings
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/b8fde7d4b92d9bab0424481570766b7a5d14ca5c/docs/html_learnings.html" target="_blank">b8fde7d</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-09-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1131,6 +1166,290 @@ Edit this content to add your own quote.
 <li>If you have JPG files you should resize them for the web since they are big and will take a long time to load.</li>
 <li>PNG: Good at compression, and good for pictures that need transparency.</li>
 </ul>
+</div>
+<div id="pictures" class="section level3">
+<h3>Pictures</h3>
+<p>When you want the image to be shown to be different depending on the screen the user is using you can wrap the data in an <code>&lt;picture&gt;</code> tag with a <code>&lt;srcset&gt;</code>.</p>
+<p>The <code>&lt;picture&gt;</code> element gives you the flexibility you need to change content as well as image size. The srcset attribute lets the browser choose from options that fit the specific situation, minimizing bandwidth consumption while producing attractive results.</p>
+<pre>
+&lt;picture&gt;
+  &lt;source media="(min-width:600px)"
+  srcset = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/dog-960.jpg"&gt;
+  &lt;source srcset = https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/dog-480.jpg&gt;
+  &lt;img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/dog-480.jpg" 
+     alt="shiny black dog looking pensive" 
+     width="480" height="360"&gt;
+&lt;/picture&gt;
+</pre>
+<p><picture> <source media="(min-width:600px)"
+  srcset = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/dog-960.jpg"> <source srcset = https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/dog-480.jpg> <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/dog-480.jpg" 
+     alt="shiny black dog looking pensive" 
+     width="480" height="360"> </picture></p>
+</div>
+<div id="caption-images" class="section level3">
+<h3>Caption images</h3>
+<ul>
+<li>We can caption an image if we use <code>&lt;figcaption&gt;</code> tag.</li>
+<li>We can wrap the entire img and figcaption in a <code>&lt;figure&gt;</code> tag.</li>
+</ul>
+<pre>
+&lt;figure&gt;
+  &lt;img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/maggie2.png" width="960" height="720" alt="shiny black dog in the sun"&gt;
+
+  &lt;figcaption&gt;Maggie the dog enjoys resting in a field, after a long day of chasing squirrels.&lt;/figcaption&gt;
+&lt;/figure&gt;
+</pre>
+<figure>
+<p><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/maggie2.png" width="960" height="720" alt="shiny black dog in the sun"></p>
+<figcaption>
+Maggie the dog enjoys resting in a field, after a long day of chasing squirrels.
+</figcaption>
+</figure>
+</div>
+<div id="audio" class="section level3">
+<h3>Audio</h3>
+<ul>
+<li>We can use the <code>&lt;audio&gt;&lt;/audio&gt;</code> element to put audio on a page.</li>
+<li>Can trigger the browser to create an audio player interface for us.</li>
+<li>Just like with <code>&lt;img&gt;</code> use the <code>src</code> attribute to provide the link to the file e.g. <code>src="file.mp3"</code>.</li>
+<li>We use the <code>controls</code> attribute to tell the browser that we’d like it to provide some controls such as volume, play btn etc.</li>
+<li>We may also provide our own custom controls instead of those in built into the browser.</li>
+<li>loop: will cause the audio to play again from the beginning <code>&lt;audio controls src="some_file.format" loop&gt;&lt;/audio&gt;</code></li>
+<li>autoplay: causes audio to be played as soon as the page loads. <strong>BE CAREFUL WITH THIS ONE: Most people hate autoplaying audio, myself included!!</strong> <br> <code>&lt;audio controls src="some_file.format" loop autoplay&gt;&lt;/audio&gt;</code></li>
+</ul>
+<pre>
+      &lt;audio controls
+      src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/birds.mp3"&gt;
+      &lt;/audio&gt;
+</pre>
+<audio controls src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/birds.mp3">
+</audio>
+<ul>
+<li>We can use the source element to specify more than one audio file. The browser will use the first file in the list that it understands. The last line is some fallback text that is only displayed if the browser has no idea how to play any of the supplied audio alternatives.</li>
+</ul>
+<pre>
+&lt;audio controls&gt;
+  &lt;source 
+      src="http://example.com/birds.ogg" 
+        type="audio/ogg; codec=opus"&gt;
+    &lt;source 
+      src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/birds.mp3" 
+        type="audio/mpeg"&gt;
+  Sorry your browser doesn't not support audio.
+&lt;/audio&gt;
+</pre>
+<audio controls>
+<source 
+      src="http://example.com/birds.ogg" 
+        type="audio/ogg; codec=opus">
+<source 
+      src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/birds.mp3" 
+        type="audio/mpeg">
+<p>Sorry your browser doesn’t not support audio. </audio></p>
+</div>
+<div id="video" class="section level3">
+<h3>Video</h3>
+<ul>
+<li>We can use the <code>&lt;video&gt;&lt;/video&gt;</code> element to put video on a page.</li>
+<li>Can trigger the browser to create a video player interface for us.</li>
+<li>Just like with <code>&lt;img&gt;</code> use the <code>src</code> attribute to provide the link to the file e.g. <code>src="file.mp4"</code>.</li>
+<li>We use the <code>controls</code> attribute to tell the browser that we’d like it to provide some controls such as volume, play btn etc.</li>
+</ul>
+<pre>
+      &lt;video controls
+      src="xxx.mp4"&gt;
+      &lt;/video&gt;
+</pre>
+<ul>
+<li>There are a few things we need to do because of how video is encoded.</li>
+<li>H.264 codec is the most widely supported across different browsers but it is <em>not open source</em>. It is owned by a consortium that <em>charges fees</em> whenever you use that codec on a device, on a page etc.</li>
+<li>AV1 is royalty free but it is still new.</li>
+<li>We can use <code>&lt;source&gt;</code> in video as well.</li>
+<li>We don’t have a <code>srcset</code> attribute for video though.</li>
+<li>That’s because we don’t want the browser to make a choice only once between standard def and high def for example. We want it to make that choice over and over again.</li>
+<li>YouTube etc. works this way using a technique called <em>adaptive bitrate streaming</em> whereby it keeps switching the resolution based on the connection attributes at the time.</li>
+<li>When we put video on a page we more likely will use an embedding hosting service instead of putting video via the <code>&lt;video&gt;&lt;/video&gt;</code> tag.</li>
+</ul>
+</div>
+<div id="captioning" class="section level3">
+<h3>Captioning</h3>
+<ul>
+<li>Not everyone can hear or understand the audio.</li>
+<li>Occassionally people may be in a place they can’t actually use the speakers.</li>
+<li>Or perhaps the speakers cadence is different to what you’re accustomed to (perhaps they’re speaking too fast for you to keep up), or they’re speaking in English, but that is not your mother tongue.</li>
+<li>We can provide content in multiple ways simultaneously.</li>
+<li>To make our video / audio more accessible we can use the <code>&lt;track&gt;</code> element and point to a text file.</li>
+<li>The video player provides the functionality so that a user can turn captioning on and off, or can switch between languages.</li>
+<li><p>We use webvtt (web video text tracks) which is a plain text file with a vtt extension.</p>
+<ul>
+<li>kind: tells browser this is captions.</li>
+<li>label: tells browser what the label for this choice should be e.g. <code>label="english"</code>.</li>
+<li>srclang: tells browser what the captioning language is e.g. <code>srclang="en"</code></li>
+<li>default: tells browser that these are the default captions to use when a user turns on captioning.</li>
+</ul></li>
+</ul>
+<pre>
+&lt;video controls&gt;
+  &lt;source src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/moonwalk.480p.vp9.webm" 
+    type="video/webm"&gt;
+  &lt;source src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/moonwalk.480p.h264.mp4" 
+    type="video/mp4"&gt;
+  
+  &lt;track src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/moonwalk.vtt"
+         kind="captions"
+         label="English"
+         srclang="en"
+         default&gt;
+  
+   &lt;track src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/10558/moonwalk.es-la.es.vtt"
+         kind="subtitles"
+         label="Español"
+         srclang="es"&gt;
+  
+  &lt;p&gt;This would be a video of a moonwalk, if your device supported playing this video.&lt;/p&gt;
+&lt;/video&gt;
+
+</pre>
+</div>
+<div id="embedding-using-iframes" class="section level3">
+<h3>Embedding using iframes</h3>
+<ul>
+<li>Go to someone elses toolkit and use that and embed it in your website.</li>
+<li>Go to a video - click Share and then Embed.</li>
+<li>Below we go to a YouTube video to get the code to embed here. <em>Note: The <code>Enable privacy-enhanced mode.</code> does not allow the video to be displayed in Rmd</em></li>
+</ul>
+<p><img src="assets/iframe.gif" alt="how-to for embedding content from elsewhere in your site" width="550" height="480"></p>
+<p><br><br></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0Gr1XSyxZy0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
+<div id="target-part-of-the-dom" class="section level3">
+<h3>Target part of the DOM</h3>
+<ul>
+<li>Sometimes you just want a way to target an area of your HTML with CSS or JS but no other element makes sense…enter the <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> elements.</li>
+<li><code>&lt;div&gt;</code>: block level element.</li>
+<li><code>&lt;span&gt;</code>: inline element.</li>
+<li>They both do the same thing - nothing - until you point JS or CSS at them.</li>
+<li>The div and span elements make it easy to create containers or labeled content for styling.</li>
+</ul>
+</div>
+<div id="html-page" class="section level3">
+<h3>HTML Page</h3>
+<ul>
+<li>To tell the browser this is a modern HTML document we use the <code>&lt;!doctype html&gt;</code> element right at the top of our page.</li>
+<li>To tell the browser we’ve got an HTML page we use the <code>&lt;html&gt;&lt;/html&gt;</code> tags around our entire content e.g. <code>&lt;html dir="ltr" lang="en-us"&gt;</code>. Remember that <code>dir=</code> tells the browser which direction the text flows, and <code>lang=</code> tells the browser what language your page is in.</li>
+<li>Meta data, for example your information about your character set (<code>charset=</code>) goes in the <code>&lt;head&gt;&lt;/head&gt;</code> element.</li>
+<li><code>title</code> in head: is not content, but rather is what shows up on the browser tab, or the bookmarked site name.</li>
+<li><code>meta name="viewport"</code>: Tells the browser that content has been morphed to fit smaller screens (i.e. it is a responsive website).</li>
+<li><code>meta name="description"</code>: Is what shows up in search engine results.</li>
+<li><code>link rel="stylesheet" href="main.css"</code>: Tells the browser where to link to for other assets we want to load like CSS files, fonts, favicons etc. <code>rel</code> tells the browser what type of asset it is. <code>href</code> provides the URL to the asset.</li>
+<li>The browser will load things in the order they are listed so put things you want to load first at the top.</li>
+<li><code>&lt;script src="my-js-file.js"&gt;&lt;/script&gt;</code>: Tells the browser to load a JS file. This is <em>often put at the end of the document instead of in the head</em> so that the JS is loaded last.</li>
+</ul>
+<pre>
+  &lt;head&gt;
+    &lt;title&gt;An Important Title :)&lt;/title&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;meta name="description" content="A description that'll show up on search engines results."&gt;
+    &lt;link rel="stylesheet" href="css/S11-02.css"&gt;
+  &lt;/head&gt;
+</pre>
+</div>
+<div id="structuring-content" class="section level3">
+<h3>Structuring content</h3>
+<ul>
+<li>The <code>&lt;main&gt;</code> element wraps around the main content of the page. Only used once per page.</li>
+<li>The <code>&lt;header&gt;</code> and <code>&lt;footer&gt;</code> elements are used to mark content that is a header or footer. <code>&lt;header&gt;</code> is used usually for logo, site name etc.</li>
+<li>The <code>&lt;footer&gt;</code> element does not have to go at the bottom of the page - it is used to convey additional info - <em>hey, we have a few extra things to say about this</em>.</li>
+<li><code>&lt;article&gt;</code> is wrapped around things like a blog post, or it may even be a short snip. It could be used for teaser cards. It’s semantic meaning is <em>hey this by itself is a unit of content</em>.</li>
+<li><code>&lt;section&gt;</code> is for sections of content. If we have a long essay for example with different sub-headlines we may have sections around segments of them. We may also have <em>zones</em> on our website. It’s semantic meaning is <em>hey let’s just start with another thing</em>.</li>
+<li><code>&lt;aside&gt;</code>: used to markup something that is off to the side, content that is not the main attraction. Its semantic meaning is <em>hey, this thing is useful but not the main attraction</em>.</li>
+</ul>
+</div>
+<div id="forms" class="section level3">
+<h3>Forms</h3>
+<p>Check out <a href="https://github.com/jensimmons/html">Chapter 9 here</a>.</p>
+<ul>
+<li>What’s the difference between the value attribute and the placeholder attribute? The value attribute fills the field with a value that will be submitted with the form. The placeholder shows a suggestion, but doesn’t really enter it.</li>
+</ul>
+</div>
+<div id="table" class="section level3">
+<h3>Table</h3>
+<table class="styled">
+<tr>
+<th>
+Element
+</th>
+<th>
+Name
+</th>
+<th>
+Purpose
+</th>
+<th>
+Attributes
+</th>
+</tr>
+<br>
+<tr>
+<td>
+&lt;table&gt;<br>&lt;/table&gt;
+</td>
+<td>
+Table
+</td>
+<td>
+  Wraps the whole table
+</td>
+<td>
+</td>
+</tr>
+<br>
+<tr>
+<td>
+&lt;tr&gt;&lt;/tr&gt;
+</td>
+<td>
+TR - <br>table row
+</td>
+<td>
+Wraps around a set of elements,<br> defining them as belonging <br> to the same row
+</td>
+<td>
+colspan, rowspan, <br> headers
+</td>
+</tr>
+<br>
+<tr>
+<td>
+&lt;th&gt;&lt;/th&gt;
+</td>
+<td>
+TH - <br>table header
+</td>
+<td>
+Defines a header for a column
+</td>
+<td>
+colspan, rowspan, <br> scope
+</td>
+</tr>
+<br>
+<tr>
+<td>
+&lt;td&gt;&lt;/td&gt;
+</td>
+<td>
+TD - <br>table data
+</td>
+<td>
+Marks the actual bits of data
+</td>
+<td>
+</td>
+</tr>
+</table>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
