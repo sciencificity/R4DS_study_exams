@@ -12,6 +12,7 @@ Welcome to my exam prep website. The chapters follow the printed version
 of `R for Data Science` which is [online](https://r4ds.had.co.nz/) as well.
 
 <strong>Assumptions:</strong>
+
 - You have worked through the material in the physical or online book.
 - You have attempted the exercises yourself. Learning by practicing
 is a really great way to get acclimatised to the language.
