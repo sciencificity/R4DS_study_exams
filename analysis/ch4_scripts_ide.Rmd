@@ -1,0 +1,104 @@
+---
+title: 'Chapter 4 - Workflow e.g. Scripts'
+author: "Vebash Naidoo"
+date: "10/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+library(emo)
+```
+
+<img src="assets/wasted_time.png" alt="wasted time" width="600" height="250">
+
+## My tips and tricks
+
+Here are a few of my tips and tricks for improving my programming efficiency in R and RStudio which I use as an IDE. <br>
+<Disclaimer: I use a Windows PC>
+
+I also tend to do two things:
+
+1. I always work in a Project (`File -> New Project ...`)
+1. I usually use RMarkdown files for my coding (`File -> New File -> R Markdown ...`).
+
+Some of the shortcuts below may seem foreign, I suggest checking out
+the ones that seem useful to you, and coming back once you're
+further along in the book `r emo::ji("biceps")`.
+
+
+### Pipe shortcut
+
+Use <span style="color: #008080;background-color:#9FDDBA">__`Ctrl + Shift + M`__</span> to insert the pipe operator.
+
+<img src="assets/shortcut_pipe.gif" alt="enter shortcut for pipe" width="500" height="300">
+
+### Comment Code
+
+Use <span style="color: #008080;background-color:#9FDDBA">__`Ctrl + Shift + C`__</span> to comment out selected code.
+
+<img src="assets/shortcut_comment_code.gif" alt="shorcut for comment" width="600" height="300">
+
+
+### Create a multi line comment
+
+Use <span style="color: #008080;background-color:#9FDDBA">__`Ctrl + Shift + /`__</span> to reflow a long comment.
+
+<img src="assets/shortcut_long_comment_code.gif" alt="shorcut for reflowing a long comment" width="800" height="300">
+
+### Create a code chunk in Rmd
+
+Use <span style="color: #008080;background-color:#9FDDBA">__`Ctrl + Alt + i`__</span> to create a new code chunk in an RMarkdown document.
+
+<img src="assets/insert_chunk_shortcut.gif" alt="shorcut for inserting a code chunk" width="800" height="450">
+
+### Insert an outline in your file
+
+Add <span style="color: #008080;background-color:#9FDDBA">__four dashes `----`__</span> to create a new outline element for easy navigation.
+
+<img src="assets/outline_code.gif" alt="create a new outline element" width="800" height="450">
+
+### Navigate to file while using read_xxx()
+
+<span style="color: #008080;background-color:#9FDDBA">__Hitting Tab between ""__</span> in a read_xxx function shows you the directories + files you could be looking for.
+
+<img src="assets/tip1.gif" alt="Navigate to file by hitting tab inside quotations marks" width="800" height="450">
+
+
+Do you know the name of the file you're looking for but no idea where in the folder structure it is? No problem, type a few chars of your file name btw "" and hit Tab -> the chars you typed are replaced with the path to the file you're looking for.
+
+<img src="assets/tip2.gif" alt="Navigate to file by hitting tab inside quotations marks" width="800" height="450">
+
+
+### Pull out Tabs
+
+<img src="assets/tip4.gif" alt="Pull out tabs in RStudio" width="800" height="450">
+
+### Find/Search
+
+- Ctrl + . -> Opens a popup where you can search for functions in your script or Files in your folder
+- Ctrl + Shift + F -> opens a "Find in Files" popup
+
+<img src="assets/tip3.gif" alt="Find/Search in RStudio" width="800" height="450">
+
+### Code snippets
+<span style="color: #008080;background-color:#9FDDBA">__In Tools -> Global Options -> Code__</span> you will find a list of code snippets.
+
+<img src="assets/tip5.gif" alt="Code snippets" width="800" height="450">
+
+
+### History Commands
+<span style="color: #008080;background-color:#9FDDBA">__Ctrl + Up Arrow__</span> in the console shows you a list of your previous commands.
+
+<img src="assets/tip6.gif" alt="Historical commands" width="800" height="450">
+
+### Turn code into a function
+<span style="color: #008080;background-color:#9FDDBA">__Extract Function__</span> allows you to turn code into a function.
+
+<img src="assets/tip7.gif" alt="Extract Function" width="800" height="450">
+
+### Find your own fave shortcut
+
+To open the Shortcuts menu hold down <span style="color: #008080;background-color:#9FDDBA">__Alt + Shift + K__</span> 
+
+<img src="assets/shortcuts_menu.gif" alt="create a new outline element" width="700" height="450">

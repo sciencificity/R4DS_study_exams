@@ -1,0 +1,1312 @@
+---
+title: "Chapter 3 - Data Transformation with dplyr"
+author: "Vebash Naidoo"
+date: "17/09/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(flair)
+library(nycflights13)
+library(palmerpenguins)
+library(gt)
+library(skimr)
+library(emo)
+```
+
+
+## Filter rows
+
+<span style="color: #008080;background-color:#9FDDBA">`filter()`</span> 
+is the verb used to subset rows in a dataframe
+based on their values - i.e. we take a dataset and we say _hey, give me back data that looks like it fulfils this condition(s)_.
+
+The `nycflights13` package has flights for the year 2013 where the departure was from an airport in New York City. You will notice the `%>%` which we used
+in the `ggplot` chapter too. If you can't recall what it does for now ignore it and just have a look at the data contained in the dataset.
+
+Aside: the pipe into gt() is to print out a neat table `r emo::ji("smile")`.
+
+```{r}
+flights %>% 
+  head(4) %>% 
+  gt()
+
+```
+<br>
+
+```{r}
+flights %>% 
+  count(origin, sort=TRUE) %>% 
+  gt()
+```
+
+<br>
+
+Let's filter all flights that occurred on Jan 1. The syntax for filter is <span style="color: #008080;background-color:#9FDDBA">`filter(df, some_condition_s)`</span> 
+
+```{r filter1, include=FALSE}
+filter(flights, month == 1, day == 1)
+```
+
+```{r, echo = FALSE}
+decorate("filter1") %>% 
+  flair("filter", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("==", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+<em>Notice the <span style="color: #008080;background-color:#9FDDBA">`==`</span> for comparison</em>
+
+```{r, echo=FALSE}
+comparison_ops <- tibble::tribble(
+  ~sign,                   ~meaning,
+    ">",             "greater than",
+   ">=", "greater than or equal to",
+    "<",                "less than",
+   "<=",    "less than or equal to",
+   "==",                 "equal to",
+   "!=",             "not equal to"
+  )
+
+comparison_ops %>% gt()
+```
+<br>
+
+Okay, truly the `{palmerpenguins}` data is going to become the new `iris`! But
+come on' who doesn't love penguins! Just try and keep me away from
+Boulders Beach in Cape Town when I'm there visiting ...
+
+```{r}
+penguins %>% 
+  head(10) %>% 
+  gt()
+
+```
+
+<br>
+
+Ok, what types of penguins are there?
+
+```{r}
+penguins %>% 
+  count(species, sort=TRUE)
+```
+
+Let's filter out `Gentoo` with `bill_depth_mm` bigger than 17mm, using some of the operations we learnt.
+
+```{r filter2, include=FALSE}
+# lets us save the filter result and 
+# prints it out ... the extra brackets on the
+# outside of the entire code block does that
+(gentoo <- filter(penguins, species == 'Gentoo',
+       bill_depth_mm > 17))
+
+```
+
+```{r, echo = FALSE}
+decorate("filter2") %>% 
+  flair("filter", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("==", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair(">", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+__Surprising results__
+
+Floats are saved a bit differently and hence can cause some unexpected behaviour.
+
+```{r}
+sqrt(2) ^ 2 == 2
+1 / 49 * 49 == 1
+```
+
+Use `near()` to give you if these are indeed nearly same.
+
+```{r near, include=FALSE}
+near(sqrt(2) ^ 2,  2)
+near(1 / 49 * 49, 1)
+```
+
+```{r, echo = FALSE}
+decorate("near") %>% 
+  flair("near", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+### Logic
+
+When we explore data we often want to filter data where one condition is true and another is also true. E.g. Which days experienced a thunder storm where a thunder storm was predicted by the Meteorologists.
+
+In R we use logic operators to combine comparisons and get us the data we're looking for.
+
+<br>
+
+```{r, echo=FALSE}
+log_ops <- tibble::tribble(
+  ~sign, ~meaning,
+    "|",     "Or",
+    "&",    "And",
+    "!",    "Not"
+  )
+log_ops %>% gt()
+```
+
+<br>
+
+Let's say we want only flights that occurred in Nov and Dec of 2013:
+
+```{r good_filter, include=FALSE}
+filter(flights, month == 11 | month == 12)
+```
+
+```{r, echo=FALSE}
+decorate("good_filter") %>% 
+  flair("month == 11 | month == 12", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+We have to repeat the <span style="color: #008080;background-color:#9FDDBA">month == </span> part for each comparison.
+
+<br>
+
+You may think that you can just say <span style="color: #FFE4E1;background-color:#E3242B">month == (11 | 12)</span> but unfortunately that does not
+work. 
+
+```{r bad_filter, eval=FALSE, include=FALSE}
+(filtered_fl <- filter(flights, month == (11 | 12)))
+```
+
+```{r, echo=FALSE}
+decorate("bad_filter") %>% 
+  flair('month == (11 | 12)',
+        background = "#E3242B", 
+        color = "#FFE4E1")
+```
+<br>Note that the result is unexpected - the tibble returned contains the `month == 1` which is January, and should not be in our returned dataset! The `(11 | 12)` evaluates to `r (11 | 12)` which internally is represented as `1` hence we then look at `month == 1`.
+To see this lets load the flights dataframe and filter Jan again. Notice that the number of rows is identical to the number of rows in the filtered `filtered_fl` which is `r nrow(filtered_fl)`.
+
+
+```{r}
+flights %>% 
+  filter(month == 1)
+```
+<br>
+
+We can also use the <span style="color: #008080;background-color:#9FDDBA">`%in%`</span>  operator instead of repeating the `month ==`.
+
+```{r}
+filter(flights, month %in% c(11, 12))
+```
+If you need the opposite of this i.e. the `not in` operator it's a bit more tricky.
+
+You can make your own function for [this](https://stackoverflow.com/questions/5831794/opposite-of-in-exclude-rows-with-values-specified-in-a-vector).
+
+```{r}
+'%!in%' <- function(x,y)!('%in%'(x,y)) # method 1
+'%ni%' <- Negate('%in%') # method 2
+filter(flights, month %ni% c(11, 12))
+```
+
+#### Aside: Some penguin fun ...
+
+Let's see if we can explore our data through filtering.
+
+```{r}
+# Get all penguins where the species is anything
+# other than Adelie
+filter(penguins, species %ni% ('Adelie'))
+```
+
+The skim function also works great in conjunction
+with filter. I am going to use the pipe again which
+we tackle later in R4DS. For now when you see _%>%_ read it as `and then` e.g. _Take this df and then filter out data that meets the condition and then show me a summary._
+
+<pre>
+    df <span style="color: #008080;background-color:#9FDDBA">%>%</span> 
+      filter(some_col meets some condition) <span style="color: #008080;background-color:#9FDDBA">%>%</span> 
+      summary(avg_col = mean(some_col))
+</pre>
+
+```{r}
+penguins %>% 
+  filter(species == "Chinstrap") %>% 
+  skim()
+```
+
+Let's see if the Chinstrap penguins with a body mass above the mean are more likely male / female / equally represented?
+
+The pipe way:
+
+```{r}
+penguins %>% 
+  filter(species == "Chinstrap") %>% 
+  filter(body_mass_g > mean(body_mass_g)) %>% 
+  skim()
+```
+
+We get the same using the non-piped way.
+
+```{r}
+skim(filter(filter(penguins, species == "Chinstrap"),
+       body_mass_g > mean(body_mass_g))) 
+```
+
+It seems there are more male penguins above the mean of body mass.
+
+
+### Exercises
+
+1.  Find all flights that
+
+    - Had an arrival delay of two or more hours
+        
+    ```{r filt_ex1, include = FALSE}
+    filter(flights,
+           arr_delay >= 120)
+    
+    ```
+    
+    ```{r, echo=FALSE}
+    decorate("filt_ex1") %>% 
+      flair('arr_delay >= 120',
+            background = "#9FDDBA", 
+            color = "#008080")
+    ```
+    
+    
+    - Flew to Houston (`IAH` or `HOU`)
+    
+    ```{r}
+    filter(flights, dest %in% c('IAH', 'HOU'))
+    ```
+    
+    
+    - Were operated by United, American, or Delta
+    ```{r}
+    as_tibble(flights) %>% 
+      distinct(carrier) %>% 
+      arrange(carrier)
+    
+    # think these are United = UA, American = AA, Delta = DL
+    filter(flights, carrier %in% c('UA', 'AA', 'DL'))
+    ```
+    
+    - Departed in summer (July, August, and September)
+    ```{r}
+    filter(flights, month %in% c(7, 8, 9))
+    ```
+    
+    - Arrived more than two hours late, but didn't leave late
+    ```{r}
+    filter(flights,
+           arr_delay > 120 & dep_delay <= 0)
+    
+    ```
+    
+    - Were delayed by at least an hour, but made up over 30 minutes in flight
+    ```{r}
+    filter(flights, 
+           dep_delay >= 60 &
+           arr_delay < (dep_delay - 30))
+    ```
+    
+    - Departed between midnight and 6am (inclusive)
+    ```{r}
+    flights %>% # notice that some flights were schedule to leave befor 00h00 but 
+      # were delayed and hence left after 00h00
+      filter(dep_time > 0 & dep_time < 100)
+    
+    flights %>% 
+      # are any flights exactly at 24h00?
+      filter(dep_time == 2400)
+    
+    filter(flights, (dep_time >= 0 & dep_time <= 600) | 
+             (dep_time == 2400))
+    
+
+    ```
+        
+
+1.  Another useful dplyr filtering helper is `between()`. What does it do?
+    Can you use it to simplify the code needed to answer the previous 
+    challenges?
+    
+    ```{r}
+    # Departed in summer (July, August, and September)
+    filter(flights, between(month,7,9))
+    # Departed between midnight and 6am (inclusive)
+    filter(flights, between(dep_time, 0, 600) | 
+         (dep_time == 2400))
+    ```
+    
+1.  How many flights have a missing `dep_time`? What other variables are 
+    missing? What might these rows represent?
+    ```{r}
+    filter(flights, is.na(dep_time))
+    
+    skim(flights) # Great summary function from skimr
+    ```
+    
+
+1.  Why is `NA ^ 0` not missing? Why is `NA | TRUE` not missing?
+    Why is `FALSE & NA` not missing? Can you figure out the general
+    rule?  (`NA * 0` is a tricky counterexample!)
+    
+    ```{r}
+    # Anything to the power 0, is 1
+    NA ^ 0
+    
+    # Anything OR TRUE, is still TRUE
+    NA | TRUE
+    
+    # FALSE and anything, is FALSE
+    FALSE & NA
+    
+    # Not everything * 0 is 0; e.g sqrt(-2) * 0 is NaN
+    NA * 0
+    
+    ```
+
+Check out [Suzan Baert's](https://twitter.com/SuzanBaert) great `dplyr` tutorial on [filter](https://suzan.rbind.io/2018/02/dplyr-tutorial-3/)
+
+## Arrange
+
+<span style="color: #008080;background-color:#9FDDBA">`arrange()`</span>  changes the order of the observations based on the columns you provide and the order you want it arranged. The syntax is `arrange(df, cols_to_order_by)` E.g. `arrange(df, col1, col2)` says "Hey, take this df and arrange the observations in alphabetical/increasing numeric order of col1 and col2." col2 comes in when there are ties in col1.
+
+We use desc() or `-` when we want to order the observations in reverse for a column.
+
+```{r arr1, include = FALSE}
+arrange(flights, desc(arr_delay), 
+        desc(dep_delay),
+        day, month, year) %>% 
+  head(10) %>% 
+  gt()
+```
+
+```{r, echo=FALSE}
+decorate("arr1") %>% 
+  flair("desc", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+<br>
+
+Using the `-` sign instead of `desc()` yields the same results.
+
+```{r arr2, include = FALSE}
+arrange(flights, -arr_delay, 
+        -dep_delay,
+        day, month, year) %>% 
+  head(10) %>% 
+  gt()
+```
+
+```{r, echo=FALSE}
+decorate("arr2") %>% 
+  flair("-", background = "#9FDDBA", 
+        color = "#008080")
+```
+<br>
+
+### Exercises
+
+1.  How could you use `arrange()` to sort all missing values to the start? Answer found [here](https://stackoverflow.com/questions/37760580/dplyr-arrange-function-sort-by-missing-values).
+    (Hint: use `is.na()`).
+    
+    ```{r}
+    flights %>% 
+      # arrange by highest row sum of NA's
+      # observations with most NAs float to the
+      # top of the df returned
+      arrange(desc(rowSums(is.na(.))))
+    ```
+    
+    
+1.  Sort `flights` to find the most delayed flights. Find the flights that
+    left earliest.
+    ```{r}
+    arrange(flights, -dep_delay,
+            dep_time)
+    ```
+    
+
+1.  Sort `flights` to find the fastest (highest speed) flights.
+
+    ```{r}
+    arrange(flights, desc(distance/air_time))
+    
+    ```
+
+
+1.  Which flights travelled the farthest? Which travelled the shortest?
+
+- farthest
+```{r}
+# farthest
+arrange(flights, desc(distance))
+```
+
+- shortest (assuming shortest distance here in context above)
+```{r}
+arrange(flights, distance)
+```
+
+
+## Select columns
+
+<span style="color: #008080;background-color:#9FDDBA">`select()`</span>
+allows you to choose a subset of <span style="color: #008080;background-color:#9FDDBA">columns / variables</span> in your data.
+
+Let's try out some using the `penguins` data.
+
+```{r}
+as_tibble(names(penguins_raw) ) %>% 
+  gt() %>% 
+  tab_options(
+    heading.title.font.size = "small",
+    table.font.size = "small"
+  )
+```
+
+<br>
+
+- Select columns by <span style="color: #008080;background-color:#9FDDBA">name</span>
+
+```{r by_name, include=FALSE}
+select(penguins_raw, "Sample Number",
+       Island, Sex)
+```
+
+
+```{r, echo=FALSE}
+decorate("by_name") %>% 
+  flair('"Sample Number"', background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair('Island, Sex', background = "#9FDDBA", 
+        color = "#008080")  
+```
+
+- Select columns in a <span style="color: #008080;background-color:#9FDDBA">range</span>
+
+```{r range, include=FALSE}
+select(penguins_raw, 
+       "Sample Number":"Individual ID")
+```
+
+
+```{r, echo=FALSE}
+decorate("range") %>% 
+  flair(':', background = "#9FDDBA", 
+        color = "#008080")
+```
+
+- Select everything <span style="color: #008080;background-color:#9FDDBA">except for</span>
+
+```{r exceptions, include=FALSE}
+select(penguins_raw, -Comments, 
+       -(Region:"Date Egg"),
+       -ends_with("(o/oo)"))
+```
+
+```{r, echo=FALSE}
+decorate("exceptions") %>% 
+  flair('-', background = "#9FDDBA", 
+        color = "#008080")
+```
+
+- Select using helper functions (we saw one above)
+
+    * <span style="color: #008080;background-color:#9FDDBA">`starts_with("abc")`</span> : matches names that begin with "abc".
+    
+    * <span style="color: #008080;background-color:#9FDDBA">`ends_with("xyz")`</span>: matches names that end with "xyz".
+    
+    * <span style="color: #008080;background-color:#9FDDBA">`contains("ijk")`</span>: matches names that contain "ijk".
+    
+    * <span style="color: #008080;background-color:#9FDDBA">`matches("(.)\\1")`</span>: selects variables that match a regular expression.
+       This one matches any variables that contain repeated characters. You'll 
+       learn more about regular expressions in [strings].
+       
+    *  <span style="color: #008080;background-color:#9FDDBA">`num_range("x", 1:3)`</span>: matches `x1`, `x2` and `x3`.
+    
+```{r sel_helpers, include=FALSE}
+select(penguins_raw, 
+       # cols starting with "Delta"
+       starts_with("Delta")) 
+
+select(penguins_raw, 
+       # all cols except those ending with "(o/oo)"
+       -ends_with("(o/oo)"))
+
+select(penguins_raw, 
+       # all columns except those with mm
+       -contains("(mm)"))
+
+select(penguins_raw, 
+       # any cols having brackets 
+       # with letters  or / inside
+       matches("\\([a-zA-Z/]+\\)"))
+```
+
+
+```{r, echo=FALSE}
+decorate("sel_helpers") %>% 
+  flair("starts_with", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("ends_with", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("contains", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("matches", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+- Use `select()` to <span style="color: #008080;background-color:#9FDDBA">reorder columns</span>.
+
+```{r every, include=FALSE}
+# move Species, Region, Island upfront them put
+# in the rest
+select(penguins_raw, Species, Region, Island,
+       everything())
+
+```
+
+```{r, echo=FALSE}
+decorate("every") %>% 
+  flair("everything()", background = "#9FDDBA", 
+        color = "#008080") 
+
+```
+
+### Exercises
+
+1.  Brainstorm as many ways as possible to select `dep_time`, `dep_delay`,
+    `arr_time`, and `arr_delay` from `flights`.
+    
+    ```{r}
+    # by name
+    select(flights, dep_time, dep_delay,
+           arr_time, arr_delay)
+    # range
+    select(flights, dep_time:arr_delay,
+           -sched_dep_time,
+           -sched_arr_time)
+    
+    # except for
+    select(flights, -(year:day),
+           -sched_dep_time,
+           -sched_arr_time,
+           -(carrier:time_hour))
+    
+    # starts with
+    select(flights, 
+           starts_with("dep"),
+           starts_with("arr"))
+    
+    # ends with
+    select(flights, 
+           ends_with("time"),
+           ends_with("delay"),
+           -sched_dep_time,
+           -sched_arr_time,
+           -air_time)
+    
+    # contains
+    select(flights, 
+           contains("dep_"),
+           contains("arr_"), 
+           -sched_dep_time,
+           -sched_arr_time)
+    
+    # matches
+    select(flights, 
+           matches("^(dep|arr)_(delay|time)"))
+    ```
+    
+    
+1.  What happens if you include the name of a variable multiple times in
+    a `select()` call?
+    
+    Only one instance is included. 
+    If you want both variables you have to
+    rename both variables.
+    
+    ```{r select_1, include=FALSE}
+    select(penguins, species, island,
+           ends_with("mm"),
+           species,
+           body_mass_g:year)
+
+    select(penguins, species = species, island,
+           ends_with("mm"),
+           rep_species = species,
+           body_mass_g:year)        
+    ```
+    
+    ```{r, echo=FALSE}
+    decorate("select_1") %>% 
+      flair("species = species", 
+            background = "#9FDDBA", 
+            color = "#008080") %>% 
+      flair("rep_", 
+            background = "#9FDDBA", 
+            color = "#008080") 
+    ```  
+1.  What does the `one_of()` function do? Why might it be helpful in conjunction
+    with this vector?
+    
+    ```{r}
+    vars <- c("year", "month", "day", "dep_delay", "arr_delay")
+    ```
+    It selects a column if it forms a part of
+    the vector.
+    
+    ```{r}
+    select(flights,
+           one_of(vars))
+    ```
+    
+    
+1.  Does the result of running the following code surprise you?  How do the
+    select helpers deal with case by default? How can you change that default?
+
+    ```{r, eval = FALSE}
+    select(flights, contains("TIME"))
+    ```    
+    
+    The default is `ignore.case = TRUE` hence 
+    this behaviour. If you want to find the precise
+    thing you're looking for add 
+    <span style="color: #008080;background-color:#9FDDBA">`ignore.case = FALSE`</span>
+     in your helper function.
+
+
+    
+    ```{r}
+    select(flights, contains("TIME"))
+    ```
+    
+    ```{r ignore, include = FALSE}
+    select(flights, 
+           contains("TIME", 
+                    ignore.case = FALSE))
+    ```
+    
+    ```{r, echo=FALSE}
+    decorate("ignore") %>% 
+      flair("ignore.case = FALSE", 
+            background = "#9FDDBA", 
+            color = "#008080") 
+    ```
+    
+
+## Mutate  
+
+<span style="color: #008080;background-color:#9FDDBA">`mutate()`</span> 
+is the verb used to create new variables in your dataframe based on other variables in your dataset.
+
+```{r mut1, include=FALSE}
+flights_sml <- select(flights, 
+  year:day, 
+  ends_with("delay"), 
+  distance, 
+  air_time
+)
+mutate(flights_sml,
+  gain = dep_delay - arr_delay,
+  speed = distance / air_time * 60,
+  hours = air_time / 60,
+  gain_per_hour = gain / hours
+)
+```
+
+
+```{r, echo=FALSE}
+decorate("mut1") %>% 
+  flair("mutate", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+To keep the new variables only, use <span style="color: #008080;background-color:#9FDDBA">`transmute()`</span>.
+
+```{r tm, include=FALSE}
+transmute(flights,
+  gain = dep_delay - arr_delay,
+  speed = distance / air_time * 60,
+  hours = air_time / 60,
+  gain_per_hour = gain / hours
+)
+```
+
+```{r, echo=FALSE}
+decorate("tm") %>% 
+  flair("transmute", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+There are many operations you can use inside `mutate()` and `transmute()`, the key is that the function is vectorisable.
+
+Modular arithmetic: `%/%` (integer division) and `%%` (remainder) are handy tools because 
+it allows you to break integers up into pieces. For example we can compute `hour` and `minute` from `dep_time` using:
+
+```{r}
+transmute(flights,
+  dep_time,
+  hour = dep_time %/% 100,
+  minute = dep_time %% 100
+)
+```
+
+### Exercises
+
+```{r, eval = FALSE, echo = FALSE}
+flights <- flights %>% mutate(
+  dep_time = hour * 60 + minute,
+  arr_time = (arr_time %/% 100) * 60 + (arr_time %% 100),
+  airtime2 = arr_time - dep_time,
+  dep_sched = dep_time + dep_delay
+)
+ggplot(flights, aes(dep_sched)) + geom_histogram(binwidth = 60)
+ggplot(flights, aes(dep_sched %% 60)) + geom_histogram(binwidth = 1)
+ggplot(flights, aes(air_time - airtime2)) + geom_histogram()
+```
+
+1.  Currently `dep_time` and `sched_dep_time` are convenient to look at, but
+    hard to compute with because they're not really continuous numbers. 
+    Convert them to a more convenient representation of number of minutes
+    since midnight.
+    
+    ```{r mut_ex1, include=FALSE}
+    flights %>% 
+      select(dep_time, 
+                       sched_dep_time, time_hour)
+    
+    mutate(flights,
+           minutes_since_00 = 
+             # get int hr and mult by 60 to 
+             # get hours converted to minutes.
+             (dep_time %/% 100) * 60 + 
+             (dep_time %% 100)) # add minutes
+    
+    flights %>% 
+      select(dep_time, 
+             sched_dep_time, time_hour) %>% 
+      filter(dep_time == 2400 | dep_time == 0) %>% 
+      mutate(minutes_since_00 = 
+             # get int hr and mult by 60 to 
+             # get hours converted to minutes.
+             (dep_time %/% 100) * 60 + 
+             (dep_time %% 100)) # add minutes
+    ```
+    
+    ```{r, echo=FALSE}
+    decorate("mut_ex1") %>% 
+      flair("mutate", background = "#9FDDBA", 
+            color = "#008080") %>% 
+      flair("minutes_since_00 = ", 
+            background = "#9FDDBA", 
+            color = "#008080")
+    ```    
+    We see that the flights have midnight flights 
+    as 2400 and there's none that are marked as 0.
+    So we can change all 2400 to 0. We will learn 
+    the `if_else()` construct later on, for now 
+    it follows the syntax 
+    
+    <pre>
+      if_else(condition,
+              do_this_if_condition_met_true,
+              do_this_otherwise)
+    </pre>              
+
+    ```{r mut_ex2, include=FALSE}
+    flights_mut2 <- mutate(flights, 
+           # if dep_time == 2400 (i.e. midnights)
+           # convert it to 0, else we keep the orig
+           # dep_time
+           dep_time = if_else(dep_time == 2400, 
+                              as.integer(0),
+                              as.integer(dep_time)),
+           sched_dep_time = 
+             if_else(sched_dep_time == 2400,
+                      as.integer(0),
+                      as.integer(sched_dep_time)),
+           minutes_dep_time = 
+             (dep_time %/% 100) * 60 + 
+             (dep_time %% 100),
+           minutes_sched_dep_time = 
+             (sched_dep_time %/% 100) * 60 + 
+             (sched_dep_time %% 100))
+    
+    flights_mut2 %>% 
+      select(dep_time, sched_dep_time,
+             minutes_dep_time,
+             minutes_sched_dep_time) %>% 
+      head(10)
+    
+    flights_mut2 %>% 
+      select(dep_time, sched_dep_time,
+             minutes_dep_time,
+             minutes_sched_dep_time) %>% 
+      filter(dep_time == 0 | 
+               sched_dep_time == 0) %>% 
+      head(10)      
+    ```
+    
+    ```{r, echo=FALSE}
+    decorate("mut_ex2") %>% 
+      flair("if_else", background = "#9FDDBA", 
+            color = "#008080") %>% 
+      flair("minutes_dep_time = ", 
+            background = "#9FDDBA", 
+            color = "#008080") %>% 
+      flair("minutes_sched_dep_time = ", 
+            background = "#9FDDBA", 
+            color = "#008080")
+    ```       
+    
+    
+1.  Compare `air_time` with `arr_time - dep_time`. What do you expect to see?
+    What do you see? What do you need to do to fix it?
+    
+    ```{r}
+    flights %>% 
+      select(air_time,
+             arr_time,
+             dep_time) %>% 
+      mutate(diff_time = arr_time - dep_time)
+    
+    ```
+    We see that just taking the difference 
+    between these times is misleading. Maybe we need
+    to do the same as before, convert these to
+    minutes since midnight before taking the
+    difference? `r emo::ji("shrug")`
+    
+    ```{r}
+    flights_mut2 <- mutate(flights_mut2,
+                           arr_time = 
+                             if_else(arr_time == 2400, 
+                                  as.integer(0),
+                                  as.integer(arr_time)),
+                     minutes_arr_time = 
+                       (arr_time %/% 100) * 60 + 
+                       (arr_time %% 100),
+                     diff_time = 
+                       minutes_arr_time - 
+                       minutes_dep_time,
+                     diff_in_metrics =
+                       air_time - diff_time
+                     )
+  flights_mut2 %>% 
+      select(origin,
+             dest, 
+             air_time,
+             arr_time,
+             dep_time,
+             minutes_arr_time,
+             minutes_dep_time,
+             diff_time, 
+             diff_in_metrics) %>% 
+      head(10) %>% 
+      gt()
+
+    ```
+    <br>
+    
+    Not quite, we see. So what else could be 
+    the difference? It could be that the arrival
+    time is the local time at the destination. For
+    example the time difference between New York and
+    Houston is 1 hour. Houston is 1 hour behind New
+    York. But upon checking the first couple some
+    airports share the same timezone so I am a 
+    bit perplexed to tell the truth. E.g. the 3rd
+    entry and the 4th entry, upon googling, suggests
+    these are the same timezones? 
+    `r emo::ji("confused")`
+    
+1.  Compare `dep_time`, `sched_dep_time`, and `dep_delay`. How would you
+    expect those three numbers to be related?
+    
+    I would expect that: 
+    
+    > dep_delay = dep_time - sched_dep_time
+    
+    ```{r}
+    flights_mut3 <- mutate(flights_mut2,
+           dep_delay_test = minutes_dep_time - 
+             minutes_sched_dep_time) %>% 
+      select(dep_time,
+             sched_dep_time,
+             minutes_dep_time,
+             minutes_sched_dep_time,
+             dep_delay, dep_delay_test)
+    
+    flights_mut3
+    
+    flights_mut3 %>% 
+      filter(dep_delay != dep_delay_test)
+    ```
+    
+    This does seem to be the case for most flights
+    except for flights that were delayed overnight.
+    To cater for these we'd need to work out 
+    whether the flight departed on the same day.
+    If they departed on different days we would find
+    how many minutes left to midnight, and then subtract the 
+    scheduled dep time from this and add to the
+    departure time to get the delay.
+    
+    ```{r}
+    
+    flights_mut2 %>% 
+      filter(dep_delay < 0) %>% 
+      arrange((dep_delay)) %>% 
+      head(4) %>% 
+      gt()
+    
+    flights_mut3 <- mutate(flights_mut2,
+               dep_delay_test = 
+                 if_else(
+                   (minutes_dep_time >=
+                    minutes_sched_dep_time) |
+                   (minutes_dep_time -
+                     minutes_sched_dep_time ) > -45,
+                 minutes_dep_time - 
+                  minutes_sched_dep_time,
+                 24*60 - minutes_sched_dep_time +
+                   minutes_dep_time)) %>% 
+          select(dep_time,
+                 sched_dep_time,
+                 minutes_dep_time,
+                 minutes_sched_dep_time,
+                 dep_delay, dep_delay_test)
+          
+    flights_mut3
+        
+    flights_mut3 %>% 
+        filter(dep_delay != dep_delay_test) %>% 
+      head(10) %>% 
+      gt()
+    
+    ```
+    <br>
+    The above checks the biggest difference for those
+    flights that had dep_delay < 0. _Note: This is a bit
+    hacky. Best approach is to compare dates but 
+    both the year-month-day and time_hour reflect the
+    same date._
+
+    
+1.  Find the 10 most delayed flights using a ranking function. How do you want 
+    to handle ties? Carefully read the documentation for `min_rank()`.
+    
+    ```{r}
+    
+    mutate(flights,
+           rank = min_rank(desc(dep_delay))) %>% 
+      arrange(rank) %>% 
+      head(10) %>% 
+      gt()
+    
+    
+    ```
+    <br>
+    
+1.  What does `1:3 + 1:10` return? Why?
+    
+    ```{r}
+    1:3 + 1:10
+    ```
+    
+    The vector that is shorter gets recycled.
+    
+    So essentially it is outputting:
+    
+    ```{r}
+    df <- data.frame(a = c(rep(1:3,3), 1),
+                     b = 1:10)
+    df %>% 
+      mutate(c = a + b) %>% 
+      gt()
+    ```
+
+1.  What trigonometric functions does R provide?
+    
+    It provides pretty much all the trig functions. [Here](
+    https://stat.ethz.ch/R-manual/R-devel/library/base/html/Trig.html
+    ) is a list.
+  
+## Grouped summaries with `summarise()`/`summarize()`
+
+If you need to find out the maximum of a certain variable, or the mean, median, minimum etc. you use `summarise()`. `na.rm = TRUE` means exclude the NA values then get the summary stat. I added a simple example in the code below.
+Notice that when we have NAs in our dataset and then we take a mean, the result is NA. If there are NAs in the input, there are NAs in the output. The `na.rm = TRUE`
+helps us by ignoring the NA values, and getting the summary stat for the non NA values here.
+
+```{r}
+summarise(flights, delay = mean(dep_delay, na.rm = TRUE))
+
+summarise(flights,
+          n = n(),
+          biggest_dep_delay = max(dep_delay, na.rm = TRUE),
+          biggest_arr_delay = max(arr_delay, na.rm = TRUE))
+
+# Why use na.rm?
+test = c(3, 3, 6, 6, NA, NA)
+mean(test)
+mean(test, na.rm = TRUE)
+```
+
+Did you see that when we used `mean(test, na.rm = TRUE)` we got a result of 4.5, 
+which is $(3 + 3+ 6 + 6)/4$. I.e. the NA values are removed and the count that
+forms the denominator is also updated.
+
+Summary stats are most often valuable when we look across groups. For example,
+let's say we wanted to know the median bill length of penguins based on species and sex. We first group by species and sex since we're interested to see how the
+stats change based on species and whether the penguin is male/female. When I ran it the first time there were some species that had sex == NA, so I removed the NA values from the penguin dataset before grouping it.
+
+```{r peng_sum1, include=FALSE}
+
+by_species_sex <- group_by(drop_na(penguins), species, sex)
+summarise(by_species_sex,
+          med_bill_length_mm = median(bill_length_mm, na.rm = TRUE),
+          med_bill_depth_mm = median(bill_depth_mm, na.rm = TRUE),
+          med_flipper_length_mm = median(flipper_length_mm, na.rm = TRUE),
+          med_body_mass_g = median(body_mass_g, na.rm = TRUE)) %>% 
+gt()
+
+```
+
+```{r, echo=FALSE}
+decorate("peng_sum1") %>% 
+    flair("group_by", background = "#9FDDBA", 
+        color = "#008080") %>% 
+    flair(" species", background = "#9FDDBA", 
+        color = "#008080") %>% 
+    flair(" sex", background = "#9FDDBA", 
+        color = "#008080") %>% 
+    flair("summarise", background = "#9FDDBA", 
+        color = "#008080") %>% 
+    flair("median", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+## The pipe: %>%
+
+The book uses an example with flights, here we add a new example with the
+penguins data set. As pointed out in the book, it is a bit tedious,
+and arguably doesn't flow very well, or read particularly well the first way.
+
+Hence the pipe! The pipe is more inuitive for me, and as discussed previously
+can be read as _as then_.
+
+### More onerous way
+
+```{r, fig.width = 6}
+by_species <- group_by(drop_na(penguins), species, sex)
+measures <- summarise(by_species,
+  count = n(),
+  med_bill_length_mm = median(bill_length_mm, na.rm = TRUE),
+  med_bill_depth_mm = median(bill_depth_mm, na.rm = TRUE),
+  med_flipper_length_mm = median(flipper_length_mm, na.rm = TRUE),
+  med_body_mass_g = median(body_mass_g, na.rm = TRUE)
+)
+
+ggplot(data = measures, mapping = aes(x = med_body_mass_g, 
+                                      y = med_flipper_length_mm)) +
+  geom_point(aes(size = count), alpha = 1/3) 
+```
+
+### Using the pipe %>%
+
+```{r}
+penguins %>% 
+  drop_na() %>% 
+  group_by(species, sex) %>% 
+  summarise(count = n(),
+  med_bill_length_mm = median(bill_length_mm, na.rm = TRUE),
+  med_bill_depth_mm = median(bill_depth_mm, na.rm = TRUE),
+  med_flipper_length_mm = median(flipper_length_mm, na.rm = TRUE),
+  med_body_mass_g = median(body_mass_g, na.rm = TRUE)) %>% 
+  ggplot(mapping = aes(x = med_body_mass_g, 
+                                      y = med_flipper_length_mm)) +
+  geom_point(aes(size = count), alpha = 1/3) 
+```
+
+```{r, echo = FALSE, eval = FALSE}
+# Hidden parts of code - replicated in R4DS, and 
+# coded by hand for practice!
+flights %>% 
+  group_by(dest) %>% 
+  summarise(count = n(),
+            dist = mean(distance, na.rm = TRUE),
+            delay = mean(arr_delay, na.rm = TRUE)) %>% 
+  filter(count > 20, dest != "HNL")
+```
+
+```{r, echo = FALSE, eval = FALSE}
+# Hidden parts of code - replicated in R4DS, and 
+# coded by hand for practice!
+starwars %>% 
+  select(gender, height, mass, species) %>% 
+  filter(species == "Human") %>% 
+  drop_na() %>% 
+  mutate(
+    # convert height to meters instead of cm
+    height = height / 100,
+    BMI = mass / height ^ 2
+  ) %>% 
+  group_by(gender) %>% 
+  summarise(avg_bmi = mean(BMI))
+```
+
+```{r, echo = FALSE, eval = FALSE}
+# Hidden parts of code - replicated in R4DS, and 
+# coded by hand for practice!
+
+not_cancelled <- flights %>% 
+  filter(!is.na(dep_delay),
+         !is.na(arr_delay))
+
+# na's already removed
+not_cancelled %>% 
+  group_by(year, month, day) %>% 
+  summarise(mean_dep = mean(dep_delay))
+```
+
+## Counts
+
+- `n()` which produces a count and,
+- `sum(is.na(some_variable))` gives you the NA sum of data.
+
+```{r}
+penguins %>% 
+  group_by(species) %>% 
+  summarise(count = n())
+
+# how many missing data in certain characteristics?
+penguins %>% 
+  select(species, body_mass_g) %>% 
+  group_by(species) %>% 
+  summarise(count = sum(is.na(body_mass_g)))
+
+# how many missing data in certain characteristics?
+penguins %>% 
+  select(species, bill_length_mm) %>% 
+  group_by(species) %>% 
+  summarise(count = sum(is.na(bill_length_mm)))
+```
+
+```{r, echo = FALSE, eval = FALSE}
+# Hidden parts of code - replicated in R4DS, and 
+# coded by hand for practice!
+
+delays <- not_cancelled %>% 
+  group_by(tailnum) %>% 
+  summarise(delay = mean(arr_delay))
+
+ggplot(data = delays, mapping = aes(x = delay)) +
+  geom_freqpoly(binwidth = 10)
+
+# The plot shows that there are some plots that average
+# more than 5 hours delay!
+# But the story is more nuanced. There is a small number with
+# high delays
+
+delays <- not_cancelled %>% 
+  group_by(tailnum) %>% 
+  summarise(delay = mean(arr_delay, na.rm = TRUE),
+            n = n())
+
+ggplot(data = delays, mapping = aes(x = n, y = delay)) +
+  geom_point(alpha = 1/10)
+
+# The variation in the delays when there are few flights is much more 
+# pronounced.
+
+# we can combine some dplyr and ggplot wrangling
+# to see the true variation better.
+
+delays %>% 
+  filter(n > 65) %>% 
+  ggplot(aes(x = n, y = delay)) +
+  geom_point(alpha = 1/10)
+
+# Batting average vs Number of times they bat
+batting <- as_tibble(Lahman::Batting)
+
+batters <- batting %>% 
+  group_by(playerID) %>% 
+  summarise(
+    ba = sum(H, na.rm = TRUE) / sum(AB, na.rm = TRUE),
+    ab = sum(AB, na.rm = TRUE)
+  )
+
+batters %>% 
+  filter(ab > 100) %>% 
+  ggplot(mapping = aes(x = ab, y = ba)) +
+  geom_point() +
+  geom_smooth(se = FALSE)
+```
+
+## Useful summary Functions
+
+### Measures of Location (mean, median etc.)
+
+- Median: `median(x) is the value of x where 50% of the variable x
+lies above that value, and 50% of the variable x lies below that value.
+
+```{r}
+not_cancelled <- flights %>% 
+  filter(!is.na(dep_delay),
+         !is.na(arr_delay))
+
+not_cancelled %>% 
+  group_by(year, month, day) %>% 
+  summarise(
+    # avg_delay
+    avg_delay1 = mean(arr_delay),
+    # avg positive delay - filter our only positive arrival delay
+    avg_delay2 = mean(arr_delay[arr_delay > 0])
+  )
+```
+
+### Measures of spread (sd, IQR etc.)
+
+- Standard deviation: sd() measures the spread of a variable, the
+larger the sd the more dispersed the data.
+- Inter Quartile Range: IQR() measures the spread in the middle -
+i.e. it measures the spread in the middle 50% of the variable. The measure
+is useful if there are outliers. $IQR = Q{3} - Q{1}$.
+- Median Absolute Devaition: mad() measures how far each point is from the
+median of the variable in absolute terms.
+- Need the Mean Absolute Deviation: That can be found in the [DescTools](https://rdrr.io/cran/DescTools/man/MeanAD.html) package.
+
+```{r}
+not_cancelled %>% 
+  group_by(dest) %>% 
+  summarise(dist_sd = sd(distance),
+            dist_iqr = IQR(distance),
+            dist_mad = mad(distance)) %>% 
+  arrange(desc(dist_sd))
+```
+
+
+
+
+
+
+
+
+
+
+
+

@@ -798,6 +798,17 @@ ggplot(data = diamonds) +
     [`identity`](https://ggplot2.tidyverse.org/reference/stat_identity.html)
     which does __NOT__ change the data.
     
+    In the code below you will see a new operation that we have not talked about:
+    `%>%` which is called the pipe operator, we tackle this later in R4DS. For now
+    when you see _%>%_ read it as `and then` e.g. _Take this df **and then** group
+    it by this criterion, **and then** show me a summary._
+    
+    <pre>
+      df <span style="color: #008080;background-color:#9FDDBA">%>%</span> 
+        group_by(this_characteristic) <span style="color: #008080;background-color:#9FDDBA">%>%</span> 
+        summary(mean_characteristic = mean(characteristic))
+    </pre>
+    
     ```{r}
     ggplot(data = diamonds) +
       geom_pointrange(mapping = aes(x = cut, y = depth),

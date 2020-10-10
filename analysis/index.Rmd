@@ -8,13 +8,31 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my exam prep website.
+Welcome to my exam prep website. The chapters follow the printed version
+of `R for Data Science` which is [online](https://r4ds.had.co.nz/) as well.
+
+<strong>Assumptions:</strong>
+- You have worked through the material in the physical or online book.
+- You have attempted the exercises yourself. Learning by practicing
+is a really great way to get acclimatised to the language.
+- You understand that like you, I too am on a journey of learning, and therefore 
+will be kind with mistakes you may pick up. 
+That being said, I know there's many
+ways to tackle problems in R and I never want to put out material that is
+fundamentally flawed, so please do let [me](https://twitter.com/sciencificity) know if I have some glaring incorrect content contained within!
+
+<b>Resources I really enjoyed:</b>
+
+- [R for Data Science Community](https://www.rfordatasci.com/)
+- [R Studio Education](https://education.rstudio.com/)
+- [Primers](https://rstudio.cloud/learn/primers)
 
 ### Chapter Exercises
 
-[Chapter 1: Data Viz with ggplot](ch1_ggplot.html) <br>
+[Chapter 1:  Data Viz with ggplot](ch1_ggplot.html) <br>
 [Chapter 2:  Workflow Basics](ch2_workflow.html) <br>
-
+[Chapter 3:  Data Transformation](ch3_dplyr.html) <br>
+[Chapter 4:  Workflow - Scripts](ch4_scripts_ide.html) <br>
 
 ### Miscellaneous
 
