@@ -82,23 +82,38 @@ Do you know the name of the file you're looking for but no idea where in the fol
 <img src="assets/tip3.gif" alt="Find/Search in RStudio" width="800" height="450">
 
 ### Code snippets
+
 <span style="color: #008080;background-color:#9FDDBA">__In Tools -> Global Options -> Code__</span> you will find a list of code snippets.
 
 <img src="assets/tip5.gif" alt="Code snippets" width="800" height="450">
 
 
 ### History Commands
+
 <span style="color: #008080;background-color:#9FDDBA">__Ctrl + Up Arrow__</span> in the console shows you a list of your previous commands.
 
 <img src="assets/tip6.gif" alt="Historical commands" width="800" height="450">
 
-### Turn code into a function
+### Miscellaneous
+
 <span style="color: #008080;background-color:#9FDDBA">__Extract Function__</span> allows you to turn code into a function.
 
 <img src="assets/tip7.gif" alt="Extract Function" width="800" height="450">
+
+### Rename in scope
+
+<span style="color: #008080;background-color:#9FDDBA">__Ctrl + Shift + Alt + M__</span> allows you to rename a variable in scope.
+
+<img src="assets/rename_var.gif" alt="Rename variable" width="800" height="450">
 
 ### Find your own fave shortcut
 
 To open the Shortcuts menu hold down <span style="color: #008080;background-color:#9FDDBA">__Alt + Shift + K__</span> 
 
 <img src="assets/shortcuts_menu.gif" alt="create a new outline element" width="700" height="450">
+
+## Diagnostics
+
+The RStudio IDE has updates as time passes. Check out [here](https://support.rstudio.com/hc/en-us/articles/205753617-Code-Diagnostics) for the one I looked at.
+
+You can do a search in Google for `RStudio diagnostics`.

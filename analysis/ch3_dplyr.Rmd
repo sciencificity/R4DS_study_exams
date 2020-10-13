@@ -17,6 +17,10 @@ library(palmerpenguins)
 library(gt)
 library(skimr)
 library(emo)
+library(tidyquant)
+library(lubridate)
+library(magrittr)
+theme_set(theme_tq())
 ```
 
 
@@ -1286,7 +1290,7 @@ larger the sd the more dispersed the data.
 - Inter Quartile Range: IQR() measures the spread in the middle -
 i.e. it measures the spread in the middle 50% of the variable. The measure
 is useful if there are outliers. $IQR = Q{3} - Q{1}$.
-- Median Absolute Devaition: mad() measures how far each point is from the
+- Median Absolute Deviation: mad() measures how far each point is from the
 median of the variable in absolute terms.
 - Need the Mean Absolute Deviation: That can be found in the [DescTools](https://rdrr.io/cran/DescTools/man/MeanAD.html) package.
 
@@ -1298,6 +1302,502 @@ not_cancelled %>%
             dist_mad = mad(distance)) %>% 
   arrange(desc(dist_sd))
 ```
+
+### Measures of rank - min() etc.
+
+- min(), max(), quantile(x, 0.75)
+- quantiles: quantile(x, 0.25) will find the value of x which is larger than 25% of the values, but less than the remaining 75%.
+
+```{r}
+not_cancelled %>% 
+  group_by(year, month, day) %>% 
+  summarise(
+    first = min(dep_time),
+    last = max(dep_time)
+  )
+```
+
+### Measures of position - first() etc.
+
+- first() - i.e. x[1]
+- nth(x, 2) - i.e. x[2]
+- last(x) - i.e. x[length[x]]
+- If the position does not exist, you may supply a default.
+
+```{r}
+not_cancelled %>% 
+  group_by(year, month, day) %>% 
+  summarise(
+    first = first(dep_time),
+    last = last(dep_time)
+  )
+```
+
+```{r}
+not_cancelled %>% 
+  group_by(year, month, day) %>% 
+  # min_rank is like rank but for ties the method is min
+  mutate(r = min_rank(desc(dep_time))) %>% 
+  filter(r %in% range(r))
+```
+
+### Counts
+
+We have used n(), now we also have:
+
+- count(x): raw counts in each category of x
+- n_distinct(x): unique values in x
+
+```{r}
+# Find distinct number of carriers at each dest
+# and sort by highest to lowest
+not_cancelled %>% 
+  group_by(dest) %>% 
+  summarise(num_carrier = n_distinct(carrier)) %>% 
+  arrange(desc(num_carrier))
+
+# counts are also useful
+not_cancelled %>% 
+  count(dest)
+
+# adding sort = TRUE puts the biggest counts at the top
+not_cancelled %>% 
+  count(dest, sort = TRUE)
+
+# can add weighted counts
+not_cancelled %>% 
+  count(tailnum, wt = distance)
+
+# sum of logical values gives number of occurrences
+# where something is TRUE
+# How many flights were early, say before 5AM?
+not_cancelled %>% 
+  group_by(year, month, day) %>% 
+  summarise(n_early = sum(dep_time < 500))
+
+# mean of logical values gives a proportion
+# how many flights were delayed more than an hour?
+not_cancelled %>% 
+  group_by(year, month, day) %>% 
+  summarise(hour_prop = mean(arr_delay > 60))
+```
+
+### Grouping by Multiple Variables
+
+When you group by multiple variables, each summary peels off one level of the grouping. It makes it easy to progressively roll up a dataset, but it should be used with sums and counts and not with medians etc.
+
+```{r}
+daily <- group_by(flights, year, month, day)
+# count flights per day
+(per_day   <- summarise(daily, flights = n()))
+# count flights per month
+(per_month <- summarise(per_day, flights = sum(flights)))
+# count flights per year
+(per_year  <- summarise(per_month, flights = sum(flights)))
+```
+
+### Ungrouping
+
+You can remove grouping as well.
+
+```{r}
+daily %>% 
+  ungroup() %>%             # no longer grouped by date
+  summarise(flights = n())  # count all flights
+```
+
+### Exercises
+
+1.  Brainstorm at least 5 different ways to assess the typical delay 
+    characteristics of a group of flights. Consider the following scenarios:
+    
+    * A flight is 15 minutes early 50% of the time, and 15 minutes late 50% of 
+      the time.
+      
+    * A flight is always 10 minutes late.
+
+    * A flight is 30 minutes early 50% of the time, and 30 minutes late 50% of 
+      the time.
+      
+    * 99% of the time a flight is on time. 1% of the time it's 2 hours late.
+    
+    Which is more important: arrival delay or departure delay?
+    
+    I think arrival delay is more important especially since many people have 
+    connecting flights. I would guess it would be more important in typical
+    connection airports e.g. Atlanta, Los Angeles, international airports like 
+    Dubai, Qatar, Heathrow etc. as it is often an area which travellers 
+    pass through.
+    
+    ```{r}
+    # The flights data has local flights within the US
+    flights %>% 
+      count(carrier, sort = TRUE)
+    
+    flights %>% 
+      count(dest, sort = TRUE)
+    
+    # Let's have a look at the busiest airports
+    # It has changed a bit from our data of 2013
+    # https://en.wikipedia.org/wiki/List_of_the_busiest_airports_in_the_United_States
+    flights %>% 
+      filter(dest %in% c('ATL', 'LAX', 'ORD', 'BOS',
+                         'MCO')) %>% 
+      count(dest, sort = TRUE)
+    
+    top5_dests <- flights %>% 
+      add_count(dest, sort = TRUE, name = 'count') %>% 
+      select(dest, count) %>% 
+      count(dest, sort = TRUE) %>% 
+      slice_max(n, n = 5)
+    
+    top_dests <- flights %>% 
+      filter(dest %in% c(top5_dests %>% select(dest))$dest)
+    
+    top_dests %>% 
+      pivot_longer(cols = c(arr_delay, dep_delay),
+                   names_to = "metric",
+                   values_to = "value") %>% 
+      ggplot(aes(value, fill = dest)) +
+      geom_density(alpha = 0.5) +
+      facet_wrap(dest ~ metric, 
+                 scales = "free",
+                 nrow = 3)
+    
+    ```
+    
+
+1.  Come up with another approach that will give you the same output as 
+    `not_cancelled %>% count(dest)` and 
+    `not_cancelled %>% count(tailnum, wt = distance)` (without using 
+    `count()`).
+    
+    ```{r}
+    
+    not_cancelled %>% count(dest)
+    
+    # Alt:
+    not_cancelled %>% 
+      group_by(dest) %>% 
+      summarise(n = n())
+    
+    not_cancelled %>% count(tailnum, wt = distance)
+    
+    # Alt:
+    not_cancelled %>% 
+      group_by(tailnum) %>% 
+      summarise(n = sum(distance))
+    
+    ```
+    
+
+1.  Our definition of cancelled flights (`is.na(dep_delay) | is.na(arr_delay)`
+    ) is slightly suboptimal. Why? Which is the most important column?
+    
+    On first thought I would assume that the dep_delay is most important since if
+    it is null I would assume that is an indication of a cancellation.
+    
+    ```{r}
+    
+    # Okay let's look at the NAs in each column
+    flights %>% 
+      select(dep_delay, arr_delay, air_time) %>% 
+      summarise_all(~ sum(is.na(.)))
+    
+    ```
+    
+    Okay, so the arr_delay count of NAs is larger and is the same as the NULLs
+    in air_time. What could be the reason for arr_delay NULLs being larger than
+    dep_delay NULLs?
+    One could be [crashes](https://en.wikipedia.org/wiki/Category:Aviation_accidents_and_incidents_in_the_United_States_in_2013) 
+    but there does not seem to be crashes from flights originating out of NY. 
+    The other could be diverted
+    [flights](https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236).
+    I therefore think we need to have a definition of what is considered 
+    cancelled? If diversions are considered cancelled then the arr_delay being NULL
+    is more important, if diversions are not included the dep_delay being NULL
+    should be considered. Without talking to an aviation expert I looked at a 
+    wikipedia page that seems to suggest that cancellations are that the 
+    [airline does not operate the flight __at all__ for a certain reason](https://en.wikipedia.org/wiki/Flight_cancellation_and_delay#:~:text=A%20cancellation%20occurs%20when%20the,all%20for%20a%20certain%20reason.&text=Airlines%20are%20required%20to%20pay,their%20control%2C%20such%20as%20weather.)
+    
+
+1.  Look at the number of cancelled flights per day. Is there a pattern?
+    Is the proportion of cancelled flights related to the average delay?
+    
+    ```{r}
+    # Keeping to the definition of cancellations being either 
+    # true non-flights and diversions
+    cancelled <- flights %>% 
+      filter(is.na(dep_delay) | is.na(arr_delay))
+    
+    cancelled <- cancelled %>% 
+      group_by(year, month, day) %>% 
+      summarise(num_cancelled = n())
+    
+    avg_delays <- flights %>% 
+      group_by(year, month, day) %>% 
+      summarise(num_flights_on_day = n(),
+                avg_dep_delay = mean(dep_delay[dep_delay > 0], na.rm = TRUE),
+                avg_arr_delay = mean(arr_delay[arr_delay > 0], na.rm = TRUE))
+    
+    # we haven't seen this yet but this joins the two datasets
+    # so we can analyse it
+    # For now consider inner_join as tagging on columns for avg_delays onto
+    # cancelled where the cancelled.year = avg_delays.year, 
+    # cancelled.month = avg_delays.month and cancelled.day = avg_delays.day
+    cancelled %>% 
+      inner_join(avg_delays) %>% 
+      # here again we use a function that we have not seen yet
+      # we make a date using the {lubridate} from the
+      # components of the date - year, month, day
+      mutate(date = make_date(year, month, day),
+             prop_cancelled = num_cancelled / num_flights_on_day) %>% 
+      pivot_longer(cols = c(num_cancelled, prop_cancelled, num_flights_on_day,
+                            avg_dep_delay, avg_arr_delay),
+                   names_to = "metric",
+                   values_to = "value") %>% 
+      ggplot(aes(x = date, y = value, fill = metric)) +
+      geom_point() +
+      labs(title = "Number of delayed flights and the average delay on the day",
+           y = "Measure of Metric") +
+      facet_wrap(~ metric, scales = "free_y") +
+      geom_smooth(se = FALSE)
+    
+    ```
+    If you look at the proportion of cancelled flights it does seem
+    as though this increases the average delays experienced.
+    
+
+1.  Which carrier has the worst delays? 
+    
+    ```{r}
+    
+    flights %>% 
+      mutate(avg_delay = mean(dep_delay, na.rm=TRUE)) %>% 
+      group_by(carrier) %>% 
+      mutate(avg_delay_carrier = mean(dep_delay, na.rm = TRUE)) %>% 
+      select(carrier, avg_delay, avg_delay_carrier) %>% 
+      distinct() %>% 
+      filter(avg_delay_carrier > avg_delay) %>% 
+      arrange(-avg_delay_carrier)
+    
+    flights %>% 
+      mutate(avg_arr_delay = mean(arr_delay, na.rm=TRUE)) %>% 
+      group_by(carrier) %>% 
+      mutate(avg_arr_delay_carrier = mean(arr_delay, na.rm = TRUE)) %>% 
+      select(carrier, avg_arr_delay, avg_arr_delay_carrier) %>% 
+      distinct() %>% 
+      filter(avg_arr_delay_carrier > avg_arr_delay) %>% 
+      arrange(-avg_arr_delay_carrier)
+    
+    ```
+    Challenge: can you disentangle the
+    effects of bad airports vs. bad carriers? Why/why not? (Hint: think about
+    `flights %>% group_by(carrier, dest) %>% summarise(n())`)
+    
+    ```{r}
+    flights %>% 
+      group_by(carrier, dest) %>% 
+      summarise(n())
+    
+    
+    # 3 origins
+    flights %>% 
+      count(origin, sort = TRUE)
+    
+    # many destinations
+    flights %>% 
+      count(dest, sort = TRUE)
+    
+    # how many carriers
+    flights %>% 
+      count(carrier, sort = TRUE)
+    
+    flights %>% 
+      count(carrier, dest, sort = TRUE) %>% 
+      slice_max(n = 25, order_by = n) %>% 
+      gt()
+    
+    # how many combos of carrier and dest?
+    (dests <- flights %>% 
+      distinct(carrier, dest))
+    # notice every carrier does not fly to every destination
+    
+    across_all <- flights %>% 
+      mutate(avg_arr_delay = mean(arr_delay[arr_delay>0], 
+                                  na.rm = TRUE),
+             med_arr_delay = median(arr_delay[arr_delay>0], 
+                                    na.rm = TRUE)) %>% 
+      group_by(carrier) %>% 
+      mutate(avg_carrier_arr_delay = mean(arr_delay[arr_delay>0], 
+                                          na.rm = TRUE),
+             med_carrier_arr_delay = median(arr_delay[arr_delay>0], 
+                                            na.rm = TRUE)) %>% 
+      ungroup() %>% 
+      group_by(dest) %>% 
+      mutate(avg_dest_arr_delay = mean(arr_delay[arr_delay>0], 
+                                          na.rm = TRUE),
+             med_dest_arr_delay = median(arr_delay[arr_delay>0], 
+                                            na.rm = TRUE)) %>% 
+      ungroup() %>% 
+      group_by(carrier, dest) %>% 
+      mutate(avg_cd_arr_delay = mean(arr_delay[arr_delay>0], 
+                                          na.rm = TRUE),
+             med_cd_arr_delay = median(arr_delay[arr_delay>0], 
+                                            na.rm = TRUE)) %>% 
+      ungroup() %>% 
+      select(carrier, dest, avg_arr_delay, avg_carrier_arr_delay,
+             avg_dest_arr_delay, avg_cd_arr_delay,
+             med_arr_delay, med_carrier_arr_delay,
+             med_dest_arr_delay, med_cd_arr_delay) %>% 
+      arrange(desc(avg_cd_arr_delay), -med_cd_arr_delay) %>% 
+      distinct() 
+    
+    across_all%>% 
+      head(25) %>% 
+      gt()
+    
+    
+    across_all %>% 
+      count(carrier, sort = TRUE)
+    
+    across_all %>% 
+      count(dest, sort=TRUE)
+    
+    across_all_dep <- flights %>% 
+      mutate(avg_dep_delay = mean(dep_delay[dep_delay>0], 
+                                  na.rm = TRUE),
+             med_dep_delay = median(dep_delay[dep_delay>0], 
+                                    na.rm = TRUE)) %>% 
+      group_by(carrier) %>% 
+      mutate(avg_carrier_dep_delay = mean(dep_delay[dep_delay>0], 
+                                          na.rm = TRUE),
+             med_carrier_dep_delay = median(dep_delay[dep_delay>0], 
+                                            na.rm = TRUE)) %>% 
+      ungroup() %>% 
+      group_by(origin) %>% 
+      mutate(avg_dest_dep_delay = mean(dep_delay[dep_delay>0], 
+                                          na.rm = TRUE),
+             med_dest_dep_delay = median(dep_delay[dep_delay>0], 
+                                            na.rm = TRUE)) %>% 
+      ungroup() %>% 
+      group_by(carrier, origin) %>% 
+      mutate(avg_cd_dep_delay = mean(dep_delay[dep_delay>0], 
+                                          na.rm = TRUE),
+             med_cd_dep_delay = median(dep_delay[dep_delay>0], 
+                                            na.rm = TRUE)) %>% 
+      ungroup() %>% 
+      select(carrier, origin, avg_dep_delay, avg_carrier_dep_delay,
+             avg_dest_dep_delay, avg_cd_dep_delay,
+             med_dep_delay, med_carrier_dep_delay,
+             med_dest_dep_delay, med_cd_dep_delay) %>% 
+      arrange(desc(avg_cd_dep_delay), -med_cd_dep_delay) %>% 
+      distinct()  
+    
+    across_all_dep %>% 
+      head(25) %>% 
+      gt()
+    
+    across_all_dep %>% 
+      count(carrier, sort = TRUE)
+    
+    across_all_dep %>% 
+      count(origin, sort=TRUE)
+    ```
+    <br>
+    
+    There does seem more of a delay based on carrier than on airport
+    but I can't put much faith in this since I did not do a thorough
+    investigation - for example 
+    some carriers had more flights, some destinations are busier.
+    We should therefore look at proportions of all flights maybe, and
+    there are other specifics that I as an aviation newbie have not
+    even thought of.
+    Here I had a rough look at the 
+    average and median delay by carrier, destination and the combination
+    of carrier and destination. Sorting by the largest delays in the
+    combination average and median gets us to seeming a lot of delays
+    from particular carriers like EV, but I wouldn't put much faith
+    in this until a proper investigation is done.
+    
+1.  For each plane, count the number of flights before the first delay 
+    of greater than 1 hour.
+    
+    ```{r}
+    # Dep delay 
+    flights %>% 
+      # group by plane
+      group_by(tailnum) %>% 
+      # arrange by flight date
+      arrange(year, month, day) %>% 
+      # assign a row number to each
+      mutate(row_number = row_number()) %>% 
+      # ungroup to clear the grouping
+      ungroup() %>% 
+      # okay get only the delays beyond 60 min
+      filter(dep_delay > 60) %>% 
+      # group again by plane
+      group_by(tailnum) %>% 
+      # the number of flights before the first delay will be the
+      # row number - 1
+      mutate(num_flights = first(row_number) - 1) %>% 
+      select(tailnum, num_flights) %>% 
+      distinct() %>% 
+      arrange(desc(num_flights)) %>% 
+      DT::datatable()
+    
+    # Let's check one of them to ensure we're on the right track
+    flights %>% 
+       filter(tailnum == 'N712TW') %>% 
+       select(year, month, day, tailnum, dep_delay) %>% 
+       arrange(year, month, day)  %>% 
+       DT::datatable()
+    
+    # Arrival delays
+    flights %>% 
+      # group by plane
+      group_by(tailnum) %>% 
+      # arrange by flight date
+      arrange(year, month, day) %>% 
+      # assign a row number to each
+      mutate(row_number = row_number()) %>% 
+      # ungroup to clear the grouping
+      ungroup() %>% 
+      # okay get only the delays beyond 60 min
+      filter(arr_delay > 60) %>% 
+      # group again by plane
+      group_by(tailnum) %>% 
+      # the number of flights before the first delay will be the
+      # row number - 1
+      mutate(num_flights = first(row_number) - 1) %>% 
+      select(tailnum, num_flights) %>% 
+      distinct() %>% 
+      filter(num_flights > 25) %>% 
+      arrange(num_flights, tailnum) %>% 
+      DT::datatable()
+    
+    # Let's check one of them to ensure we're on the right track
+    # It's on Page 16 in the DT above, entry 152
+    flights %>% 
+       filter(tailnum == 'N597UA') %>% 
+       select(year, month, day, tailnum, arr_delay) %>% 
+       arrange(year, month, day)  %>% 
+       DT::datatable()
+    ```
+    
+1.  What does the `sort` argument to `count()` do. When might you use it?
+
+    The `sort = TRUE` in __count()__ allows us to see the items with the
+    highest counts up at the top - it sorts the count in descending order.
+
+
+
+
+
+
+
+
+
 
 
 
