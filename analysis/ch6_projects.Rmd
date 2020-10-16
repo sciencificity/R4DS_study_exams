@@ -1,0 +1,78 @@
+---
+title: 'Chapter 6: Workflow - Projects'
+author: "Vebash Naidoo"
+date: "16/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+I almost always work in projects now.
+
+Recently thanks to a hosting opportunity for useR!2020 I also learnt about {workflowr} created by John Blischak, Peter Carbonetto and Matthew Stephens. The R package {workflowr} facilitates reproducible research, and works great with GitHub once you setup your RStudio environment to talk to GitHub.
+
+#### Tools -> Global Options -> Git/SVN
+
+<figure>
+  <img src="assets/option_git.PNG" width="500" height="450" alt="Options to enable Git access">
+
+  <figcaption>Tools -> Global Options -> Git/SVN</figcaption>
+</figure>
+
+### {workflowr} Resources
+
+1. Tutorial slides:
+https://bit.ly/useR-workflowr-slides
+
+1. RStudio Cloud project:
+https://bit.ly/useR-workflowr-rstudio
+
+1. Video resource of an RLadies meetup:
+http://bit.ly/workflowr-video
+
+### {workflowr} Commands
+
+- install.packages("workflowr")
+- library(workflowr)
+- Configure Git: 
+
+  wflow_git_config(user.name = "Your Name",
+                    user.email = "email@domain")
+                     
+-  Start Project:
+
+    wflow_start(directory = ".",
+              name = "Analysis XXX",
+              existing = TRUE)
+            
+-  Build Website
+
+    wflow_build()
+  
+- Add link in index.Rmd
+
+- Publish website:
+  
+    wflow_publish(c("analysis/\*.Rmd", "data/\*.csv"),
+                message = "Add analysis")
+              
+- Create repo on GitHub.
+
+- Connect the repo on GitHub to the {workflowr} project.
+
+    wflow_git_remote("origin",
+                   user = "<github-username>",
+                   repo = "workflowr-analysis")
+                 
+- Push project to GitHub
+
+    wflow_git_push()
+
+
+
+
+
+
+

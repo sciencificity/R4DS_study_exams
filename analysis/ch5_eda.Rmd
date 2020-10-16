@@ -1,0 +1,522 @@
+---
+title: "Chapter 5 - Exploratory Data Analysis (EDA)"
+author: "Vebash Naidoo"
+date: "16/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(flair)
+library(nycflights13)
+library(palmerpenguins)
+library(gt)
+library(skimr)
+library(emo)
+library(tidyquant)
+library(lubridate)
+library(magrittr)
+theme_set(theme_tq())
+```
+
+## Patterns
+
+- Variation: Best way to understand the pattern in a variable is to visualise
+the distribution of the variables values.
+
+  * Categorical: Bar chart
+  * Continuous: Histogram
+  * In both: 
+      
+      + tall bars == common values of the variable
+      + short bars == less common values of the variable
+      + no bars == absense of that value in your data
+
+### Investigate Categories
+
+```{r, echo=FALSE, eval=FALSE}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut))
+
+diamonds %>% 
+  count(cut)
+```
+
+```{r cat1, include=FALSE}
+ggplot(data = penguins) +
+  geom_bar(aes(x = species))
+```
+
+```{r, echo=FALSE}
+decorate("cat1") %>% 
+  flair("geom_bar", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+```{r cat2, include=FALSE}
+ggplot(data = penguins) +
+  geom_bar(aes(x = sex))
+```
+
+```{r, echo=FALSE}
+decorate("cat2") %>% 
+  flair("geom_bar", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+```{r cat3, include=FALSE}
+ggplot(data = penguins) +
+  geom_bar(aes(x = island))
+```
+
+```{r, echo=FALSE}
+decorate("cat3") %>% 
+  flair("geom_bar", background = "#9FDDBA", 
+        color = "#008080")
+```
+  
+### Investigate Continuous Data
+
+```{r, echo=FALSE, eval=FALSE}
+ggplot(data = diamonds) +
+  geom_histogram(mapping = aes(x = carat), binwidth = 0.5)
+
+# computing yourself? use the count + cut_width!
+diamonds %>% 
+  count(cut_width(carat, 0.5))
+```
+
+```{r con1, include=FALSE}
+ggplot(data = penguins) +
+  geom_histogram(aes(x = bill_length_mm), 
+                 binwidth = 0.6)
+
+penguins %>% 
+  count(cut_width(bill_length_mm, 0.6))
+```
+
+```{r, echo=FALSE}
+decorate("con1") %>% 
+  flair("geom_histogram", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("count", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("cut_width", background = "#9FDDBA", 
+        color = "#008080")  
+```
+
+The data looks bimodal - i.e. there are 2 bumps in the distribution. 
+If we recall we have 3 species, so let's fill in the bars based on the
+species.
+
+```{r con2, include=FALSE}
+ggplot(data = penguins) +
+  geom_histogram(aes(x = bill_length_mm, fill = species),
+                 alpha = 0.5,
+                 binwidth = 0.6) +
+  scale_fill_tq()
+
+penguins %>% 
+  group_by(species) %>% 
+  count(cut_width(bill_length_mm, 0.6))
+```
+
+```{r, echo=FALSE}
+decorate("con2") %>% 
+  flair("geom_histogram", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("fill = species", background = "#9FDDBA", 
+        color = "#008080") 
+```
+
+When we have overlapping histograms, the suggestion is to use <span style="color: #008080;background-color:#9FDDBA">`geom_freqpoly()`</span> which 
+uses lines instead of bars.
+
+```{r, echo=FALSE, eval=FALSE}
+smaller <- diamonds %>% 
+  filter(carat < 3)
+
+ggplot(data = smaller) +
+  geom_histogram(aes(x = carat), binwidth = 0.1)
+
+ggplot(data = smaller) +
+  geom_freqpoly(aes(x = carat, colour = cut), binwidth = 0.1)
+
+ggplot(data = smaller, aes(x = carat)) +
+  geom_histogram(binwidth = 0.01)
+```
+
+```{r con3, include=FALSE}
+ggplot(data = penguins) +
+  geom_freqpoly(aes(x = bill_length_mm, colour = species),
+                binwidth = 0.6) +
+  scale_fill_tq()
+```
+
+```{r, echo=FALSE}
+decorate("con3") %>% 
+  flair("geom_freqpoly", background = "#9FDDBA", 
+        color = "#008080") 
+```
+
+Looking at the plots ask some questions of your data:
+
+* Which values are the most common? Why?
+
+* Which values are rare? Why? Does that match your expectations?
+
+* Can you see any unusual patterns? What might explain them?
+
+
+Clusters of similar values suggest that subgroups exist in your data. To understand the subgroups, ask:
+
+* How are the observations within each cluster similar to each other?
+
+* How are the observations in separate clusters different from each other?
+
+* How can you explain or describe the clusters?
+
+* Why might the appearance of clusters be misleading?
+
+### Investigate Unusual Values
+
+Outliers are observations that don't seem to gel nicely with the rest of the
+data. 
+
+Here the long y-axis indicates some outliers.
+
+```{r}
+ggplot(data = diamonds) +
+  # y is a var in the dataset! it measures one of the
+  # dimensions of the diamond
+  geom_histogram(aes(x = y), 
+                 binwidth = 0.5)
+```
+
+To zoom in lets use <span style="color: #008080;background-color:#9FDDBA">`coord_cartesian()`</span> with the
+`ylim` variable.
+
+The <span style="color: #008080;background-color:#9FDDBA">`coord_cartesian()`</span> also has an `xlim`
+to zoom into the x-axis.
+
+```{r}
+ggplot(data = diamonds) +
+  geom_histogram(mapping = aes(x = y), binwidth = 0.5) +
+  # limit the y-axis to btw 0-50! Note to self: DON'T CONFUSE with the x-axis
+  # which is named `y`!!
+  coord_cartesian(ylim = c(0,50)) +
+  labs(x = "The variable y in the diamonds dataset")
+
+# zoom into the unusual values
+(unusual <- diamonds %>% 
+    filter(y < 3 | y > 20) %>% 
+    arrange(y)) %>% 
+  print(width = Inf) # print the whole dataset so we can see all cols
+```
+
+The y feature in the diamonds dataset measures a dimension (width, height,
+depth) in millimeters. A dimension of 0 mm is incorrect, and a dimension
+of ~32mm or ~59mm is also incorrect. Those diamonds will cost an
+`r emo::ji("biceps")` and a `r emo::ji("leg")`!
+
+In __practice__ it is best to do analysis _with and without_ your outliers.
+
+* No difference with or without, probably safe to remove them
+* Big difference with vs without, need to investigate why they are there
+before any action.
+* In both cases, disclose the action taken in your analysis.
+
+### Exercises
+
+1.  Explore the distribution of each of the `x`, `y`, and `z` variables 
+    in `diamonds`. What do you learn? Think about a diamond and how you
+    might decide which dimension is the length, width, and depth.
+    
+    ```{r}
+    ggplot(data = diamonds) +
+      geom_histogram(aes(x=x),
+                     binwidth = 0.5)
+    
+    filter(diamonds, x == max(x)) %>% 
+      print(width = Inf)
+    
+    filter(diamonds, x == min(x)) %>% 
+      print(width = Inf)
+    
+    diamonds %>% 
+      filter(x != 0) %>% 
+      filter(x == min(x)) %>% 
+      print(width = Inf)
+    
+    ggplot(data = diamonds) +
+      geom_histogram(aes(x = x), binwidth = 0.5) +
+      coord_cartesian(xlim = c(0, 1),
+                      ylim = c(0, 10))
+    
+    ggplot(data = diamonds) +
+      geom_histogram(aes(x = y),
+                     binwidth = 0.5)
+    
+    filter(diamonds, y == max(y)) %>% 
+      print(width = Inf)
+    
+    filter(diamonds, y == min(y)) %>% 
+      print(width = Inf)
+    
+    diamonds %>% 
+      filter(y != 0) %>% 
+      filter(y == min(y)) %>% 
+      print(width = Inf)    
+    
+    diamonds %>% 
+      filter(y < 10) %>% 
+      filter(y == max(y)) %>% 
+      print(width = Inf)    
+    
+    ggplot(data = diamonds) +
+      geom_histogram(aes(x = z),
+                     binwidth = 0.5)
+    
+    filter(diamonds, z == max(z)) %>% 
+      print(width = Inf)
+    
+    filter(diamonds, z == min(z)) %>% 
+      print(width = Inf)
+    
+    unusual_z <- diamonds %>% 
+      filter(z < 2 | z > 10)
+    
+    ggplot(data = unusual_z) +
+      geom_histogram(aes(x = z), binwidth = 0.5) +
+      coord_cartesian(xlim = c(0, 35),
+                      ylim = c(0, 25))
+    
+    diamonds %>% 
+      select(x, y, z) %>% 
+      filter(x != 0,
+             y != 0, 
+             z != 0) %>% 
+      skim()    
+    ```
+    
+    So it turns out a diamond has a table, width and depth. 
+    
+    <div class="pic right">
+    <img src="assets/diamond.PNG" alt="Dimensions of a diamond; Credit: https://www.diamonds.pro/" /> 
+    <p><cite>Credit: https://www.diamonds.pro/</cite></p>
+    </div>
+    
+    x and y could be depth or width - there's not much difference
+    between the 2 values. The z is likely to be the `table` since it is
+    smaller.
+    
+    But looking at the `?diamonds` help page x = length, y = width and
+    z = depth, and there is actually a table variable that is a relative 
+    measure `r emo::ji("doubt")`, so there goes my "theory" 
+    `r emo::ji("exasperation")`.
+
+1.  Explore the distribution of `price`. Do you discover anything unusual
+    or surprising? (Hint: Carefully think about the `binwidth` and make sure
+    you try a wide range of values.)
+    
+    ```{r}
+    ggplot(data = diamonds) +
+      geom_histogram(aes(x = price), bins = 20)
+    
+    ggplot(data = diamonds) +
+      geom_histogram(aes(x = price), binwidth = 1000)
+    
+    ggplot(data = diamonds) +
+      geom_histogram(aes(x = price), binwidth = 200)
+    
+    ggplot(data = diamonds) +
+      geom_histogram(aes(x = price), binwidth = 500)
+    
+    diamonds %>% 
+      select(price) %>% 
+      skim()
+    
+    diamonds %>% 
+      filter(price == 326 |
+               price == 18823) %>% 
+      gt()
+    
+    diamonds %>% 
+      arrange(-carat) %>% 
+      head(10) %>% 
+      gt()
+      
+    ```
+    
+    <br>
+    
+    The prices range from $326 to $18823. The carat of the high priced
+    $18823 diamond is 2.29. There are other diamonds where the carat is
+    bigger, and the cut is also Premium yet the price is lower. So it seems 
+    diamond pricing considers many factors, and could also be determined on
+    who is doing the selling.
+    
+
+1.  How many diamonds are 0.99 carat? How many are 1 carat? What
+    do you think is the cause of the difference?
+    
+    ```{r}
+    diamonds %>%   
+      filter(
+             carat == 1 |
+             carat == 0.99
+            ) %>%  
+      count(carat, sort = TRUE)
+    
+    sample_test <- diamonds %>% 
+      filter(carat == 1 |
+             carat == 0.99) %>% 
+      group_by(carat) %>% 
+      arrange(carat, price)
+      
+    sample_test %>%   
+      sample_n(20) %>% 
+      gt()
+    
+    sample_test %>% 
+      select(cut, price) %>% 
+      skim()
+    
+    ```
+    
+    <br>
+    
+    The one carat diamonds are gigher in price and hugely so in the upper
+    range.
+    
+1.  Compare and contrast `coord_cartesian()` vs `xlim()` or `ylim()` when
+    zooming in on a histogram. What happens if you leave `binwidth` unset?
+    What happens if you try and zoom so only half a bar shows?
+    
+    ```{r}
+    ggplot(data = diamonds) +
+      geom_histogram(mapping = aes(x = y), binwidth = 0.5) +
+      # limit the y-axis to btw 0-50! 
+      # Note to self: DON'T CONFUSE with the x-axis
+      # which is named `y`!!
+      coord_cartesian(ylim = c(0,50)) +
+      labs(x = "The variable y in the diamonds dataset")
+    
+    ggplot(data = diamonds) +
+      geom_histogram(mapping = aes(x = y), binwidth = 0.5) +
+      ylim(c(0,50)) +
+      labs(x = "The variable y in the diamonds dataset")
+    
+    ggplot(data = diamonds) +
+      geom_histogram(mapping = aes(x = y)) +
+      ylim(c(0,50)) +
+      labs(x = "The variable y in the diamonds dataset")    
+    
+    ```
+    
+    Documentation reads: "This is a shortcut for supplying 
+    the limits argument to the individual scales. Note that,
+    by default, any values outside the limits will be 
+    replaced with NA." So `ylim()` and `xlim()` replace 
+    values outside the limit with NULL values resulting
+    in the histogram being quite different to what we have
+    when we use `coord_cartesian()`.
+    
+    If we don't supply a binwidth ggplot defaults the 
+    number of bins to display to 30, and hence 
+    implicitly picks a binwidth for us.
+    
+
+## Leveraging Missing Values
+
+When you have weird values for variables, e.g. the ~59 mm for y, you may be tempted to drop these values and carry on. 
+Often though a dataset is not nice and neat with all it's weird values in a few observations! Usually the weird
+values are spread over multiple observations!
+
+```{r}
+
+diamonds %>% 
+  mutate(row_num = row_number()) %>% 
+  filter(x==0 | y==0 | z==0) %>% 
+  gt()
+  
+```
+
+<br>
+
+Throwing away all observations where a variable has weird values can result in a serious shrinking of your dataset.
+
+The authors suggest that instead of throwing away the observations with weird values, rather replace them with `missing values`. This may sound strange since many of us
+have probably heard that `missing values` shouldn't be used in data science! It's usually a _problem_ to be fixed!
+
+But in EDA it may provide insight to either force weird values to be NA, or to investigate how missing values differ from non-missing values.
+
+```{r, echo=FALSE, eval=FALSE, warning=TRUE}
+diamonds2 <- diamonds %>% 
+  mutate(y = if_else((y < 3 | y > 20), NA_real_, y))
+
+diamonds2 %>% 
+  ggplot(aes(x = x, y = y)) +
+  geom_point()
+  
+```
+
+```{r, echo=FALSE, eval=FALSE, warning=TRUE}
+nycflights13::flights %>% 
+  mutate(cancelled = is.na(dep_time),
+         sched_hour = sched_dep_time %/% 100,
+         sched_min = sched_dep_time %/% 100,
+         sched_dep_time = sched_hour + sched_min / 60) %>% 
+  ggplot(aes(sched_dep_time)) +
+  geom_freqpoly(aes(colour = cancelled), binwidth = 1/4)
+
+```
+
+### Exercises
+
+1.  What happens to missing values in a histogram?  What happens to missing
+    values in a bar chart? Why is there a difference?
+    
+    Missing values in bar charts are plotted as a category.
+    Missing values in a histogram are dropped.
+    
+    I guess that it is easy to create one category for 
+    missing and lump all the missing variable observations
+    into that count.
+    
+    For a continuous variable where data is binned 
+    however how do you show that on a graph? The limits are
+    continuous values e.g. from 0 - 100, -100 - 100 etc. 
+    Where should the count of NAs go on the x-axis, and
+    y-axis given that the range that NA could represent
+    is any number in the range of the continuous values 
+    we have for a variable.
+
+
+1.  What does `na.rm = TRUE` do in `mean()` and `sum()`?
+    
+    The NAs are removed and then the mean() or sum() is
+    computed on the remaining non-NA values.
+    
+    ```{r}
+    c(1,2,NA,3,4,NA,5) %>% 
+      mean(na.rm=TRUE)
+    # (1+2+3+4+5) / 5 = 15 / 5 = 3
+    
+    c(1,2,NA,3,4,NA,5) %>% 
+      sum(na.rm=TRUE)
+    # (1+2+3+4+5)
+    ```
+
+## Covariation
+
+
+
+
+
+
+
