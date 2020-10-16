@@ -299,7 +299,7 @@ be interpreted.
 We can do this by using the `&lt;` entity.
 - For `>` we use `&gt;`.
 - `<pre>` keeps the formatting as you specified.
-- <br> inserts a line break.
+- `<br>` inserts a line break.
 
 ### Superscripts, Subscripts and Small Text
 

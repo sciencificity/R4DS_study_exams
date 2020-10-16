@@ -1791,7 +1791,364 @@ daily %>%
     highest counts up at the top - it sorts the count in descending order.
 
 
+```{r, echo=FALSE, eval=FALSE}
+# Hidden parts of code - replicated in R4DS, and 
+# coded by hand for practice!
 
+# find worst members of a group
+flights_sml %>% 
+  group_by(year, month, day) %>% 
+  filter(rank(desc(arr_delay)) < 10)
+
+# find all groups bigger than a threshold
+(popular_dests <- flights %>% 
+  group_by(dest) %>% 
+  filter(n() > 365))
+
+# standardise to compute group metrics
+popular_dests %>% 
+  filter(arr_delay > 0) %>% 
+  mutate(prop_delay = arr_delay / sum(arr_delay)) %>% 
+  select(year:day, dest, arr_delay, prop_delay)
+
+# vignette("window-functions")
+```
+
+### Exercises
+
+1.  Refer back to the lists of useful mutate and filtering functions. 
+    Describe how each operation changes when you combine it with grouping.
+    
+    When you combine a mutate with a group it depends on the 
+    function you use within the mutate. Above I used a row_number
+    to mark each row in a set. In the case above I considered each
+    plane (tailnum) as a separate group and wanted to know how many
+    flights before that plane had a delay of above 60 min.
+    The authors note that grouped mutates work best with window
+    functions like `lag` or `lead`, it also works alright with mean(),
+    median() etc. where it first creates the group then gets the 
+    aggregate value for that variable for the group. We often do this in 
+    SQL but I think in R this is equivalent to the `summarise()` function.
+      <pre>
+          SELECT dest
+          , AVG(arr_delay) -- Average arrival delay
+          FROM flights
+          WHERE arr_delay > 0
+          GROUP BY dest
+      </pre>
+      
+    We can also do arithmetic using `+`, `-`, etc. but this is not
+    affected by the group and hence grouping does not make sense.
+
+1.  Which plane (`tailnum`) has the worst on-time record?
+
+    ```{r}
+    # okay one way may be to see who from a pure
+    # count has the most flights with arrival delays
+    flights %>% 
+      filter(!is.na(tailnum),
+             !is.na(arr_delay),
+             arr_delay > 0) %>% 
+      select(tailnum, arr_delay) %>% 
+      count(tailnum, sort = TRUE)
+    
+    # BUT the above is not really useful, I mean it does 
+    # not consider how many flights did that plane do etc.
+    # So let's consider that.
+    flights %>% 
+      add_count(tailnum, name = 'num_flights_plane') %>% 
+      filter(!is.na(tailnum),
+             !is.na(arr_delay),
+             arr_delay > 0) %>% 
+      select(tailnum, arr_delay, num_flights_plane) %>% 
+      filter(num_flights_plane > 10) %>% # some planes had few flights
+      add_count(tailnum, name = 'num_delayed') %>% 
+      mutate(prop_delayed = num_delayed / num_flights_plane) %>% 
+      select(tailnum, num_flights_plane, num_delayed, prop_delayed) %>% 
+      distinct() %>% 
+      arrange(desc(prop_delayed))
+    
+    flights %>% 
+      filter(tailnum %in% c('N337AT', 
+                            'N169AT',
+                            'N988AT')) %>% 
+      select(year, month, day, tailnum, arr_delay) %>% 
+      arrange(tailnum) %>% 
+      DT::datatable()
+    
+    # We can also probably look at the total number of minutes
+    # each plane has as arr_delay vs the total arr_delay minutes
+    # overall for all delayed flights
+    flights %>% 
+      filter(!is.na(tailnum),
+             !is.na(arr_delay),
+             arr_delay > 0) %>% 
+      select(tailnum, arr_delay) %>% 
+      mutate(tot_delay = sum(arr_delay)) %>% 
+      group_by(tailnum) %>% 
+      mutate(plane_delay = sum(arr_delay),
+             prop_delay = plane_delay / tot_delay) %>% 
+      ungroup() %>% 
+      select(tailnum, plane_delay, tot_delay, prop_delay) %>% 
+      distinct() %>% 
+      arrange(desc(prop_delay))
+    
+    # Checks for one plane
+    flights %>% 
+      filter(!is.na(tailnum),
+             !is.na(arr_delay),
+             arr_delay > 0) %>% 
+      summarise(sum(arr_delay))
+    
+    flights %>% 
+      filter(!is.na(arr_delay),
+             arr_delay > 0,
+             tailnum == 'N228JB') %>% 
+      summarise(sum(arr_delay))
+    ```
+
+
+1.  What time of day should you fly if you want to avoid delays as much
+    as possible?
+    
+    ```{r}
+    # there's often times where there is a departure delay but
+    # the time is made up in flight, so I am going to consider
+    # arr_delay only
+    flights %>% 
+      select(sched_dep_time, arr_delay) %>% 
+      filter(!is.na(arr_delay)) %>% 
+      group_by(sched_dep_time) %>% 
+      mutate(total_arr_delay = sum(arr_delay)) %>% 
+      select(sched_dep_time, total_arr_delay) %>% 
+      distinct() %>% 
+      arrange(total_arr_delay)
+    ```
+    The best time is at 7h00 but truly you're pretty good to go
+    if you depart between 6h00 - 8h00 `r emo::ji("grin")`
+    
+    
+1.  For each destination, compute the total minutes of delay. For each 
+    flight, compute the proportion of the total delay for its destination.
+    
+    ```{r}
+    flights %>% 
+      # Let's first get only those flights which were late
+      filter(arr_delay > 0) %>% 
+      group_by(dest) %>% 
+      # Let's get the total delay for each dest
+      mutate(tot_delay = sum(arr_delay, na.rm = TRUE)) %>% 
+      ungroup() %>% 
+      group_by(year, month, day, tailnum) %>% 
+      mutate(flight_delay_prop = arr_delay / tot_delay) %>% 
+      # select a subset of cols of interest to us
+      select(year, month, day, tailnum, dest, 
+             arr_delay, tot_delay, flight_delay_prop) %>% 
+      # sort by descending flight_delay_prop
+      arrange(-flight_delay_prop)
+    ```
+        
+    
+1.  Delays are typically temporally correlated: even once the problem that
+    caused the initial delay has been resolved, later flights are delayed 
+    to allow earlier flights to leave. Using `lag()`, explore how the delay
+    of a flight is related to the delay of the immediately preceding flight.
+    
+    ```{r}
+    flights_sub <- flights %>% 
+      filter(dep_delay > 0) %>% 
+      arrange(year, month, day, origin, dep_time) %>% 
+      group_by(year, month, day, origin) %>% 
+      mutate(prev_delay = lag(dep_delay)) %>% 
+      filter(dep_delay > 0, 
+             prev_delay > 0) %>% 
+      select(year, month, day, origin, tailnum, dep_time, 
+             dep_delay, prev_delay) %>% 
+      arrange(year, month, day, origin, dep_time) 
+    flights_sub %>% 
+      slice_head(n = 50) %>% 
+      DT::datatable()
+    
+    flights_sub %>% ggplot(aes(prev_delay, dep_delay, 
+                               colour = origin)) +
+      geom_point() +
+      geom_smooth(se = FALSE) +
+      scale_colour_tq()
+      
+    ```
+    
+    Departure delay does seem to increase with the previous delay,
+    if we look at flights leaving a destination in particular. 
+    This just considers what flights leave airport
+    X on a particular day. Irrespective of carrier, or actual plane we then
+    see what's the delay of flight 2 in comparison to the previous flights
+    delay. It increases up to a point and then gets better. I took out 
+    negative delays so this may be a nonsensical way of looking at flight
+    delays as a consequence of previous flight delays. Plus we have a time
+    element here that we're not addressing! So it's hard to understand
+    anything from this to be honest.
+    
+    What if we keep negative delays in, and just looked at a period 
+    of the data?
+
+    
+    ```{r}
+    flights_sub <- flights %>% 
+      filter(!is.na(dep_delay),
+             !is.na(arr_delay) # take out cancelled flights
+             ) %>% 
+      arrange(year, month, day, origin, dep_time) %>% 
+      group_by(year, month, day, origin) %>% 
+      mutate(prev_delay = lag(dep_delay)) %>% 
+      filter(!is.na(dep_delay),
+             !is.na(prev_delay)) %>% 
+      select(year, month, day, origin, tailnum, dep_time, 
+             dep_delay, prev_delay) %>% 
+      arrange(year, month, day, origin, dep_time) %>% 
+      filter(month == 1,
+             day %in% c(1:12))
+    
+    flights_sub %>% 
+      slice_head(n = 50) %>% 
+      DT::datatable()
+    
+    flights_sub %>% 
+      arrange(year, month, day, origin, dep_time) %>% 
+      ggplot(aes(prev_delay, dep_delay, 
+                               colour = origin)) +
+      geom_point() +
+      geom_smooth(se = FALSE) +
+      scale_colour_tq() +
+      facet_wrap(~ day, nrow = 4) +
+      labs(title = "How does the current delay stack up against the previous delay?",
+            caption = "Data for first 12 days in January")
+    
+    flights_sub2 <- flights %>% 
+      filter(!is.na(dep_delay),
+             !is.na(arr_delay) # take out cancelled flights
+             ) %>% 
+      arrange(year, month, day, origin, dep_time) %>% 
+      group_by(year, month, day, origin) %>% 
+      mutate(prev_delay = lag(dep_delay)) %>% 
+      filter(!is.na(dep_delay),
+             !is.na(prev_delay)) %>% 
+      select(year, month, day, origin, tailnum, dep_time, 
+             dep_delay, prev_delay) %>% 
+      arrange(year, month, day, origin, dep_time) %>% 
+      filter(month == 11,
+             day %in% c(10:22))
+    
+    flights_sub2 %>% 
+      arrange(year, month, day, origin, dep_time) %>% 
+      ggplot(aes(prev_delay, dep_delay, 
+                               colour = origin)) +
+      geom_point() +
+      geom_smooth(se = FALSE) +
+      scale_colour_tq() +
+      facet_wrap(~ day, nrow = 4) +
+      labs(title = "How does the current delay stack up against the previous delay?",
+            caption = "Data for 10-22 of November")
+    
+    ```    
+    
+    It still shows recovery for quite a few origin airports, 
+    so the airport and carrier make strides in rectifying delays. 
+    Maybe the ahead of schedule and late also kind of cancel each
+    other out?
+    
+    What about if we consider the particular carrier delays? Does a carrier
+    delay have a knock on effect on their other flights?
+    
+    ```{r}
+    flights_sub <- flights %>% 
+      filter(!is.na(dep_delay),
+             !is.na(arr_delay) # take out cancelled flights
+             ) %>% 
+      arrange(year, month, day, origin, carrier, dep_time) %>% 
+      group_by(year, month, day, origin, carrier) %>% 
+      mutate(prev_delay = lag(dep_delay)) %>% 
+      filter(!is.na(dep_delay),
+             !is.na(prev_delay)) %>% 
+      select(year, month, day, origin, carrier, dep_time, 
+             dep_delay, prev_delay) %>% 
+      arrange(year, month, day, origin, carrier, dep_time) %>% 
+      filter(month == 1,
+             day %in% c(1:12))
+    
+    flights_sub %>% 
+      slice_head(n = 50) %>% 
+      DT::datatable()
+    
+    flights_sub %>% 
+      arrange(year, month, day, origin, carrier, dep_time) %>%  
+      ggplot(aes(prev_delay, dep_delay, 
+                               colour = carrier)) +
+      geom_point() +
+      geom_smooth(se = FALSE) +
+      scale_colour_tq() +
+      facet_wrap(~ day, nrow = 4) +
+      labs(title = "How does the current delay stack up against the previous delay?",
+            caption = "Data for first 12 days in January")
+      
+    ```    
+    
+    Okay we could spend an entire day looking at the data to be considerate
+    here. For the purposes of answering the exercise question it does seem that
+    delays increase as a result of previous delays indicating there may be some
+    knock on effect during the day. The pattern rectifies itself over the
+    course of the day it seems, but I must be honest I did a cursory check
+    here so I'd rather give conclusions after more analysis.
+    
+1.  Look at each destination. Can you find flights that are suspiciously
+    fast? (i.e. flights that represent a potential data entry error). Compute
+    the air time of a flight relative to the shortest flight to that destination.
+    Which flights were most delayed in the air?
+    
+    ```{r}
+    flights %>% 
+      filter(air_time > 0) %>% 
+      arrange(air_time) %>% 
+      select(year, month, day, origin,
+             dest, dep_delay, arr_delay, air_time)
+    
+    flight_stats <- flights %>% 
+      filter(air_time > 0) %>% 
+      group_by(origin, dest) %>% 
+      mutate(mean_time_to_dest = mean(air_time, na.rm = TRUE),
+                median_time_to_dest = median(air_time, na.rm = TRUE),
+                sd = sd(air_time, na.rm = TRUE),
+                diff = air_time - median_time_to_dest) %>% 
+      select(origin, dest, air_time, mean_time_to_dest,
+             median_time_to_dest, sd, diff) %>% 
+      arrange((diff))
+    
+    # suspiciously quick airtime
+    flight_stats %>% 
+      head(10) %>% 
+      gt()
+    
+    # most time in air
+    flight_stats %>% 
+      tail(10) %>% 
+      gt()
+    
+    ```
+    <br>
+    
+1.  Find all destinations that are flown by at least two carriers. Use that
+    information to rank the carriers.
+    
+    ```{r}
+    flights %>% 
+      group_by(dest) %>% # for each dest
+      mutate(num_carriers = n_distinct(carrier)) %>% # count number carriers
+      ungroup() %>% 
+      filter(num_carriers > 1) %>% # we want destinations having 2+ carriers
+      group_by(carrier) %>% # for each carrier
+      summarise(num_dests = n_distinct(dest)) %>%  # count number destinations
+      arrange(-num_dests) # put carrier flying to biggest #destinations at top
+    ```
+    
 
 
 
