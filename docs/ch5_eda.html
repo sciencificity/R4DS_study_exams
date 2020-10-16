@@ -1,0 +1,3700 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Vebash Naidoo" />
+
+
+<title>Chapter 5 - Exploratory Data Analysis (EDA)</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+      </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R4DS Book - Prep for exam</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Chapter 5 - Exploratory Data Analysis (EDA)</h1>
+<h4 class="author">Vebash Naidoo</h4>
+<h4 class="date">16/10/2020</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-10-16
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>r4ds_book/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200814code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200814)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200814code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200814)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree50bf4b775ee96d086916aee671514c29a534d296targetblank50bf4b7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/50bf4b775ee96d086916aee671514c29a534d296" target="_blank">50bf4b7</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree50bf4b775ee96d086916aee671514c29a534d296targetblank50bf4b7a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/50bf4b775ee96d086916aee671514c29a534d296" target="_blank">50bf4b7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  VideoDecodeStats/
+    Untracked:  analysis/images/
+    Untracked:  code_snipp.txt
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/ch5_eda.Rmd</code>) and HTML (<code>docs/ch5_eda.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/50bf4b775ee96d086916aee671514c29a534d296/analysis/ch5_eda.Rmd" target="_blank">50bf4b7</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-10-16
+</td>
+<td>
+added new chapters
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>library(tidyverse)
+library(flair)
+library(nycflights13)
+library(palmerpenguins)
+library(gt)
+library(skimr)
+library(emo)
+library(tidyquant)
+library(lubridate)
+library(magrittr)
+theme_set(theme_tq())</code></pre>
+<div id="patterns" class="section level2">
+<h2>Patterns</h2>
+<ul>
+<li><p>Variation: Best way to understand the pattern in a variable is to visualise the distribution of the variables values.</p>
+<ul>
+<li><p>Categorical: Bar chart</p></li>
+<li><p>Continuous: Histogram</p></li>
+<li><p>In both:</p>
+<ul>
+<li>tall bars == common values of the variable</li>
+<li>short bars == less common values of the variable</li>
+<li>no bars == absense of that value in your data</li>
+</ul></li>
+</ul></li>
+</ul>
+<div id="investigate-categories" class="section level3">
+<h3>Investigate Categories</h3>
+<pre><code class='language-r'><code>ggplot(data = penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_bar</span>(aes(x = species))</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(data = penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_bar</span>(aes(x = sex))</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(data = penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_bar</span>(aes(x = island))</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="investigate-continuous-data" class="section level3">
+<h3>Investigate Continuous Data</h3>
+<pre><code class='language-r'><code>ggplot(data = penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_histogram</span>(aes(x = bill_length_mm), <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;binwidth = 0.6)</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>penguins %>% <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>count</span>(<span style='background-color:#9FDDBA;color:#008080'>cut_width</span>(bill_length_mm, 0.6))</code></code></pre>
+<pre><code>
+# A tibble: 42 x 2
+   `cut_width(bill_length_mm, 0.6)`     n
+   &lt;fct&gt;                            &lt;int&gt;
+ 1 [32.1,32.7]                          1
+ 2 (32.7,33.3]                          1
+ 3 (33.3,33.9]                          1
+ 4 (33.9,34.5]                          3
+ 5 (34.5,35.1]                          5
+ 6 (35.1,35.7]                          6
+ 7 (35.7,36.3]                         13
+ 8 (36.3,36.9]                          9
+ 9 (36.9,37.5]                          8
+10 (37.5,38.1]                         15
+# ... with 32 more rows
+</code></pre>
+<p>The data looks bimodal - i.e. there are 2 bumps in the distribution. If we recall we have 3 species, so let’s fill in the bars based on the species.</p>
+<pre><code class='language-r'><code>ggplot(data = penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_histogram</span>(aes(x = bill_length_mm, <span style='background-color:#9FDDBA;color:#008080'>fill = species</span>),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alpha = 0.5,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;binwidth = 0.6) +<br>&nbsp;&nbsp;scale_fill_tq()</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>penguins %>% <br>&nbsp;&nbsp;group_by(species) %>% <br>&nbsp;&nbsp;count(cut_width(bill_length_mm, 0.6))</code></code></pre>
+<pre><code>
+# A tibble: 71 x 3
+# Groups:   species [3]
+   species `cut_width(bill_length_mm, 0.6)`     n
+   &lt;fct&gt;   &lt;fct&gt;                            &lt;int&gt;
+ 1 Adelie  [32.1,32.7]                          1
+ 2 Adelie  (32.7,33.3]                          1
+ 3 Adelie  (33.3,33.9]                          1
+ 4 Adelie  (33.9,34.5]                          3
+ 5 Adelie  (34.5,35.1]                          5
+ 6 Adelie  (35.1,35.7]                          6
+ 7 Adelie  (35.7,36.3]                         13
+ 8 Adelie  (36.3,36.9]                          9
+ 9 Adelie  (36.9,37.5]                          8
+10 Adelie  (37.5,38.1]                         15
+# ... with 61 more rows
+</code></pre>
+<p>When we have overlapping histograms, the suggestion is to use <span style="color: #008080;background-color:#9FDDBA"><code>geom_freqpoly()</code></span> which uses lines instead of bars.</p>
+<pre><code class='language-r'><code>ggplot(data = penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_freqpoly</span>(aes(x = bill_length_mm, colour = species),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;binwidth = 0.6) +<br>&nbsp;&nbsp;scale_fill_tq()</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Looking at the plots ask some questions of your data:</p>
+<ul>
+<li><p>Which values are the most common? Why?</p></li>
+<li><p>Which values are rare? Why? Does that match your expectations?</p></li>
+<li><p>Can you see any unusual patterns? What might explain them?</p></li>
+</ul>
+<p>Clusters of similar values suggest that subgroups exist in your data. To understand the subgroups, ask:</p>
+<ul>
+<li><p>How are the observations within each cluster similar to each other?</p></li>
+<li><p>How are the observations in separate clusters different from each other?</p></li>
+<li><p>How can you explain or describe the clusters?</p></li>
+<li><p>Why might the appearance of clusters be misleading?</p></li>
+</ul>
+</div>
+<div id="investigate-unusual-values" class="section level3">
+<h3>Investigate Unusual Values</h3>
+<p>Outliers are observations that don’t seem to gel nicely with the rest of the data.</p>
+<p>Here the long y-axis indicates some outliers.</p>
+<pre class="r"><code>ggplot(data = diamonds) +
+  # y is a var in the dataset! it measures one of the
+  # dimensions of the diamond
+  geom_histogram(aes(x = y), 
+                 binwidth = 0.5)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>To zoom in lets use <span style="color: #008080;background-color:#9FDDBA"><code>coord_cartesian()</code></span> with the <code>ylim</code> variable.</p>
+<p>The <span style="color: #008080;background-color:#9FDDBA"><code>coord_cartesian()</code></span> also has an <code>xlim</code> to zoom into the x-axis.</p>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_histogram(mapping = aes(x = y), binwidth = 0.5) +
+  # limit the y-axis to btw 0-50! Note to self: DON&#39;T CONFUSE with the x-axis
+  # which is named `y`!!
+  coord_cartesian(ylim = c(0,50)) +
+  labs(x = &quot;The variable y in the diamonds dataset&quot;)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># zoom into the unusual values
+(unusual &lt;- diamonds %&gt;% 
+    filter(y &lt; 3 | y &gt; 20) %&gt;% 
+    arrange(y)) %&gt;% 
+  print(width = Inf) # print the whole dataset so we can see all cols</code></pre>
+<pre><code># A tibble: 9 x 10
+  carat cut       color clarity depth table price     x     y     z
+  &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1  1    Very Good H     VS2      63.3    53  5139  0      0    0   
+2  1.14 Fair      G     VS1      57.5    67  6381  0      0    0   
+3  1.56 Ideal     G     VS2      62.2    54 12800  0      0    0   
+4  1.2  Premium   D     VVS1     62.1    59 15686  0      0    0   
+5  2.25 Premium   H     SI2      62.8    59 18034  0      0    0   
+6  0.71 Good      F     SI2      64.1    60  2130  0      0    0   
+7  0.71 Good      F     SI2      64.1    60  2130  0      0    0   
+8  0.51 Ideal     E     VS1      61.8    55  2075  5.15  31.8  5.12
+9  2    Premium   H     SI2      58.9    57 12210  8.09  58.9  8.06</code></pre>
+<p>The y feature in the diamonds dataset measures a dimension (width, height, depth) in millimeters. A dimension of 0 mm is incorrect, and a dimension of ~32mm or ~59mm is also incorrect. Those diamonds will cost an 💪 and a 🦵!</p>
+<p>In <strong>practice</strong> it is best to do analysis <em>with and without</em> your outliers.</p>
+<ul>
+<li>No difference with or without, probably safe to remove them</li>
+<li>Big difference with vs without, need to investigate why they are there before any action.</li>
+<li>In both cases, disclose the action taken in your analysis.</li>
+</ul>
+</div>
+<div id="exercises" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Explore the distribution of each of the <code>x</code>, <code>y</code>, and <code>z</code> variables in <code>diamonds</code>. What do you learn? Think about a diamond and how you might decide which dimension is the length, width, and depth.</p>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_histogram(aes(x=x),
+                 binwidth = 0.5)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>filter(diamonds, x == max(x)) %&gt;% 
+  print(width = Inf)</code></pre>
+<pre><code># A tibble: 1 x 10
+  carat cut   color clarity depth table price     x     y     z
+  &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1  5.01 Fair  J     I1       65.5    59 18018  10.7  10.5  6.98</code></pre>
+<pre class="r"><code>filter(diamonds, x == min(x)) %&gt;% 
+  print(width = Inf)</code></pre>
+<pre><code># A tibble: 8 x 10
+  carat cut       color clarity depth table price     x     y     z
+  &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1  1.07 Ideal     F     SI2      61.6    56  4954     0  6.62     0
+2  1    Very Good H     VS2      63.3    53  5139     0  0        0
+3  1.14 Fair      G     VS1      57.5    67  6381     0  0        0
+4  1.56 Ideal     G     VS2      62.2    54 12800     0  0        0
+5  1.2  Premium   D     VVS1     62.1    59 15686     0  0        0
+6  2.25 Premium   H     SI2      62.8    59 18034     0  0        0
+7  0.71 Good      F     SI2      64.1    60  2130     0  0        0
+8  0.71 Good      F     SI2      64.1    60  2130     0  0        0</code></pre>
+<pre class="r"><code>diamonds %&gt;% 
+  filter(x != 0) %&gt;% 
+  filter(x == min(x)) %&gt;% 
+  print(width = Inf)</code></pre>
+<pre><code># A tibble: 2 x 10
+  carat cut     color clarity depth table price     x     y     z
+  &lt;dbl&gt; &lt;ord&gt;   &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1   0.2 Premium F     VS2      62.6    59   367  3.73  3.71  2.33
+2   0.2 Premium D     VS2      62.3    60   367  3.73  3.68  2.31</code></pre>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_histogram(aes(x = x), binwidth = 0.5) +
+  coord_cartesian(xlim = c(0, 1),
+                  ylim = c(0, 10))</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-13-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_histogram(aes(x = y),
+                 binwidth = 0.5)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-13-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>filter(diamonds, y == max(y)) %&gt;% 
+  print(width = Inf)</code></pre>
+<pre><code># A tibble: 1 x 10
+  carat cut     color clarity depth table price     x     y     z
+  &lt;dbl&gt; &lt;ord&gt;   &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     2 Premium H     SI2      58.9    57 12210  8.09  58.9  8.06</code></pre>
+<pre class="r"><code>filter(diamonds, y == min(y)) %&gt;% 
+  print(width = Inf)</code></pre>
+<pre><code># A tibble: 7 x 10
+  carat cut       color clarity depth table price     x     y     z
+  &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1  1    Very Good H     VS2      63.3    53  5139     0     0     0
+2  1.14 Fair      G     VS1      57.5    67  6381     0     0     0
+3  1.56 Ideal     G     VS2      62.2    54 12800     0     0     0
+4  1.2  Premium   D     VVS1     62.1    59 15686     0     0     0
+5  2.25 Premium   H     SI2      62.8    59 18034     0     0     0
+6  0.71 Good      F     SI2      64.1    60  2130     0     0     0
+7  0.71 Good      F     SI2      64.1    60  2130     0     0     0</code></pre>
+<pre class="r"><code>diamonds %&gt;% 
+  filter(y != 0) %&gt;% 
+  filter(y == min(y)) %&gt;% 
+  print(width = Inf)    </code></pre>
+<pre><code># A tibble: 1 x 10
+  carat cut     color clarity depth table price     x     y     z
+  &lt;dbl&gt; &lt;ord&gt;   &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1   0.2 Premium D     VS2      62.3    60   367  3.73  3.68  2.31</code></pre>
+<pre class="r"><code>diamonds %&gt;% 
+  filter(y &lt; 10) %&gt;% 
+  filter(y == max(y)) %&gt;% 
+  print(width = Inf)    </code></pre>
+<pre><code># A tibble: 2 x 10
+  carat cut       color clarity depth table price     x     y     z
+  &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1  4.01 Premium   J     I1       62.5    62 15223  10.0  9.94  6.24
+2  4    Very Good I     I1       63.3    58 15984  10.0  9.94  6.31</code></pre>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_histogram(aes(x = z),
+                 binwidth = 0.5)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-13-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>filter(diamonds, z == max(z)) %&gt;% 
+  print(width = Inf)</code></pre>
+<pre><code># A tibble: 1 x 10
+  carat cut       color clarity depth table price     x     y     z
+  &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1  0.51 Very Good E     VS1      61.8  54.7  1970  5.12  5.15  31.8</code></pre>
+<pre class="r"><code>filter(diamonds, z == min(z)) %&gt;% 
+  print(width = Inf)</code></pre>
+<pre><code># A tibble: 20 x 10
+   carat cut       color clarity depth table price     x     y     z
+   &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  1    Premium   G     SI2      59.1    59  3142  6.55  6.48     0
+ 2  1.01 Premium   H     I1       58.1    59  3167  6.66  6.6      0
+ 3  1.1  Premium   G     SI2      63      59  3696  6.5   6.47     0
+ 4  1.01 Premium   F     SI2      59.2    58  3837  6.5   6.47     0
+ 5  1.5  Good      G     I1       64      61  4731  7.15  7.04     0
+ 6  1.07 Ideal     F     SI2      61.6    56  4954  0     6.62     0
+ 7  1    Very Good H     VS2      63.3    53  5139  0     0        0
+ 8  1.15 Ideal     G     VS2      59.2    56  5564  6.88  6.83     0
+ 9  1.14 Fair      G     VS1      57.5    67  6381  0     0        0
+10  2.18 Premium   H     SI2      59.4    61 12631  8.49  8.45     0
+11  1.56 Ideal     G     VS2      62.2    54 12800  0     0        0
+12  2.25 Premium   I     SI1      61.3    58 15397  8.52  8.42     0
+13  1.2  Premium   D     VVS1     62.1    59 15686  0     0        0
+14  2.2  Premium   H     SI1      61.2    59 17265  8.42  8.37     0
+15  2.25 Premium   H     SI2      62.8    59 18034  0     0        0
+16  2.02 Premium   H     VS2      62.7    53 18207  8.02  7.95     0
+17  2.8  Good      G     SI2      63.8    58 18788  8.9   8.85     0
+18  0.71 Good      F     SI2      64.1    60  2130  0     0        0
+19  0.71 Good      F     SI2      64.1    60  2130  0     0        0
+20  1.12 Premium   G     I1       60.4    59  2383  6.71  6.67     0</code></pre>
+<pre class="r"><code>unusual_z &lt;- diamonds %&gt;% 
+  filter(z &lt; 2 | z &gt; 10)
+
+ggplot(data = unusual_z) +
+  geom_histogram(aes(x = z), binwidth = 0.5) +
+  coord_cartesian(xlim = c(0, 35),
+                  ylim = c(0, 25))</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-13-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>diamonds %&gt;% 
+  select(x, y, z) %&gt;% 
+  filter(x != 0,
+         y != 0, 
+         z != 0) %&gt;% 
+  skim()    </code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Piped data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">53920</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">x</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5.73</td>
+<td align="right">1.12</td>
+<td align="right">3.73</td>
+<td align="right">4.71</td>
+<td align="right">5.70</td>
+<td align="right">6.54</td>
+<td align="right">10.74</td>
+<td align="left">▇▇▅▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">y</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5.73</td>
+<td align="right">1.14</td>
+<td align="right">3.68</td>
+<td align="right">4.72</td>
+<td align="right">5.71</td>
+<td align="right">6.54</td>
+<td align="right">58.90</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">z</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3.54</td>
+<td align="right">0.70</td>
+<td align="right">1.07</td>
+<td align="right">2.91</td>
+<td align="right">3.53</td>
+<td align="right">4.04</td>
+<td align="right">31.80</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+<p>So it turns out a diamond has a table, width and depth.</p>
+<div class="pic right">
+<img src="assets/diamond.PNG" alt="Dimensions of a diamond; Credit: https://www.diamonds.pro/" />
+<p>
+<cite>Credit: <a href="https://www.diamonds.pro/" class="uri">https://www.diamonds.pro/</a></cite>
+</p>
+</div>
+<p>x and y could be depth or width - there’s not much difference between the 2 values. The z is likely to be the <code>table</code> since it is smaller.</p>
+<p>But looking at the <code>?diamonds</code> help page x = length, y = width and z = depth, and there is actually a table variable that is a relative measure 🤷, so there goes my “theory” 🤦.</p></li>
+<li><p>Explore the distribution of <code>price</code>. Do you discover anything unusual or surprising? (Hint: Carefully think about the <code>binwidth</code> and make sure you try a wide range of values.)</p>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_histogram(aes(x = price), bins = 20)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_histogram(aes(x = price), binwidth = 1000)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-14-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_histogram(aes(x = price), binwidth = 200)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-14-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_histogram(aes(x = price), binwidth = 500)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-14-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>diamonds %&gt;% 
+  select(price) %&gt;% 
+  skim()</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Piped data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">53940</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">price</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3932.8</td>
+<td align="right">3989.44</td>
+<td align="right">326</td>
+<td align="right">950</td>
+<td align="right">2401</td>
+<td align="right">5324.25</td>
+<td align="right">18823</td>
+<td align="left">▇▂▁▁▁</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>diamonds %&gt;% 
+  filter(price == 326 |
+           price == 18823) %&gt;% 
+  gt()</code></pre>
+<style>html {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+    }
+    
+    #jixpdgneat .gt_table {
+      display: table;
+      border-collapse: collapse;
+      margin-left: auto;
+      margin-right: auto;
+      color: #333333;
+      font-size: 16px;
+      font-weight: normal;
+      font-style: normal;
+      background-color: #FFFFFF;
+      width: auto;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #A8A8A8;
+      border-right-style: none;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #A8A8A8;
+      border-left-style: none;
+      border-left-width: 2px;
+      border-left-color: #D3D3D3;
+    }
+    
+    #jixpdgneat .gt_heading {
+      background-color: #FFFFFF;
+      text-align: center;
+      border-bottom-color: #FFFFFF;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #jixpdgneat .gt_title {
+      color: #333333;
+      font-size: 125%;
+      font-weight: initial;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      border-bottom-color: #FFFFFF;
+      border-bottom-width: 0;
+    }
+    
+    #jixpdgneat .gt_subtitle {
+      color: #333333;
+      font-size: 85%;
+      font-weight: initial;
+      padding-top: 0;
+      padding-bottom: 4px;
+      border-top-color: #FFFFFF;
+      border-top-width: 0;
+    }
+    
+    #jixpdgneat .gt_bottom_border {
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+    }
+    
+    #jixpdgneat .gt_col_headings {
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #jixpdgneat .gt_col_heading {
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: normal;
+      text-transform: inherit;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+      vertical-align: bottom;
+      padding-top: 5px;
+      padding-bottom: 6px;
+      padding-left: 5px;
+      padding-right: 5px;
+      overflow-x: hidden;
+    }
+    
+    #jixpdgneat .gt_column_spanner_outer {
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: normal;
+      text-transform: inherit;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+    
+    #jixpdgneat .gt_column_spanner_outer:first-child {
+      padding-left: 0;
+    }
+    
+    #jixpdgneat .gt_column_spanner_outer:last-child {
+      padding-right: 0;
+    }
+    
+    #jixpdgneat .gt_column_spanner {
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      vertical-align: bottom;
+      padding-top: 5px;
+      padding-bottom: 6px;
+      overflow-x: hidden;
+      display: inline-block;
+      width: 100%;
+    }
+    
+    #jixpdgneat .gt_group_heading {
+      padding: 8px;
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: initial;
+      text-transform: inherit;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+      vertical-align: middle;
+    }
+    
+    #jixpdgneat .gt_empty_group_heading {
+      padding: 0.5px;
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: initial;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      vertical-align: middle;
+    }
+    
+    #jixpdgneat .gt_from_md > :first-child {
+      margin-top: 0;
+    }
+    
+    #jixpdgneat .gt_from_md > :last-child {
+      margin-bottom: 0;
+    }
+    
+    #jixpdgneat .gt_row {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+      margin: 10px;
+      border-top-style: solid;
+      border-top-width: 1px;
+      border-top-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+      vertical-align: middle;
+      overflow-x: hidden;
+    }
+    
+    #jixpdgneat .gt_stub {
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: initial;
+      text-transform: inherit;
+      border-right-style: solid;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+      padding-left: 12px;
+    }
+    
+    #jixpdgneat .gt_summary_row {
+      color: #333333;
+      background-color: #FFFFFF;
+      text-transform: inherit;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    
+    #jixpdgneat .gt_first_summary_row {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+    }
+    
+    #jixpdgneat .gt_grand_summary_row {
+      color: #333333;
+      background-color: #FFFFFF;
+      text-transform: inherit;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    
+    #jixpdgneat .gt_first_grand_summary_row {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-top-style: double;
+      border-top-width: 6px;
+      border-top-color: #D3D3D3;
+    }
+    
+    #jixpdgneat .gt_striped {
+      background-color: rgba(128, 128, 128, 0.05);
+    }
+    
+    #jixpdgneat .gt_table_body {
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+    }
+    
+    #jixpdgneat .gt_footnotes {
+      color: #333333;
+      background-color: #FFFFFF;
+      border-bottom-style: none;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 2px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #jixpdgneat .gt_footnote {
+      margin: 0px;
+      font-size: 90%;
+      padding: 4px;
+    }
+    
+    #jixpdgneat .gt_sourcenotes {
+      color: #333333;
+      background-color: #FFFFFF;
+      border-bottom-style: none;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 2px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #jixpdgneat .gt_sourcenote {
+      font-size: 90%;
+      padding: 4px;
+    }
+    
+    #jixpdgneat .gt_left {
+      text-align: left;
+    }
+    
+    #jixpdgneat .gt_center {
+      text-align: center;
+    }
+    
+    #jixpdgneat .gt_right {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    #jixpdgneat .gt_font_normal {
+      font-weight: normal;
+    }
+    
+    #jixpdgneat .gt_font_bold {
+      font-weight: bold;
+    }
+    
+    #jixpdgneat .gt_font_italic {
+      font-style: italic;
+    }
+    
+    #jixpdgneat .gt_super {
+      font-size: 65%;
+    }
+    
+    #jixpdgneat .gt_footnote_marks {
+      font-style: italic;
+      font-size: 65%;
+    }
+    </style>
+    <div id="jixpdgneat" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+      
+      <thead class="gt_col_headings">
+        <tr>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">carat</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">cut</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">color</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">clarity</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">depth</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">table</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">price</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">x</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">y</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">z</th>
+        </tr>
+      </thead>
+      <tbody class="gt_table_body">
+        <tr>
+          <td class="gt_row gt_right">0.23</td>
+          <td class="gt_row gt_center">Ideal</td>
+          <td class="gt_row gt_center">E</td>
+          <td class="gt_row gt_center">SI2</td>
+          <td class="gt_row gt_right">61.5</td>
+          <td class="gt_row gt_right">55</td>
+          <td class="gt_row gt_center">326</td>
+          <td class="gt_row gt_right">3.95</td>
+          <td class="gt_row gt_right">3.98</td>
+          <td class="gt_row gt_right">2.43</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_right">0.21</td>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">E</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">59.8</td>
+          <td class="gt_row gt_right">61</td>
+          <td class="gt_row gt_center">326</td>
+          <td class="gt_row gt_right">3.89</td>
+          <td class="gt_row gt_right">3.84</td>
+          <td class="gt_row gt_right">2.31</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_right">2.29</td>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">I</td>
+          <td class="gt_row gt_center">VS2</td>
+          <td class="gt_row gt_right">60.8</td>
+          <td class="gt_row gt_right">60</td>
+          <td class="gt_row gt_center">18823</td>
+          <td class="gt_row gt_right">8.50</td>
+          <td class="gt_row gt_right">8.47</td>
+          <td class="gt_row gt_right">5.16</td>
+        </tr>
+      </tbody>
+      
+      
+    </table></div>
+<pre class="r"><code>diamonds %&gt;% 
+  arrange(-carat) %&gt;% 
+  head(10) %&gt;% 
+  gt()</code></pre>
+<style>html {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+    }
+    
+    #tietxdudzj .gt_table {
+      display: table;
+      border-collapse: collapse;
+      margin-left: auto;
+      margin-right: auto;
+      color: #333333;
+      font-size: 16px;
+      font-weight: normal;
+      font-style: normal;
+      background-color: #FFFFFF;
+      width: auto;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #A8A8A8;
+      border-right-style: none;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #A8A8A8;
+      border-left-style: none;
+      border-left-width: 2px;
+      border-left-color: #D3D3D3;
+    }
+    
+    #tietxdudzj .gt_heading {
+      background-color: #FFFFFF;
+      text-align: center;
+      border-bottom-color: #FFFFFF;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #tietxdudzj .gt_title {
+      color: #333333;
+      font-size: 125%;
+      font-weight: initial;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      border-bottom-color: #FFFFFF;
+      border-bottom-width: 0;
+    }
+    
+    #tietxdudzj .gt_subtitle {
+      color: #333333;
+      font-size: 85%;
+      font-weight: initial;
+      padding-top: 0;
+      padding-bottom: 4px;
+      border-top-color: #FFFFFF;
+      border-top-width: 0;
+    }
+    
+    #tietxdudzj .gt_bottom_border {
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+    }
+    
+    #tietxdudzj .gt_col_headings {
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #tietxdudzj .gt_col_heading {
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: normal;
+      text-transform: inherit;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+      vertical-align: bottom;
+      padding-top: 5px;
+      padding-bottom: 6px;
+      padding-left: 5px;
+      padding-right: 5px;
+      overflow-x: hidden;
+    }
+    
+    #tietxdudzj .gt_column_spanner_outer {
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: normal;
+      text-transform: inherit;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+    
+    #tietxdudzj .gt_column_spanner_outer:first-child {
+      padding-left: 0;
+    }
+    
+    #tietxdudzj .gt_column_spanner_outer:last-child {
+      padding-right: 0;
+    }
+    
+    #tietxdudzj .gt_column_spanner {
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      vertical-align: bottom;
+      padding-top: 5px;
+      padding-bottom: 6px;
+      overflow-x: hidden;
+      display: inline-block;
+      width: 100%;
+    }
+    
+    #tietxdudzj .gt_group_heading {
+      padding: 8px;
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: initial;
+      text-transform: inherit;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+      vertical-align: middle;
+    }
+    
+    #tietxdudzj .gt_empty_group_heading {
+      padding: 0.5px;
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: initial;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      vertical-align: middle;
+    }
+    
+    #tietxdudzj .gt_from_md > :first-child {
+      margin-top: 0;
+    }
+    
+    #tietxdudzj .gt_from_md > :last-child {
+      margin-bottom: 0;
+    }
+    
+    #tietxdudzj .gt_row {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+      margin: 10px;
+      border-top-style: solid;
+      border-top-width: 1px;
+      border-top-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+      vertical-align: middle;
+      overflow-x: hidden;
+    }
+    
+    #tietxdudzj .gt_stub {
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: initial;
+      text-transform: inherit;
+      border-right-style: solid;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+      padding-left: 12px;
+    }
+    
+    #tietxdudzj .gt_summary_row {
+      color: #333333;
+      background-color: #FFFFFF;
+      text-transform: inherit;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    
+    #tietxdudzj .gt_first_summary_row {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+    }
+    
+    #tietxdudzj .gt_grand_summary_row {
+      color: #333333;
+      background-color: #FFFFFF;
+      text-transform: inherit;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    
+    #tietxdudzj .gt_first_grand_summary_row {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-top-style: double;
+      border-top-width: 6px;
+      border-top-color: #D3D3D3;
+    }
+    
+    #tietxdudzj .gt_striped {
+      background-color: rgba(128, 128, 128, 0.05);
+    }
+    
+    #tietxdudzj .gt_table_body {
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+    }
+    
+    #tietxdudzj .gt_footnotes {
+      color: #333333;
+      background-color: #FFFFFF;
+      border-bottom-style: none;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 2px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #tietxdudzj .gt_footnote {
+      margin: 0px;
+      font-size: 90%;
+      padding: 4px;
+    }
+    
+    #tietxdudzj .gt_sourcenotes {
+      color: #333333;
+      background-color: #FFFFFF;
+      border-bottom-style: none;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 2px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #tietxdudzj .gt_sourcenote {
+      font-size: 90%;
+      padding: 4px;
+    }
+    
+    #tietxdudzj .gt_left {
+      text-align: left;
+    }
+    
+    #tietxdudzj .gt_center {
+      text-align: center;
+    }
+    
+    #tietxdudzj .gt_right {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    #tietxdudzj .gt_font_normal {
+      font-weight: normal;
+    }
+    
+    #tietxdudzj .gt_font_bold {
+      font-weight: bold;
+    }
+    
+    #tietxdudzj .gt_font_italic {
+      font-style: italic;
+    }
+    
+    #tietxdudzj .gt_super {
+      font-size: 65%;
+    }
+    
+    #tietxdudzj .gt_footnote_marks {
+      font-style: italic;
+      font-size: 65%;
+    }
+    </style>
+    <div id="tietxdudzj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+      
+      <thead class="gt_col_headings">
+        <tr>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">carat</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">cut</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">color</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">clarity</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">depth</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">table</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">price</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">x</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">y</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">z</th>
+        </tr>
+      </thead>
+      <tbody class="gt_table_body">
+        <tr>
+          <td class="gt_row gt_right">5.01</td>
+          <td class="gt_row gt_center">Fair</td>
+          <td class="gt_row gt_center">J</td>
+          <td class="gt_row gt_center">I1</td>
+          <td class="gt_row gt_right">65.5</td>
+          <td class="gt_row gt_right">59</td>
+          <td class="gt_row gt_center">18018</td>
+          <td class="gt_row gt_right">10.74</td>
+          <td class="gt_row gt_right">10.54</td>
+          <td class="gt_row gt_right">6.98</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_right">4.50</td>
+          <td class="gt_row gt_center">Fair</td>
+          <td class="gt_row gt_center">J</td>
+          <td class="gt_row gt_center">I1</td>
+          <td class="gt_row gt_right">65.8</td>
+          <td class="gt_row gt_right">58</td>
+          <td class="gt_row gt_center">18531</td>
+          <td class="gt_row gt_right">10.23</td>
+          <td class="gt_row gt_right">10.16</td>
+          <td class="gt_row gt_right">6.72</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_right">4.13</td>
+          <td class="gt_row gt_center">Fair</td>
+          <td class="gt_row gt_center">H</td>
+          <td class="gt_row gt_center">I1</td>
+          <td class="gt_row gt_right">64.8</td>
+          <td class="gt_row gt_right">61</td>
+          <td class="gt_row gt_center">17329</td>
+          <td class="gt_row gt_right">10.00</td>
+          <td class="gt_row gt_right">9.85</td>
+          <td class="gt_row gt_right">6.43</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_right">4.01</td>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">I</td>
+          <td class="gt_row gt_center">I1</td>
+          <td class="gt_row gt_right">61.0</td>
+          <td class="gt_row gt_right">61</td>
+          <td class="gt_row gt_center">15223</td>
+          <td class="gt_row gt_right">10.14</td>
+          <td class="gt_row gt_right">10.10</td>
+          <td class="gt_row gt_right">6.17</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_right">4.01</td>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">J</td>
+          <td class="gt_row gt_center">I1</td>
+          <td class="gt_row gt_right">62.5</td>
+          <td class="gt_row gt_right">62</td>
+          <td class="gt_row gt_center">15223</td>
+          <td class="gt_row gt_right">10.02</td>
+          <td class="gt_row gt_right">9.94</td>
+          <td class="gt_row gt_right">6.24</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_right">4.00</td>
+          <td class="gt_row gt_center">Very Good</td>
+          <td class="gt_row gt_center">I</td>
+          <td class="gt_row gt_center">I1</td>
+          <td class="gt_row gt_right">63.3</td>
+          <td class="gt_row gt_right">58</td>
+          <td class="gt_row gt_center">15984</td>
+          <td class="gt_row gt_right">10.01</td>
+          <td class="gt_row gt_right">9.94</td>
+          <td class="gt_row gt_right">6.31</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_right">3.67</td>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">I</td>
+          <td class="gt_row gt_center">I1</td>
+          <td class="gt_row gt_right">62.4</td>
+          <td class="gt_row gt_right">56</td>
+          <td class="gt_row gt_center">16193</td>
+          <td class="gt_row gt_right">9.86</td>
+          <td class="gt_row gt_right">9.81</td>
+          <td class="gt_row gt_right">6.13</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_right">3.65</td>
+          <td class="gt_row gt_center">Fair</td>
+          <td class="gt_row gt_center">H</td>
+          <td class="gt_row gt_center">I1</td>
+          <td class="gt_row gt_right">67.1</td>
+          <td class="gt_row gt_right">53</td>
+          <td class="gt_row gt_center">11668</td>
+          <td class="gt_row gt_right">9.53</td>
+          <td class="gt_row gt_right">9.48</td>
+          <td class="gt_row gt_right">6.38</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_right">3.51</td>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">J</td>
+          <td class="gt_row gt_center">VS2</td>
+          <td class="gt_row gt_right">62.5</td>
+          <td class="gt_row gt_right">59</td>
+          <td class="gt_row gt_center">18701</td>
+          <td class="gt_row gt_right">9.66</td>
+          <td class="gt_row gt_right">9.63</td>
+          <td class="gt_row gt_right">6.03</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_right">3.50</td>
+          <td class="gt_row gt_center">Ideal</td>
+          <td class="gt_row gt_center">H</td>
+          <td class="gt_row gt_center">I1</td>
+          <td class="gt_row gt_right">62.8</td>
+          <td class="gt_row gt_right">57</td>
+          <td class="gt_row gt_center">12587</td>
+          <td class="gt_row gt_right">9.65</td>
+          <td class="gt_row gt_right">9.59</td>
+          <td class="gt_row gt_right">6.03</td>
+        </tr>
+      </tbody>
+      
+      
+    </table></div>
+<p><br></p>
+<p>The prices range from $326 to $18823. The carat of the high priced $18823 diamond is 2.29. There are other diamonds where the carat is bigger, and the cut is also Premium yet the price is lower. So it seems diamond pricing considers many factors, and could also be determined on who is doing the selling.</p></li>
+<li><p>How many diamonds are 0.99 carat? How many are 1 carat? What do you think is the cause of the difference?</p>
+<pre class="r"><code>diamonds %&gt;%   
+  filter(
+         carat == 1 |
+         carat == 0.99
+        ) %&gt;%  
+  count(carat, sort = TRUE)</code></pre>
+<pre><code># A tibble: 2 x 2
+  carat     n
+  &lt;dbl&gt; &lt;int&gt;
+1  1     1558
+2  0.99    23</code></pre>
+<pre class="r"><code>sample_test &lt;- diamonds %&gt;% 
+  filter(carat == 1 |
+         carat == 0.99) %&gt;% 
+  group_by(carat) %&gt;% 
+  arrange(carat, price)
+
+sample_test %&gt;%   
+  sample_n(20) %&gt;% 
+  gt()</code></pre>
+<style>html {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+    }
+    
+    #pygzjjscuw .gt_table {
+      display: table;
+      border-collapse: collapse;
+      margin-left: auto;
+      margin-right: auto;
+      color: #333333;
+      font-size: 16px;
+      font-weight: normal;
+      font-style: normal;
+      background-color: #FFFFFF;
+      width: auto;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #A8A8A8;
+      border-right-style: none;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #A8A8A8;
+      border-left-style: none;
+      border-left-width: 2px;
+      border-left-color: #D3D3D3;
+    }
+    
+    #pygzjjscuw .gt_heading {
+      background-color: #FFFFFF;
+      text-align: center;
+      border-bottom-color: #FFFFFF;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #pygzjjscuw .gt_title {
+      color: #333333;
+      font-size: 125%;
+      font-weight: initial;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      border-bottom-color: #FFFFFF;
+      border-bottom-width: 0;
+    }
+    
+    #pygzjjscuw .gt_subtitle {
+      color: #333333;
+      font-size: 85%;
+      font-weight: initial;
+      padding-top: 0;
+      padding-bottom: 4px;
+      border-top-color: #FFFFFF;
+      border-top-width: 0;
+    }
+    
+    #pygzjjscuw .gt_bottom_border {
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+    }
+    
+    #pygzjjscuw .gt_col_headings {
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #pygzjjscuw .gt_col_heading {
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: normal;
+      text-transform: inherit;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+      vertical-align: bottom;
+      padding-top: 5px;
+      padding-bottom: 6px;
+      padding-left: 5px;
+      padding-right: 5px;
+      overflow-x: hidden;
+    }
+    
+    #pygzjjscuw .gt_column_spanner_outer {
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: normal;
+      text-transform: inherit;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+    
+    #pygzjjscuw .gt_column_spanner_outer:first-child {
+      padding-left: 0;
+    }
+    
+    #pygzjjscuw .gt_column_spanner_outer:last-child {
+      padding-right: 0;
+    }
+    
+    #pygzjjscuw .gt_column_spanner {
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      vertical-align: bottom;
+      padding-top: 5px;
+      padding-bottom: 6px;
+      overflow-x: hidden;
+      display: inline-block;
+      width: 100%;
+    }
+    
+    #pygzjjscuw .gt_group_heading {
+      padding: 8px;
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: initial;
+      text-transform: inherit;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+      vertical-align: middle;
+    }
+    
+    #pygzjjscuw .gt_empty_group_heading {
+      padding: 0.5px;
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: initial;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      vertical-align: middle;
+    }
+    
+    #pygzjjscuw .gt_from_md > :first-child {
+      margin-top: 0;
+    }
+    
+    #pygzjjscuw .gt_from_md > :last-child {
+      margin-bottom: 0;
+    }
+    
+    #pygzjjscuw .gt_row {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+      margin: 10px;
+      border-top-style: solid;
+      border-top-width: 1px;
+      border-top-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+      vertical-align: middle;
+      overflow-x: hidden;
+    }
+    
+    #pygzjjscuw .gt_stub {
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: initial;
+      text-transform: inherit;
+      border-right-style: solid;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+      padding-left: 12px;
+    }
+    
+    #pygzjjscuw .gt_summary_row {
+      color: #333333;
+      background-color: #FFFFFF;
+      text-transform: inherit;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    
+    #pygzjjscuw .gt_first_summary_row {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+    }
+    
+    #pygzjjscuw .gt_grand_summary_row {
+      color: #333333;
+      background-color: #FFFFFF;
+      text-transform: inherit;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    
+    #pygzjjscuw .gt_first_grand_summary_row {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-top-style: double;
+      border-top-width: 6px;
+      border-top-color: #D3D3D3;
+    }
+    
+    #pygzjjscuw .gt_striped {
+      background-color: rgba(128, 128, 128, 0.05);
+    }
+    
+    #pygzjjscuw .gt_table_body {
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+    }
+    
+    #pygzjjscuw .gt_footnotes {
+      color: #333333;
+      background-color: #FFFFFF;
+      border-bottom-style: none;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 2px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #pygzjjscuw .gt_footnote {
+      margin: 0px;
+      font-size: 90%;
+      padding: 4px;
+    }
+    
+    #pygzjjscuw .gt_sourcenotes {
+      color: #333333;
+      background-color: #FFFFFF;
+      border-bottom-style: none;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 2px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #pygzjjscuw .gt_sourcenote {
+      font-size: 90%;
+      padding: 4px;
+    }
+    
+    #pygzjjscuw .gt_left {
+      text-align: left;
+    }
+    
+    #pygzjjscuw .gt_center {
+      text-align: center;
+    }
+    
+    #pygzjjscuw .gt_right {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    #pygzjjscuw .gt_font_normal {
+      font-weight: normal;
+    }
+    
+    #pygzjjscuw .gt_font_bold {
+      font-weight: bold;
+    }
+    
+    #pygzjjscuw .gt_font_italic {
+      font-style: italic;
+    }
+    
+    #pygzjjscuw .gt_super {
+      font-size: 65%;
+    }
+    
+    #pygzjjscuw .gt_footnote_marks {
+      font-style: italic;
+      font-size: 65%;
+    }
+    </style>
+    <div id="pygzjjscuw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+      
+      <thead class="gt_col_headings">
+        <tr>
+          <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">cut</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">color</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">clarity</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">depth</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">table</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">price</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">x</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">y</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">z</th>
+        </tr>
+      </thead>
+      <tbody class="gt_table_body">
+        <tr class="gt_group_heading_row">
+          <td colspan="9" class="gt_group_heading">0.99</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Good</td>
+          <td class="gt_row gt_center">F</td>
+          <td class="gt_row gt_center">SI2</td>
+          <td class="gt_row gt_right">63.3</td>
+          <td class="gt_row gt_right">54</td>
+          <td class="gt_row gt_center">4052</td>
+          <td class="gt_row gt_right">6.36</td>
+          <td class="gt_row gt_right">6.43</td>
+          <td class="gt_row gt_right">4.05</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">F</td>
+          <td class="gt_row gt_center">VS2</td>
+          <td class="gt_row gt_right">62.6</td>
+          <td class="gt_row gt_right">55</td>
+          <td class="gt_row gt_center">5893</td>
+          <td class="gt_row gt_right">6.50</td>
+          <td class="gt_row gt_right">6.35</td>
+          <td class="gt_row gt_right">4.02</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Very Good</td>
+          <td class="gt_row gt_center">F</td>
+          <td class="gt_row gt_center">SI2</td>
+          <td class="gt_row gt_right">61.2</td>
+          <td class="gt_row gt_right">56</td>
+          <td class="gt_row gt_center">4852</td>
+          <td class="gt_row gt_right">6.40</td>
+          <td class="gt_row gt_right">6.45</td>
+          <td class="gt_row gt_right">3.93</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Fair</td>
+          <td class="gt_row gt_center">I</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">60.7</td>
+          <td class="gt_row gt_right">66</td>
+          <td class="gt_row gt_center">3337</td>
+          <td class="gt_row gt_right">6.42</td>
+          <td class="gt_row gt_right">6.34</td>
+          <td class="gt_row gt_right">3.87</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Very Good</td>
+          <td class="gt_row gt_center">D</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">62.6</td>
+          <td class="gt_row gt_right">57</td>
+          <td class="gt_row gt_center">5671</td>
+          <td class="gt_row gt_right">6.34</td>
+          <td class="gt_row gt_right">6.37</td>
+          <td class="gt_row gt_right">3.98</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Ideal</td>
+          <td class="gt_row gt_center">F</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">62.8</td>
+          <td class="gt_row gt_right">57</td>
+          <td class="gt_row gt_center">5728</td>
+          <td class="gt_row gt_right">6.30</td>
+          <td class="gt_row gt_right">6.38</td>
+          <td class="gt_row gt_right">3.98</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Ideal</td>
+          <td class="gt_row gt_center">H</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">61.1</td>
+          <td class="gt_row gt_right">56</td>
+          <td class="gt_row gt_center">5287</td>
+          <td class="gt_row gt_right">6.44</td>
+          <td class="gt_row gt_right">6.47</td>
+          <td class="gt_row gt_right">3.94</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Ideal</td>
+          <td class="gt_row gt_center">F</td>
+          <td class="gt_row gt_center">VS1</td>
+          <td class="gt_row gt_right">61.0</td>
+          <td class="gt_row gt_right">55</td>
+          <td class="gt_row gt_center">5947</td>
+          <td class="gt_row gt_right">6.46</td>
+          <td class="gt_row gt_right">6.52</td>
+          <td class="gt_row gt_right">3.96</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Very Good</td>
+          <td class="gt_row gt_center">F</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">62.5</td>
+          <td class="gt_row gt_right">58</td>
+          <td class="gt_row gt_center">5112</td>
+          <td class="gt_row gt_right">6.36</td>
+          <td class="gt_row gt_right">6.38</td>
+          <td class="gt_row gt_right">3.98</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Very Good</td>
+          <td class="gt_row gt_center">G</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">62.8</td>
+          <td class="gt_row gt_right">56</td>
+          <td class="gt_row gt_center">4863</td>
+          <td class="gt_row gt_right">6.34</td>
+          <td class="gt_row gt_right">6.36</td>
+          <td class="gt_row gt_right">3.99</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Ideal</td>
+          <td class="gt_row gt_center">F</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">62.1</td>
+          <td class="gt_row gt_right">58</td>
+          <td class="gt_row gt_center">6038</td>
+          <td class="gt_row gt_right">6.33</td>
+          <td class="gt_row gt_right">6.40</td>
+          <td class="gt_row gt_right">3.95</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Fair</td>
+          <td class="gt_row gt_center">I</td>
+          <td class="gt_row gt_center">SI2</td>
+          <td class="gt_row gt_right">68.1</td>
+          <td class="gt_row gt_right">56</td>
+          <td class="gt_row gt_center">2811</td>
+          <td class="gt_row gt_right">6.21</td>
+          <td class="gt_row gt_right">6.06</td>
+          <td class="gt_row gt_right">4.18</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Fair</td>
+          <td class="gt_row gt_center">H</td>
+          <td class="gt_row gt_center">VS2</td>
+          <td class="gt_row gt_right">71.6</td>
+          <td class="gt_row gt_right">57</td>
+          <td class="gt_row gt_center">3593</td>
+          <td class="gt_row gt_right">5.94</td>
+          <td class="gt_row gt_right">5.80</td>
+          <td class="gt_row gt_right">4.20</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Very Good</td>
+          <td class="gt_row gt_center">J</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">60.3</td>
+          <td class="gt_row gt_right">57</td>
+          <td class="gt_row gt_center">4002</td>
+          <td class="gt_row gt_right">6.44</td>
+          <td class="gt_row gt_right">6.49</td>
+          <td class="gt_row gt_right">3.90</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Very Good</td>
+          <td class="gt_row gt_center">F</td>
+          <td class="gt_row gt_center">VS2</td>
+          <td class="gt_row gt_right">61.8</td>
+          <td class="gt_row gt_right">57</td>
+          <td class="gt_row gt_center">6094</td>
+          <td class="gt_row gt_right">6.37</td>
+          <td class="gt_row gt_right">6.39</td>
+          <td class="gt_row gt_right">3.94</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Ideal</td>
+          <td class="gt_row gt_center">I</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">61.8</td>
+          <td class="gt_row gt_right">57</td>
+          <td class="gt_row gt_center">4763</td>
+          <td class="gt_row gt_right">6.40</td>
+          <td class="gt_row gt_right">6.42</td>
+          <td class="gt_row gt_right">3.96</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Very Good</td>
+          <td class="gt_row gt_center">E</td>
+          <td class="gt_row gt_center">SI2</td>
+          <td class="gt_row gt_right">61.8</td>
+          <td class="gt_row gt_right">59</td>
+          <td class="gt_row gt_center">4780</td>
+          <td class="gt_row gt_right">6.30</td>
+          <td class="gt_row gt_right">6.33</td>
+          <td class="gt_row gt_right">3.90</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">F</td>
+          <td class="gt_row gt_center">SI2</td>
+          <td class="gt_row gt_right">60.6</td>
+          <td class="gt_row gt_right">61</td>
+          <td class="gt_row gt_center">4075</td>
+          <td class="gt_row gt_right">6.45</td>
+          <td class="gt_row gt_right">6.38</td>
+          <td class="gt_row gt_right">3.89</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Very Good</td>
+          <td class="gt_row gt_center">D</td>
+          <td class="gt_row gt_center">SI2</td>
+          <td class="gt_row gt_right">62.5</td>
+          <td class="gt_row gt_right">57</td>
+          <td class="gt_row gt_center">4993</td>
+          <td class="gt_row gt_right">6.30</td>
+          <td class="gt_row gt_right">6.34</td>
+          <td class="gt_row gt_right">3.95</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Fair</td>
+          <td class="gt_row gt_center">J</td>
+          <td class="gt_row gt_center">I1</td>
+          <td class="gt_row gt_right">73.6</td>
+          <td class="gt_row gt_right">60</td>
+          <td class="gt_row gt_center">1789</td>
+          <td class="gt_row gt_right">6.01</td>
+          <td class="gt_row gt_right">5.80</td>
+          <td class="gt_row gt_right">4.35</td>
+        </tr>
+        <tr class="gt_group_heading_row">
+          <td colspan="9" class="gt_group_heading">1</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Very Good</td>
+          <td class="gt_row gt_center">H</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">62.1</td>
+          <td class="gt_row gt_right">58</td>
+          <td class="gt_row gt_center">5247</td>
+          <td class="gt_row gt_right">6.44</td>
+          <td class="gt_row gt_right">6.45</td>
+          <td class="gt_row gt_right">4.00</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Very Good</td>
+          <td class="gt_row gt_center">D</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">60.1</td>
+          <td class="gt_row gt_right">60</td>
+          <td class="gt_row gt_center">4697</td>
+          <td class="gt_row gt_right">6.47</td>
+          <td class="gt_row gt_right">6.55</td>
+          <td class="gt_row gt_right">3.91</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">H</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">62.7</td>
+          <td class="gt_row gt_right">60</td>
+          <td class="gt_row gt_center">4469</td>
+          <td class="gt_row gt_right">6.30</td>
+          <td class="gt_row gt_right">6.24</td>
+          <td class="gt_row gt_right">3.93</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Ideal</td>
+          <td class="gt_row gt_center">E</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">61.9</td>
+          <td class="gt_row gt_right">56</td>
+          <td class="gt_row gt_center">5458</td>
+          <td class="gt_row gt_right">6.37</td>
+          <td class="gt_row gt_right">6.45</td>
+          <td class="gt_row gt_right">3.97</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">E</td>
+          <td class="gt_row gt_center">VS2</td>
+          <td class="gt_row gt_right">63.0</td>
+          <td class="gt_row gt_right">58</td>
+          <td class="gt_row gt_center">7168</td>
+          <td class="gt_row gt_right">6.25</td>
+          <td class="gt_row gt_right">6.22</td>
+          <td class="gt_row gt_right">3.93</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Good</td>
+          <td class="gt_row gt_center">H</td>
+          <td class="gt_row gt_center">VS1</td>
+          <td class="gt_row gt_right">61.8</td>
+          <td class="gt_row gt_right">61</td>
+          <td class="gt_row gt_center">5219</td>
+          <td class="gt_row gt_right">6.40</td>
+          <td class="gt_row gt_right">6.31</td>
+          <td class="gt_row gt_right">3.93</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Very Good</td>
+          <td class="gt_row gt_center">D</td>
+          <td class="gt_row gt_center">IF</td>
+          <td class="gt_row gt_right">63.3</td>
+          <td class="gt_row gt_right">59</td>
+          <td class="gt_row gt_center">16073</td>
+          <td class="gt_row gt_right">6.37</td>
+          <td class="gt_row gt_right">6.33</td>
+          <td class="gt_row gt_right">4.02</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Good</td>
+          <td class="gt_row gt_center">D</td>
+          <td class="gt_row gt_center">SI2</td>
+          <td class="gt_row gt_right">64.0</td>
+          <td class="gt_row gt_right">54</td>
+          <td class="gt_row gt_center">3304</td>
+          <td class="gt_row gt_right">6.29</td>
+          <td class="gt_row gt_right">6.24</td>
+          <td class="gt_row gt_right">4.01</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">H</td>
+          <td class="gt_row gt_center">VS2</td>
+          <td class="gt_row gt_right">61.5</td>
+          <td class="gt_row gt_right">61</td>
+          <td class="gt_row gt_center">5000</td>
+          <td class="gt_row gt_right">6.45</td>
+          <td class="gt_row gt_right">6.40</td>
+          <td class="gt_row gt_right">3.95</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Fair</td>
+          <td class="gt_row gt_center">F</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">64.8</td>
+          <td class="gt_row gt_right">59</td>
+          <td class="gt_row gt_center">5292</td>
+          <td class="gt_row gt_right">6.29</td>
+          <td class="gt_row gt_right">6.24</td>
+          <td class="gt_row gt_right">4.06</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Ideal</td>
+          <td class="gt_row gt_center">E</td>
+          <td class="gt_row gt_center">SI2</td>
+          <td class="gt_row gt_right">62.0</td>
+          <td class="gt_row gt_right">57</td>
+          <td class="gt_row gt_center">4623</td>
+          <td class="gt_row gt_right">6.37</td>
+          <td class="gt_row gt_right">6.41</td>
+          <td class="gt_row gt_right">3.96</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">D</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">61.5</td>
+          <td class="gt_row gt_right">60</td>
+          <td class="gt_row gt_center">5488</td>
+          <td class="gt_row gt_right">6.38</td>
+          <td class="gt_row gt_right">6.34</td>
+          <td class="gt_row gt_right">3.91</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">G</td>
+          <td class="gt_row gt_center">VS1</td>
+          <td class="gt_row gt_right">60.6</td>
+          <td class="gt_row gt_right">59</td>
+          <td class="gt_row gt_center">6115</td>
+          <td class="gt_row gt_right">6.48</td>
+          <td class="gt_row gt_right">6.42</td>
+          <td class="gt_row gt_right">3.91</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Very Good</td>
+          <td class="gt_row gt_center">I</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">58.5</td>
+          <td class="gt_row gt_right">61</td>
+          <td class="gt_row gt_center">4649</td>
+          <td class="gt_row gt_right">6.51</td>
+          <td class="gt_row gt_right">6.55</td>
+          <td class="gt_row gt_right">3.82</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">D</td>
+          <td class="gt_row gt_center">SI2</td>
+          <td class="gt_row gt_right">61.6</td>
+          <td class="gt_row gt_right">58</td>
+          <td class="gt_row gt_center">4626</td>
+          <td class="gt_row gt_right">6.45</td>
+          <td class="gt_row gt_right">6.37</td>
+          <td class="gt_row gt_right">3.95</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">H</td>
+          <td class="gt_row gt_center">VS2</td>
+          <td class="gt_row gt_right">62.6</td>
+          <td class="gt_row gt_right">59</td>
+          <td class="gt_row gt_center">5320</td>
+          <td class="gt_row gt_right">6.37</td>
+          <td class="gt_row gt_right">6.31</td>
+          <td class="gt_row gt_right">3.97</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">H</td>
+          <td class="gt_row gt_center">SI2</td>
+          <td class="gt_row gt_right">62.8</td>
+          <td class="gt_row gt_right">60</td>
+          <td class="gt_row gt_center">3080</td>
+          <td class="gt_row gt_right">6.46</td>
+          <td class="gt_row gt_right">6.34</td>
+          <td class="gt_row gt_right">4.02</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Ideal</td>
+          <td class="gt_row gt_center">D</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">63.0</td>
+          <td class="gt_row gt_right">56</td>
+          <td class="gt_row gt_center">4592</td>
+          <td class="gt_row gt_right">6.33</td>
+          <td class="gt_row gt_right">6.28</td>
+          <td class="gt_row gt_right">3.97</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Premium</td>
+          <td class="gt_row gt_center">F</td>
+          <td class="gt_row gt_center">SI1</td>
+          <td class="gt_row gt_right">59.7</td>
+          <td class="gt_row gt_right">60</td>
+          <td class="gt_row gt_center">4939</td>
+          <td class="gt_row gt_right">6.51</td>
+          <td class="gt_row gt_right">6.48</td>
+          <td class="gt_row gt_right">3.88</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_center">Ideal</td>
+          <td class="gt_row gt_center">G</td>
+          <td class="gt_row gt_center">VS2</td>
+          <td class="gt_row gt_right">58.9</td>
+          <td class="gt_row gt_right">60</td>
+          <td class="gt_row gt_center">6235</td>
+          <td class="gt_row gt_right">6.53</td>
+          <td class="gt_row gt_right">6.58</td>
+          <td class="gt_row gt_right">3.86</td>
+        </tr>
+      </tbody>
+      
+      
+    </table></div>
+<pre class="r"><code>sample_test %&gt;% 
+  select(cut, price) %&gt;% 
+  skim()</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Piped data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">1581</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">factor</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">carat</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">carat</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">cut</td>
+<td align="right">0.99</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">TRUE</td>
+<td align="right">5</td>
+<td align="left">Ver: 8, Fai: 7, Ide: 5, Pre: 2</td>
+</tr>
+<tr class="even">
+<td align="left">cut</td>
+<td align="right">1.00</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">TRUE</td>
+<td align="right">5</td>
+<td align="left">Pre: 462, Ver: 389, Goo: 333, Ide: 208</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">carat</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">price</td>
+<td align="right">0.99</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4406.17</td>
+<td align="right">1318.99</td>
+<td align="right">1789</td>
+<td align="right">3465</td>
+<td align="right">4780</td>
+<td align="right">5479</td>
+<td align="right">6094</td>
+<td align="left">▂▅▅▇▇</td>
+</tr>
+<tr class="even">
+<td align="left">price</td>
+<td align="right">1.00</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5241.59</td>
+<td align="right">1603.94</td>
+<td align="right">1681</td>
+<td align="right">4155</td>
+<td align="right">4864</td>
+<td align="right">6073</td>
+<td align="right">16469</td>
+<td align="left">▇▇▁▁▁</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>The one carat diamonds are gigher in price and hugely so in the upper range.</p></li>
+<li><p>Compare and contrast <code>coord_cartesian()</code> vs <code>xlim()</code> or <code>ylim()</code> when zooming in on a histogram. What happens if you leave <code>binwidth</code> unset? What happens if you try and zoom so only half a bar shows?</p>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_histogram(mapping = aes(x = y), binwidth = 0.5) +
+  # limit the y-axis to btw 0-50! 
+  # Note to self: DON&#39;T CONFUSE with the x-axis
+  # which is named `y`!!
+  coord_cartesian(ylim = c(0,50)) +
+  labs(x = &quot;The variable y in the diamonds dataset&quot;)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_histogram(mapping = aes(x = y), binwidth = 0.5) +
+  ylim(c(0,50)) +
+  labs(x = &quot;The variable y in the diamonds dataset&quot;)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-16-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_histogram(mapping = aes(x = y)) +
+  ylim(c(0,50)) +
+  labs(x = &quot;The variable y in the diamonds dataset&quot;)    </code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-16-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Documentation reads: “This is a shortcut for supplying the limits argument to the individual scales. Note that, by default, any values outside the limits will be replaced with NA.” So <code>ylim()</code> and <code>xlim()</code> replace values outside the limit with NULL values resulting in the histogram being quite different to what we have when we use <code>coord_cartesian()</code>.</p>
+<p>If we don’t supply a binwidth ggplot defaults the number of bins to display to 30, and hence implicitly picks a binwidth for us.</p></li>
+</ol>
+</div>
+</div>
+<div id="leveraging-missing-values" class="section level2">
+<h2>Leveraging Missing Values</h2>
+<p>When you have weird values for variables, e.g. the ~59 mm for y, you may be tempted to drop these values and carry on. Often though a dataset is not nice and neat with all it’s weird values in a few observations! Usually the weird values are spread over multiple observations!</p>
+<pre class="r"><code>diamonds %&gt;% 
+  mutate(row_num = row_number()) %&gt;% 
+  filter(x==0 | y==0 | z==0) %&gt;% 
+  gt()</code></pre>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#rmxqnsmplc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#rmxqnsmplc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rmxqnsmplc .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#rmxqnsmplc .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#rmxqnsmplc .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rmxqnsmplc .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rmxqnsmplc .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#rmxqnsmplc .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#rmxqnsmplc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#rmxqnsmplc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#rmxqnsmplc .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#rmxqnsmplc .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rmxqnsmplc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rmxqnsmplc .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#rmxqnsmplc .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#rmxqnsmplc .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#rmxqnsmplc .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#rmxqnsmplc .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rmxqnsmplc .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#rmxqnsmplc .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rmxqnsmplc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#rmxqnsmplc .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#rmxqnsmplc .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rmxqnsmplc .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rmxqnsmplc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#rmxqnsmplc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rmxqnsmplc .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#rmxqnsmplc .gt_left {
+  text-align: left;
+}
+
+#rmxqnsmplc .gt_center {
+  text-align: center;
+}
+
+#rmxqnsmplc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#rmxqnsmplc .gt_font_normal {
+  font-weight: normal;
+}
+
+#rmxqnsmplc .gt_font_bold {
+  font-weight: bold;
+}
+
+#rmxqnsmplc .gt_font_italic {
+  font-style: italic;
+}
+
+#rmxqnsmplc .gt_super {
+  font-size: 65%;
+}
+
+#rmxqnsmplc .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="rmxqnsmplc" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">carat</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">cut</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">color</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">clarity</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">depth</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">table</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">price</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">x</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">y</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">z</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">row_num</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_right">1.00</td>
+      <td class="gt_row gt_center">Premium</td>
+      <td class="gt_row gt_center">G</td>
+      <td class="gt_row gt_center">SI2</td>
+      <td class="gt_row gt_right">59.1</td>
+      <td class="gt_row gt_right">59</td>
+      <td class="gt_row gt_center">3142</td>
+      <td class="gt_row gt_right">6.55</td>
+      <td class="gt_row gt_right">6.48</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">2208</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">1.01</td>
+      <td class="gt_row gt_center">Premium</td>
+      <td class="gt_row gt_center">H</td>
+      <td class="gt_row gt_center">I1</td>
+      <td class="gt_row gt_right">58.1</td>
+      <td class="gt_row gt_right">59</td>
+      <td class="gt_row gt_center">3167</td>
+      <td class="gt_row gt_right">6.66</td>
+      <td class="gt_row gt_right">6.60</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">2315</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">1.10</td>
+      <td class="gt_row gt_center">Premium</td>
+      <td class="gt_row gt_center">G</td>
+      <td class="gt_row gt_center">SI2</td>
+      <td class="gt_row gt_right">63.0</td>
+      <td class="gt_row gt_right">59</td>
+      <td class="gt_row gt_center">3696</td>
+      <td class="gt_row gt_right">6.50</td>
+      <td class="gt_row gt_right">6.47</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">4792</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">1.01</td>
+      <td class="gt_row gt_center">Premium</td>
+      <td class="gt_row gt_center">F</td>
+      <td class="gt_row gt_center">SI2</td>
+      <td class="gt_row gt_right">59.2</td>
+      <td class="gt_row gt_right">58</td>
+      <td class="gt_row gt_center">3837</td>
+      <td class="gt_row gt_right">6.50</td>
+      <td class="gt_row gt_right">6.47</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">5472</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">1.50</td>
+      <td class="gt_row gt_center">Good</td>
+      <td class="gt_row gt_center">G</td>
+      <td class="gt_row gt_center">I1</td>
+      <td class="gt_row gt_right">64.0</td>
+      <td class="gt_row gt_right">61</td>
+      <td class="gt_row gt_center">4731</td>
+      <td class="gt_row gt_right">7.15</td>
+      <td class="gt_row gt_right">7.04</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">10168</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">1.07</td>
+      <td class="gt_row gt_center">Ideal</td>
+      <td class="gt_row gt_center">F</td>
+      <td class="gt_row gt_center">SI2</td>
+      <td class="gt_row gt_right">61.6</td>
+      <td class="gt_row gt_right">56</td>
+      <td class="gt_row gt_center">4954</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">6.62</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">11183</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">1.00</td>
+      <td class="gt_row gt_center">Very Good</td>
+      <td class="gt_row gt_center">H</td>
+      <td class="gt_row gt_center">VS2</td>
+      <td class="gt_row gt_right">63.3</td>
+      <td class="gt_row gt_right">53</td>
+      <td class="gt_row gt_center">5139</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">11964</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">1.15</td>
+      <td class="gt_row gt_center">Ideal</td>
+      <td class="gt_row gt_center">G</td>
+      <td class="gt_row gt_center">VS2</td>
+      <td class="gt_row gt_right">59.2</td>
+      <td class="gt_row gt_right">56</td>
+      <td class="gt_row gt_center">5564</td>
+      <td class="gt_row gt_right">6.88</td>
+      <td class="gt_row gt_right">6.83</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">13602</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">1.14</td>
+      <td class="gt_row gt_center">Fair</td>
+      <td class="gt_row gt_center">G</td>
+      <td class="gt_row gt_center">VS1</td>
+      <td class="gt_row gt_right">57.5</td>
+      <td class="gt_row gt_right">67</td>
+      <td class="gt_row gt_center">6381</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">15952</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">2.18</td>
+      <td class="gt_row gt_center">Premium</td>
+      <td class="gt_row gt_center">H</td>
+      <td class="gt_row gt_center">SI2</td>
+      <td class="gt_row gt_right">59.4</td>
+      <td class="gt_row gt_right">61</td>
+      <td class="gt_row gt_center">12631</td>
+      <td class="gt_row gt_right">8.49</td>
+      <td class="gt_row gt_right">8.45</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">24395</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">1.56</td>
+      <td class="gt_row gt_center">Ideal</td>
+      <td class="gt_row gt_center">G</td>
+      <td class="gt_row gt_center">VS2</td>
+      <td class="gt_row gt_right">62.2</td>
+      <td class="gt_row gt_right">54</td>
+      <td class="gt_row gt_center">12800</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">24521</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">2.25</td>
+      <td class="gt_row gt_center">Premium</td>
+      <td class="gt_row gt_center">I</td>
+      <td class="gt_row gt_center">SI1</td>
+      <td class="gt_row gt_right">61.3</td>
+      <td class="gt_row gt_right">58</td>
+      <td class="gt_row gt_center">15397</td>
+      <td class="gt_row gt_right">8.52</td>
+      <td class="gt_row gt_right">8.42</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">26124</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">1.20</td>
+      <td class="gt_row gt_center">Premium</td>
+      <td class="gt_row gt_center">D</td>
+      <td class="gt_row gt_center">VVS1</td>
+      <td class="gt_row gt_right">62.1</td>
+      <td class="gt_row gt_right">59</td>
+      <td class="gt_row gt_center">15686</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">26244</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">2.20</td>
+      <td class="gt_row gt_center">Premium</td>
+      <td class="gt_row gt_center">H</td>
+      <td class="gt_row gt_center">SI1</td>
+      <td class="gt_row gt_right">61.2</td>
+      <td class="gt_row gt_right">59</td>
+      <td class="gt_row gt_center">17265</td>
+      <td class="gt_row gt_right">8.42</td>
+      <td class="gt_row gt_right">8.37</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">27113</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">2.25</td>
+      <td class="gt_row gt_center">Premium</td>
+      <td class="gt_row gt_center">H</td>
+      <td class="gt_row gt_center">SI2</td>
+      <td class="gt_row gt_right">62.8</td>
+      <td class="gt_row gt_right">59</td>
+      <td class="gt_row gt_center">18034</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">27430</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">2.02</td>
+      <td class="gt_row gt_center">Premium</td>
+      <td class="gt_row gt_center">H</td>
+      <td class="gt_row gt_center">VS2</td>
+      <td class="gt_row gt_right">62.7</td>
+      <td class="gt_row gt_right">53</td>
+      <td class="gt_row gt_center">18207</td>
+      <td class="gt_row gt_right">8.02</td>
+      <td class="gt_row gt_right">7.95</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">27504</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">2.80</td>
+      <td class="gt_row gt_center">Good</td>
+      <td class="gt_row gt_center">G</td>
+      <td class="gt_row gt_center">SI2</td>
+      <td class="gt_row gt_right">63.8</td>
+      <td class="gt_row gt_right">58</td>
+      <td class="gt_row gt_center">18788</td>
+      <td class="gt_row gt_right">8.90</td>
+      <td class="gt_row gt_right">8.85</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">27740</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">0.71</td>
+      <td class="gt_row gt_center">Good</td>
+      <td class="gt_row gt_center">F</td>
+      <td class="gt_row gt_center">SI2</td>
+      <td class="gt_row gt_right">64.1</td>
+      <td class="gt_row gt_right">60</td>
+      <td class="gt_row gt_center">2130</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">49557</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">0.71</td>
+      <td class="gt_row gt_center">Good</td>
+      <td class="gt_row gt_center">F</td>
+      <td class="gt_row gt_center">SI2</td>
+      <td class="gt_row gt_right">64.1</td>
+      <td class="gt_row gt_right">60</td>
+      <td class="gt_row gt_center">2130</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">0.00</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">49558</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_right">1.12</td>
+      <td class="gt_row gt_center">Premium</td>
+      <td class="gt_row gt_center">G</td>
+      <td class="gt_row gt_center">I1</td>
+      <td class="gt_row gt_right">60.4</td>
+      <td class="gt_row gt_right">59</td>
+      <td class="gt_row gt_center">2383</td>
+      <td class="gt_row gt_right">6.71</td>
+      <td class="gt_row gt_right">6.67</td>
+      <td class="gt_row gt_right">0</td>
+      <td class="gt_row gt_center">51507</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+<p><br></p>
+<p>Throwing away all observations where a variable has weird values can result in a serious shrinking of your dataset.</p>
+<p>The authors suggest that instead of throwing away the observations with weird values, rather replace them with <code>missing values</code>. This may sound strange since many of us have probably heard that <code>missing values</code> shouldn’t be used in data science! It’s usually a <em>problem</em> to be fixed!</p>
+<p>But in EDA it may provide insight to either force weird values to be NA, or to investigate how missing values differ from non-missing values.</p>
+<div id="exercises-1" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>What happens to missing values in a histogram? What happens to missing values in a bar chart? Why is there a difference?</p>
+<p>Missing values in bar charts are plotted as a category. Missing values in a histogram are dropped.</p>
+<p>I guess that it is easy to create one category for missing and lump all the missing variable observations into that count.</p>
+<p>For a continuous variable where data is binned however how do you show that on a graph? The limits are continuous values e.g. from 0 - 100, -100 - 100 etc. Where should the count of NAs go on the x-axis, and y-axis given that the range that NA could represent is any number in the range of the continuous values we have for a variable.</p></li>
+<li><p>What does <code>na.rm = TRUE</code> do in <code>mean()</code> and <code>sum()</code>?</p>
+<p>The NAs are removed and then the mean() or sum() is computed on the remaining non-NA values.</p>
+<pre class="r"><code>c(1,2,NA,3,4,NA,5) %&gt;% 
+  mean(na.rm=TRUE)</code></pre>
+<pre><code>[1] 3</code></pre>
+<pre class="r"><code># (1+2+3+4+5) / 5 = 15 / 5 = 3
+
+c(1,2,NA,3,4,NA,5) %&gt;% 
+  sum(na.rm=TRUE)</code></pre>
+<pre><code>[1] 15</code></pre>
+<pre class="r"><code># (1+2+3+4+5)</code></pre></li>
+</ol>
+</div>
+</div>
+<div id="covariation" class="section level2">
+<h2>Covariation</h2>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.3 (2020-02-29)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 18363)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_South Africa.1252  LC_CTYPE=English_South Africa.1252   
+[3] LC_MONETARY=English_South Africa.1252 LC_NUMERIC=C                         
+[5] LC_TIME=English_South Africa.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] magrittr_1.5               tidyquant_1.0.0           
+ [3] quantmod_0.4.17            TTR_0.23-6                
+ [5] PerformanceAnalytics_2.0.4 xts_0.12-0                
+ [7] zoo_1.8-7                  lubridate_1.7.8           
+ [9] emo_0.0.0.9000             skimr_2.1.1               
+[11] gt_0.2.2                   palmerpenguins_0.1.0      
+[13] nycflights13_1.0.1         flair_0.0.2               
+[15] forcats_0.5.0              stringr_1.4.0             
+[17] dplyr_1.0.0                purrr_0.3.4               
+[19] readr_1.3.1                tidyr_1.1.0               
+[21] tibble_3.0.3               ggplot2_3.3.0             
+[23] tidyverse_1.3.0            workflowr_1.6.2           
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.2       sass_0.2.0       jsonlite_1.7.0   modelr_0.1.6    
+ [5] assertthat_0.2.1 highr_0.8        cellranger_1.1.0 yaml_2.2.1      
+ [9] pillar_1.4.6     backports_1.1.6  lattice_0.20-38  glue_1.4.1      
+[13] quadprog_1.5-8   digest_0.6.25    checkmate_2.0.0  promises_1.1.0  
+[17] rvest_0.3.5      colorspace_1.4-1 htmltools_0.5.0  httpuv_1.5.2    
+[21] pkgconfig_2.0.3  broom_0.5.6      haven_2.2.0      scales_1.1.0    
+[25] whisker_0.4      later_1.0.0      git2r_0.26.1     farver_2.0.3    
+[29] generics_0.0.2   ellipsis_0.3.1   withr_2.2.0      repr_1.1.0      
+[33] cli_2.0.2        crayon_1.3.4     readxl_1.3.1     evaluate_0.14   
+[37] fs_1.4.1         fansi_0.4.1      nlme_3.1-144     xml2_1.3.2      
+[41] tools_3.6.3      hms_0.5.3        lifecycle_0.2.0  munsell_0.5.0   
+[45] reprex_0.3.0     compiler_3.6.3   rlang_0.4.7      grid_3.6.3      
+[49] rstudioapi_0.11  base64enc_0.1-3  labeling_0.3     rmarkdown_2.4   
+[53] gtable_0.3.0     DBI_1.1.0        curl_4.3         R6_2.4.1        
+[57] knitr_1.28       utf8_1.1.4       rprojroot_1.3-2  Quandl_2.10.0   
+[61] stringi_1.4.6    Rcpp_1.0.4.6     vctrs_0.3.2      dbplyr_1.4.3    
+[65] tidyselect_1.1.0 xfun_0.13       </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

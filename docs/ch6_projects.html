@@ -11,9 +11,8 @@
 
 <meta name="author" content="Vebash Naidoo" />
 
-<meta name="date" content="2020-10-10" />
 
-<title>Chapter 4 - Workflow e.g. Scripts</title>
+<title>Chapter 6: Workflow - Projects</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -387,9 +386,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Chapter 4 - Workflow e.g. Scripts</h1>
+<h1 class="title toc-ignore">Chapter 6: Workflow - Projects</h1>
 <h4 class="author">Vebash Naidoo</h4>
-<h4 class="date">10/10/2020</h4>
+<h4 class="date">16/10/2020</h4>
 
 </div>
 
@@ -541,7 +540,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/ch4_scripts_ide.Rmd</code>) and HTML (<code>docs/ch4_scripts_ide.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/ch6_projects.Rmd</code>) and HTML (<code>docs/ch6_projects.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -567,10 +566,10 @@ Message
 <tbody>
 <tr>
 <td>
-html
+Rmd
 </td>
 <td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/1fa6c06f801f7ae7ccd15c16f6966b80870106ea/docs/ch4_scripts_ide.html" target="_blank">1fa6c06</a>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/50bf4b775ee96d086916aee671514c29a534d296/analysis/ch6_projects.Rmd" target="_blank">50bf4b7</a>
 </td>
 <td>
 sciencificity
@@ -579,92 +578,7 @@ sciencificity
 2020-10-16
 </td>
 <td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/9ae58618edba4e2eb84fc2113bb131bd9797ca37/docs/ch4_scripts_ide.html" target="_blank">9ae5861</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-13
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/sciencificity/R4DS_study_exams/blob/d9de836c80bbfbc69358e9b746cc3c3059f62b48/analysis/ch4_scripts_ide.Rmd" target="_blank">d9de836</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-13
-</td>
-<td>
-added more content Ch 3
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/76c2bc460c59f4d690f4091bd02ea7a901c3a1db/docs/ch4_scripts_ide.html" target="_blank">76c2bc4</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-10
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/226cd16443d6f476c331f2c8d7ae945c62f5a59e/docs/ch4_scripts_ide.html" target="_blank">226cd16</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-10
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/sciencificity/R4DS_study_exams/blob/ae71e8e5db989d4834f8e2c29bde75a588c02c8e/analysis/ch4_scripts_ide.Rmd" target="_blank">ae71e8e</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-10
-</td>
-<td>
-added Ch 4 section
+added new chapters
 </td>
 </tr>
 </tbody>
@@ -674,90 +588,45 @@ added Ch 4 section
 </div>
 </div>
 </div>
-<p><img src="assets/wasted_time.png" alt="wasted time" width="600" height="250"></p>
-<div id="my-tips-and-tricks" class="section level2">
-<h2>My tips and tricks</h2>
-<p>Here are a few of my tips and tricks for improving my programming efficiency in R and RStudio which I use as an IDE. <br> &lt;Disclaimer: I use a Windows PC&gt;</p>
-<p>I also tend to do two things:</p>
+<p>I almost always work in projects now.</p>
+<p>Recently thanks to a hosting opportunity for useR!2020 I also learnt about {workflowr} created by John Blischak, Peter Carbonetto and Matthew Stephens. The R package {workflowr} facilitates reproducible research, and works great with GitHub once you setup your RStudio environment to talk to GitHub.</p>
+<div id="tools---global-options---gitsvn" class="section level4">
+<h4>Tools -&gt; Global Options -&gt; Git/SVN</h4>
+<figure>
+<p><img src="assets/option_git.PNG" width="500" height="450" alt="Options to enable Git access"></p>
+<figcaption>
+Tools -&gt; Global Options -&gt; Git/SVN
+</figcaption>
+</figure>
+</div>
+<div id="workflowr-resources" class="section level3">
+<h3>{workflowr} Resources</h3>
 <ol style="list-style-type: decimal">
-<li>I always work in a Project (<code>File -&gt; New Project ...</code>)</li>
-<li>I usually use RMarkdown files for my coding (<code>File -&gt; New File -&gt; R Markdown ...</code>).</li>
+<li><p>Tutorial slides: <a href="https://bit.ly/useR-workflowr-slides" class="uri">https://bit.ly/useR-workflowr-slides</a></p></li>
+<li><p>RStudio Cloud project: <a href="https://bit.ly/useR-workflowr-rstudio" class="uri">https://bit.ly/useR-workflowr-rstudio</a></p></li>
+<li><p>Video resource of an RLadies meetup: <a href="http://bit.ly/workflowr-video" class="uri">http://bit.ly/workflowr-video</a></p></li>
 </ol>
-<p>Some of the shortcuts below may seem foreign, I suggest checking out the ones that seem useful to you, and coming back once you’re further along in the book 💪.</p>
-<div id="pipe-shortcut" class="section level3">
-<h3>Pipe shortcut</h3>
-<p>Use <span style="color: #008080;background-color:#9FDDBA"><strong><code>Ctrl + Shift + M</code></strong></span> to insert the pipe operator.</p>
-<p><img src="assets/shortcut_pipe.gif" alt="enter shortcut for pipe" width="500" height="300"></p>
 </div>
-<div id="comment-code" class="section level3">
-<h3>Comment Code</h3>
-<p>Use <span style="color: #008080;background-color:#9FDDBA"><strong><code>Ctrl + Shift + C</code></strong></span> to comment out selected code.</p>
-<p><img src="assets/shortcut_comment_code.gif" alt="shorcut for comment" width="600" height="300"></p>
-</div>
-<div id="create-a-multi-line-comment" class="section level3">
-<h3>Create a multi line comment</h3>
-<p>Use <span style="color: #008080;background-color:#9FDDBA"><strong><code>Ctrl + Shift + /</code></strong></span> to reflow a long comment.</p>
-<p><img src="assets/shortcut_long_comment_code.gif" alt="shorcut for reflowing a long comment" width="800" height="300"></p>
-</div>
-<div id="create-a-code-chunk-in-rmd" class="section level3">
-<h3>Create a code chunk in Rmd</h3>
-<p>Use <span style="color: #008080;background-color:#9FDDBA"><strong><code>Ctrl + Alt + i</code></strong></span> to create a new code chunk in an RMarkdown document.</p>
-<p><img src="assets/insert_chunk_shortcut.gif" alt="shorcut for inserting a code chunk" width="800" height="450"></p>
-</div>
-<div id="insert-an-outline-in-your-file" class="section level3">
-<h3>Insert an outline in your file</h3>
-<p>Add <span style="color: #008080;background-color:#9FDDBA"><strong>four dashes <code>----</code></strong></span> to create a new outline element for easy navigation.</p>
-<p><img src="assets/outline_code.gif" alt="create a new outline element" width="800" height="450"></p>
-</div>
-<div id="navigate-to-file-while-using-read_xxx" class="section level3">
-<h3>Navigate to file while using read_xxx()</h3>
-<p><span style="color: #008080;background-color:#9FDDBA"><strong>Hitting Tab between ""</strong></span> in a read_xxx function shows you the directories + files you could be looking for.</p>
-<p><img src="assets/tip1.gif" alt="Navigate to file by hitting tab inside quotations marks" width="800" height="450"></p>
-<p>Do you know the name of the file you’re looking for but no idea where in the folder structure it is? No problem, type a few chars of your file name btw "" and hit Tab -&gt; the chars you typed are replaced with the path to the file you’re looking for.</p>
-<p><img src="assets/tip2.gif" alt="Navigate to file by hitting tab inside quotations marks" width="800" height="450"></p>
-</div>
-<div id="pull-out-tabs" class="section level3">
-<h3>Pull out Tabs</h3>
-<p><img src="assets/tip4.gif" alt="Pull out tabs in RStudio" width="800" height="450"></p>
-</div>
-<div id="findsearch" class="section level3">
-<h3>Find/Search</h3>
+<div id="workflowr-commands" class="section level3">
+<h3>{workflowr} Commands</h3>
 <ul>
-<li>Ctrl + . -&gt; Opens a popup where you can search for functions in your script or Files in your folder</li>
-<li>Ctrl + Shift + F -&gt; opens a “Find in Files” popup</li>
+<li><p>install.packages(“workflowr”)</p></li>
+<li><p>library(workflowr)</p></li>
+<li><p>Configure Git:</p>
+<p>wflow_git_config(user.name = “Your Name”, user.email = “<a href="mailto:email@domain" class="email">email@domain</a>”)</p></li>
+<li><p>Start Project:</p>
+<p>wflow_start(directory = “.”, name = “Analysis XXX”, existing = TRUE)</p></li>
+<li><p>Build Website</p>
+<p>wflow_build()</p></li>
+<li><p>Add link in index.Rmd</p></li>
+<li><p>Publish website:</p>
+<p>wflow_publish(c(“analysis/*.Rmd”, “data/*.csv”), message = “Add analysis”)</p></li>
+<li><p>Create repo on GitHub.</p></li>
+<li><p>Connect the repo on GitHub to the {workflowr} project.</p>
+<p>wflow_git_remote(“origin”, user = “<github-username>”, repo = “workflowr-analysis”)</p></li>
+<li><p>Push project to GitHub</p>
+<p>wflow_git_push()</p></li>
 </ul>
-<p><img src="assets/tip3.gif" alt="Find/Search in RStudio" width="800" height="450"></p>
-</div>
-<div id="code-snippets" class="section level3">
-<h3>Code snippets</h3>
-<p><span style="color: #008080;background-color:#9FDDBA"><strong>In Tools -&gt; Global Options -&gt; Code</strong></span> you will find a list of code snippets.</p>
-<p><img src="assets/tip5.gif" alt="Code snippets" width="800" height="450"></p>
-</div>
-<div id="history-commands" class="section level3">
-<h3>History Commands</h3>
-<p><span style="color: #008080;background-color:#9FDDBA"><strong>Ctrl + Up Arrow</strong></span> in the console shows you a list of your previous commands.</p>
-<p><img src="assets/tip6.gif" alt="Historical commands" width="800" height="450"></p>
-</div>
-<div id="miscellaneous" class="section level3">
-<h3>Miscellaneous</h3>
-<p><span style="color: #008080;background-color:#9FDDBA"><strong>Extract Function</strong></span> allows you to turn code into a function.</p>
-<p><img src="assets/tip7.gif" alt="Extract Function" width="800" height="450"></p>
-</div>
-<div id="rename-in-scope" class="section level3">
-<h3>Rename in scope</h3>
-<p><span style="color: #008080;background-color:#9FDDBA"><strong>Ctrl + Shift + Alt + M</strong></span> allows you to rename a variable in scope.</p>
-<p><img src="assets/rename_var.gif" alt="Rename variable" width="800" height="450"></p>
-</div>
-<div id="find-your-own-fave-shortcut" class="section level3">
-<h3>Find your own fave shortcut</h3>
-<p>To open the Shortcuts menu hold down <span style="color: #008080;background-color:#9FDDBA"><strong>Alt + Shift + K</strong></span></p>
-<p><img src="assets/shortcuts_menu.gif" alt="create a new outline element" width="700" height="450"></p>
-</div>
-</div>
-<div id="diagnostics" class="section level2">
-<h2>Diagnostics</h2>
-<p>The RStudio IDE has updates as time passes. Check out <a href="https://support.rstudio.com/hc/en-us/articles/205753617-Code-Diagnostics">here</a> for the one I looked at.</p>
-<p>You can do a search in Google for <code>RStudio diagnostics</code>.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -781,17 +650,15 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] emo_0.0.0.9000  workflowr_1.6.2
+[1] workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.4.6     knitr_1.28       whisker_0.4      magrittr_1.5    
- [5] R6_2.4.1         rlang_0.4.7      stringr_1.4.0    tools_3.6.3     
- [9] xfun_0.13        git2r_0.26.1     htmltools_0.5.0  yaml_2.2.1      
-[13] digest_0.6.25    rprojroot_1.3-2  assertthat_0.2.1 crayon_1.3.4    
-[17] purrr_0.3.4      later_1.0.0      promises_1.1.0   fs_1.4.1        
-[21] glue_1.4.1       evaluate_0.14    rmarkdown_2.4    stringi_1.4.6   
-[25] compiler_3.6.3   generics_0.0.2   backports_1.1.6  lubridate_1.7.8 
-[29] httpuv_1.5.2    </code></pre>
+ [1] Rcpp_1.0.4.6    rprojroot_1.3-2 digest_0.6.25   later_1.0.0    
+ [5] R6_2.4.1        backports_1.1.6 git2r_0.26.1    magrittr_1.5   
+ [9] evaluate_0.14   stringi_1.4.6   rlang_0.4.7     fs_1.4.1       
+[13] promises_1.1.0  whisker_0.4     rmarkdown_2.4   tools_3.6.3    
+[17] stringr_1.4.0   glue_1.4.1      httpuv_1.5.2    xfun_0.13      
+[21] yaml_2.2.1      compiler_3.6.3  htmltools_0.5.0 knitr_1.28     </code></pre>
 </div>
 </div>
 
