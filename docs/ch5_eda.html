@@ -413,7 +413,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-10-16
+<strong>Last updated:</strong> 2020-10-18
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree50bf4b775ee96d086916aee671514c29a534d296targetblank50bf4b7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/50bf4b775ee96d086916aee671514c29a534d296" target="_blank">50bf4b7</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree03b054a44efc8737fcba5ddc0d1d8d2e5852d614targetblank03b054aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/03b054a44efc8737fcba5ddc0d1d8d2e5852d614" target="_blank">03b054a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree50bf4b775ee96d086916aee671514c29a534d296targetblank50bf4b7a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree03b054a44efc8737fcba5ddc0d1d8d2e5852d614targetblank03b054aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/50bf4b775ee96d086916aee671514c29a534d296" target="_blank">50bf4b7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/03b054a44efc8737fcba5ddc0d1d8d2e5852d614" target="_blank">03b054a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -569,6 +569,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/03b054a44efc8737fcba5ddc0d1d8d2e5852d614/analysis/ch5_eda.Rmd" target="_blank">03b054a</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-10-18
+</td>
+<td>
+added Chapter 7
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/ce8c214bdd8dad411142f64342ae54f8f3dd9d17/docs/ch5_eda.html" target="_blank">ce8c214</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-10-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/sciencificity/R4DS_study_exams/blob/50bf4b775ee96d086916aee671514c29a534d296/analysis/ch5_eda.Rmd" target="_blank">50bf4b7</a>
 </td>
 <td>
@@ -588,7 +622,8 @@ added new chapters
 </div>
 </div>
 </div>
-<pre class="r"><code>library(tidyverse)
+<pre class="r"><code>options(scipen=10000)
+library(tidyverse)
 library(flair)
 library(nycflights13)
 library(palmerpenguins)
@@ -617,16 +652,16 @@ theme_set(theme_tq())</code></pre>
 <div id="investigate-categories" class="section level3">
 <h3>Investigate Categories</h3>
 <pre><code class='language-r'><code>ggplot(data = penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_bar</span>(aes(x = species))</code></code></pre>
-<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-49-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code class='language-r'><code>ggplot(data = penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_bar</span>(aes(x = sex))</code></code></pre>
-<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-50-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code class='language-r'><code>ggplot(data = penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_bar</span>(aes(x = island))</code></code></pre>
-<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-51-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="investigate-continuous-data" class="section level3">
 <h3>Investigate Continuous Data</h3>
 <pre><code class='language-r'><code>ggplot(data = penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_histogram</span>(aes(x = bill_length_mm), <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;binwidth = 0.6)</code></code></pre>
-<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-52-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code class='language-r'><code>penguins %>% <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>count</span>(<span style='background-color:#9FDDBA;color:#008080'>cut_width</span>(bill_length_mm, 0.6))</code></code></pre>
 <pre><code>
 # A tibble: 42 x 2
@@ -646,7 +681,7 @@ theme_set(theme_tq())</code></pre>
 </code></pre>
 <p>The data looks bimodal - i.e. there are 2 bumps in the distribution. If we recall we have 3 species, so let’s fill in the bars based on the species.</p>
 <pre><code class='language-r'><code>ggplot(data = penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_histogram</span>(aes(x = bill_length_mm, <span style='background-color:#9FDDBA;color:#008080'>fill = species</span>),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alpha = 0.5,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;binwidth = 0.6) +<br>&nbsp;&nbsp;scale_fill_tq()</code></code></pre>
-<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-53-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code class='language-r'><code>penguins %>% <br>&nbsp;&nbsp;group_by(species) %>% <br>&nbsp;&nbsp;count(cut_width(bill_length_mm, 0.6))</code></code></pre>
 <pre><code>
 # A tibble: 71 x 3
@@ -667,7 +702,7 @@ theme_set(theme_tq())</code></pre>
 </code></pre>
 <p>When we have overlapping histograms, the suggestion is to use <span style="color: #008080;background-color:#9FDDBA"><code>geom_freqpoly()</code></span> which uses lines instead of bars.</p>
 <pre><code class='language-r'><code>ggplot(data = penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_freqpoly</span>(aes(x = bill_length_mm, colour = species),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;binwidth = 0.6) +<br>&nbsp;&nbsp;scale_fill_tq()</code></code></pre>
-<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-54-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Looking at the plots ask some questions of your data:</p>
 <ul>
 <li><p>Which values are the most common? Why?</p></li>
@@ -3554,6 +3589,389 @@ c(1,2,NA,3,4,NA,5) %&gt;%
 </div>
 <div id="covariation" class="section level2">
 <h2>Covariation</h2>
+<p>Covariance is how two or more variables change together in some way. Visualisation is good for noticing these relationships.</p>
+<div id="categorical-and-continuous" class="section level3">
+<h3>Categorical and Continuous</h3>
+<div id="density-freq-polygons" class="section level4">
+<h4>Density Freq Polygons</h4>
+<p>We previously used a <code>geom_freqpoly()</code> for this, which doesn’t provide much use if groups are unbalanced. If one group is much smaller than the others it’s hard to see differences.</p>
+<p>We can display <code>density</code> on the y-axis instead of a count. <span style="color: #008080;background-color:#9FDDBA"><code>..density..</code></span> is a count that is standardised so that the area under each curve is <strong>1</strong>.</p>
+<pre><code class='language-r'><code>ggplot(penguins, aes(x = body_mass_g)) +<br>&nbsp;&nbsp;geom_freqpoly(aes(colour = species), binwidth = 200)</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-55-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(penguins, aes(x = body_mass_g, y = <span style='background-color:#9FDDBA;color:#008080'>..density..</span>)) +<br>&nbsp;&nbsp;geom_freqpoly(aes(colour = species), binwidth = 200)</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-55-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(penguins, aes(x = bill_length_mm)) +<br>&nbsp;&nbsp;geom_freqpoly(aes(colour = species), binwidth = 5)</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-55-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(penguins, aes(x = bill_length_mm, y = <span style='background-color:#9FDDBA;color:#008080'>..density..</span>)) +<br>&nbsp;&nbsp;geom_freqpoly(aes(colour = species), binwidth = 5)</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-55-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(penguins, aes(x = bill_depth_mm)) +<br>&nbsp;&nbsp;geom_freqpoly(aes(colour = species), binwidth = 5)</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-55-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(penguins, aes(x = bill_depth_mm, y = <span style='background-color:#9FDDBA;color:#008080'>..density..</span>)) +<br>&nbsp;&nbsp;geom_freqpoly(aes(colour = species), binwidth = 5)</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-55-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(penguins, aes(x = flipper_length_mm)) +<br>&nbsp;&nbsp;geom_freqpoly(aes(colour = species), binwidth = 5)</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-55-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(penguins, aes(x = flipper_length_mm, y = <span style='background-color:#9FDDBA;color:#008080'>..density..</span>)) +<br>&nbsp;&nbsp;geom_freqpoly(aes(colour = species), binwidth = 5)</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-55-8.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="boxplots" class="section level4">
+<h4>Boxplots</h4>
+<p>Verbatim from the book:</p>
+<ul>
+<li><p>A box that stretches from the 25th percentile of the distribution to the 75th percentile, a distance known as the interquartile range (IQR). In the middle of the box is a line that displays the median, i.e. 50th percentile, of the distribution. These three lines give you a sense of the spread of the distribution and whether or not the distribution is symmetric about the median or skewed to one side.</p></li>
+<li><p>Visual points that display observations that fall more than 1.5 times the IQR from either edge of the box. These outlying points are unusual so are plotted individually.</p></li>
+<li><p>A line (or whisker) that extends from each end of the box and goes to the<br />
+farthest non-outlier point in the distribution.</p>
+<div class="pic right">
+<img src="assets//EDA-boxplot.PNG" alt="Boxplot; Credit: R for Data Science" />
+<p>
+<cite>Credit: R for Data Science</cite>
+</p>
+</div></li>
+</ul>
+<pre><code class='language-r'><code>ggplot(penguins, aes(x = species, y = body_mass_g)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_boxplot</span>()</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-56-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(penguins, aes(x = body_mass_g, y = species)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_boxplot</span>()</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-56-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(penguins, aes(x = bill_length_mm, y = species)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_boxplot</span>()</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-56-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(penguins, aes(x = flipper_length_mm,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = species)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_boxplot</span>()</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-56-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code># the reorder does not seem to be working for me<br>ggplot(penguins, aes(y = bill_depth_mm, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = reorder(species,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bill_depth_mm,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FUN = median))) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_boxplot</span>()</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-56-5.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="exercises-2" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Use what you’ve learned to improve the visualisation of the departure times of cancelled vs. non-cancelled flights.</p>
+<pre class="r"><code>nycflights13::flights %&gt;% 
+  mutate(cancelled = is.na(dep_time),
+         sched_hour = sched_dep_time %/% 100,
+         sched_min = sched_dep_time %/% 100,
+         sched_dep_time = sched_hour + sched_min / 60) %&gt;% 
+  ggplot(aes(x = sched_dep_time, y = cancelled)) +
+  geom_boxplot()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p></li>
+<li><p>What variable in the diamonds dataset is most important for predicting the price of a diamond? How is that variable correlated with cut? Why does the combination of those two relationships lead to lower quality diamonds being more expensive?</p>
+<pre class="r"><code>ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(diamonds, aes(x = reorder(cut, price,
+                                 median), y = price)) +
+  geom_boxplot()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-26-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(diamonds, aes(x = reorder(color, price,
+                                 median), y = price)) +
+  geom_boxplot()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-26-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(diamonds, aes(x = reorder(clarity,
+                                 price, median),
+                     y = price)) +
+  geom_boxplot()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-26-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(diamonds, aes(x = reorder(cut, carat,
+                                 median), 
+                     y = carat)) +
+  geom_boxplot()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-26-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(diamonds, aes(x = reorder(color, carat,
+                                 median), y = carat)) +
+  geom_boxplot()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-26-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(diamonds, aes(x = reorder(clarity, carat,
+                                 median), y = carat)) +
+  geom_boxplot()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-26-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>cor(diamonds$price, diamonds$carat)</code></pre>
+<pre><code>[1] 0.9215913</code></pre>
+<p>They say that there are 4 characteristics of diamonds that come into play when considering the quality - Carat Weight, Cut, Colour and Clarity. It looks like carat, is most correlated with the price, and there are quite a few low quality for the Cut of the diamonds that have a big carat weight.</p></li>
+<li><p>Install the ggstance package, and create a horizontal boxplot. How does this compare to using <code>coord_flip()</code>?</p>
+<p>There is no longer a need to use the ggstance 📦 as this functionality is provided in <a href="https://cran.r-project.org/web/packages/ggstance/readme/README.html">ggplot2 since version 3.3.0</a>.</p></li>
+<li><p>One problem with boxplots is that they were developed in an era of much smaller datasets and tend to display a prohibitively large number of “outlying values”. One approach to remedy this problem is the letter value plot. Install the lvplot package, and try using <code>geom_lv()</code> to display the distribution of price vs cut. What do you learn? How do you interpret the plots?</p>
+<pre class="r"><code>library(lvplot)
+ggplot(diamonds, aes(reorder(cut,
+                             price, median), price)) +
+  geom_boxplot() +
+  labs(x = &quot;Cut&quot;,
+       y = &quot;Price&quot;)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(diamonds, aes(reorder(cut, price,
+                             median), price)) +
+  geom_lv(outlier.colour = &quot;darkgreen&quot;) +
+  labs(x = &quot;Cut&quot;, y = &quot;Price&quot;)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-27-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(diamonds, aes(reorder(cut, price,
+                             median), price)) +
+  geom_lv(aes(fill = ..LV..), outlier.colour = &quot;darkgreen&quot;,
+          k = 6) +
+  labs(x = &quot;Cut&quot;, y = &quot;Price&quot;) +
+  scale_fill_lv()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-27-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The plots are an <a href="https://www.rdocumentation.org/packages/lvplot/versions/0.2.0/topics/geom_lv">extension of the boxplots</a> and allows you to see the distribution better especially for large datasets. More information on the plot can be found <a href="https://vita.had.co.nz/papers/letter-value-plot.pdf">here</a>.</p></li>
+<li><p>Compare and contrast <code>geom_violin()</code> with a facetted <code>geom_histogram()</code>, or a coloured <code>geom_freqpoly()</code>. What are the pros and cons of each method?</p>
+<pre class="r"><code>ggplot(penguins, aes(x = species, body_mass_g)) +
+  geom_violin(aes(colour = species))</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram() +
+  facet_wrap(~ species,
+             ncol = 1,
+             scales = &quot;free_y&quot;)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-28-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(penguins, aes(x = body_mass_g, y = ..density..)) +
+  geom_freqpoly(aes(colour = species), binwidth = 200)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-28-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>They’re all pretty similar, but I think the geom_freqpoly() and geom_violin() use density and hence is harder to interpret.</p></li>
+<li><p>If you have a small dataset, it’s sometimes useful to use <code>geom_jitter()</code> to see the relationship between a continuous and categorical variable. The ggbeeswarm package provides a number of methods similar to <code>geom_jitter()</code>. List them and briefly describe what each one does.</p>
+<pre class="r"><code>library(ggbeeswarm)
+ggplot(penguins, aes(x = species, body_mass_g)) +
+    geom_quasirandom()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-29-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(penguins, aes(x = species, body_mass_g)) +
+    geom_beeswarm()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-29-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(penguins, aes(x = species, bill_depth_mm)) +
+    geom_beeswarm()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-29-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(diamonds, aes(x = reorder(cut, price,
+                                median), y = price)) +
+      geom_quasirandom()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-29-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The <span style="color: #008080;background-color:#9FDDBA"><code>ggbeeswarm</code></span> 📦 produces <em>column scatter plots</em> and has <a href="https://github.com/eclarke/ggbeeswarm">2 functions</a>, one <code>geom_quasirandom()</code> reduces the overplotting and also helps visualise the density at each point.</p>
+<p>The other is <code>geom_beeswarm()</code> and does a point-size offset.</p></li>
+</ol>
+</div>
+<div id="two-categorical-variables" class="section level3">
+<h3>Two Categorical Variables</h3>
+<p>For two catgories we need to count the number of observations in each combination of the 2 categories.</p>
+<p>We can use <span style="color: #008080;background-color:#9FDDBA"><code>geom_count()</code></span> for this, and the size of each dot tells you how many observations fell in that category.</p>
+<pre><code class='language-r'><code>ggplot(penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_count</span>(aes(x = species, y = island))</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-57-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>penguins %>% <br>&nbsp;&nbsp;count(species, island, sort = TRUE)</code></code></pre>
+<pre><code>
+# A tibble: 5 x 3
+  species   island        n
+  &lt;fct&gt;     &lt;fct&gt;     &lt;int&gt;
+1 Gentoo    Biscoe      124
+2 Chinstrap Dream        68
+3 Adelie    Dream        56
+4 Adelie    Torgersen    52
+5 Adelie    Biscoe       44
+</code></pre>
+<pre><code class='language-r'><code>ggplot(penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_count</span>(aes(x = species, y = sex))</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-57-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>penguins %>% <br>&nbsp;&nbsp;count(species, sex, sort = TRUE)</code></code></pre>
+<pre><code>
+# A tibble: 8 x 3
+  species   sex        n
+  &lt;fct&gt;     &lt;fct&gt;  &lt;int&gt;
+1 Adelie    female    73
+2 Adelie    male      73
+3 Gentoo    male      61
+4 Gentoo    female    58
+5 Chinstrap female    34
+6 Chinstrap male      34
+7 Adelie    &lt;NA&gt;       6
+8 Gentoo    &lt;NA&gt;       5
+</code></pre>
+<p>We can see that the largest number of observations were of the Gentoo species, on the island Biscoe.</p>
+<p>The male / female splits look roughly equal and is confirmed using a count().</p>
+<p>Another way is to use the <span style="color: #008080;background-color:#9FDDBA"><code>geom_tile()</code></span> function but here you must first compute the count, and then use the count as a <strong>fill</strong>.</p>
+<pre><code class='language-r'><code>penguins %>% <br>&nbsp;&nbsp;count(species, island) %>% <br>&nbsp;&nbsp;ggplot(aes(x = species, y = island)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_tile</span>(aes(fill = n ))</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-58-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>penguins %>% <br>&nbsp;&nbsp;count(species, island, sort = TRUE)</code></code></pre>
+<pre><code>
+# A tibble: 5 x 3
+  species   island        n
+  &lt;fct&gt;     &lt;fct&gt;     &lt;int&gt;
+1 Gentoo    Biscoe      124
+2 Chinstrap Dream        68
+3 Adelie    Dream        56
+4 Adelie    Torgersen    52
+5 Adelie    Biscoe       44
+</code></pre>
+<pre><code class='language-r'><code>penguins %>% <br>&nbsp;&nbsp;count(species, sex) %>% <br>&nbsp;&nbsp;ggplot(aes(x = species, y = sex)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_tile</span>(aes(fill = n ))</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-58-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>penguins %>% <br>&nbsp;&nbsp;count(species, sex, sort = TRUE)</code></code></pre>
+<pre><code>
+# A tibble: 8 x 3
+  species   sex        n
+  &lt;fct&gt;     &lt;fct&gt;  &lt;int&gt;
+1 Adelie    female    73
+2 Adelie    male      73
+3 Gentoo    male      61
+4 Gentoo    female    58
+5 Chinstrap female    34
+6 Chinstrap male      34
+7 Adelie    &lt;NA&gt;       6
+8 Gentoo    &lt;NA&gt;       5
+</code></pre>
+<p>We see that the colouring for the tiled graph of species and sex show again that the data is quite balanced in terms of males vs females for each species. The NA values also only appear for <em>Adelie</em> and <em>Gentoo</em>.</p>
+</div>
+<div id="exercises-3" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>How could you rescale the count dataset above to more clearly show the distribution of cut within colour, or colour within cut?</p>
+<p>Original:</p>
+<pre class="r"><code>diamonds %&gt;% 
+  count(color, cut) %&gt;%  
+  ggplot(mapping = aes(x = color, y = cut)) +
+    geom_tile(mapping = aes(fill = n))</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>diamonds %&gt;% 
+  add_count(color, cut) %&gt;%  
+  group_by(color) %&gt;% 
+  mutate(perc = n / sum(n) * 100) %&gt;% 
+  ggplot(mapping = aes(x = color, y = cut)) +
+    geom_tile(mapping = aes(fill = perc)) +
+  scale_fill_gradient(low = &quot;#999999&quot;,
+                      high = &quot;gold&quot;) +
+  guides(fill = guide_colourbar(barwidth = 10, 
+                                barheight = 0.5))</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-35-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>diamonds %&gt;% 
+  add_count(cut, color) %&gt;%  
+  group_by(cut) %&gt;% 
+  mutate(perc = n / sum(n) * 100) %&gt;% 
+  ggplot(mapping = aes(x = cut, y = color)) +
+    geom_tile(mapping = aes(fill = perc)) +
+  scale_fill_gradient(low = &quot;#F4EDCA&quot;,
+                      high = &quot;#293352&quot;) +
+  guides(fill = guide_colourbar(barwidth = 10, 
+                                barheight = 0.5))</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-36-1.png" width="672" style="display: block; margin: auto;" /> Maybe use a percentage within each color.</p></li>
+<li><p>Use <code>geom_tile()</code> together with dplyr to explore how average flight delays vary by destination and month of year. What makes the plot difficult to read? How could you improve it?</p>
+<pre class="r"><code>flights %&gt;% 
+  group_by(dest, month) %&gt;% 
+  mutate(avg_delay = mean(arr_delay, na.rm = TRUE)) %&gt;% 
+  ggplot(aes(x = month, y = dest)) +
+    geom_tile(mapping = aes(fill = avg_delay)) +
+    scale_fill_gradient(low = &quot;#F4EDCA&quot;,
+                        high = &quot;#293352&quot;) +
+    guides(fill = guide_colourbar(barwidth = 10, 
+                                  barheight = 0.5))  </code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-37-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>flights %&gt;% 
+  mutate(dest = fct_lump(dest, 10)) %&gt;% 
+  group_by(dest, month) %&gt;% 
+  mutate(avg_delay = mean(arr_delay, na.rm = TRUE)) %&gt;% 
+  ggplot(aes(x = month, y = dest)) +
+    geom_tile(mapping = aes(fill = avg_delay)) +
+    scale_fill_gradient(low = &quot;#F4EDCA&quot;,
+                        high = &quot;#293352&quot;) +
+    guides(fill = guide_colourbar(barwidth = 10, 
+                                  barheight = 0.5))</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-37-2.png" width="672" style="display: block; margin: auto;" /> The missing values for some months is an issue. There are many destinations. It will be better to sort it by the highest number of flights and highest average delay, and then maybe also lump the lower ones into a single category with something like <code>fct_lump()</code> which we will learn about later. For now just see <code>fct_lump(var, n = 8)</code> as lumping together factors that are less frequent. Here we keep the most frequent or top 8 of the variable <code>var</code>. In the example above we kept the 10 most frequent destinations, and lumped the rest into <code>Other</code>.</p></li>
+<li><p>Why is it slightly better to use <code>aes(x = color, y = cut)</code> rather than <code>aes(x = cut, y = color)</code> in the example above?</p>
+<pre class="r"><code>diamonds %&gt;% 
+  count(color, cut) %&gt;%  
+  ggplot(mapping = aes(x = color, y = cut)) +
+    geom_tile(mapping = aes(fill = n)) +
+    scale_fill_gradient(low = &quot;#F4EDCA&quot;,
+                            high = &quot;#293352&quot;) +
+    guides(fill = guide_colourbar(barwidth = 10, 
+                                      barheight = 0.5))</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>diamonds %&gt;% 
+  count(cut, color) %&gt;%  
+  ggplot(mapping = aes(x = cut, y = color)) +
+    geom_tile(mapping = aes(fill = n)) +
+    scale_fill_gradient(low = &quot;#F4EDCA&quot;,
+                            high = &quot;#293352&quot;) +
+    guides(fill = guide_colourbar(barwidth = 10, 
+                                      barheight = 0.5))</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-38-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>For me it is easier to read. I can say in the color <code>D</code> there is approximately 200 observations of the cut <code>Fair</code>, ~ 500 observations of the cut <code>Good</code> etc. I.e. there is more variation in the cut within each color than the other way around if that makes sense.</p>
+<p>If I read the color in each cut, there’s not much variation, e.g. for the <code>Fair</code> cut ~200 lie in every color.</p></li>
+</ol>
+</div>
+<div id="two-continuous-variables" class="section level3">
+<h3>Two Continuous Variables</h3>
+<p>One way we have already seen is the <span style="color: #008080;background-color:#9FDDBA"><code>geom_point()</code></span>. When you have lots of data you can use an <code>alpha</code> value to prevent the overplotting, and see you data more clearly.</p>
+<pre><code class='language-r'><code>ggplot(penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_point</span>(aes(x = bill_length_mm,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = bill_depth_mm))</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-59-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(penguins) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_point</span>(aes(x = bill_length_mm,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = bill_depth_mm,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;colour = species))</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-59-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>It seems there is an upward trend but it is hard to make it out.</p>
+<pre><code class='language-r'><code>ggplot(penguins) +<br>&nbsp;&nbsp;geom_point(aes(x = bill_length_mm,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = bill_depth_mm,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>colour = species</span>))</code></code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-60-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Ah that’s much better, when the data is segmented by species we can see a trend.</p>
+<p>With large datasets you can also bin your data and use <code>geom_bin2d()</code> and <code>geom_hex()</code>.</p>
+<p>Or alternately you can bin one variable to act as though it is categorical e.g. using <code>cut_width()</code>, then we can use one of the visualisations suitable for a categorical and continuous combination.</p>
+<div id="exercises-4" class="section level4">
+<h4>Exercises</h4>
+<ol style="list-style-type: decimal">
+<li><p>Instead of summarising the conditional distribution with a boxplot, you could use a frequency polygon. What do you need to consider when using <code>cut_width()</code> vs <code>cut_number()</code>? How does that impact a visualisation of the 2d distribution of <code>carat</code> and <code>price</code>?</p>
+<pre class="r"><code>smaller &lt;- diamonds %&gt;%
+  filter(carat &lt; 3)
+
+ggplot(data = smaller, mapping = aes(colour = 
+                                       cut_width(carat, 
+                                               0.4), 
+                                     x = price)) + 
+  geom_freqpoly()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-44-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = smaller, mapping = aes(colour = 
+                                       cut_number(carat, 
+                                               6), 
+                                     x = price)) + 
+  geom_freqpoly()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-44-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = diamonds, mapping = aes(colour = 
+                                       cut_width(carat, 
+                                               0.8), 
+                                     x = price)) + 
+  geom_freqpoly()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-44-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = diamonds, mapping = aes(colour = 
+                                       cut_number(carat, 
+                                               6), 
+                                     x = price)) + 
+  geom_freqpoly()</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-44-4.png" width="672" style="display: block; margin: auto;" /> <code>cut_width()</code> we say what we’d like the binwidth of the variable to be, and the number of bins will be calculated. <code>cut_number()</code> we say what we’d like as a bin number, and the binwidth of each bin is calculated.</p></li>
+<li><p>Visualise the distribution of carat, partitioned by price.</p>
+<pre class="r"><code>ggplot(diamonds,
+       aes(x = carat, y = price)) +
+  geom_boxplot(aes(group = cut_number(price, 10)))</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-45-1.png" width="672" style="display: block; margin: auto;" /></p></li>
+<li><p>How does the price distribution of very large diamonds compare to small diamonds? Is it as you expect, or does it surprise you?</p>
+<p>Heavier diamonds cost more than lighter diamonds. This does not surprise me, but as you see diamonds in the range 3-5 all get a big price tag, so there is more to the pricing mechanism than just carat weight and I would guess this is where the 4C’s come in. Heavier diamonds attract a big price tag.</p></li>
+<li><p>Combine two of the techniques you’ve learned to visualise the combined distribution of cut, carat, and price.</p>
+<pre class="r"><code>ggplot(diamonds, aes(carat, price)) +
+  geom_boxplot(aes(group = cut_number(price, 10))) +
+  facet_wrap(~ cut, scales = &quot;free_y&quot;)</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-46-1.png" width="672" style="display: block; margin: auto;" /></p></li>
+<li><p>Two dimensional plots reveal outliers that are not visible in one dimensional plots. For example, some points in the plot below have an unusual combination of <code>x</code> and <code>y</code> values, which makes the points outliers even though their <code>x</code> and <code>y</code> values appear normal when examined separately.</p>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_point(mapping = aes(x = x, y = y)) </code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-47-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_point(mapping = aes(x = x, y = y)) +
+  coord_cartesian(xlim = c(4, 11), ylim = c(4, 11))</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-47-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = diamonds) +
+  geom_boxplot(mapping = aes(x = x, y = y, group=cut_number(y, 10))) +
+  coord_cartesian(xlim = c(4, 11), ylim = c(4, 11))</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-47-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Why is a scatterplot a better display than a binned plot for this case?</p>
+<p>In a binned plot the points are gathered together in a bin and you may not notice that it is an outlier.</p></li>
+</ol>
+</div>
+</div>
+<div id="patterns-1" class="section level3">
+<h3>Patterns</h3>
+<p>If you spot a pattern, some Qs:</p>
+<ul>
+<li><p>Could this pattern be due to coincidence (i.e. random chance)?</p></li>
+<li><p>How can you describe the relationship implied by the pattern?</p></li>
+<li><p>How strong is the relationship implied by the pattern?</p></li>
+<li><p>What other variables might affect the relationship?</p></li>
+<li><p>Does the relationship change if you look at individual subgroups of the data?</p></li>
+</ul>
+<pre class="r"><code># old faithful eruption lengths vs wait time
+ggplot(faithful) +
+  geom_point(mapping = aes(x = eruptions, y = waiting))</code></pre>
+<p><img src="figure/ch5_eda.Rmd/unnamed-chunk-48-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -3577,37 +3995,40 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] magrittr_1.5               tidyquant_1.0.0           
- [3] quantmod_0.4.17            TTR_0.23-6                
- [5] PerformanceAnalytics_2.0.4 xts_0.12-0                
- [7] zoo_1.8-7                  lubridate_1.7.8           
- [9] emo_0.0.0.9000             skimr_2.1.1               
-[11] gt_0.2.2                   palmerpenguins_0.1.0      
-[13] nycflights13_1.0.1         flair_0.0.2               
-[15] forcats_0.5.0              stringr_1.4.0             
-[17] dplyr_1.0.0                purrr_0.3.4               
-[19] readr_1.3.1                tidyr_1.1.0               
-[21] tibble_3.0.3               ggplot2_3.3.0             
-[23] tidyverse_1.3.0            workflowr_1.6.2           
+ [1] ggbeeswarm_0.6.0           lvplot_0.2.0              
+ [3] magrittr_1.5               tidyquant_1.0.0           
+ [5] quantmod_0.4.17            TTR_0.23-6                
+ [7] PerformanceAnalytics_2.0.4 xts_0.12-0                
+ [9] zoo_1.8-7                  lubridate_1.7.8           
+[11] emo_0.0.0.9000             skimr_2.1.1               
+[13] gt_0.2.2                   palmerpenguins_0.1.0      
+[15] nycflights13_1.0.1         flair_0.0.2               
+[17] forcats_0.5.0              stringr_1.4.0             
+[19] dplyr_1.0.0                purrr_0.3.4               
+[21] readr_1.3.1                tidyr_1.1.0               
+[23] tibble_3.0.3               ggplot2_3.3.0             
+[25] tidyverse_1.3.0            workflowr_1.6.2           
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.2       sass_0.2.0       jsonlite_1.7.0   modelr_0.1.6    
- [5] assertthat_0.2.1 highr_0.8        cellranger_1.1.0 yaml_2.2.1      
- [9] pillar_1.4.6     backports_1.1.6  lattice_0.20-38  glue_1.4.1      
-[13] quadprog_1.5-8   digest_0.6.25    checkmate_2.0.0  promises_1.1.0  
-[17] rvest_0.3.5      colorspace_1.4-1 htmltools_0.5.0  httpuv_1.5.2    
-[21] pkgconfig_2.0.3  broom_0.5.6      haven_2.2.0      scales_1.1.0    
-[25] whisker_0.4      later_1.0.0      git2r_0.26.1     farver_2.0.3    
-[29] generics_0.0.2   ellipsis_0.3.1   withr_2.2.0      repr_1.1.0      
-[33] cli_2.0.2        crayon_1.3.4     readxl_1.3.1     evaluate_0.14   
-[37] fs_1.4.1         fansi_0.4.1      nlme_3.1-144     xml2_1.3.2      
-[41] tools_3.6.3      hms_0.5.3        lifecycle_0.2.0  munsell_0.5.0   
-[45] reprex_0.3.0     compiler_3.6.3   rlang_0.4.7      grid_3.6.3      
-[49] rstudioapi_0.11  base64enc_0.1-3  labeling_0.3     rmarkdown_2.4   
-[53] gtable_0.3.0     DBI_1.1.0        curl_4.3         R6_2.4.1        
-[57] knitr_1.28       utf8_1.1.4       rprojroot_1.3-2  Quandl_2.10.0   
-[61] stringi_1.4.6    Rcpp_1.0.4.6     vctrs_0.3.2      dbplyr_1.4.3    
-[65] tidyselect_1.1.0 xfun_0.13       </code></pre>
+ [1] nlme_3.1-144       fs_1.4.1           RColorBrewer_1.1-2 httr_1.4.2        
+ [5] rprojroot_1.3-2    repr_1.1.0         tools_3.6.3        backports_1.1.6   
+ [9] utf8_1.1.4         R6_2.4.1           vipor_0.4.5        DBI_1.1.0         
+[13] colorspace_1.4-1   withr_2.2.0        tidyselect_1.1.0   curl_4.3          
+[17] compiler_3.6.3     git2r_0.26.1       cli_2.0.2          rvest_0.3.5       
+[21] xml2_1.3.2         labeling_0.3       sass_0.2.0         scales_1.1.0      
+[25] checkmate_2.0.0    quadprog_1.5-8     digest_0.6.25      rmarkdown_2.4     
+[29] base64enc_0.1-3    pkgconfig_2.0.3    htmltools_0.5.0    dbplyr_1.4.3      
+[33] highr_0.8          rlang_0.4.7        readxl_1.3.1       rstudioapi_0.11   
+[37] generics_0.0.2     farver_2.0.3       jsonlite_1.7.0     Rcpp_1.0.4.6      
+[41] Quandl_2.10.0      munsell_0.5.0      fansi_0.4.1        lifecycle_0.2.0   
+[45] stringi_1.4.6      whisker_0.4        yaml_2.2.1         grid_3.6.3        
+[49] promises_1.1.0     crayon_1.3.4       lattice_0.20-38    haven_2.2.0       
+[53] hms_0.5.3          knitr_1.28         pillar_1.4.6       reprex_0.3.0      
+[57] glue_1.4.1         evaluate_0.14      modelr_0.1.6       vctrs_0.3.2       
+[61] httpuv_1.5.2       cellranger_1.1.0   gtable_0.3.0       assertthat_0.2.1  
+[65] xfun_0.13          broom_0.5.6        later_1.0.0        beeswarm_0.2.3    
+[69] ellipsis_0.3.1    </code></pre>
+</div>
 </div>
 </div>
 
