@@ -1,0 +1,404 @@
+---
+title: "Chapter 7 - Tibbles"
+author: "Vebash Naidoo"
+date: "17/10/2020"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+options(scipen=10000)
+library(tidyverse)
+library(flair)
+library(nycflights13)
+library(palmerpenguins)
+library(gt)
+library(skimr)
+library(emo)
+library(tidyquant)
+library(lubridate)
+library(magrittr)
+theme_set(theme_tq())
+```
+
+## Class 
+
+```{r tib1, include=FALSE}
+class(iris) # initially R's data.frame
+(iris2 <- as_tibble(iris))
+class(iris2) # "tbl_df"     "tbl"        "data.frame"
+```
+
+```{r, echo=FALSE}
+decorate("tib1") %>% 
+  flair("as_tibble", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+The <span style="color: #008080;background-color:#9FDDBA">`tbl`</span> and 
+<span style="color: #008080;background-color:#9FDDBA">`tbl_df`</span> 
+tell us this has been converted to a tibble.
+
+
+## Creation
+
+To create a `tibble` we use the <span style="color: #008080;background-color:#9FDDBA">`tibble()`</span> function.
+
+```{r tib2, include=FALSE}
+tibble(
+  x = 1:5,
+  y = 1, # recycled
+  z = x ^ 2 + y
+)
+```
+
+```{r, echo=FALSE}
+decorate("tib2") %>% 
+  flair("tibble", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+A tibble is just a different form of a data.frame. The column names
+do not need to comply with R's variable naming convention.
+
+For example the variable name `test subject` is unacceptable in R as a var name,
+however it is totally fine if it is a column name in a tibble.
+The variable must be referred to by using the backticks `` or "".
+
+```{r tib3, include=FALSE}
+# Ch7 in R4DS - tibbles
+# Can use either backticks `` or quotation marks "" to surround non-syntactic names
+(tb = tibble(
+  ":)" = "smile",
+  " " = "space",
+  `2000` = "number",
+  `some non syntactic name` = "some value",
+  meaning = 42 # no back ticks or "" since this is syntactically allowed
+))
+
+# Can use `` or "" to access the variable with the non-syntactic name
+tb$`:)`
+tb$":)"
+
+# Can use `` or "" to manipulate the non-syntactic named var
+tb %>% 
+  mutate(":)" = "smiley")
+
+tb %>% 
+  mutate(`:)` = "smiley too")
+```
+
+```{r, echo=FALSE}
+decorate("tib3") %>% 
+  flair("tibble", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+The variable `:)` in tb contains the value: 
+<span style="color: #008080;background-color:#9FDDBA">`r tb$":)"`</span>. 
+The variable `some non syntactic name` in tb contains the value: 
+<span style="color: #008080;background-color:#9FDDBA">
+`r tb$"some non syntactic name"`</span>.
+
+<!--
+To output non-syntactic variable names in Rmd you use: 
+`r tb$"some non syntactic name"`
+SO Post: https://stackoverflow.com/questions/24472114/use-a-variable-name-with-spaces-inline-in-r-markdown
+-->
+
+Another way is to create a tibble is to use the <span style="color: #008080;background-color:#9FDDBA">`tribble()`</span> function with `~` used 
+for each column name. I often use the datapasta `r emo::ji("package")` to paste
+a tribble from something I have copied onto the clipboard.
+<br>
+
+<img src= assets/datapasta_paste_tribble.gif alt="pasting a tribble from data on clipboard" width="850" height="400">
+
+<br>
+
+
+A `tribble` is _transposed tibble_. It makes it easy to lay out small amounts
+of data in an easy to read format.
+
+
+```{r tib4, include=FALSE}
+tribble(
+  ~x, ~y, ~z,
+  #--/--/----
+  "a", 2, 3.6,
+  "b", 1, 8.5
+)
+
+tibble::tribble(
+                               ~Flavour, ~Total.2009, ~Total.2011, ~East, ~Midwest, ~South, ~West, ~Rep, ~Dem, ~Ind,
+                            "Chocolate",         27L,         28L,   31L,      32L,    28L,   21L,  32L,  23L,  30L,
+                              "Vanilla",         22L,         26L,   27L,      22L,    30L,   22L,  28L,  26L,  22L,
+      "Cookie Dough/ Cookies and cream",         22L,         22L,   26L,      22L,    21L,   19L,  24L,  18L,  24L,
+           "Butter Pecan/ Swiss Almond",         20L,         19L,   12L,      24L,    21L,   15L,  15L,  22L,  19L,
+                  "Mint Chocolate Chip",         17L,         15L,   15L,      15L,    15L,   15L,  16L,  12L,  16L,
+                           "Strawberry",         13L,         12L,    8L,      10L,    15L,   12L,  10L,  13L,  12L,
+                           "Rocky Road",         14L,         11L,    8L,      11L,     8L,   19L,  14L,  11L,   9L,
+                               "Coffee",          9L,          9L,   10L,       7L,     6L,   14L,   7L,  11L,   8L,
+                        "Peanut Butter",          8L,          8L,   10L,       9L,     7L,    8L,  12L,   5L,   8L,
+                       "Cherry Vanilla",          9L,          7L,   10L,       6L,     7L,    7L,   6L,  10L,   8L,
+                            "Pistachio",          8L,          7L,    7L,       6L,     6L,    8L,   5L,   9L,   6L,
+                      "Black Raspberry",          6L,          6L,   10L,       6L,     3L,    6L,   7L,   5L,   6L,
+                                "Peach",          4L,          5L,    6L,       4L,     7L,    3L,   5L,   7L,   4L,
+  "Seasonal, such as pumpkin or eggnog",          2L,          4L,    4L,       4L,     5L,    4L,   5L,   3L,   5L,
+                                "Other",          9L,         13L,   13L,      12L,    13L,   15L,   9L,  16L,  13L,
+                 "Do not eat ice cream",          3L,          3L,    1L,       3L,     2L,    5L,   2L,   3L,   3L
+  )
+
+```
+
+```{r, echo=FALSE}
+decorate("tib4") %>% 
+  flair("tribble", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+## Printing
+
+```{r}
+tibble(
+  a = lubridate::now() + runif(1e3) * 86400,
+  b = lubridate::today() + runif(1e3) * 30,
+  c = 1:1e3,
+  d = runif(1e3),
+  e = sample(letters, 1e3, replace = TRUE)
+) %>% 
+  print(n = 15, width = Inf) # show 15 rows instead of 10, and all cols
+```
+
+## Subsetting
+
+```{r sub1, include=FALSE}
+(df <- tibble(
+  x = runif(5),
+  y = rnorm(5)
+))
+
+# extract by name
+df$x
+# OR
+df[["x"]]
+
+# extract by position
+df[[1]]
+
+# When using a pipe use the placeholder . to access
+df %>% 
+  .$x
+
+df %>% 
+  .[["x"]]
+```
+
+```{r, echo=FALSE}
+decorate("sub1") %>% 
+  flair("$", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("[[", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("[.$]+", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("[.[[]+", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+## Summary
+
+Tibbles:
+
+- Print well, so as to not overwhelm your console (by printing 10
+rows and only as many columns as will fit in your console window).
+
+  * Want to print all columns? Use `print(n = xx, width = Inf)`
+  <br>
+- Subset more strictly that data.frame
+
+  * Never partial matching
+  * Warns if column you're trying to access does not exist.
+  <br>
+- Older functions may not work with tibbles. To convert a
+tibble to a data.fram use <span style="color: #008080;background-color:#9FDDBA">`as.data.frame(tibble_name)`</span>
+  
+
+### Exercises
+
+1.  How can you tell if an object is a tibble? (Hint: try printing `mtcars`,
+    which is a regular data frame). 
+    
+    ```{r}
+    mtcars
+    class(mtcars)
+    ```
+    
+    Tibbles:
+    
+    - Print only 10 rows, and as many columns as will fit on
+    the console / screen
+    - If you find the calss of a tibble among the output should
+    be `tbl_df` and `tbl`.
+    
+    ```{r}
+    penguins
+    class(penguins)
+    ```
+    
+1.  Compare and contrast the following operations on a `data.frame` and 
+    equivalent tibble. What is different? Why might the default data frame
+    behaviours cause you frustration?
+    
+    - On a data.frame
+    
+      ```{r}
+      df <- data.frame(abc = 1, xyz = "a")
+      df$x
+      df[, "xyz"]
+      df[, c("abc", "xyz")]
+      ```
+    
+    - On a tibble
+    
+      ```{r, warning = TRUE}
+      df <- tibble(abc = 1, xyz = "a")
+      df$x
+      df[, "xyz"]
+      df[, c("abc", "xyz")]
+      ```    
+    
+      * The data frame does not have an x variable, yet with a 
+        data.frame it prints a value for x since it does partial
+        matching.
+      * The data frame has a character attribute for the column
+        `xyz` yet the data.frame converts it to a factor, and 
+        outputs the factors levels. `r emo::ji("oops")`
+      * The information about the type of data contained in 
+      every variable when you print a tibble is useful 
+      `r emo::ji("perfect")`.
+
+1.  If you have the name of a variable stored in an object, e.g. `var <- "mpg"`,
+    how can you extract the reference variable from a tibble?
+    
+    ```{r}
+    var <- "mpg"
+    (test_tbl <- as_tibble(mtcars))
+    
+    # does not work: 
+    # test_tbl$var
+    # NULL 
+    # Warning message:
+    # Unknown or uninitialised column: `var`. 
+    
+    # does not work
+    # test_tbl[["var"]]
+    # NULL
+    
+    # Need to use:
+    test_tbl[[var]]
+    ```
+    
+
+1.  Practice referring to non-syntactic names in the following data frame by:
+
+    1.  Extracting the variable called `1`.
+
+    1.  Plotting a scatterplot of `1` vs `2`.
+
+    1.  Creating a new column called `3` which is `2` divided by `1`.
+        
+    1.  Renaming the columns to `one`, `two` and `three`. 
+    
+    ```{r}
+    annoying <- tibble(
+      `1` = 1:10,
+      `2` = `1` * 2 + rnorm(length(`1`))
+    )
+    ```
+    
+    ```{r}
+    # Extracting the variable called `1`.
+    annoying$`1`
+    annoying$"1"
+    annoying[["1"]]
+    annoying[[1]] # by position
+    # does not work
+    # annoying[[`1`]]
+    # Error in tbl_subset2(x, j = i, j_arg = substitute(i)) : 
+    #   object '1' not found
+    ```
+    ```{r, warning = TRUE}
+    # Plotting a scatterplot of `1` vs `2`.
+    annoying %>% 
+      ggplot(aes(x = `1`, y = `2`)) +
+      geom_point()
+    
+    # discouraged ways
+    annoying %>% 
+      ggplot(aes(x = .$`1`, y = .$`2`)) +
+      geom_point()
+    
+    annoying %>% 
+      ggplot(aes(x = .$"1", y = .$"2")) +
+      geom_point()
+    
+    annoying %>% 
+      ggplot(aes(x = .[[1]], y = .[[2]])) +
+      geom_point()
+    ```
+    
+    ```{r}
+    # Creating a new column called `3` which is 
+    # `2` divided by `1`.
+    (annoying <- annoying %>% 
+      mutate(`3` = `2`/`1`))
+    ```
+    
+    ```{r}
+    # Renaming the columns to `one`, `two` and `three`.
+    (annoying <- annoying %>% 
+      rename("one" = "1",
+             "two" = "2",
+             "three" = "3"))
+    ```
+
+1.  What does `tibble::enframe()` do? When might you use it?
+
+    It converts named vectors into tibbles.
+    
+    ```{r}
+    # examples from the ?enframe help page
+    enframe(1:3)
+    enframe(c(a = 5, b = 7))
+    enframe(list(one = 1, two = 2:3, three = 4:6))
+    ```
+    Note: Selecting examples on a help page in RStudio and pressing
+    Ctrl + Enter sends the example to your console and runs it!
+    
+    <img src = assets/ctrl_enter_example_help_file2.gif 
+    alt="Ctrl and Enter in Help File" 
+    width="800" height="450">
+    
+1.  What option controls how many additional column names are printed
+    at the footer of a tibble?  
+    
+    ```
+    n_extra: Number of extra columns to print abbreviated information for, 
+    if the width is too small for the entire tibble. If NULL, the default, 
+    will print information about at most tibble.max_extra_cols extra columns.
+    ```
+
+
+
+
+
+
+
+
+
+
+
