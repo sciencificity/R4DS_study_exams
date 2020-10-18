@@ -37,6 +37,8 @@ fundamentally flawed, so please do let [me](https://twitter.com/sciencificity) k
 [Chapter 5:  Exploratory Data Analysis](ch5_eda.html) <br>
 [Chapter 6:  Workflow - Projects](ch6_projects.html) <br>
 [Chapter 7:  Tibbles](ch7_tibbles.html) <br>
+[Chapter 8:  Data Import](ch8_import_data.html) <br>
+[Chapter 14:  Pipes](ch14_pipes.html) <br>
 
 ### Miscellaneous
 

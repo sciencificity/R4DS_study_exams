@@ -1,0 +1,199 @@
+---
+title: "Chapter 14 - Pipes"
+author: "Vebash Naidoo"
+date: "18/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+options(scipen=10000)
+library(palmerpenguins)
+library(emo)
+library(magrittr)
+library(flair)
+```
+
+## Pipes %>%
+
+The ease of reading and writing code in R is a thing of beauty, and is
+made so due to the pipe! `r emo::ji("excited")` `r emo::ji("sparkle")` 
+`r emo::ji("cool")`. 
+
+
+> Little bunny Foo Foo  
+> Went hopping through the forest  
+> Scooping up the field mice  
+> And bopping them on the head  
+
+### Intermediate Steps
+
+```{r, eval=FALSE}
+foo_foo <-  little_bunny()
+foo_foo1 <- hop(foo_foo, through = forest)
+foo_foo2 <- scoop(foo_foo1, up = field_mice)
+foo_foo3 <- bop(foo_foo2, on = head)
+```
+
+- Main downside is that we need to name each intermediate step
+and with long data wrangling pipelines this can get tedious.
+- The thought is that these extra copies also take up space, but
+they don't. R cleverly handles that for us behind the scenes.
+
+```{r}
+diamonds <- ggplot2::diamonds
+diamonds2 <- diamonds %>% 
+  dplyr::mutate(price_per_carat = price / carat)
+
+pryr::object_size(diamonds)  # gives memory occupied by all its args
+pryr::object_size(diamonds2)
+pryr::object_size(diamonds, diamonds2) # collective size of both
+```
+
+`diamonds` and `diamonds2` have 10 columns in common. These are shared
+by both objects.
+
+If we modify any columns then the number of columns in common reduces. This
+is what happens below, and hence the shared size increases.
+
+```{r}
+diamonds$carat[1] <- NA
+pryr::object_size(diamonds)  # gives memory occupied by all its args
+pryr::object_size(diamonds2)
+pryr::object_size(diamonds, diamonds2) # collective size of both
+```
+
+
+### Overwrite Original
+
+```{r, eval = FALSE}
+foo_foo <-  little_bunny()
+foo_foo <- hop(foo_foo, through = forest)
+foo_foo <- scoop(foo_foo, up = field_mice)
+foo_foo <- bop(foo_foo, on = head)
+```
+
+- Debugging is hard. Need to re-run pipeline to figure out where the error
+lies.
+- The common variable being overwritten hides whats happening at each step.
+E.g. Foo foo is a bunny who is hopping through the forest, and on her
+way she scoops up some field mice. A person reading your code will get
+confused as to what happened with Foo foo if they read long pipelines,
+or worse will think Foo foo can bop something on its head sometimes, 
+can hop through a forest sometimes etc. I.e. it's hard to keep track
+of what Foo foo is doing.
+
+### Function Composition
+
+```{r, eval = FALSE}
+bop(
+  scoop(
+    hop(
+      foo_foo, 
+      through = forest
+    ), 
+    up = field_mice
+  ),
+  on = head
+)
+```
+
+- This way gets me the most, I struggle to keep track of what is happening
+when reading from the inside out, and I waste loads of paper drawing
+up pipelines like this to figure out what's the end goal of the pipeline
+(sadly most other languages don't have the `%>%`)!
+
+### The pipe
+
+```{r, eval = FALSE}
+foo_foo <- little_bunny()
+foo_foo %>% 
+  hop(through = forest) %>% 
+  scoop(up = field_mice) %>% 
+  bop(on = head)
+```
+
+The authors remark that this is their favourite form, because it focusses on verbs, not nouns, and I am totally with them.
+
+Foo foo hops through the forest, then scoops up field mice, then bops 'em on the
+head.
+
+Behind the scenes magrittr creates a function with these steps and 
+saves each in an intermediate object for us.
+
+```{r, eval = FALSE}
+my_pipe <- function(.) {
+  . <- hop(., through = forest)
+  . <- scoop(., up = field_mice)
+  bop(., on = head)
+}
+my_pipe(foo_foo)
+```
+
+The pipe does not work well for all functions though. Ones that
+use the current environment, functions using lazy evaluation like
+`tryCatch()`.
+
+### Other useful pipe operators
+
+Call a function for its side effects.
+
+```{r}
+rnorm(100) %>% 
+  matrix(ncol = 2) %>% 
+  plot() %>% 
+  str()
+```
+
+Our `str()` did not produce anything! `r emo::ji("sad")`
+
+Enter the __tee operator__ given by (%T>%). Things like `print()`, 
+`plot()`, `View()` etc. do not return anything and when you use them
+in a pipeline it pipes nothing into the next step in the pipeline. A pipeline
+expects the result of the previous step to "replace" the first
+argument in the subsequent step though so this breaks the pipeline.
+
+The __%T>%__ does it's job and sends the result of the previous pipe
+to the one after it's side job function.
+
+```{r}
+rnorm(100) %>% 
+  matrix(ncol = 2) %T>% # side job is to please plot
+  plot() %>% 
+  str()
+```
+
+The above takes `matrix(rnorm(100, ncol = 2)` and pipes it into `str()`.
+
+<br>
+
+<figure>
+  <img src="assets/tee_operator.png" alt="Tee operator of magrittr" 
+  width="750" height="450"/> 
+  <figcaption>Tee operator %T>%</figcaption>
+</figure>
+
+<br><br>
+
+<figure>
+  <img src="assets/exposition.png" alt="Exposition operator of magrittr"
+  width="750" height="450"/>
+  <figcaption>Exposition operator %$%</figcaption>
+</figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

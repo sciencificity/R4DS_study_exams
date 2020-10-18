@@ -1,0 +1,175 @@
+---
+title: "Chapter 8 - Data Import"
+author: "Vebash Naidoo"
+date: "18/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+options(scipen=10000)
+library(tidyverse)
+library(flair)
+library(nycflights13)
+library(palmerpenguins)
+library(gt)
+library(skimr)
+library(emo)
+library(tidyquant)
+library(lubridate)
+library(magrittr)
+theme_set(theme_tq())
+```
+
+__Inline csv file__
+
+```{r}
+read_csv("a,b,c
+1,2,3
+4,5,6")
+```
+
+__Skip some columns__
+
+- metadata
+- commented lines that you don't want to read
+
+```{r}
+read_csv("The first line of metadata
+  The second line of metadata
+  x,y,z
+  1,2,3", skip = 2)
+
+read_csv("# A comment I want to skip
+  x,y,z
+  1,2,3", comment = "#")
+```
+
+__No column names in data__
+
+```{r}
+read_csv("1,2,3\n4,5,6", # \n adds a new line 
+         col_names = FALSE) # cols will be labelled seq from X1 .. Xn
+
+read_csv("1,2,3\n4,5,6", 
+         col_names = c("x", "y", "z")) # cols named as you provided here
+```
+
+__NA values__
+
+```{r}
+read_csv("a,b,c,d\nnull,1,2,.", 
+         na = c(".",
+                "null"))
+# here we specify that the . and null
+# must be considered to be missing values
+```
+
+### Exercises
+
+1.  What function would you use to read a file where fields were separated with  
+    "|"?
+    
+    `read_delim()`
+    
+    ```{r}
+    # from the ?read_delim help page
+    read_delim("a|b\n1.0|2.0", delim = "|")
+    ```
+    
+    
+1.  Apart from `file`, `skip`, and `comment`, what other arguments do
+    `read_csv()` and `read_tsv()` have in common?
+    
+    All columns are common across the functions.
+    
+    - col_names
+    - col_types
+    - locale
+    - na
+    - quoted_na
+    - quote
+    - trim_ws
+    - n_max 
+    - guess_max 
+    - progress 
+    - skip_empty_rows 
+    
+    
+1.  What are the most important arguments to `read_fwf()`?
+
+    - file to read
+    - col_positions as created by fwf_empty(), fwf_widths() or fwf_positions()
+    which tells the function where a column starts and ends.
+   
+1.  Sometimes strings in a CSV file contain commas. To prevent them from
+    causing problems they need to be surrounded by a quoting character, like
+    `"` or `'`. By default, `read_csv()` assumes that the quoting
+    character will be `"`. What argument to `read_csv()` do you need to specify
+    to read the following text into a data frame?
+    
+    ```{r, eval = FALSE}
+    "x,y\n1,'a,b'"
+    ```
+    
+    Specify the quote argument.
+    
+    ```{r}
+    read_csv("x,y\n1,'a,b'", quote = "'")
+    ```
+    
+    
+1.  Identify what is wrong with each of the following inline CSV files. 
+    What happens when you run the code?
+    
+    ```{r, eval = FALSE}
+    read_csv("a,b\n1,2,3\n4,5,6") # only 2 cols specified but 
+    read_csv("a,b,c\n1,2\n1,2,3,4")
+    read_csv("a,b\n\"1")
+    read_csv("a,b\n1,2\na,b")
+    read_csv("a;b\n1;3")
+    ```
+    
+    > read_csv("a,b\n1,2,3\n4,5,6") <br>
+    > only 2 cols specified but 3 values provided
+    <br>
+    
+    > read_csv("a,b,c\n1,2\n1,2,3,4") <br>
+    > 3 col names provided, but either too few, or too many column values provided
+    <br>
+    
+    > read_csv("a,b\n\"1") <br>
+    > 2 col names provided, but only one value provided. <br>
+    > closing " missing
+    <br>
+    
+    > read_csv("a,b\n1,2\na,b")
+    > Nothing syntactically a problem, but the rows are filled<br>
+    > with the column headings?
+    <br>
+    
+    > read_csv("a;b\n1;3")
+    > the read_csv2 which reads ; as delimiters should have been used
+    <br>
+    
+    They all run, but most have warnings, and some are not imported as expected.
+    
+    ```{r, warning = TRUE}
+    read_csv("a,b\n1,2,3\n4,5,6") # only 2 cols specified but 
+    read_csv("a,b,c\n1,2\n1,2,3,4")
+    read_csv("a,b\n\"1")
+    read_csv("a,b\n1,2\na,b")
+    read_csv("a;b\n1;3")
+    ```
+    
+
+
+
+
+
+
+
+
