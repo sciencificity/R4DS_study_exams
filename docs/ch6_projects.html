@@ -413,7 +413,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-10-18
+<strong>Last updated:</strong> 2020-10-21
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreef81b11af2710b31c31be80bbe141d30c41f721c2targetblankf81b11aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/f81b11af2710b31c31be80bbe141d30c41f721c2" target="_blank">f81b11a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree8e445e8eff8f7dbb7a0ed7ca5fc49d8983211776targetblank8e445e8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/8e445e8eff8f7dbb7a0ed7ca5fc49d8983211776" target="_blank">8e445e8</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreef81b11af2710b31c31be80bbe141d30c41f721c2targetblankf81b11aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree8e445e8eff8f7dbb7a0ed7ca5fc49d8983211776targetblank8e445e8a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/f81b11af2710b31c31be80bbe141d30c41f721c2" target="_blank">f81b11a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/8e445e8eff8f7dbb7a0ed7ca5fc49d8983211776" target="_blank">8e445e8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -564,6 +564,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/8e445e8eff8f7dbb7a0ed7ca5fc49d8983211776/analysis/ch6_projects.Rmd" target="_blank">8e445e8</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-10-21
+</td>
+<td>
+updated the workflow-projects section
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/4497db4a779ca510b0a1e2bccce4f393a6c73012/docs/ch6_projects.html" target="_blank">4497db4</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-10-18
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -647,20 +681,69 @@ Tools -&gt; Global Options -&gt; Git/SVN
 <li><p>install.packages(“workflowr”)</p></li>
 <li><p>library(workflowr)</p></li>
 <li><p>Configure Git:</p>
-<p>wflow_git_config(user.name = “Your Name”, user.email = “<a href="mailto:email@domain" class="email">email@domain</a>”)</p></li>
-<li><p>Start Project:</p>
-<p>wflow_start(directory = “.”, name = “Analysis XXX”, existing = TRUE)</p></li>
+<blockquote>
+<p>wflow_git_config(user.name = “Your Name”, user.email = “<a href="mailto:email@domain" class="email">email@domain</a>”)</p>
+</blockquote>
+<ul>
+<li>Only need to do this once on a computer if you use the same GitHub account for all your work.</li>
+<li>I use different GitHub accounts so I sometimes need to redo this command based on the Git profile I am using. <br><br />
+</li>
+</ul></li>
+<li><p>Start Project (Existing Project):</p>
+<blockquote>
+<p>wflow_start(directory = “.”, name = “Analysis XXX”, existing = TRUE)</p>
+</blockquote></li>
+<li><p>Start a New {workflowr} Project from scratch:</p>
+<figure>
+<p><img src="assets/workflowr_proj.PNG" width="500" height="450" alt="Create a workflowr project from the menu"></p>
+<figcaption>
+<p>File -&gt; New Project -&gt; New Directory -&gt; scroll to <code>workflowr project</code></p>
+</figcaption>
+</figure></li>
 <li><p>Build Website</p>
-<p>wflow_build()</p></li>
-<li><p>Add link in index.Rmd</p></li>
-<li><p>Publish website:</p>
-<p>wflow_publish(c(“analysis/*.Rmd”, “data/*.csv”), message = “Add analysis”)</p></li>
-<li><p>Create repo on GitHub.</p></li>
-<li><p>Connect the repo on GitHub to the {workflowr} project.</p>
-<p>wflow_git_remote(“origin”, user = “<github-username>”, repo = “workflowr-analysis”)</p></li>
+<p>The site will be built from the <code>.Rmd</code> files in your <code>analysis</code> folder.</p>
+<blockquote>
+<p>wflow_build()</p>
+</blockquote></li>
+<li><p>If you’re converting an existing project into a {workflowr} project move your <code>.Rmd</code> files into the <code>analysis</code> folder, move your data into the <code>data</code> folder, and move any images into some sub-folder (you can name as you wish I believe - I use <code>assets</code>) in the <code>docs</code> folder.</p></li>
+<li><p>If you are starting a new {workflowr} project, and don’t yet have any analysis files, once you do create <code>.Rmd</code> files save these in the <code>analysis</code> folder.</p></li>
+<li><p>Add the <code>.html</code> link(s) in index.Rmd. For example:</p>
+<p><code>[Chapter 1:  Data Viz with ggplot](ch1_ggplot.html)</code> <br></p></li>
+<li><p>Publish website (this builds the website and does a <code>git commit</code>):</p>
+<pre>
+  wflow_publish(c("analysis/*.Rmd", 
+                  "data/*.csv",
+                  "docs/assets/*.*"),
+                message = "Add analysis")
+</pre></li>
+<li><p>Create repo on GitHub (only need to do this once).</p></li>
+<li><p>Connect the repo on GitHub to the {workflowr} project (only need to do this once).</p>
+<pre>
+    wflow_git_remote("origin",
+                      user = "<github-username>",
+                      repo = "workflowr-analysis")
+</pre></li>
 <li><p>Push project to GitHub</p>
-<p>wflow_git_push()</p></li>
+<blockquote>
+<p>wflow_git_push()</p>
+</blockquote></li>
 </ul>
+</div>
+<div id="workflowr-common-commands" class="section level3">
+<h3>{workflowr} Common Commands</h3>
+<p>After you have setup your {workflowr} project and you’re working on your analysis these are the commands that you will typically use in a solo project.</p>
+<ol style="list-style-type: decimal">
+<li>wflow_build() <br><br></li>
+<li><pre>
+ wflow_publish(
+     c("analysis/*.Rmd", 
+       "data/*.csv",
+       "docs/assets/*.*"),
+     message = "Some more specific message than this ;)"
+ )
+  </pre></li>
+<li>wflow_git_push()</li>
+</ol>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
