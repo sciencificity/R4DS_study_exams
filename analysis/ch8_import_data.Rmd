@@ -165,11 +165,248 @@ read_csv("a,b,c,d\nnull,1,2,.",
     read_csv("a;b\n1;3")
     ```
     
+## Parsing
+
+```{r import1a, include = FALSE}
+str(parse_logical(c("TRUE", "FALSE", "NA")))
+str(parse_integer(c("1", "2", "3")))
+str(parse_date(c("2010-01-01", "1979-10-14")))
+```
+
+```{r, echo=FALSE}
+decorate("import1a") %>% 
+  flair("parse_", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+All <span style="color: #008080;background-color:#9FDDBA">`parse_xxx()`</span>
+variants provide a uniform specification to use.
+
+> parse_x(character_vector_to_parse,
+> na = c(x, y))
+
+```{r, warning = TRUE}
+parse_integer(c("1", "231", ".", "456"), na = ".")
+(x <- parse_integer(c("123", "345", "abc", "123.45")))
+```
+
+To detect problems use `problems()`.
+
+```{r import2, include=FALSE}
+problems(x)
+```
+
+```{r, echo=FALSE}
+decorate("import2") %>% 
+  flair("problems", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+Sometimes depending on where in the world you are you will have different
+conventions when it comes to numbers.
+
+For example you may separate the integer part from the decimal part by
+using a `.` or a `,`. To tell the parsing function what kind of data
+you're expecting to be in a vector use <span style="color: #008080;background-color:#9FDDBA">`locale = locale(...)`</span> in
+your parsing function.
+
+```{r}
+parse_double("1.23")
+parse_double("1,23", locale = locale(decimal_mark = ","))
+```
+
+```{r}
+parse_number("$100")
+parse_number("20%")
+parse_number("It cost $123.45")
+```
+
+```{r}
+# Used in America
+parse_number("$123,456,789")
+# Used in many parts of Europe
+parse_number("123.456.789", locale = locale(grouping_mark = "."))
+# Used in Switzerland
+parse_number("123'456'789", locale = locale(grouping_mark = "'"))
+```
+
+```{r}
+charToRaw("Hadley")
+(x1 <- "El Ni\xf1o was particularly bad this year")
+(x2 <- "\x82\xb1\x82\xf1\x82\xc9\x82\xbf\x82\xcd")
+```
+
+To fix the problem you need to specify the encoding in `parse_character()`:
+
+```{r}
+parse_character(x1, locale = locale(encoding = "Latin1"))
+parse_character(x2, locale = locale(encoding = "Shift-JIS"))
+```
+
+You can try the guess_encoding() to help you out:
+
+```{r}
+guess_encoding(charToRaw(x1))
+guess_encoding(charToRaw(x2))
+```
+
+```{r}
+fruit <- c("apple", "banana")
+parse_factor(c("apple", "banana", "bananana"), levels = fruit)
+```
+
+```{r}
+parse_datetime("2010-10-01T2010")
+# If time is omitted, it will be set to midnight
+parse_datetime("20101010")
+parse_date("2010-10-01")
+library(hms)
+parse_time("01:10 am")
+parse_time("20:10:01")
+```
+
+```{r}
+parse_date("01/02/15", "%m/%d/%y")
+parse_date("01/02/15", "%d/%m/%y")
+parse_date("01/02/15", "%y/%m/%d")
+parse_date("1 janvier 2015", "%d %B %Y", locale = locale("fr"))
+```
 
 
+### Exercises
 
+1.  What are the most important arguments to `locale()`? 
 
+    - The date_names, for example above we specified "fr" for French 
+    date names in order to parse the date.
+    - decimal_mark: Due to differences in locale, you should set this
+    if your decimal numbers are separated using something other than __.__.
+    - grouping_mark: The default is "," since that is what is used in the US,
+    but if your grouping_mark is different, you should set this argument
+    for your analysis.
+    - tz: The default tz is UTC, but you may want to change it to your 
+    [timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). 
 
+1.  What happens if you try and set `decimal_mark` and `grouping_mark` 
+    to the same character? What happens to the default value of 
+    `grouping_mark` when you set `decimal_mark` to ","? What happens
+    to the default value of `decimal_mark` when you set the `grouping_mark`
+    to "."?
+        
+    ```{r, eval = FALSE}
+    # decimal_mark` and `grouping_mark` to the same character
+    parse_double("123,456,78", locale = locale(decimal_mark = ",",
+                                            grouping_mark = ","))
+    # Error: `decimal_mark` and `grouping_mark` must be different
+    
+    parse_number("123,456,78", locale = locale(decimal_mark = ",",
+                                            grouping_mark = ","))
+    # Error: `decimal_mark` and `grouping_mark` must be different
+    ```
+    
+    ```{r}
+    # What happens to the default value of `grouping_mark` 
+    # when you set `decimal_mark` to ","?
+    parse_number("123 456,78", locale = locale(decimal_mark = ","))
+    # no grouping preserved, whitespace is not considered as group
+    # so we get an incorrect parsing
+    # I would gather that since we overrode decimal_mark to be
+    # equal to the grouping_mark default, this removes the
+    # default, and hence has to be supplied for correct parsing
+    # if you also have a specific grouping character present
+    
+    parse_number("123 456,78", locale = locale(decimal_mark = ",",
+                                               grouping_mark = " "))
+    # both specified, number parsed correctly
+    
+    parse_number("123.456,78", locale = locale(decimal_mark = ","))
+    # even though no grouping_mark specified, parse_number 
+    # handles the . grouping mark well
+    
+    # preserve the decimals
+    print(parse_number("123.456,78", 
+                       locale = locale(decimal_mark = ",")),digits=10)
+    
+    ```
+    
+    Turns out the code sets the decimal_mark if it was not set, 
+    or vice versa. From readr code file
+    [locale.R](https://github.com/tidyverse/readr/blob/master/R/locale.R)
+    
+    ```{r, eval=FALSE}
+      if (missing(grouping_mark) && !missing(decimal_mark)) {
+        grouping_mark <- if (decimal_mark == ".") "," else "."
+      } else if (missing(decimal_mark) && !missing(grouping_mark)) {
+        decimal_mark <- if (grouping_mark == ".") "," else "."
+      }
+    ```
+    
+    
+    ```{r}
+    # What happens to the default value of `grouping_mark` 
+    # when you set `decimal_mark` to ","?
+    parse_double("123456,78", locale = locale(decimal_mark = ","))
+    
+    parse_double("123.456,78", locale = locale(decimal_mark = ","))
+    
+    parse_double("123.456,78", locale = locale(decimal_mark = ",",
+                                               grouping_mark = "."))
+    
+    parse_double("123 456,78", locale = locale(decimal_mark = ",",
+                                               grouping_mark = " "))
+    ```
+    
+    Hhmm okay, so it seems like `parse_double()` is a bit more strict,
+    and does not seem to like it even if we override the 
+    `locale()`. This [Stack Overflow post](https://stackoverflow.com/questions/47487424/parsing-double-grouped-number-with-readrparse-double) confirms what we see here, so
+    too does [this post](https://github.com/tidyverse/readr/issues/827) and [this one](https://github.com/tidyverse/readr/issues/556). The only
+    perplexing thing is that when I do set the __grouping_mark__ in locale()
+    why is this not considered? Because `parse_double()` also has a default 
+    locale which may be overriden by locale()? `r emo::ji("confused")`
+    
+    ```{r}
+    # What happens to the default value of `decimal_mark` 
+    # when you set the `grouping_mark` to "."
+    parse_number("5.123.456,78", locale = locale(grouping_mark = "."))
+    # As above shows the decimal character set to , in code
 
+    parse_number("5.123.456,78", locale = locale(decimal_mark = ",",
+                                               grouping_mark = "."))
+    
+    problems(parse_double("5.123.456,78", 
+                          locale = locale(decimal_mark = ",",
+                                          grouping_mark = ".")))
+    ```
 
+    
+
+1.  I didn't discuss the `date_format` and `time_format` options to
+    `locale()`. What do they do? Construct an example that shows when 
+    they might be useful.
+    
+```{r}
+
+```
+    
+
+1.  If you live outside the US, create a new locale object that encapsulates 
+    the settings for the types of file you read most commonly.
+    
+1.  What's the difference between `read_csv()` and `read_csv2()`?
+    
+1.  What are the most common encodings used in Europe? What are the
+    most common encodings used in Asia? Do some googling to find out.
+
+1.  Generate the correct format string to parse each of the following 
+    dates and times:
+    
+    ```{r}
+    d1 <- "January 1, 2010"
+    d2 <- "2015-Mar-07"
+    d3 <- "06-Jun-2017"
+    d4 <- c("August 19 (2015)", "July 1 (2015)")
+    d5 <- "12/30/14" # Dec 30, 2014
+    t1 <- "1705"
+    t2 <- "11:15:10.12 PM"
+    ```
 

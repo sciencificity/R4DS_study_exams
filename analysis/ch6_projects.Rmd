@@ -38,37 +38,88 @@ http://bit.ly/workflowr-video
 - library(workflowr)
 - Configure Git: 
 
-  wflow_git_config(user.name = "Your Name",
+  > wflow_git_config(user.name = "Your Name",
                     user.email = "email@domain")
                      
--  Start Project:
+    * Only need to do this once on a computer if you use
+    the same GitHub account for all your work.
+    * I use different GitHub accounts so I sometimes
+    need to redo this command based on the Git profile I am using.
+<br>    
+-  Start Project (Existing Project):
 
-    wflow_start(directory = ".",
-              name = "Analysis XXX",
-              existing = TRUE)
-            
+    > wflow_start(directory = ".",
+                name = "Analysis XXX",
+                existing = TRUE)
+              
+- Start a New {workflowr} Project from scratch:
+    <figure>
+      <img src="assets/workflowr_proj.PNG" width="500" height="450" alt="Create a workflowr project from the menu">
+    
+      <figcaption>File -> New Project -> New Directory -> scroll to `workflowr project`</figcaption>
+    </figure>
+    
 -  Build Website
 
-    wflow_build()
-  
-- Add link in index.Rmd
+    The site will be built from the `.Rmd` files in your `analysis` folder.
+    
+    > wflow_build()
+    
+- If you're converting an existing project into a {workflowr} project 
+move your `.Rmd` files into the `analysis` folder, move your data 
+into the `data` folder, and move any images into some sub-folder (you can name
+as you wish I believe - I use `assets`) in the `docs` folder.
 
-- Publish website:
+- If you are starting a new {workflowr} project, and don't yet
+have any analysis files, once you do create `.Rmd` files save these in the
+`analysis` folder.
   
-    wflow_publish(c("analysis/\*.Rmd", "data/\*.csv"),
-                message = "Add analysis")
+- Add the `.html` link(s) in index.Rmd. For example:
+
+  `[Chapter 1:  Data Viz with ggplot](ch1_ggplot.html)` <br>
+
+- Publish website (this builds the website and does a `git commit`):
+  
+  <pre>
+    wflow_publish(c("analysis/*.Rmd", 
+                    "data/*.csv",
+                    "docs/assets/*.*"),
+                  message = "Add analysis")
+  </pre>
               
-- Create repo on GitHub.
+- Create repo on GitHub (only need to do this once).
 
-- Connect the repo on GitHub to the {workflowr} project.
-
-    wflow_git_remote("origin",
-                   user = "<github-username>",
-                   repo = "workflowr-analysis")
-                 
+- Connect the repo on GitHub to the {workflowr} project (only need to do
+this once).
+  <pre>
+      wflow_git_remote("origin",
+                        user = "<github-username>",
+                        repo = "workflowr-analysis")
+  </pre>   
+  
 - Push project to GitHub
 
-    wflow_git_push()
+  > wflow_git_push()
+  
+### {workflowr} Common Commands
+
+After you have setup your {workflowr} project and
+you're working on your analysis these are the commands that
+you will typically use in a solo project.
+
+1.
+    wflow_build() <br><br>
+1. 
+  <pre>
+    wflow_publish(
+        c("analysis/*.Rmd", 
+          "data/*.csv",
+          "docs/assets/*.*"),
+        message = "Some more specific message than this ;)"
+    )
+  </pre>
+1. 
+  wflow_git_push()  
 
 
 
