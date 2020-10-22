@@ -13,15 +13,9 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 options(scipen=10000)
 library(tidyverse)
 library(flair)
-library(nycflights13)
-library(palmerpenguins)
-library(gt)
-library(skimr)
 library(emo)
-library(tidyquant)
 library(lubridate)
 library(magrittr)
-theme_set(theme_tq())
 ```
 
 __Inline csv file__
@@ -51,21 +45,26 @@ read_csv("# A comment I want to skip
 __No column names in data__
 
 ```{r}
-read_csv("1,2,3\n4,5,6", # \n adds a new line 
-         col_names = FALSE) # cols will be labelled seq from X1 .. Xn
+read_csv("1,2,3\n4,5,6", 
+         # \n adds a new line 
+         col_names = FALSE
+         # cols will be labelled seq from X1 .. Xn
+         ) 
 
 read_csv("1,2,3\n4,5,6", 
-         col_names = c("x", "y", "z")) # cols named as you provided here
+         # cols named as you provided here
+         col_names = c("x", "y", "z")) 
 ```
 
 __NA values__
 
 ```{r}
 read_csv("a,b,c,d\nnull,1,2,.", 
+         # here we specify that the . and null
+         # must be considered to be missing values
          na = c(".",
                 "null"))
-# here we specify that the . and null
-# must be considered to be missing values
+
 ```
 
 ### Exercises
@@ -118,7 +117,8 @@ read_csv("a,b,c,d\nnull,1,2,.",
     Specify the quote argument.
     
     ```{r}
-    read_csv("x,y\n1,'a,b'", quote = "'")
+    read_csv("x,y\n1,'a,b'", 
+             quote = "'")
     ```
     
     
@@ -126,39 +126,39 @@ read_csv("a,b,c,d\nnull,1,2,.",
     What happens when you run the code?
     
     ```{r, eval = FALSE}
-    read_csv("a,b\n1,2,3\n4,5,6") # only 2 cols specified but 
+    read_csv("a,b\n1,2,3\n4,5,6") 
     read_csv("a,b,c\n1,2\n1,2,3,4")
     read_csv("a,b\n\"1")
     read_csv("a,b\n1,2\na,b")
     read_csv("a;b\n1;3")
     ```
     
-    > read_csv("a,b\n1,2,3\n4,5,6") <br>
+    > read_csv("a,b\\n1,2,3\\n4,5,6") <br>
     > only 2 cols specified but 3 values provided
     <br>
     
-    > read_csv("a,b,c\n1,2\n1,2,3,4") <br>
+    > read_csv("a,b,c\\n1,2\\n1,2,3,4") <br>
     > 3 col names provided, but either too few, or too many column values provided
     <br>
     
-    > read_csv("a,b\n\"1") <br>
+    > read_csv("a,b\\n\"1") <br>
     > 2 col names provided, but only one value provided. <br>
     > closing " missing
     <br>
     
-    > read_csv("a,b\n1,2\na,b")
+    > read_csv("a,b\\n1,2\\na,b")
     > Nothing syntactically a problem, but the rows are filled<br>
     > with the column headings?
     <br>
     
-    > read_csv("a;b\n1;3")
+    > read_csv("a;b\\n1;3")
     > the read_csv2 which reads ; as delimiters should have been used
     <br>
     
     They all run, but most have warnings, and some are not imported as expected.
     
     ```{r, warning = TRUE}
-    read_csv("a,b\n1,2,3\n4,5,6") # only 2 cols specified but 
+    read_csv("a,b\n1,2,3\n4,5,6") 
     read_csv("a,b,c\n1,2\n1,2,3,4")
     read_csv("a,b\n\"1")
     read_csv("a,b\n1,2\na,b")
@@ -202,17 +202,21 @@ decorate("import2") %>%
         color = "#008080")
 ```
 
-Sometimes depending on where in the world you are you will have different
-conventions when it comes to numbers.
+Sometimes depending on where in the world you are, you will have different conventions when it comes to numbers.
 
-For example you may separate the integer part from the decimal part by
-using a `.` or a `,`. To tell the parsing function what kind of data
-you're expecting to be in a vector use <span style="color: #008080;background-color:#9FDDBA">`locale = locale(...)`</span> in
+For example you may separate the integer part from the decimal part by using a `.` or a `,`. To tell the parsing function what kind of data you're expecting to be in a vector use <span style="color: #008080;background-color:#9FDDBA">`locale = locale(...)`</span> in
 your parsing function.
 
-```{r}
+
+```{r parse1, include=FALSE}
 parse_double("1.23")
 parse_double("1,23", locale = locale(decimal_mark = ","))
+```
+
+```{r, echo=FALSE}
+decorate("parse1") %>% 
+  flair("locale = locale", background = "#9FDDBA", 
+        color = "#008080")
 ```
 
 ```{r}
@@ -225,22 +229,33 @@ parse_number("It cost $123.45")
 # Used in America
 parse_number("$123,456,789")
 # Used in many parts of Europe
-parse_number("123.456.789", locale = locale(grouping_mark = "."))
+parse_number("123.456.789", 
+             locale = locale(grouping_mark = "."))
 # Used in Switzerland
-parse_number("123'456'789", locale = locale(grouping_mark = "'"))
+parse_number("123'456'789", 
+             locale = locale(grouping_mark = "'"))
 ```
 
 ```{r}
 charToRaw("Hadley")
+charToRaw("Vebash")
 (x1 <- "El Ni\xf1o was particularly bad this year")
 (x2 <- "\x82\xb1\x82\xf1\x82\xc9\x82\xbf\x82\xcd")
 ```
 
 To fix the problem you need to specify the encoding in `parse_character()`:
 
-```{r}
-parse_character(x1, locale = locale(encoding = "Latin1"))
-parse_character(x2, locale = locale(encoding = "Shift-JIS"))
+```{r parse2, include=FALSE}
+parse_character(x1, 
+                locale = locale(encoding = "Latin1"))
+parse_character(x2, 
+                locale = locale(encoding = "Shift-JIS"))
+```
+
+```{r, echo=FALSE}
+decorate("parse2") %>% 
+  flair("encoding =", background = "#9FDDBA", 
+        color = "#008080")
 ```
 
 You can try the guess_encoding() to help you out:
@@ -252,7 +267,8 @@ guess_encoding(charToRaw(x2))
 
 ```{r}
 fruit <- c("apple", "banana")
-parse_factor(c("apple", "banana", "bananana"), levels = fruit)
+parse_factor(c("apple", "banana", "bananana"), 
+             levels = fruit)
 ```
 
 ```{r}
@@ -269,7 +285,8 @@ parse_time("20:10:01")
 parse_date("01/02/15", "%m/%d/%y")
 parse_date("01/02/15", "%d/%m/%y")
 parse_date("01/02/15", "%y/%m/%d")
-parse_date("1 janvier 2015", "%d %B %Y", locale = locale("fr"))
+parse_date("1 janvier 2015", "%d %B %Y", 
+           locale = locale("fr"))
 ```
 
 
@@ -292,110 +309,188 @@ parse_date("1 janvier 2015", "%d %B %Y", locale = locale("fr"))
     `grouping_mark` when you set `decimal_mark` to ","? What happens
     to the default value of `decimal_mark` when you set the `grouping_mark`
     to "."?
+    
+    - What happens if you try and set `decimal_mark` and
+    `grouping_mark` to the same character?
         
-    ```{r, eval = FALSE}
-    # decimal_mark` and `grouping_mark` to the same character
-    parse_double("123,456,78", locale = locale(decimal_mark = ",",
-                                            grouping_mark = ","))
-    # Error: `decimal_mark` and `grouping_mark` must be different
+      ```{r, eval = FALSE}
+      # decimal_mark` and `grouping_mark` 
+      # to the same character
+      parse_double("123,456,78", 
+                   locale = locale(decimal_mark = ",",
+                                   grouping_mark = ","))
+      parse_number("123,456,78", 
+                   locale = locale(decimal_mark = ",",
+                                   grouping_mark = ","))
+      ```
     
-    parse_number("123,456,78", locale = locale(decimal_mark = ",",
-                                            grouping_mark = ","))
-    # Error: `decimal_mark` and `grouping_mark` must be different
-    ```
-    
-    ```{r}
-    # What happens to the default value of `grouping_mark` 
-    # when you set `decimal_mark` to ","?
-    parse_number("123 456,78", locale = locale(decimal_mark = ","))
-    # no grouping preserved, whitespace is not considered as group
-    # so we get an incorrect parsing
-    # I would gather that since we overrode decimal_mark to be
-    # equal to the grouping_mark default, this removes the
-    # default, and hence has to be supplied for correct parsing
-    # if you also have a specific grouping character present
-    
-    parse_number("123 456,78", locale = locale(decimal_mark = ",",
-                                               grouping_mark = " "))
-    # both specified, number parsed correctly
-    
-    parse_number("123.456,78", locale = locale(decimal_mark = ","))
-    # even though no grouping_mark specified, parse_number 
-    # handles the . grouping mark well
-    
-    # preserve the decimals
-    print(parse_number("123.456,78", 
-                       locale = locale(decimal_mark = ",")),digits=10)
-    
-    ```
-    
-    Turns out the code sets the decimal_mark if it was not set, 
-    or vice versa. From readr code file
-    [locale.R](https://github.com/tidyverse/readr/blob/master/R/locale.R)
-    
-    ```{r, eval=FALSE}
-      if (missing(grouping_mark) && !missing(decimal_mark)) {
-        grouping_mark <- if (decimal_mark == ".") "," else "."
-      } else if (missing(decimal_mark) && !missing(grouping_mark)) {
-        decimal_mark <- if (grouping_mark == ".") "," else "."
-      }
-    ```
+      We get _# Error: `decimal_mark` and `grouping_mark` 
+      must be different when using both `parse_number` and 
+      `parse_double`_.
     
     
-    ```{r}
-    # What happens to the default value of `grouping_mark` 
-    # when you set `decimal_mark` to ","?
-    parse_double("123456,78", locale = locale(decimal_mark = ","))
+    - What happens to the default value of 
+    `grouping_mark` when you set `decimal_mark` to ","?
     
-    parse_double("123.456,78", locale = locale(decimal_mark = ","))
+      ```{r}
+      parse_number("123 456,78", locale = 
+                     locale(decimal_mark = ","))
+      # when both are specified, 
+      # number parsed correctly
+      parse_number("123 456,78", locale = 
+                     locale(decimal_mark = ",",
+                            grouping_mark = " "))
+      
+      # even though no grouping_mark specified, 
+      # parse_number handles the grouping mark 
+      # of . well.
+      # Below the reason is revealed to be the default
+      # switching in the readr code
+      parse_number("123.456,78", 
+                   locale = locale(decimal_mark = ","))
+      
+      # preserve the decimals
+      print(parse_number("123.456,78", 
+              locale = locale(decimal_mark = ",")),
+              digits=10)
+      print(parse_number("123456789,11", 
+              locale = locale(decimal_mark = ",")),
+              digits=15)
+      ```
     
-    parse_double("123.456,78", locale = locale(decimal_mark = ",",
-                                               grouping_mark = "."))
+      In `parse_number` no grouping preserved, 
+      whitespace is not considered as group so we get an 
+      incorrect parsing.
+      Initially I thought that since we overrode decimal_mark to be
+      equal to the grouping_mark default, this removes the
+      default, and hence has to be supplied for correct parsing
+      if you also have a specific grouping character present.
+      
+      Turns out the code sets the decimal_mark if it was not set, 
+      or vice versa, but it can't be exhaustive and hence chooses
+      to toggle between the `.` and `,`.
+      
+      Defaults are that `decimal_mark = .` and 
+      `grouping_mark = ,`. If you only change the `decimal_mark`  
+      to be `,`, and don't specify any grouping mark it is
+      defaulted to be `.`
+      
+      But in this case we've got a `grouping_mark` that is a space,
+      and have not specified that, hence the parsing does not
+      occur well. 
+      
+      My take away here is even knowing that
+      the code defaults the `grouping_mark` to be `.` if you set
+      the `decimal_mark` to be `,` we should always be vigilant
+      and override both to ensure parsing happens as expected.
+      
+      From readr code file
+      [locale.R](https://github.com/tidyverse/readr/blob/master/R/locale.R). 
     
-    parse_double("123 456,78", locale = locale(decimal_mark = ",",
-                                               grouping_mark = " "))
-    ```
+      ```{r, eval=FALSE}
+        if (missing(grouping_mark) && 
+            !missing(decimal_mark)) {
+          grouping_mark <- if (decimal_mark == ".") "," 
+                           else "."
+        } else if (missing(decimal_mark) && 
+                   !missing(grouping_mark)) {
+          decimal_mark <- if (grouping_mark == ".") "," 
+                          else "."
+        }
+      ```
     
-    Hhmm okay, so it seems like `parse_double()` is a bit more strict,
-    and does not seem to like it even if we override the 
-    `locale()`. This [Stack Overflow post](https://stackoverflow.com/questions/47487424/parsing-double-grouped-number-with-readrparse-double) confirms what we see here, so
-    too does [this post](https://github.com/tidyverse/readr/issues/827) and [this one](https://github.com/tidyverse/readr/issues/556). The only
-    perplexing thing is that when I do set the __grouping_mark__ in locale()
-    why is this not considered? Because `parse_double()` also has a default 
-    locale which may be overriden by locale()? `r emo::ji("confused")`
-    
-    ```{r}
-    # What happens to the default value of `decimal_mark` 
-    # when you set the `grouping_mark` to "."
-    parse_number("5.123.456,78", locale = locale(grouping_mark = "."))
-    # As above shows the decimal character set to , in code
-
-    parse_number("5.123.456,78", locale = locale(decimal_mark = ",",
-                                               grouping_mark = "."))
-    
-    problems(parse_double("5.123.456,78", 
-                          locale = locale(decimal_mark = ",",
-                                          grouping_mark = ".")))
-    ```
-
-    
+      For parse_double() we experience different results.
+      
+      ```{r}
+      parse_double("123456,78", 
+                   locale = locale(decimal_mark = ","))
+      
+      parse_double("123.456,78", 
+                   locale = locale(decimal_mark = ","))
+      
+      parse_double("123.456,78", 
+                   locale = locale(decimal_mark = ",",
+                                   grouping_mark = "."))
+      
+      parse_double("123 456,78", 
+                   locale = locale(decimal_mark = ",",
+                                   grouping_mark = " "))
+      ```
+      
+      Hhmm okay, so it seems like `parse_double()` is a bit more strict,
+      and does not seem to like it even if we override the 
+      `locale()`. This [Stack Overflow post](https://stackoverflow.com/questions/47487424/parsing-double-grouped-number-with-readrparse-double) confirms what we see here, so
+      too does [this post](https://github.com/tidyverse/readr/issues/827) and [this one](https://github.com/tidyverse/readr/issues/556). The only
+      perplexing thing is that when I do set the __grouping_mark__ in locale()
+      why is this not considered? Because `parse_double()` also has a default 
+      locale which may be overriden by locale()? `r emo::ji("confused")`
+      
+      What happens to the default value of `decimal_mark`
+      when you set the `grouping_mark` to "."?
+      
+      ```{r}
+      # As above shows the decimal character 
+      # set to , in code
+      parse_number("5.123.456,78", 
+                   locale = locale(grouping_mark = "."))
+      parse_number("5.123.456,78", 
+                   locale = locale(decimal_mark = ",",
+                                   grouping_mark = "."))
+      problems(parse_double("5.123.456,78", 
+                            locale = locale(
+                              decimal_mark = ",",
+                              grouping_mark = ".")))
+      ```
 
 1.  I didn't discuss the `date_format` and `time_format` options to
     `locale()`. What do they do? Construct an example that shows when 
     they might be useful.
     
-```{r}
-
-```
+    Dates and times may be specified in 
+    [numerous ways](https://en.wikipedia.org/wiki/Calendar_date#:~:text=RFC%203339%20Date%20and%20Time,and%20year%20is%20four%20digits.). 
+    Dates for example can be `YYYY-MM-DD` or `MM-DD-YY`.
+    
+    Times are the same. It may be `hh:mm:ss` or `hh:mm AM/PM`.
+    
+    It may be useful to use this if you know your data
+    contains dates / times in a different for from
+    the default.
+    
+    ```{r}
+    locale("zu")
+    locale("af")
+    locale_af <- locale("af", date_format = "%m %d",
+           time_format = "%H:%M")
+    
+    read_csv("a, date, time
+             x, Mrt. 23, 20:30
+             y, Okt. 31, 15:45", locale = locale_af)
+    ```
     
 
 1.  If you live outside the US, create a new locale object that encapsulates 
     the settings for the types of file you read most commonly.
     
+    ```{r}
+    locale_za = locale("en", date_format = "%Y-%m-%d",
+                       time_format = "%H:%M:%S")
+    ```
+    
+    
 1.  What's the difference between `read_csv()` and `read_csv2()`?
+    
+    - read_csv2() has __;__ as a delimiter.
+    - read_csv() has __,__ as a delimiter.
     
 1.  What are the most common encodings used in Europe? What are the
     most common encodings used in Asia? Do some googling to find out.
+    
+    UTF-8 is the standard it seems. Other than this:
+  
+      - [Europe](http://www.steves-internet-guide.com/guide-data-character-encoding/#:~:text=ISO%2D8859%20is%20An%208,Italian%2C%20Spanish%2C%20French%20etc.) seems to be `Latin-1`.
+      
+      - [Asia](https://stackoverflow.com/questions/8509339/what-is-the-most-common-encoding-of-each-language) seems to be `Shift-JIS`
+    
 
 1.  Generate the correct format string to parse each of the following 
     dates and times:
@@ -409,4 +504,160 @@ parse_date("1 janvier 2015", "%d %B %Y", locale = locale("fr"))
     t1 <- "1705"
     t2 <- "11:15:10.12 PM"
     ```
+      
+    ```{r}
+    d1 <- "January 1, 2010"
+    parse_date(d1, "%B %d, %Y")
+    
+    d2 <- "2015-Mar-07"
+    parse_date(d2, "%Y-%b-%d")
+    
+    d3 <- "06-Jun-2017"
+    parse_date(d3, "%d-%b-%Y")
+    
+    d4 <- c("August 19 (2015)", "July 1 (2015)")
+    parse_date(d4, "%B %d (%Y)")
+    
+    d5 <- "12/30/14" # Dec 30, 2014
+    parse_date(d5, "%m/%d/%y")
+    
+    t1 <- "1705"
+    parse_time(t1, "%H%M")
+    
+    t2 <- "11:15:10.12 PM"
+    parse_time(t2, "%I:%M:%OS %p")
+    ```
+    
+## readr Strategy
+
+The `readr` `r emo::ji("package")` uses the first 1000 entries
+in a column to guess the type of data contained in that
+column. This may work okay for most cases, but if you have sorted
+a file in a certain way (e.g. all missing values up top) then
+you may end up with a column inference that doesn't quite work.
+
+```{r}
+guess_parser("2010-10-01")
+guess_parser("15:01")
+guess_parser(c("TRUE", "FALSE"))
+guess_parser(c("1", "5", "9"))
+guess_parser(c("12,352,561"))
+str(parse_guess("2010-10-10"))
+```
+
+```{r}
+challenge <- read_csv(readr_example("challenge.csv"))
+```
+
+```{r}
+problems(challenge)
+```
+
+```{r}
+tail(challenge)
+```
+
+When you encounter problems:
+
+1. Work column by column to fix.
+1. Copy and paste the specification that `read_xxx()` inferred
+and use it to adjust the columns you experienced issues on. Just a note here: in the old version of readr the `x` column had integers up front, and hence was inferred as integer. Now it is inferred as
+double so the file only has an issue with the second column that has
+many NA values up top, and hence is considered incorrectly
+to be a logical when it is in fact a date.
+
+I am a little perplexed by this though because the first 1000
+rows are only integers. I would guess that the heuristic has been
+amended and maybe integer has been removed?
+
+```{r}
+challenge <- read_csv(
+  readr_example("challenge.csv"), 
+  col_types = cols(
+    x = col_double(),
+    # change here from col_logical() to
+    # col_date()
+    y = col_date() 
+  )
+)
+tail(challenge)
+
+challenge %>% 
+  head(1010) %>% 
+  tail(11)
+
+challenge %>% 
+  head(1000) %>% 
+  filter(as.integer(x) != x)
+
+challenge %>% 
+  head(1000) %>% 
+  filter(x%%1!=0)
+
+challenge %>% 
+  tail(1000) %>% 
+  filter(as.integer(x) != x)
+
+(test_file <- read_csv("a, b, c
+# Trying to confirm if integers get read in a double?
+                      1, 2.3, 'x'
+                      2, 5.4, 'y'
+                      3, 6.7, 'z'"))
+```
+
+### Other strategies for read issues
+
+__Guess a few more rows__
+
+```{r}
+challenge2 <- read_csv(readr_example("challenge.csv"), 
+                       guess_max = 1001)
+challenge2
+
+
+challenge2 %>% 
+  head(1010) %>% 
+  tail(11)
+```
+
+__Read in all as character columns__
+
+Then use type_covert() to help identify column
+types.
+
+```{r}
+challenge2 <- read_csv(readr_example("challenge.csv"), 
+  col_types = cols(.default = col_character())
+)
+```
+
+```{r}
+# Reminder: the extra brackets around do the assignment 
+# and print out the results
+(df <- tribble(
+  ~x,  ~y,
+  "1", "1.21",
+  "2", "2.32",
+  "3", "4.56"
+)) 
+
+# Note the column types
+type_convert(df)
+```
+
+The authors recommend that you always supply `col_types = cols()`
+ourselves for consistency and detecting any data changes. You can use `readr`'s guesses and build from that.
+
+## Writing files
+
+- write_csv(dataset, "file path")
+- write_tsv(dataset, "file_path")
+- write_excel_csv(dataset, "file_path"). I did not know about this one! `r emo::ji("folded")`
+
+The only issue with the above is you need to recreate the specification on every subsequent read.
+
+- write_rds() [to read use read_rds()] stores data in R's custom
+binary format called RDS.
+- write_feather() [and read_feather()] from the `feather` `r emo::ji("package")` allows files to be shared across languages.
+
 
