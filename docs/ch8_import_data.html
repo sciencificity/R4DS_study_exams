@@ -413,7 +413,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-10-21
+<strong>Last updated:</strong> 2020-10-22
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree8e445e8eff8f7dbb7a0ed7ca5fc49d8983211776targetblank8e445e8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/8e445e8eff8f7dbb7a0ed7ca5fc49d8983211776" target="_blank">8e445e8</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree7c43632339b7c973806c99863a5d5af077e7cde4targetblank7c43632a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/7c43632339b7c973806c99863a5d5af077e7cde4" target="_blank">7c43632</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree8e445e8eff8f7dbb7a0ed7ca5fc49d8983211776targetblank8e445e8a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree7c43632339b7c973806c99863a5d5af077e7cde4targetblank7c43632a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/8e445e8eff8f7dbb7a0ed7ca5fc49d8983211776" target="_blank">8e445e8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/7c43632339b7c973806c99863a5d5af077e7cde4" target="_blank">7c43632</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -564,6 +564,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/7c43632339b7c973806c99863a5d5af077e7cde4/analysis/ch8_import_data.Rmd" target="_blank">7c43632</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-10-22
+</td>
+<td>
+Completed Chapter 8
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/cfbefe68681ad4c3490fe028029c92711bf9ae35/docs/ch8_import_data.html" target="_blank">cfbefe6</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-10-21
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -625,15 +659,9 @@ added Chapter 14 and some of Chapter 8
 <pre class="r"><code>options(scipen=10000)
 library(tidyverse)
 library(flair)
-library(nycflights13)
-library(palmerpenguins)
-library(gt)
-library(skimr)
 library(emo)
-library(tidyquant)
 library(lubridate)
-library(magrittr)
-theme_set(theme_tq())</code></pre>
+library(magrittr)</code></pre>
 <p><strong>Inline csv file</strong></p>
 <pre class="r"><code>read_csv(&quot;a,b,c
 1,2,3
@@ -664,15 +692,19 @@ theme_set(theme_tq())</code></pre>
   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 1     1     2     3</code></pre>
 <p><strong>No column names in data</strong></p>
-<pre class="r"><code>read_csv(&quot;1,2,3\n4,5,6&quot;, # \n adds a new line 
-         col_names = FALSE) # cols will be labelled seq from X1 .. Xn</code></pre>
+<pre class="r"><code>read_csv(&quot;1,2,3\n4,5,6&quot;, 
+         # \n adds a new line 
+         col_names = FALSE
+         # cols will be labelled seq from X1 .. Xn
+         ) </code></pre>
 <pre><code># A tibble: 2 x 3
      X1    X2    X3
   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 1     1     2     3
 2     4     5     6</code></pre>
 <pre class="r"><code>read_csv(&quot;1,2,3\n4,5,6&quot;, 
-         col_names = c(&quot;x&quot;, &quot;y&quot;, &quot;z&quot;)) # cols named as you provided here</code></pre>
+         # cols named as you provided here
+         col_names = c(&quot;x&quot;, &quot;y&quot;, &quot;z&quot;)) </code></pre>
 <pre><code># A tibble: 2 x 3
       x     y     z
   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -680,14 +712,14 @@ theme_set(theme_tq())</code></pre>
 2     4     5     6</code></pre>
 <p><strong>NA values</strong></p>
 <pre class="r"><code>read_csv(&quot;a,b,c,d\nnull,1,2,.&quot;, 
+         # here we specify that the . and null
+         # must be considered to be missing values
          na = c(&quot;.&quot;,
                 &quot;null&quot;))</code></pre>
 <pre><code># A tibble: 1 x 4
   a         b     c d    
   &lt;lgl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;
 1 NA        1     2 NA   </code></pre>
-<pre class="r"><code># here we specify that the . and null
-# must be considered to be missing values</code></pre>
 <div id="exercises" class="section level3">
 <h3>Exercises</h3>
 <ol style="list-style-type: decimal">
@@ -723,34 +755,35 @@ read_delim(&quot;a|b\n1.0|2.0&quot;, delim = &quot;|&quot;)</code></pre>
 <li><p>Sometimes strings in a CSV file contain commas. To prevent them from causing problems they need to be surrounded by a quoting character, like <code>"</code> or <code>'</code>. By default, <code>read_csv()</code> assumes that the quoting character will be <code>"</code>. What argument to <code>read_csv()</code> do you need to specify to read the following text into a data frame?</p>
 <pre class="r"><code>&quot;x,y\n1,&#39;a,b&#39;&quot;</code></pre>
 <p>Specify the quote argument.</p>
-<pre class="r"><code>read_csv(&quot;x,y\n1,&#39;a,b&#39;&quot;, quote = &quot;&#39;&quot;)</code></pre>
+<pre class="r"><code>read_csv(&quot;x,y\n1,&#39;a,b&#39;&quot;, 
+         quote = &quot;&#39;&quot;)</code></pre>
 <pre><code># A tibble: 1 x 2
       x y    
   &lt;dbl&gt; &lt;chr&gt;
 1     1 a,b  </code></pre></li>
 <li><p>Identify what is wrong with each of the following inline CSV files. What happens when you run the code?</p>
-<pre class="r"><code>read_csv(&quot;a,b\n1,2,3\n4,5,6&quot;) # only 2 cols specified but 
+<pre class="r"><code>read_csv(&quot;a,b\n1,2,3\n4,5,6&quot;) 
 read_csv(&quot;a,b,c\n1,2\n1,2,3,4&quot;)
 read_csv(&quot;a,b\n\&quot;1&quot;)
 read_csv(&quot;a,b\n1,2\na,b&quot;)
 read_csv(&quot;a;b\n1;3&quot;)</code></pre>
 <blockquote>
-<p>read_csv(“a,b1,2,34,5,6”) <br> only 2 cols specified but 3 values provided <br></p>
+<p>read_csv(“a,b\n1,2,3\n4,5,6”) <br> only 2 cols specified but 3 values provided <br></p>
 </blockquote>
 <blockquote>
-<p>read_csv(“a,b,c1,21,2,3,4”) <br> 3 col names provided, but either too few, or too many column values provided <br></p>
+<p>read_csv(“a,b,c\n1,2\n1,2,3,4”) <br> 3 col names provided, but either too few, or too many column values provided <br></p>
 </blockquote>
 <blockquote>
-<p>read_csv(“a,b"1”) <br> 2 col names provided, but only one value provided. <br> closing " missing <br></p>
+<p>read_csv(“a,b\n"1”) <br> 2 col names provided, but only one value provided. <br> closing " missing <br></p>
 </blockquote>
 <blockquote>
-<p>read_csv(“a,b1,2,b”) Nothing syntactically a problem, but the rows are filled<br> with the column headings? <br></p>
+<p>read_csv(“a,b\n1,2\na,b”) Nothing syntactically a problem, but the rows are filled<br> with the column headings? <br></p>
 </blockquote>
 <blockquote>
-<p>read_csv(“a;b1;3”) the read_csv2 which reads ; as delimiters should have been used <br></p>
+<p>read_csv(“a;b\n1;3”) the read_csv2 which reads ; as delimiters should have been used <br></p>
 </blockquote>
 <p>They all run, but most have warnings, and some are not imported as expected.</p>
-<pre class="r"><code>read_csv(&quot;a,b\n1,2,3\n4,5,6&quot;) # only 2 cols specified but </code></pre>
+<pre class="r"><code>read_csv(&quot;a,b\n1,2,3\n4,5,6&quot;) </code></pre>
 <pre><code>Warning: 2 parsing failures.
 row col  expected    actual         file
   1  -- 2 columns 3 columns literal data
@@ -833,12 +866,16 @@ attr(,&quot;problems&quot;)
 1     3    NA an integer             abc   
 2     4    NA no trailing characters .45   
 </code></pre>
-<p>Sometimes depending on where in the world you are you will have different conventions when it comes to numbers.</p>
+<p>Sometimes depending on where in the world you are, you will have different conventions when it comes to numbers.</p>
 <p>For example you may separate the integer part from the decimal part by using a <code>.</code> or a <code>,</code>. To tell the parsing function what kind of data you’re expecting to be in a vector use <span style="color: #008080;background-color:#9FDDBA"><code>locale = locale(...)</code></span> in your parsing function.</p>
-<pre class="r"><code>parse_double(&quot;1.23&quot;)</code></pre>
-<pre><code>[1] 1.23</code></pre>
-<pre class="r"><code>parse_double(&quot;1,23&quot;, locale = locale(decimal_mark = &quot;,&quot;))</code></pre>
-<pre><code>[1] 1.23</code></pre>
+<pre><code class='language-r'><code>parse_double("1.23")</code></code></pre>
+<pre><code>
+[1] 1.23
+</code></pre>
+<pre><code class='language-r'><code>parse_double("1,23", <span style='background-color:#9FDDBA;color:#008080'>locale = locale</span>(decimal_mark = ","))</code></code></pre>
+<pre><code>
+[1] 1.23
+</code></pre>
 <pre class="r"><code>parse_number(&quot;$100&quot;)</code></pre>
 <pre><code>[1] 100</code></pre>
 <pre class="r"><code>parse_number(&quot;20%&quot;)</code></pre>
@@ -849,22 +886,30 @@ attr(,&quot;problems&quot;)
 parse_number(&quot;$123,456,789&quot;)</code></pre>
 <pre><code>[1] 123456789</code></pre>
 <pre class="r"><code># Used in many parts of Europe
-parse_number(&quot;123.456.789&quot;, locale = locale(grouping_mark = &quot;.&quot;))</code></pre>
+parse_number(&quot;123.456.789&quot;, 
+             locale = locale(grouping_mark = &quot;.&quot;))</code></pre>
 <pre><code>[1] 123456789</code></pre>
 <pre class="r"><code># Used in Switzerland
-parse_number(&quot;123&#39;456&#39;789&quot;, locale = locale(grouping_mark = &quot;&#39;&quot;))</code></pre>
+parse_number(&quot;123&#39;456&#39;789&quot;, 
+             locale = locale(grouping_mark = &quot;&#39;&quot;))</code></pre>
 <pre><code>[1] 123456789</code></pre>
 <pre class="r"><code>charToRaw(&quot;Hadley&quot;)</code></pre>
 <pre><code>[1] 48 61 64 6c 65 79</code></pre>
+<pre class="r"><code>charToRaw(&quot;Vebash&quot;)</code></pre>
+<pre><code>[1] 56 65 62 61 73 68</code></pre>
 <pre class="r"><code>(x1 &lt;- &quot;El Ni\xf1o was particularly bad this year&quot;)</code></pre>
 <pre><code>[1] &quot;El Niño was particularly bad this year&quot;</code></pre>
 <pre class="r"><code>(x2 &lt;- &quot;\x82\xb1\x82\xf1\x82\xc9\x82\xbf\x82\xcd&quot;)</code></pre>
 <pre><code>[1] &quot;‚±‚ñ‚É‚¿‚Í&quot;</code></pre>
 <p>To fix the problem you need to specify the encoding in <code>parse_character()</code>:</p>
-<pre class="r"><code>parse_character(x1, locale = locale(encoding = &quot;Latin1&quot;))</code></pre>
-<pre><code>[1] &quot;El Niño was particularly bad this year&quot;</code></pre>
-<pre class="r"><code>parse_character(x2, locale = locale(encoding = &quot;Shift-JIS&quot;))</code></pre>
-<pre><code>[1] &quot;&lt;U+3053&gt;&lt;U+3093&gt;&lt;U+306B&gt;&lt;U+3061&gt;&lt;U+306F&gt;&quot;</code></pre>
+<pre><code class='language-r'><code>parse_character(x1, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;locale = locale(<span style='background-color:#9FDDBA;color:#008080'>encoding =</span> "Latin1"))</code></code></pre>
+<pre><code>
+[1] &quot;El Niño was particularly bad this year&quot;
+</code></pre>
+<pre><code class='language-r'><code>parse_character(x2, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;locale = locale(<span style='background-color:#9FDDBA;color:#008080'>encoding =</span> "Shift-JIS"))</code></code></pre>
+<pre><code>
+[1] &quot;&lt;U+3053&gt;&lt;U+3093&gt;&lt;U+306B&gt;&lt;U+3061&gt;&lt;U+306F&gt;&quot;
+</code></pre>
 <p>You can try the guess_encoding() to help you out:</p>
 <pre class="r"><code>guess_encoding(charToRaw(x1))</code></pre>
 <pre><code># A tibble: 2 x 2
@@ -878,7 +923,8 @@ parse_number(&quot;123&#39;456&#39;789&quot;, locale = locale(grouping_mark = &q
   &lt;chr&gt;         &lt;dbl&gt;
 1 KOI8-R         0.42</code></pre>
 <pre class="r"><code>fruit &lt;- c(&quot;apple&quot;, &quot;banana&quot;)
-parse_factor(c(&quot;apple&quot;, &quot;banana&quot;, &quot;bananana&quot;), levels = fruit)</code></pre>
+parse_factor(c(&quot;apple&quot;, &quot;banana&quot;, &quot;bananana&quot;), 
+             levels = fruit)</code></pre>
 <pre><code>[1] apple  banana &lt;NA&gt;  
 attr(,&quot;problems&quot;)
 # A tibble: 1 x 4
@@ -904,7 +950,8 @@ parse_time(&quot;01:10 am&quot;)</code></pre>
 <pre><code>[1] &quot;2015-02-01&quot;</code></pre>
 <pre class="r"><code>parse_date(&quot;01/02/15&quot;, &quot;%y/%m/%d&quot;)</code></pre>
 <pre><code>[1] &quot;2001-02-15&quot;</code></pre>
-<pre class="r"><code>parse_date(&quot;1 janvier 2015&quot;, &quot;%d %B %Y&quot;, locale = locale(&quot;fr&quot;))</code></pre>
+<pre class="r"><code>parse_date(&quot;1 janvier 2015&quot;, &quot;%d %B %Y&quot;, 
+           locale = locale(&quot;fr&quot;))</code></pre>
 <pre><code>[1] &quot;2015-01-01&quot;</code></pre>
 <div id="exercises-1" class="section level3">
 <h3>Exercises</h3>
@@ -917,66 +964,84 @@ parse_time(&quot;01:10 am&quot;)</code></pre>
 <li>tz: The default tz is UTC, but you may want to change it to your <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">timezone</a>.</li>
 </ul></li>
 <li><p>What happens if you try and set <code>decimal_mark</code> and <code>grouping_mark</code> to the same character? What happens to the default value of <code>grouping_mark</code> when you set <code>decimal_mark</code> to “,”? What happens to the default value of <code>decimal_mark</code> when you set the <code>grouping_mark</code> to “.”?</p>
-<pre class="r"><code># decimal_mark` and `grouping_mark` to the same character
-parse_double(&quot;123,456,78&quot;, locale = locale(decimal_mark = &quot;,&quot;,
-                                        grouping_mark = &quot;,&quot;))
-# Error: `decimal_mark` and `grouping_mark` must be different
-
-parse_number(&quot;123,456,78&quot;, locale = locale(decimal_mark = &quot;,&quot;,
-                                        grouping_mark = &quot;,&quot;))
-# Error: `decimal_mark` and `grouping_mark` must be different</code></pre>
-<pre class="r"><code># What happens to the default value of `grouping_mark` 
-# when you set `decimal_mark` to &quot;,&quot;?
-parse_number(&quot;123 456,78&quot;, locale = locale(decimal_mark = &quot;,&quot;))</code></pre>
+<ul>
+<li><p>What happens if you try and set <code>decimal_mark</code> and <code>grouping_mark</code> to the same character?</p>
+<pre class="r"><code># decimal_mark` and `grouping_mark` 
+# to the same character
+parse_double(&quot;123,456,78&quot;, 
+             locale = locale(decimal_mark = &quot;,&quot;,
+                             grouping_mark = &quot;,&quot;))
+parse_number(&quot;123,456,78&quot;, 
+             locale = locale(decimal_mark = &quot;,&quot;,
+                             grouping_mark = &quot;,&quot;))</code></pre>
+<p>We get <em># Error: <code>decimal_mark</code> and <code>grouping_mark</code> must be different when using both <code>parse_number</code> and <code>parse_double</code></em>.</p></li>
+<li><p>What happens to the default value of <code>grouping_mark</code> when you set <code>decimal_mark</code> to “,”?</p>
+<pre class="r"><code>parse_number(&quot;123 456,78&quot;, locale = 
+               locale(decimal_mark = &quot;,&quot;))</code></pre>
 <pre><code>[1] 123</code></pre>
-<pre class="r"><code># no grouping preserved, whitespace is not considered as group
-# so we get an incorrect parsing
-# I would gather that since we overrode decimal_mark to be
-# equal to the grouping_mark default, this removes the
-# default, and hence has to be supplied for correct parsing
-# if you also have a specific grouping character present
-
-parse_number(&quot;123 456,78&quot;, locale = locale(decimal_mark = &quot;,&quot;,
-                                           grouping_mark = &quot; &quot;))</code></pre>
+<pre class="r"><code># when both are specified, 
+# number parsed correctly
+parse_number(&quot;123 456,78&quot;, locale = 
+               locale(decimal_mark = &quot;,&quot;,
+                      grouping_mark = &quot; &quot;))</code></pre>
 <pre><code>[1] 123456.8</code></pre>
-<pre class="r"><code># both specified, number parsed correctly
-
-parse_number(&quot;123.456,78&quot;, locale = locale(decimal_mark = &quot;,&quot;))</code></pre>
+<pre class="r"><code># even though no grouping_mark specified, 
+# parse_number handles the grouping mark 
+# of . well.
+# Below the reason is revealed to be the default
+# switching in the readr code
+parse_number(&quot;123.456,78&quot;, 
+             locale = locale(decimal_mark = &quot;,&quot;))</code></pre>
 <pre><code>[1] 123456.8</code></pre>
-<pre class="r"><code># even though no grouping_mark specified, parse_number 
-# handles the . grouping mark well
-
-# preserve the decimals
+<pre class="r"><code># preserve the decimals
 print(parse_number(&quot;123.456,78&quot;, 
-                   locale = locale(decimal_mark = &quot;,&quot;)),digits=10)</code></pre>
+        locale = locale(decimal_mark = &quot;,&quot;)),
+        digits=10)</code></pre>
 <pre><code>[1] 123456.78</code></pre>
-<p>Turns out the code sets the decimal_mark if it was not set, or vice versa. From readr code file <a href="https://github.com/tidyverse/readr/blob/master/R/locale.R">locale.R</a></p>
-<pre class="r"><code>  if (missing(grouping_mark) &amp;&amp; !missing(decimal_mark)) {
-    grouping_mark &lt;- if (decimal_mark == &quot;.&quot;) &quot;,&quot; else &quot;.&quot;
-  } else if (missing(decimal_mark) &amp;&amp; !missing(grouping_mark)) {
-    decimal_mark &lt;- if (grouping_mark == &quot;.&quot;) &quot;,&quot; else &quot;.&quot;
+<pre class="r"><code>print(parse_number(&quot;123456789,11&quot;, 
+        locale = locale(decimal_mark = &quot;,&quot;)),
+        digits=15)</code></pre>
+<pre><code>[1] 123456789.11</code></pre>
+<p>In <code>parse_number</code> no grouping preserved, whitespace is not considered as group so we get an incorrect parsing. Initially I thought that since we overrode decimal_mark to be equal to the grouping_mark default, this removes the default, and hence has to be supplied for correct parsing if you also have a specific grouping character present.</p>
+<p>Turns out the code sets the decimal_mark if it was not set, or vice versa, but it can’t be exhaustive and hence chooses to toggle between the <code>.</code> and <code>,</code>.</p>
+<p>Defaults are that <code>decimal_mark = .</code> and <code>grouping_mark = ,</code>. If you only change the <code>decimal_mark</code><br />
+to be <code>,</code>, and don’t specify any grouping mark it is defaulted to be <code>.</code></p>
+<p>But in this case we’ve got a <code>grouping_mark</code> that is a space, and have not specified that, hence the parsing does not occur well.</p>
+<p>My take away here is even knowing that the code defaults the <code>grouping_mark</code> to be <code>.</code> if you set the <code>decimal_mark</code> to be <code>,</code> we should always be vigilant and override both to ensure parsing happens as expected.</p>
+<p>From readr code file <a href="https://github.com/tidyverse/readr/blob/master/R/locale.R">locale.R</a>.</p>
+<pre class="r"><code>  if (missing(grouping_mark) &amp;&amp; 
+      !missing(decimal_mark)) {
+    grouping_mark &lt;- if (decimal_mark == &quot;.&quot;) &quot;,&quot; 
+                     else &quot;.&quot;
+  } else if (missing(decimal_mark) &amp;&amp; 
+             !missing(grouping_mark)) {
+    decimal_mark &lt;- if (grouping_mark == &quot;.&quot;) &quot;,&quot; 
+                    else &quot;.&quot;
   }</code></pre>
-<pre class="r"><code># What happens to the default value of `grouping_mark` 
-# when you set `decimal_mark` to &quot;,&quot;?
-parse_double(&quot;123456,78&quot;, locale = locale(decimal_mark = &quot;,&quot;))</code></pre>
+<p>For parse_double() we experience different results.</p>
+<pre class="r"><code>parse_double(&quot;123456,78&quot;, 
+             locale = locale(decimal_mark = &quot;,&quot;))</code></pre>
 <pre><code>[1] 123456.8</code></pre>
-<pre class="r"><code>parse_double(&quot;123.456,78&quot;, locale = locale(decimal_mark = &quot;,&quot;))</code></pre>
+<pre class="r"><code>parse_double(&quot;123.456,78&quot;, 
+             locale = locale(decimal_mark = &quot;,&quot;))</code></pre>
 <pre><code>[1] NA
 attr(,&quot;problems&quot;)
 # A tibble: 1 x 4
     row   col expected               actual 
   &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;  
 1     1    NA no trailing characters .456,78</code></pre>
-<pre class="r"><code>parse_double(&quot;123.456,78&quot;, locale = locale(decimal_mark = &quot;,&quot;,
-                                           grouping_mark = &quot;.&quot;))</code></pre>
+<pre class="r"><code>parse_double(&quot;123.456,78&quot;, 
+             locale = locale(decimal_mark = &quot;,&quot;,
+                             grouping_mark = &quot;.&quot;))</code></pre>
 <pre><code>[1] NA
 attr(,&quot;problems&quot;)
 # A tibble: 1 x 4
     row   col expected               actual 
   &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;  
 1     1    NA no trailing characters .456,78</code></pre>
-<pre class="r"><code>parse_double(&quot;123 456,78&quot;, locale = locale(decimal_mark = &quot;,&quot;,
-                                           grouping_mark = &quot; &quot;))</code></pre>
+<pre class="r"><code>parse_double(&quot;123 456,78&quot;, 
+             locale = locale(decimal_mark = &quot;,&quot;,
+                             grouping_mark = &quot; &quot;))</code></pre>
 <pre><code>[1] NA
 attr(,&quot;problems&quot;)
 # A tibble: 1 x 4
@@ -984,26 +1049,80 @@ attr(,&quot;problems&quot;)
   &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;    
 1     1    NA no trailing characters &quot; 456,78&quot;</code></pre>
 <p>Hhmm okay, so it seems like <code>parse_double()</code> is a bit more strict, and does not seem to like it even if we override the <code>locale()</code>. This <a href="https://stackoverflow.com/questions/47487424/parsing-double-grouped-number-with-readrparse-double">Stack Overflow post</a> confirms what we see here, so too does <a href="https://github.com/tidyverse/readr/issues/827">this post</a> and <a href="https://github.com/tidyverse/readr/issues/556">this one</a>. The only perplexing thing is that when I do set the <strong>grouping_mark</strong> in locale() why is this not considered? Because <code>parse_double()</code> also has a default locale which may be overriden by locale()? 😕</p>
-<pre class="r"><code># What happens to the default value of `decimal_mark` 
-# when you set the `grouping_mark` to &quot;.&quot;
-parse_number(&quot;5.123.456,78&quot;, locale = locale(grouping_mark = &quot;.&quot;))</code></pre>
+<p>What happens to the default value of <code>decimal_mark</code> when you set the <code>grouping_mark</code> to “.”?</p>
+<pre class="r"><code># As above shows the decimal character 
+# set to , in code
+parse_number(&quot;5.123.456,78&quot;, 
+             locale = locale(grouping_mark = &quot;.&quot;))</code></pre>
 <pre><code>[1] 5123457</code></pre>
-<pre class="r"><code># As above shows the decimal character set to , in code
-
-parse_number(&quot;5.123.456,78&quot;, locale = locale(decimal_mark = &quot;,&quot;,
-                                           grouping_mark = &quot;.&quot;))</code></pre>
+<pre class="r"><code>parse_number(&quot;5.123.456,78&quot;, 
+             locale = locale(decimal_mark = &quot;,&quot;,
+                             grouping_mark = &quot;.&quot;))</code></pre>
 <pre><code>[1] 5123457</code></pre>
 <pre class="r"><code>problems(parse_double(&quot;5.123.456,78&quot;, 
-                      locale = locale(decimal_mark = &quot;,&quot;,
-                                      grouping_mark = &quot;.&quot;)))</code></pre>
+                      locale = locale(
+                        decimal_mark = &quot;,&quot;,
+                        grouping_mark = &quot;.&quot;)))</code></pre>
 <pre><code># A tibble: 1 x 4
     row   col expected               actual     
   &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;      
 1     1    NA no trailing characters .123.456,78</code></pre></li>
-<li><p>I didn’t discuss the <code>date_format</code> and <code>time_format</code> options to <code>locale()</code>. What do they do? Construct an example that shows when they might be useful.</p></li>
-<li><p>If you live outside the US, create a new locale object that encapsulates the settings for the types of file you read most commonly.</p></li>
-<li><p>What’s the difference between <code>read_csv()</code> and <code>read_csv2()</code>?</p></li>
-<li><p>What are the most common encodings used in Europe? What are the most common encodings used in Asia? Do some googling to find out.</p></li>
+</ul></li>
+<li><p>I didn’t discuss the <code>date_format</code> and <code>time_format</code> options to <code>locale()</code>. What do they do? Construct an example that shows when they might be useful.</p>
+<p>Dates and times may be specified in <a href="https://en.wikipedia.org/wiki/Calendar_date#:~:text=RFC%203339%20Date%20and%20Time,and%20year%20is%20four%20digits.">numerous ways</a>. Dates for example can be <code>YYYY-MM-DD</code> or <code>MM-DD-YY</code>.</p>
+<p>Times are the same. It may be <code>hh:mm:ss</code> or <code>hh:mm AM/PM</code>.</p>
+<p>It may be useful to use this if you know your data contains dates / times in a different for from the default.</p>
+<pre class="r"><code>locale(&quot;zu&quot;)</code></pre>
+<pre><code>&lt;locale&gt;
+Numbers:  123,456.78
+Formats:  %AD / %AT
+Timezone: UTC
+Encoding: UTF-8
+&lt;date_names&gt;
+Days:   Sonto (Son), Msombuluko (Mso), Lwesibili (Bil), Lwesithathu (Tha),
+        Lwesine (Sin), Lwesihlanu (Hla), Mgqibelo (Mgq)
+Months: Januwari (Jan), Februwari (Feb), Mashi (Mas), Apreli (Apr), Meyi (Mey),
+        Juni (Jun), Julayi (Jul), Agasti (Aga), Septhemba (Sep),
+        Okthoba (Okt), Novemba (Nov), Disemba (Dis)
+AM/PM:  Ekuseni/Ntambama</code></pre>
+<pre class="r"><code>locale(&quot;af&quot;)</code></pre>
+<pre><code>&lt;locale&gt;
+Numbers:  123,456.78
+Formats:  %AD / %AT
+Timezone: UTC
+Encoding: UTF-8
+&lt;date_names&gt;
+Days:   Sondag (So), Maandag (Ma), Dinsdag (Di), Woensdag (Wo), Donderdag (Do),
+        Vrydag (Vr), Saterdag (Sa)
+Months: Januarie (Jan.), Februarie (Feb.), Maart (Mrt.), April (Apr), Mei
+        (Mei), Junie (Jun), Julie (Jul), Augustus (Aug), September
+        (Sep), Oktober (Okt), November (Nov), Desember (Des)
+AM/PM:  vm./nm.</code></pre>
+<pre class="r"><code>locale_af &lt;- locale(&quot;af&quot;, date_format = &quot;%m %d&quot;,
+       time_format = &quot;%H:%M&quot;)
+
+read_csv(&quot;a, date, time
+         x, Mrt. 23, 20:30
+         y, Okt. 31, 15:45&quot;, locale = locale_af)</code></pre>
+<pre><code># A tibble: 2 x 3
+  a     date    time  
+  &lt;chr&gt; &lt;chr&gt;   &lt;time&gt;
+1 x     Mrt. 23 20:30 
+2 y     Okt. 31 15:45 </code></pre></li>
+<li><p>If you live outside the US, create a new locale object that encapsulates the settings for the types of file you read most commonly.</p>
+<pre class="r"><code>locale_za = locale(&quot;en&quot;, date_format = &quot;%Y-%m-%d&quot;,
+                   time_format = &quot;%H:%M:%S&quot;)</code></pre></li>
+<li><p>What’s the difference between <code>read_csv()</code> and <code>read_csv2()</code>?</p>
+<ul>
+<li>read_csv2() has <strong>;</strong> as a delimiter.</li>
+<li>read_csv() has <strong>,</strong> as a delimiter.</li>
+</ul></li>
+<li><p>What are the most common encodings used in Europe? What are the most common encodings used in Asia? Do some googling to find out.</p>
+<p>UTF-8 is the standard it seems. Other than this:</p>
+<ul>
+<li><p><a href="http://www.steves-internet-guide.com/guide-data-character-encoding/#:~:text=ISO%2D8859%20is%20An%208,Italian%2C%20Spanish%2C%20French%20etc.">Europe</a> seems to be <code>Latin-1</code>.</p></li>
+<li><p><a href="https://stackoverflow.com/questions/8509339/what-is-the-most-common-encoding-of-each-language">Asia</a> seems to be <code>Shift-JIS</code></p></li>
+</ul></li>
 <li><p>Generate the correct format string to parse each of the following dates and times:</p>
 <pre class="r"><code>d1 &lt;- &quot;January 1, 2010&quot;
 d2 &lt;- &quot;2015-Mar-07&quot;
@@ -1011,8 +1130,232 @@ d3 &lt;- &quot;06-Jun-2017&quot;
 d4 &lt;- c(&quot;August 19 (2015)&quot;, &quot;July 1 (2015)&quot;)
 d5 &lt;- &quot;12/30/14&quot; # Dec 30, 2014
 t1 &lt;- &quot;1705&quot;
-t2 &lt;- &quot;11:15:10.12 PM&quot;</code></pre></li>
+t2 &lt;- &quot;11:15:10.12 PM&quot;</code></pre>
+<pre class="r"><code>d1 &lt;- &quot;January 1, 2010&quot;
+parse_date(d1, &quot;%B %d, %Y&quot;)</code></pre>
+<pre><code>[1] &quot;2010-01-01&quot;</code></pre>
+<pre class="r"><code>d2 &lt;- &quot;2015-Mar-07&quot;
+parse_date(d2, &quot;%Y-%b-%d&quot;)</code></pre>
+<pre><code>[1] &quot;2015-03-07&quot;</code></pre>
+<pre class="r"><code>d3 &lt;- &quot;06-Jun-2017&quot;
+parse_date(d3, &quot;%d-%b-%Y&quot;)</code></pre>
+<pre><code>[1] &quot;2017-06-06&quot;</code></pre>
+<pre class="r"><code>d4 &lt;- c(&quot;August 19 (2015)&quot;, &quot;July 1 (2015)&quot;)
+parse_date(d4, &quot;%B %d (%Y)&quot;)</code></pre>
+<pre><code>[1] &quot;2015-08-19&quot; &quot;2015-07-01&quot;</code></pre>
+<pre class="r"><code>d5 &lt;- &quot;12/30/14&quot; # Dec 30, 2014
+parse_date(d5, &quot;%m/%d/%y&quot;)</code></pre>
+<pre><code>[1] &quot;2014-12-30&quot;</code></pre>
+<pre class="r"><code>t1 &lt;- &quot;1705&quot;
+parse_time(t1, &quot;%H%M&quot;)</code></pre>
+<pre><code>17:05:00</code></pre>
+<pre class="r"><code>t2 &lt;- &quot;11:15:10.12 PM&quot;
+parse_time(t2, &quot;%I:%M:%OS %p&quot;)</code></pre>
+<pre><code>23:15:10.12</code></pre></li>
 </ol>
+</div>
+</div>
+<div id="readr-strategy" class="section level2">
+<h2>readr Strategy</h2>
+<p>The <code>readr</code> 📦 uses the first 1000 entries in a column to guess the type of data contained in that column. This may work okay for most cases, but if you have sorted a file in a certain way (e.g. all missing values up top) then you may end up with a column inference that doesn’t quite work.</p>
+<pre class="r"><code>guess_parser(&quot;2010-10-01&quot;)</code></pre>
+<pre><code>[1] &quot;date&quot;</code></pre>
+<pre class="r"><code>guess_parser(&quot;15:01&quot;)</code></pre>
+<pre><code>[1] &quot;time&quot;</code></pre>
+<pre class="r"><code>guess_parser(c(&quot;TRUE&quot;, &quot;FALSE&quot;))</code></pre>
+<pre><code>[1] &quot;logical&quot;</code></pre>
+<pre class="r"><code>guess_parser(c(&quot;1&quot;, &quot;5&quot;, &quot;9&quot;))</code></pre>
+<pre><code>[1] &quot;double&quot;</code></pre>
+<pre class="r"><code>guess_parser(c(&quot;12,352,561&quot;))</code></pre>
+<pre><code>[1] &quot;number&quot;</code></pre>
+<pre class="r"><code>str(parse_guess(&quot;2010-10-10&quot;))</code></pre>
+<pre><code> Date[1:1], format: &quot;2010-10-10&quot;</code></pre>
+<pre class="r"><code>challenge &lt;- read_csv(readr_example(&quot;challenge.csv&quot;))</code></pre>
+<pre class="r"><code>problems(challenge)</code></pre>
+<pre><code># A tibble: 1,000 x 5
+     row col   expected       actual   file                                     
+   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;                                    
+ 1  1001 y     1/0/T/F/TRUE/~ 2015-01~ &#39;C:/Users/vebashini/Documents/R/win-libr~
+ 2  1002 y     1/0/T/F/TRUE/~ 2018-05~ &#39;C:/Users/vebashini/Documents/R/win-libr~
+ 3  1003 y     1/0/T/F/TRUE/~ 2015-09~ &#39;C:/Users/vebashini/Documents/R/win-libr~
+ 4  1004 y     1/0/T/F/TRUE/~ 2012-11~ &#39;C:/Users/vebashini/Documents/R/win-libr~
+ 5  1005 y     1/0/T/F/TRUE/~ 2020-01~ &#39;C:/Users/vebashini/Documents/R/win-libr~
+ 6  1006 y     1/0/T/F/TRUE/~ 2016-04~ &#39;C:/Users/vebashini/Documents/R/win-libr~
+ 7  1007 y     1/0/T/F/TRUE/~ 2011-05~ &#39;C:/Users/vebashini/Documents/R/win-libr~
+ 8  1008 y     1/0/T/F/TRUE/~ 2020-07~ &#39;C:/Users/vebashini/Documents/R/win-libr~
+ 9  1009 y     1/0/T/F/TRUE/~ 2011-04~ &#39;C:/Users/vebashini/Documents/R/win-libr~
+10  1010 y     1/0/T/F/TRUE/~ 2010-05~ &#39;C:/Users/vebashini/Documents/R/win-libr~
+# ... with 990 more rows</code></pre>
+<pre class="r"><code>tail(challenge)</code></pre>
+<pre><code># A tibble: 6 x 2
+      x y    
+  &lt;dbl&gt; &lt;lgl&gt;
+1 0.805 NA   
+2 0.164 NA   
+3 0.472 NA   
+4 0.718 NA   
+5 0.270 NA   
+6 0.608 NA   </code></pre>
+<p>When you encounter problems:</p>
+<ol style="list-style-type: decimal">
+<li>Work column by column to fix.</li>
+<li>Copy and paste the specification that <code>read_xxx()</code> inferred and use it to adjust the columns you experienced issues on. Just a note here: in the old version of readr the <code>x</code> column had integers up front, and hence was inferred as integer. Now it is inferred as double so the file only has an issue with the second column that has many NA values up top, and hence is considered incorrectly to be a logical when it is in fact a date.</li>
+</ol>
+<p>I am a little perplexed by this though because the first 1000 rows are only integers. I would guess that the heuristic has been amended and maybe integer has been removed?</p>
+<pre class="r"><code>challenge &lt;- read_csv(
+  readr_example(&quot;challenge.csv&quot;), 
+  col_types = cols(
+    x = col_double(),
+    # change here from col_logical() to
+    # col_date()
+    y = col_date() 
+  )
+)
+tail(challenge)</code></pre>
+<pre><code># A tibble: 6 x 2
+      x y         
+  &lt;dbl&gt; &lt;date&gt;    
+1 0.805 2019-11-21
+2 0.164 2018-03-29
+3 0.472 2014-08-04
+4 0.718 2015-08-16
+5 0.270 2020-02-04
+6 0.608 2019-01-06</code></pre>
+<pre class="r"><code>challenge %&gt;% 
+  head(1010) %&gt;% 
+  tail(11)</code></pre>
+<pre><code># A tibble: 11 x 2
+          x y         
+      &lt;dbl&gt; &lt;date&gt;    
+ 1 4548     NA        
+ 2    0.238 2015-01-16
+ 3    0.412 2018-05-18
+ 4    0.746 2015-09-05
+ 5    0.723 2012-11-28
+ 6    0.615 2020-01-13
+ 7    0.474 2016-04-17
+ 8    0.578 2011-05-14
+ 9    0.242 2020-07-18
+10    0.114 2011-04-30
+11    0.298 2010-05-11</code></pre>
+<pre class="r"><code>challenge %&gt;% 
+  head(1000) %&gt;% 
+  filter(as.integer(x) != x)</code></pre>
+<pre><code># A tibble: 0 x 2
+# ... with 2 variables: x &lt;dbl&gt;, y &lt;date&gt;</code></pre>
+<pre class="r"><code>challenge %&gt;% 
+  head(1000) %&gt;% 
+  filter(x%%1!=0)</code></pre>
+<pre><code># A tibble: 0 x 2
+# ... with 2 variables: x &lt;dbl&gt;, y &lt;date&gt;</code></pre>
+<pre class="r"><code>challenge %&gt;% 
+  tail(1000) %&gt;% 
+  filter(as.integer(x) != x)</code></pre>
+<pre><code># A tibble: 1,000 x 2
+       x y         
+   &lt;dbl&gt; &lt;date&gt;    
+ 1 0.238 2015-01-16
+ 2 0.412 2018-05-18
+ 3 0.746 2015-09-05
+ 4 0.723 2012-11-28
+ 5 0.615 2020-01-13
+ 6 0.474 2016-04-17
+ 7 0.578 2011-05-14
+ 8 0.242 2020-07-18
+ 9 0.114 2011-04-30
+10 0.298 2010-05-11
+# ... with 990 more rows</code></pre>
+<pre class="r"><code>(test_file &lt;- read_csv(&quot;a, b, c
+# Trying to confirm if integers get read in a double?
+                      1, 2.3, &#39;x&#39;
+                      2, 5.4, &#39;y&#39;
+                      3, 6.7, &#39;z&#39;&quot;))</code></pre>
+<pre><code># A tibble: 4 x 3
+  a                                                         b c    
+  &lt;chr&gt;                                                 &lt;dbl&gt; &lt;chr&gt;
+1 # Trying to confirm if integers get read in a double?  NA   &lt;NA&gt; 
+2 1                                                       2.3 &#39;x&#39;  
+3 2                                                       5.4 &#39;y&#39;  
+4 3                                                       6.7 &#39;z&#39;  </code></pre>
+<div id="other-strategies-for-read-issues" class="section level3">
+<h3>Other strategies for read issues</h3>
+<p><strong>Guess a few more rows</strong></p>
+<pre class="r"><code>challenge2 &lt;- read_csv(readr_example(&quot;challenge.csv&quot;), 
+                       guess_max = 1001)
+challenge2</code></pre>
+<pre><code># A tibble: 2,000 x 2
+       x y         
+   &lt;dbl&gt; &lt;date&gt;    
+ 1   404 NA        
+ 2  4172 NA        
+ 3  3004 NA        
+ 4   787 NA        
+ 5    37 NA        
+ 6  2332 NA        
+ 7  2489 NA        
+ 8  1449 NA        
+ 9  3665 NA        
+10  3863 NA        
+# ... with 1,990 more rows</code></pre>
+<pre class="r"><code>challenge2 %&gt;% 
+  head(1010) %&gt;% 
+  tail(11)</code></pre>
+<pre><code># A tibble: 11 x 2
+          x y         
+      &lt;dbl&gt; &lt;date&gt;    
+ 1 4548     NA        
+ 2    0.238 2015-01-16
+ 3    0.412 2018-05-18
+ 4    0.746 2015-09-05
+ 5    0.723 2012-11-28
+ 6    0.615 2020-01-13
+ 7    0.474 2016-04-17
+ 8    0.578 2011-05-14
+ 9    0.242 2020-07-18
+10    0.114 2011-04-30
+11    0.298 2010-05-11</code></pre>
+<p><strong>Read in all as character columns</strong></p>
+<p>Then use type_covert() to help identify column types.</p>
+<pre class="r"><code>challenge2 &lt;- read_csv(readr_example(&quot;challenge.csv&quot;), 
+  col_types = cols(.default = col_character())
+)</code></pre>
+<pre class="r"><code># Reminder: the extra brackets around do the assignment 
+# and print out the results
+(df &lt;- tribble(
+  ~x,  ~y,
+  &quot;1&quot;, &quot;1.21&quot;,
+  &quot;2&quot;, &quot;2.32&quot;,
+  &quot;3&quot;, &quot;4.56&quot;
+)) </code></pre>
+<pre><code># A tibble: 3 x 2
+  x     y    
+  &lt;chr&gt; &lt;chr&gt;
+1 1     1.21 
+2 2     2.32 
+3 3     4.56 </code></pre>
+<pre class="r"><code># Note the column types
+type_convert(df)</code></pre>
+<pre><code># A tibble: 3 x 2
+      x     y
+  &lt;dbl&gt; &lt;dbl&gt;
+1     1  1.21
+2     2  2.32
+3     3  4.56</code></pre>
+<p>The authors recommend that you always supply <code>col_types = cols()</code> ourselves for consistency and detecting any data changes. You can use <code>readr</code>’s guesses and build from that.</p>
+</div>
+</div>
+<div id="writing-files" class="section level2">
+<h2>Writing files</h2>
+<ul>
+<li>write_csv(dataset, “file path”)</li>
+<li>write_tsv(dataset, “file_path”)</li>
+<li>write_excel_csv(dataset, “file_path”). I did not know about this one! 🙏</li>
+</ul>
+<p>The only issue with the above is you need to recreate the specification on every subsequent read.</p>
+<ul>
+<li>write_rds() [to read use read_rds()] stores data in R’s custom binary format called RDS.</li>
+<li>write_feather() [and read_feather()] from the <code>feather</code> 📦 allows files to be shared across languages.</li>
+</ul>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1036,37 +1379,26 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] hms_0.5.3                  magrittr_1.5              
- [3] tidyquant_1.0.0            quantmod_0.4.17           
- [5] TTR_0.23-6                 PerformanceAnalytics_2.0.4
- [7] xts_0.12-0                 zoo_1.8-7                 
- [9] lubridate_1.7.8            emo_0.0.0.9000            
-[11] skimr_2.1.1                gt_0.2.2                  
-[13] palmerpenguins_0.1.0       nycflights13_1.0.1        
-[15] flair_0.0.2                forcats_0.5.0             
-[17] stringr_1.4.0              dplyr_1.0.0               
-[19] purrr_0.3.4                readr_1.3.1               
-[21] tidyr_1.1.0                tibble_3.0.3              
-[23] ggplot2_3.3.0              tidyverse_1.3.0           
-[25] workflowr_1.6.2           
+ [1] hms_0.5.3       magrittr_1.5    lubridate_1.7.8 emo_0.0.0.9000 
+ [5] flair_0.0.2     forcats_0.5.0   stringr_1.4.0   dplyr_1.0.0    
+ [9] purrr_0.3.4     readr_1.3.1     tidyr_1.1.0     tibble_3.0.3   
+[13] ggplot2_3.3.0   tidyverse_1.3.0 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.2       jsonlite_1.7.0   modelr_0.1.6     assertthat_0.2.1
- [5] cellranger_1.1.0 yaml_2.2.1       pillar_1.4.6     backports_1.1.6 
- [9] lattice_0.20-38  glue_1.4.1       quadprog_1.5-8   digest_0.6.25   
-[13] promises_1.1.0   rvest_0.3.5      colorspace_1.4-1 htmltools_0.5.0 
-[17] httpuv_1.5.2     pkgconfig_2.0.3  broom_0.5.6      haven_2.2.0     
-[21] scales_1.1.0     whisker_0.4      later_1.0.0      git2r_0.26.1    
-[25] generics_0.0.2   ellipsis_0.3.1   withr_2.2.0      repr_1.1.0      
-[29] cli_2.0.2        crayon_1.3.4     readxl_1.3.1     evaluate_0.14   
-[33] fs_1.4.1         fansi_0.4.1      nlme_3.1-144     xml2_1.3.2      
-[37] tools_3.6.3      lifecycle_0.2.0  munsell_0.5.0    reprex_0.3.0    
-[41] compiler_3.6.3   rlang_0.4.7      grid_3.6.3       rstudioapi_0.11 
-[45] base64enc_0.1-3  rmarkdown_2.4    gtable_0.3.0     DBI_1.1.0       
-[49] curl_4.3         R6_2.4.1         knitr_1.28       utf8_1.1.4      
-[53] rprojroot_1.3-2  Quandl_2.10.0    stringi_1.4.6    Rcpp_1.0.4.6    
-[57] vctrs_0.3.2      dbplyr_1.4.3     tidyselect_1.1.0 xfun_0.13       </code></pre>
-</div>
+ [1] tidyselect_1.1.0 xfun_0.13        haven_2.2.0      lattice_0.20-38 
+ [5] colorspace_1.4-1 vctrs_0.3.2      generics_0.0.2   htmltools_0.5.0 
+ [9] yaml_2.2.1       utf8_1.1.4       rlang_0.4.7      later_1.0.0     
+[13] pillar_1.4.6     withr_2.2.0      glue_1.4.1       DBI_1.1.0       
+[17] dbplyr_1.4.3     modelr_0.1.6     readxl_1.3.1     lifecycle_0.2.0 
+[21] munsell_0.5.0    gtable_0.3.0     cellranger_1.1.0 rvest_0.3.5     
+[25] evaluate_0.14    knitr_1.28       httpuv_1.5.2     fansi_0.4.1     
+[29] broom_0.5.6      Rcpp_1.0.4.6     promises_1.1.0   backports_1.1.6 
+[33] scales_1.1.0     jsonlite_1.7.0   fs_1.4.1         digest_0.6.25   
+[37] stringi_1.4.6    grid_3.6.3       rprojroot_1.3-2  cli_2.0.2       
+[41] tools_3.6.3      crayon_1.3.4     whisker_0.4      pkgconfig_2.0.3 
+[45] ellipsis_0.3.1   xml2_1.3.2       reprex_0.3.0     rstudioapi_0.11 
+[49] assertthat_0.2.1 rmarkdown_2.4    httr_1.4.2       R6_2.4.1        
+[53] nlme_3.1-144     git2r_0.26.1     compiler_3.6.3  </code></pre>
 </div>
 </div>
 
