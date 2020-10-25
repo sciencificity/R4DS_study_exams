@@ -1,0 +1,1928 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Vebash Naidoo" />
+
+
+<title>Chapter 9 - Tidy Data with tidyr</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+      </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R4DS Book - Prep for exam</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Chapter 9 - Tidy Data with tidyr</h1>
+<h4 class="author">Vebash Naidoo</h4>
+<h4 class="date">23/10/2020</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-10-25
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>r4ds_book/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200814code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200814)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200814code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200814)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree57f23a8d1f8d9585729b81cd7dc845385095ca5dtargetblank57f23a8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/57f23a8d1f8d9585729b81cd7dc845385095ca5d" target="_blank">57f23a8</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree57f23a8d1f8d9585729b81cd7dc845385095ca5dtargetblank57f23a8a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/57f23a8d1f8d9585729b81cd7dc845385095ca5d" target="_blank">57f23a8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  VideoDecodeStats/
+    Untracked:  analysis/images/
+    Untracked:  code_snipp.txt
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/ch9_tidy_data.Rmd</code>) and HTML (<code>docs/ch9_tidy_data.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/57f23a8d1f8d9585729b81cd7dc845385095ca5d/analysis/ch9_tidy_data.Rmd" target="_blank">57f23a8</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-10-25
+</td>
+<td>
+added Ch9
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>options(scipen=10000)
+library(tidyverse)
+library(flair)
+library(emo)
+library(lubridate)
+library(magrittr)
+library(tidyquant)
+theme_set(theme_tq())</code></pre>
+<div id="whats-tidy-data-anyway" class="section level2">
+<h2>What’s <strong>tidy</strong> data anyway?</h2>
+<ol style="list-style-type: decimal">
+<li>Each variable must have its own column.</li>
+<li>Each observation must have its own row.</li>
+<li>Each value must have its own cell.</li>
+</ol>
+<p>In all the examples <em>tidyr::table</em> to <em>tidyr::table4b</em>, only <code>tidyr::table1</code> is tidy.</p>
+<pre class="r"><code>(
+  # practising the read_csv function to create table1
+  # just note however that table1 is in tidyr ;)
+  # tidyr::table1 etc. 
+  # In all honesty, I only figured this out after &quot;practising&quot; :P
+  table1 &lt;- read_csv(&quot;country, year, cases, population
+                     Afghanistan, 1999, 745, 19987071
+                     Afghanistan, 2000, 2666, 20595360
+                     Brazil, 1999, 37737, 172006362
+                     Brazil, 2000, 80488, 174504898
+                     China, 1999, 212258, 1272915272
+                     China, 2000, 213766, 1280428583&quot;)
+)</code></pre>
+<pre><code># A tibble: 6 x 4
+  country      year  cases population
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+1 Afghanistan  1999    745   19987071
+2 Afghanistan  2000   2666   20595360
+3 Brazil       1999  37737  172006362
+4 Brazil       2000  80488  174504898
+5 China        1999 212258 1272915272
+6 China        2000 213766 1280428583</code></pre>
+<div id="working-with-tidy-data" class="section level3">
+<h3>Working with tidy data</h3>
+<pre class="r"><code>table1 %&gt;% 
+  mutate(rate = cases/population * 10000)</code></pre>
+<pre><code># A tibble: 6 x 5
+  country      year  cases population  rate
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
+1 Afghanistan  1999    745   19987071 0.373
+2 Afghanistan  2000   2666   20595360 1.29 
+3 Brazil       1999  37737  172006362 2.19 
+4 Brazil       2000  80488  174504898 4.61 
+5 China        1999 212258 1272915272 1.67 
+6 China        2000 213766 1280428583 1.67 </code></pre>
+<pre class="r"><code>table1 %&gt;% 
+  count(year, wt=cases) # same as group_by and sum</code></pre>
+<pre><code># A tibble: 2 x 2
+   year      n
+  &lt;dbl&gt;  &lt;dbl&gt;
+1  1999 250740
+2  2000 296920</code></pre>
+<pre class="r"><code>table1 %&gt;% 
+  group_by(year) %&gt;% 
+  summarise(sum(cases))</code></pre>
+<pre><code># A tibble: 2 x 2
+   year `sum(cases)`
+  &lt;dbl&gt;        &lt;dbl&gt;
+1  1999       250740
+2  2000       296920</code></pre>
+<pre class="r"><code>ggplot(table1, aes(year, cases)) +
+  geom_line(aes(group = country), colour = &quot;grey50&quot;) +
+  geom_point(aes(colour = country)) +
+  scale_colour_tq()</code></pre>
+<p><img src="figure/ch9_tidy_data.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="exercises" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Using prose, describe how the variables and observations are organised in each of the sample tables.</p>
+<pre class="r"><code>tidyr::table1</code></pre>
+<pre><code># A tibble: 6 x 4
+  country      year  cases population
+  &lt;chr&gt;       &lt;int&gt;  &lt;int&gt;      &lt;int&gt;
+1 Afghanistan  1999    745   19987071
+2 Afghanistan  2000   2666   20595360
+3 Brazil       1999  37737  172006362
+4 Brazil       2000  80488  174504898
+5 China        1999 212258 1272915272
+6 China        2000 213766 1280428583</code></pre>
+<ul>
+<li>Each column is a variable ✅</li>
+<li>Each observation is in a row ✅</li>
+<li>Each value is in a cell ✅</li>
+<li>The table describes the number of cases, and the population count (each in its own column) for each country and year combination.</li>
+</ul>
+<p><br></p>
+<pre class="r"><code>tidyr::table2</code></pre>
+<pre><code># A tibble: 12 x 4
+   country      year type            count
+   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;           &lt;int&gt;
+ 1 Afghanistan  1999 cases             745
+ 2 Afghanistan  1999 population   19987071
+ 3 Afghanistan  2000 cases            2666
+ 4 Afghanistan  2000 population   20595360
+ 5 Brazil       1999 cases           37737
+ 6 Brazil       1999 population  172006362
+ 7 Brazil       2000 cases           80488
+ 8 Brazil       2000 population  174504898
+ 9 China        1999 cases          212258
+10 China        1999 population 1272915272
+11 China        2000 cases          213766
+12 China        2000 population 1280428583</code></pre>
+<ul>
+<li>Each column is a variable ❌</li>
+<li>Each observation is in a row ✅</li>
+<li>Each value is in a cell ✅</li>
+<li>Each row contains either the number of cases, or the population count for each country and year combination.</li>
+</ul>
+<p><br></p>
+<pre class="r"><code>tidyr::table3</code></pre>
+<pre><code># A tibble: 6 x 3
+  country      year rate             
+* &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;            
+1 Afghanistan  1999 745/19987071     
+2 Afghanistan  2000 2666/20595360    
+3 Brazil       1999 37737/172006362  
+4 Brazil       2000 80488/174504898  
+5 China        1999 212258/1272915272
+6 China        2000 213766/1280428583</code></pre>
+<ul>
+<li>Each column is a variable ❌</li>
+<li>Each observation is in a row ✅</li>
+<li>Each value is in a cell ❌</li>
+<li>Each row considers the country and year combination, and shows the number of cases and the population count (separated by a /) in one variable named <code>rate</code>.</li>
+</ul>
+<p><br></p>
+<pre class="r"><code>tidyr::table4a</code></pre>
+<pre><code># A tibble: 3 x 3
+  country     `1999` `2000`
+* &lt;chr&gt;        &lt;int&gt;  &lt;int&gt;
+1 Afghanistan    745   2666
+2 Brazil       37737  80488
+3 China       212258 213766</code></pre>
+<ul>
+<li>Each column is a variable ✅</li>
+<li>Each observation is in a row ❌</li>
+<li>Each value is in a cell ✅</li>
+</ul>
+<p><br></p>
+<pre class="r"><code>tidyr::table4b</code></pre>
+<pre><code># A tibble: 3 x 3
+  country         `1999`     `2000`
+* &lt;chr&gt;            &lt;int&gt;      &lt;int&gt;
+1 Afghanistan   19987071   20595360
+2 Brazil       172006362  174504898
+3 China       1272915272 1280428583</code></pre>
+<ul>
+<li>Each column is a variable ✅</li>
+<li>Each observation is in a row ❌</li>
+<li>Each value is in a cell ✅<br />
+</li>
+<li>Each table houses either the number of cases, or the population count for each country, in separated columns for each year.</li>
+</ul>
+<p><br></p>
+<pre class="r"><code>tidyr::table5</code></pre>
+<pre><code># A tibble: 6 x 4
+  country     century year  rate             
+* &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;            
+1 Afghanistan 19      99    745/19987071     
+2 Afghanistan 20      00    2666/20595360    
+3 Brazil      19      99    37737/172006362  
+4 Brazil      20      00    80488/174504898  
+5 China       19      99    212258/1272915272
+6 China       20      00    213766/1280428583</code></pre>
+<ul>
+<li>Each column is a variable ❌</li>
+<li>Each observation is in a row ✅</li>
+<li>Each value is in a cell ❌</li>
+<li>The table considers each year separated into century and year for each country and then similar to table3 it combines the cases and population count in one variable <code>rate</code> (separated within the column by /)</li>
+</ul>
+<p><br></p></li>
+<li><p>Compute the <code>rate</code> for <code>table2</code>, and <code>table4a</code> + <code>table4b</code>. You will need to perform four operations:</p>
+<ol style="list-style-type: decimal">
+<li>Extract the number of TB cases per country per year.</li>
+<li>Extract the matching population per country per year.</li>
+<li>Divide cases by population, and multiply by 10000.</li>
+<li>Store back in the appropriate place.</li>
+</ol>
+<p>Which representation is easiest to work with? Which is hardest? Why?</p>
+<pre class="r"><code>(
+  tbl1 &lt;- tidyr::table2 %&gt;% 
+  filter(type == &quot;cases&quot;) %&gt;% 
+  group_by(country, year) %&gt;% 
+  mutate(cases = count) %&gt;% 
+  ungroup() %&gt;% 
+  select(country, year, cases) %&gt;% 
+  arrange(country, year)
+)</code></pre>
+<pre><code># A tibble: 6 x 3
+  country      year  cases
+  &lt;chr&gt;       &lt;int&gt;  &lt;int&gt;
+1 Afghanistan  1999    745
+2 Afghanistan  2000   2666
+3 Brazil       1999  37737
+4 Brazil       2000  80488
+5 China        1999 212258
+6 China        2000 213766</code></pre>
+<pre class="r"><code>(
+  tbl2 &lt;- tidyr::table2 %&gt;% 
+  filter(type == &quot;population&quot;) %&gt;% 
+  group_by(country, year) %&gt;% 
+  mutate(population = count) %&gt;% 
+  ungroup() %&gt;% 
+  select(country_temp = country, 
+         year_temp = year, 
+         population) %&gt;% 
+  arrange(country_temp, year_temp)
+)</code></pre>
+<pre><code># A tibble: 6 x 3
+  country_temp year_temp population
+  &lt;chr&gt;            &lt;int&gt;      &lt;int&gt;
+1 Afghanistan       1999   19987071
+2 Afghanistan       2000   20595360
+3 Brazil            1999  172006362
+4 Brazil            2000  174504898
+5 China             1999 1272915272
+6 China             2000 1280428583</code></pre>
+<pre class="r"><code>(
+tbl3 &lt;- tbl1 %&gt;% 
+  bind_cols(tbl2) %&gt;% 
+  select(c(1:3,6)) %&gt;% 
+  mutate(rate = (cases / population) * 10000) %&gt;% 
+  arrange(country, year) %&gt;% 
+  select(country, year, rate) %&gt;% 
+  mutate(type = &quot;rate&quot;,
+         count = rate) %&gt;% 
+  select(c(1,2,4,5))
+)</code></pre>
+<pre><code># A tibble: 6 x 4
+  country      year type  count
+  &lt;chr&gt;       &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
+1 Afghanistan  1999 rate  0.373
+2 Afghanistan  2000 rate  1.29 
+3 Brazil       1999 rate  2.19 
+4 Brazil       2000 rate  4.61 
+5 China        1999 rate  1.67 
+6 China        2000 rate  1.67 </code></pre>
+<pre class="r"><code>tidyr::table2 %&gt;% 
+  bind_rows(tbl3) %&gt;% 
+  mutate(count = round(count, 2)) %&gt;% 
+  arrange(country, year, type) %&gt;% 
+  gt::gt()</code></pre>
+<style>html {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+    }
+    
+    #neattietxd .gt_table {
+      display: table;
+      border-collapse: collapse;
+      margin-left: auto;
+      margin-right: auto;
+      color: #333333;
+      font-size: 16px;
+      font-weight: normal;
+      font-style: normal;
+      background-color: #FFFFFF;
+      width: auto;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #A8A8A8;
+      border-right-style: none;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #A8A8A8;
+      border-left-style: none;
+      border-left-width: 2px;
+      border-left-color: #D3D3D3;
+    }
+    
+    #neattietxd .gt_heading {
+      background-color: #FFFFFF;
+      text-align: center;
+      border-bottom-color: #FFFFFF;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #neattietxd .gt_title {
+      color: #333333;
+      font-size: 125%;
+      font-weight: initial;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      border-bottom-color: #FFFFFF;
+      border-bottom-width: 0;
+    }
+    
+    #neattietxd .gt_subtitle {
+      color: #333333;
+      font-size: 85%;
+      font-weight: initial;
+      padding-top: 0;
+      padding-bottom: 4px;
+      border-top-color: #FFFFFF;
+      border-top-width: 0;
+    }
+    
+    #neattietxd .gt_bottom_border {
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+    }
+    
+    #neattietxd .gt_col_headings {
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #neattietxd .gt_col_heading {
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: normal;
+      text-transform: inherit;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+      vertical-align: bottom;
+      padding-top: 5px;
+      padding-bottom: 6px;
+      padding-left: 5px;
+      padding-right: 5px;
+      overflow-x: hidden;
+    }
+    
+    #neattietxd .gt_column_spanner_outer {
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: normal;
+      text-transform: inherit;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+    
+    #neattietxd .gt_column_spanner_outer:first-child {
+      padding-left: 0;
+    }
+    
+    #neattietxd .gt_column_spanner_outer:last-child {
+      padding-right: 0;
+    }
+    
+    #neattietxd .gt_column_spanner {
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      vertical-align: bottom;
+      padding-top: 5px;
+      padding-bottom: 6px;
+      overflow-x: hidden;
+      display: inline-block;
+      width: 100%;
+    }
+    
+    #neattietxd .gt_group_heading {
+      padding: 8px;
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: initial;
+      text-transform: inherit;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+      vertical-align: middle;
+    }
+    
+    #neattietxd .gt_empty_group_heading {
+      padding: 0.5px;
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: initial;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      vertical-align: middle;
+    }
+    
+    #neattietxd .gt_from_md > :first-child {
+      margin-top: 0;
+    }
+    
+    #neattietxd .gt_from_md > :last-child {
+      margin-bottom: 0;
+    }
+    
+    #neattietxd .gt_row {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+      margin: 10px;
+      border-top-style: solid;
+      border-top-width: 1px;
+      border-top-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 1px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 1px;
+      border-right-color: #D3D3D3;
+      vertical-align: middle;
+      overflow-x: hidden;
+    }
+    
+    #neattietxd .gt_stub {
+      color: #333333;
+      background-color: #FFFFFF;
+      font-size: 100%;
+      font-weight: initial;
+      text-transform: inherit;
+      border-right-style: solid;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+      padding-left: 12px;
+    }
+    
+    #neattietxd .gt_summary_row {
+      color: #333333;
+      background-color: #FFFFFF;
+      text-transform: inherit;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    
+    #neattietxd .gt_first_summary_row {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+    }
+    
+    #neattietxd .gt_grand_summary_row {
+      color: #333333;
+      background-color: #FFFFFF;
+      text-transform: inherit;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    
+    #neattietxd .gt_first_grand_summary_row {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-top-style: double;
+      border-top-width: 6px;
+      border-top-color: #D3D3D3;
+    }
+    
+    #neattietxd .gt_striped {
+      background-color: rgba(128, 128, 128, 0.05);
+    }
+    
+    #neattietxd .gt_table_body {
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: #D3D3D3;
+      border-bottom-style: solid;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+    }
+    
+    #neattietxd .gt_footnotes {
+      color: #333333;
+      background-color: #FFFFFF;
+      border-bottom-style: none;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 2px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #neattietxd .gt_footnote {
+      margin: 0px;
+      font-size: 90%;
+      padding: 4px;
+    }
+    
+    #neattietxd .gt_sourcenotes {
+      color: #333333;
+      background-color: #FFFFFF;
+      border-bottom-style: none;
+      border-bottom-width: 2px;
+      border-bottom-color: #D3D3D3;
+      border-left-style: none;
+      border-left-width: 2px;
+      border-left-color: #D3D3D3;
+      border-right-style: none;
+      border-right-width: 2px;
+      border-right-color: #D3D3D3;
+    }
+    
+    #neattietxd .gt_sourcenote {
+      font-size: 90%;
+      padding: 4px;
+    }
+    
+    #neattietxd .gt_left {
+      text-align: left;
+    }
+    
+    #neattietxd .gt_center {
+      text-align: center;
+    }
+    
+    #neattietxd .gt_right {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    #neattietxd .gt_font_normal {
+      font-weight: normal;
+    }
+    
+    #neattietxd .gt_font_bold {
+      font-weight: bold;
+    }
+    
+    #neattietxd .gt_font_italic {
+      font-style: italic;
+    }
+    
+    #neattietxd .gt_super {
+      font-size: 65%;
+    }
+    
+    #neattietxd .gt_footnote_marks {
+      font-style: italic;
+      font-size: 65%;
+    }
+    </style>
+    <div id="neattietxd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+      
+      <thead class="gt_col_headings">
+        <tr>
+          <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">country</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">year</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">type</th>
+          <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">count</th>
+        </tr>
+      </thead>
+      <tbody class="gt_table_body">
+        <tr>
+          <td class="gt_row gt_left">Afghanistan</td>
+          <td class="gt_row gt_center">1999</td>
+          <td class="gt_row gt_left">cases</td>
+          <td class="gt_row gt_right">745.00</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">Afghanistan</td>
+          <td class="gt_row gt_center">1999</td>
+          <td class="gt_row gt_left">population</td>
+          <td class="gt_row gt_right">19987071.00</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">Afghanistan</td>
+          <td class="gt_row gt_center">1999</td>
+          <td class="gt_row gt_left">rate</td>
+          <td class="gt_row gt_right">0.37</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">Afghanistan</td>
+          <td class="gt_row gt_center">2000</td>
+          <td class="gt_row gt_left">cases</td>
+          <td class="gt_row gt_right">2666.00</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">Afghanistan</td>
+          <td class="gt_row gt_center">2000</td>
+          <td class="gt_row gt_left">population</td>
+          <td class="gt_row gt_right">20595360.00</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">Afghanistan</td>
+          <td class="gt_row gt_center">2000</td>
+          <td class="gt_row gt_left">rate</td>
+          <td class="gt_row gt_right">1.29</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">Brazil</td>
+          <td class="gt_row gt_center">1999</td>
+          <td class="gt_row gt_left">cases</td>
+          <td class="gt_row gt_right">37737.00</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">Brazil</td>
+          <td class="gt_row gt_center">1999</td>
+          <td class="gt_row gt_left">population</td>
+          <td class="gt_row gt_right">172006362.00</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">Brazil</td>
+          <td class="gt_row gt_center">1999</td>
+          <td class="gt_row gt_left">rate</td>
+          <td class="gt_row gt_right">2.19</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">Brazil</td>
+          <td class="gt_row gt_center">2000</td>
+          <td class="gt_row gt_left">cases</td>
+          <td class="gt_row gt_right">80488.00</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">Brazil</td>
+          <td class="gt_row gt_center">2000</td>
+          <td class="gt_row gt_left">population</td>
+          <td class="gt_row gt_right">174504898.00</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">Brazil</td>
+          <td class="gt_row gt_center">2000</td>
+          <td class="gt_row gt_left">rate</td>
+          <td class="gt_row gt_right">4.61</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">China</td>
+          <td class="gt_row gt_center">1999</td>
+          <td class="gt_row gt_left">cases</td>
+          <td class="gt_row gt_right">212258.00</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">China</td>
+          <td class="gt_row gt_center">1999</td>
+          <td class="gt_row gt_left">population</td>
+          <td class="gt_row gt_right">1272915272.00</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">China</td>
+          <td class="gt_row gt_center">1999</td>
+          <td class="gt_row gt_left">rate</td>
+          <td class="gt_row gt_right">1.67</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">China</td>
+          <td class="gt_row gt_center">2000</td>
+          <td class="gt_row gt_left">cases</td>
+          <td class="gt_row gt_right">213766.00</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">China</td>
+          <td class="gt_row gt_center">2000</td>
+          <td class="gt_row gt_left">population</td>
+          <td class="gt_row gt_right">1280428583.00</td>
+        </tr>
+        <tr>
+          <td class="gt_row gt_left">China</td>
+          <td class="gt_row gt_center">2000</td>
+          <td class="gt_row gt_left">rate</td>
+          <td class="gt_row gt_right">1.67</td>
+        </tr>
+      </tbody>
+      
+      
+    </table></div>
+<p><br> <br></p>
+<pre class="r"><code>(
+  tbl1_cases &lt;- tidyr::table4a %&gt;% 
+  select(country, `1999`) %&gt;% 
+  mutate(year = 1999,
+         cases  = `1999`) %&gt;% 
+  select(country, year, cases)
+)</code></pre>
+<pre><code># A tibble: 3 x 3
+  country      year  cases
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;int&gt;
+1 Afghanistan  1999    745
+2 Brazil       1999  37737
+3 China        1999 212258</code></pre>
+<pre class="r"><code>(
+  tbl2_cases &lt;- tidyr::table4a %&gt;% 
+  select(country, &quot;2000&quot;) %&gt;% 
+  mutate(year = 2000, 
+         cases = `2000`) %&gt;% 
+  select(country, year, cases)
+)</code></pre>
+<pre><code># A tibble: 3 x 3
+  country      year  cases
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;int&gt;
+1 Afghanistan  2000   2666
+2 Brazil       2000  80488
+3 China        2000 213766</code></pre>
+<pre class="r"><code>(
+  tbl_cases &lt;- tbl1_cases %&gt;% 
+  bind_rows(tbl2_cases) %&gt;% 
+  arrange(country, year)
+)</code></pre>
+<pre><code># A tibble: 6 x 3
+  country      year  cases
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;int&gt;
+1 Afghanistan  1999    745
+2 Afghanistan  2000   2666
+3 Brazil       1999  37737
+4 Brazil       2000  80488
+5 China        1999 212258
+6 China        2000 213766</code></pre>
+<pre class="r"><code>(
+  tbl1_pop &lt;- tidyr::table4b %&gt;% 
+  select(country, `1999`) %&gt;% 
+  mutate(year = 1999,
+         population  = `1999`) %&gt;% 
+  select(country, year, population)
+)</code></pre>
+<pre><code># A tibble: 3 x 3
+  country      year population
+  &lt;chr&gt;       &lt;dbl&gt;      &lt;int&gt;
+1 Afghanistan  1999   19987071
+2 Brazil       1999  172006362
+3 China        1999 1272915272</code></pre>
+<pre class="r"><code>(
+  tbl2_pop &lt;- tidyr::table4b %&gt;% 
+  select(country, &quot;2000&quot;) %&gt;% 
+  mutate(year = 2000, 
+         population = `2000`) %&gt;% 
+  select(country, year, population)
+)</code></pre>
+<pre><code># A tibble: 3 x 3
+  country      year population
+  &lt;chr&gt;       &lt;dbl&gt;      &lt;int&gt;
+1 Afghanistan  2000   20595360
+2 Brazil       2000  174504898
+3 China        2000 1280428583</code></pre>
+<pre class="r"><code>(
+  tbl_pop &lt;- tbl1_pop %&gt;% 
+  bind_rows(tbl2_pop) %&gt;% 
+  arrange(country, year)
+)</code></pre>
+<pre><code># A tibble: 6 x 3
+  country      year population
+  &lt;chr&gt;       &lt;dbl&gt;      &lt;int&gt;
+1 Afghanistan  1999   19987071
+2 Afghanistan  2000   20595360
+3 Brazil       1999  172006362
+4 Brazil       2000  174504898
+5 China        1999 1272915272
+6 China        2000 1280428583</code></pre>
+<pre class="r"><code>(
+  tbl_rate &lt;- tbl_cases %&gt;% 
+    bind_cols(tbl_pop) %&gt;% 
+    janitor::clean_names() %&gt;% 
+    select(country = country_1,
+           year = year_2,
+           cases, population) %&gt;% 
+    mutate(rate = cases / population * 10000)
+)</code></pre>
+<pre><code># A tibble: 6 x 5
+  country      year  cases population  rate
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;int&gt;      &lt;int&gt; &lt;dbl&gt;
+1 Afghanistan  1999    745   19987071 0.373
+2 Afghanistan  2000   2666   20595360 1.29 
+3 Brazil       1999  37737  172006362 2.19 
+4 Brazil       2000  80488  174504898 4.61 
+5 China        1999 212258 1272915272 1.67 
+6 China        2000 213766 1280428583 1.67 </code></pre>
+<pre class="r"><code>(
+  tbl_1999 &lt;- tbl_rate %&gt;% 
+    select(country, year, rate) %&gt;% 
+    filter(year == 1999) %&gt;% 
+    mutate(`1999` = rate) %&gt;% 
+    select(country, `1999`)
+)</code></pre>
+<pre><code># A tibble: 3 x 2
+  country     `1999`
+  &lt;chr&gt;        &lt;dbl&gt;
+1 Afghanistan  0.373
+2 Brazil       2.19 
+3 China        1.67 </code></pre>
+<pre class="r"><code>(
+  tbl_2000 &lt;- tbl_rate %&gt;% 
+    select(country, year, rate) %&gt;% 
+    filter(year == 2000) %&gt;% 
+    mutate(`2000` = rate) %&gt;% 
+    select(country_temp = country, `2000`)
+)</code></pre>
+<pre><code># A tibble: 3 x 2
+  country_temp `2000`
+  &lt;chr&gt;         &lt;dbl&gt;
+1 Afghanistan    1.29
+2 Brazil         4.61
+3 China          1.67</code></pre>
+<pre class="r"><code>(
+  tbl_4c &lt;- 
+    tbl_1999 %&gt;% 
+    bind_cols(tbl_2000) %&gt;% 
+    select(country, `1999`, `2000`)
+)</code></pre>
+<pre><code># A tibble: 3 x 3
+  country     `1999` `2000`
+  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;
+1 Afghanistan  0.373   1.29
+2 Brazil       2.19    4.61
+3 China        1.67    1.67</code></pre></li>
+<li><p>Recreate the plot showing change in cases over time using <code>table2</code> instead of <code>table1</code>. What do you need to do first?</p>
+<pre class="r"><code>tidyr::table1</code></pre>
+<pre><code># A tibble: 6 x 4
+  country      year  cases population
+  &lt;chr&gt;       &lt;int&gt;  &lt;int&gt;      &lt;int&gt;
+1 Afghanistan  1999    745   19987071
+2 Afghanistan  2000   2666   20595360
+3 Brazil       1999  37737  172006362
+4 Brazil       2000  80488  174504898
+5 China        1999 212258 1272915272
+6 China        2000 213766 1280428583</code></pre>
+<pre class="r"><code>ggplot(table1, aes(year, cases)) +
+  geom_line(aes(group = country), colour = &quot;grey50&quot;) +
+  geom_point(aes(colour = country)) +
+  scale_colour_tq()</code></pre>
+<p><img src="figure/ch9_tidy_data.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>tidyr::table2</code></pre>
+<pre><code># A tibble: 12 x 4
+   country      year type            count
+   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;           &lt;int&gt;
+ 1 Afghanistan  1999 cases             745
+ 2 Afghanistan  1999 population   19987071
+ 3 Afghanistan  2000 cases            2666
+ 4 Afghanistan  2000 population   20595360
+ 5 Brazil       1999 cases           37737
+ 6 Brazil       1999 population  172006362
+ 7 Brazil       2000 cases           80488
+ 8 Brazil       2000 population  174504898
+ 9 China        1999 cases          212258
+10 China        1999 population 1272915272
+11 China        2000 cases          213766
+12 China        2000 population 1280428583</code></pre>
+<pre class="r"><code>table2 %&gt;% 
+  filter(type == &quot;cases&quot;) %&gt;% 
+  ggplot(aes(year, count)) +
+  geom_line(aes(group = country), colour = &quot;grey50&quot;) +
+  geom_point(aes(colour = country)) +
+  scale_colour_tq()</code></pre>
+<p><img src="figure/ch9_tidy_data.Rmd/unnamed-chunk-12-2.png" width="672" style="display: block; margin: auto;" /></p></li>
+</ol>
+<p>Sometimes you will have to resolve one of two common problems:</p>
+<ol style="list-style-type: decimal">
+<li><p>One variable might be spread across multiple columns.</p></li>
+<li><p>One observation might be scattered across multiple rows.</p></li>
+</ol>
+</div>
+</div>
+<div id="pivot-longer-gather" class="section level2">
+<h2>Pivot Longer / Gather</h2>
+<p><code>pivot_longer()</code> makes datasets longer by increasing the number of rows and decreasing the number of columns.</p>
+<pre><code class='language-r'><code>table4a</code></code></pre>
+<pre><code>
+# A tibble: 3 x 3
+  country     `1999` `2000`
+* &lt;chr&gt;        &lt;int&gt;  &lt;int&gt;
+1 Afghanistan    745   2666
+2 Brazil       37737  80488
+3 China       212258 213766
+</code></pre>
+<pre><code class='language-r'><code>table4a %>% <br>&nbsp;&nbsp;# <span style='background-color:#9FDDBA;color:#008080'>gather</span>(list out columns you want to <span style='background-color:#9FDDBA;color:#008080'>gather</span> like dplyr::select() style,<br>&nbsp;&nbsp;# &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key = what do you want to call the column<br>&nbsp;&nbsp;# &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;these column names go into,<br>&nbsp;&nbsp;# &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value = the values of the columns will go here)<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>gather</span>(`1999`, `2000`, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key = "year",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value = "cases" )</code></code></pre>
+<pre><code>
+# A tibble: 6 x 3
+  country     year   cases
+  &lt;chr&gt;       &lt;chr&gt;  &lt;int&gt;
+1 Afghanistan 1999     745
+2 Brazil      1999   37737
+3 China       1999  212258
+4 Afghanistan 2000    2666
+5 Brazil      2000   80488
+6 China       2000  213766
+</code></pre>
+<pre><code class='language-r'><code>(tidy_4a <- table4a %>% <br>&nbsp;&nbsp;# cols = list the columns you want to pivot<br>&nbsp;&nbsp;# names_to = what will you call the new column these<br>&nbsp;&nbsp;# &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;column names go into<br>&nbsp;&nbsp;# values_to = the values in the columns will go here<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>pivot_longer</span>(cols = c(`1999`, `2000`),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;names_to = "year",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;values_to = "cases"))</code></code></pre>
+<pre><code>
+# A tibble: 6 x 3
+  country     year   cases
+  &lt;chr&gt;       &lt;chr&gt;  &lt;int&gt;
+1 Afghanistan 1999     745
+2 Afghanistan 2000    2666
+3 Brazil      1999   37737
+4 Brazil      2000   80488
+5 China       1999  212258
+6 China       2000  213766
+</code></pre>
+<pre><code class='language-r'><code>table4b</code></code></pre>
+<pre><code>
+# A tibble: 3 x 3
+  country         `1999`     `2000`
+* &lt;chr&gt;            &lt;int&gt;      &lt;int&gt;
+1 Afghanistan   19987071   20595360
+2 Brazil       172006362  174504898
+3 China       1272915272 1280428583
+</code></pre>
+<pre><code class='language-r'><code>table4b %>% <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>gather</span>(`1999`, `2000`, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key = "year",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value = "population")</code></code></pre>
+<pre><code>
+# A tibble: 6 x 3
+  country     year  population
+  &lt;chr&gt;       &lt;chr&gt;      &lt;int&gt;
+1 Afghanistan 1999    19987071
+2 Brazil      1999   172006362
+3 China       1999  1272915272
+4 Afghanistan 2000    20595360
+5 Brazil      2000   174504898
+6 China       2000  1280428583
+</code></pre>
+<pre><code class='language-r'><code>(tidy_4b <- table4b %>% <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>pivot_longer</span>(cols = c(`1999`, `2000`),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;names_to = "year",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;values_to = "population"))</code></code></pre>
+<pre><code>
+# A tibble: 6 x 3
+  country     year  population
+  &lt;chr&gt;       &lt;chr&gt;      &lt;int&gt;
+1 Afghanistan 1999    19987071
+2 Afghanistan 2000    20595360
+3 Brazil      1999   172006362
+4 Brazil      2000   174504898
+5 China       1999  1272915272
+6 China       2000  1280428583
+</code></pre>
+<pre><code class='language-r'><code>left_join(tidy_4a, tidy_4b) %>% <br>&nbsp;&nbsp;arrange(country, year)</code></code></pre>
+<pre><code>
+# A tibble: 6 x 4
+  country     year   cases population
+  &lt;chr&gt;       &lt;chr&gt;  &lt;int&gt;      &lt;int&gt;
+1 Afghanistan 1999     745   19987071
+2 Afghanistan 2000    2666   20595360
+3 Brazil      1999   37737  172006362
+4 Brazil      2000   80488  174504898
+5 China       1999  212258 1272915272
+6 China       2000  213766 1280428583
+</code></pre>
+</div>
+<div id="pivot-wider-spread" class="section level2">
+<h2>Pivot Wider / Spread</h2>
+<p><code>pivot_wider()</code> is the opposite of <code>pivot_longer()</code>. You use it when an observation is scattered across multiple rows.</p>
+<pre><code class='language-r'><code>table2</code></code></pre>
+<pre><code>
+# A tibble: 12 x 4
+   country      year type            count
+   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;           &lt;int&gt;
+ 1 Afghanistan  1999 cases             745
+ 2 Afghanistan  1999 population   19987071
+ 3 Afghanistan  2000 cases            2666
+ 4 Afghanistan  2000 population   20595360
+ 5 Brazil       1999 cases           37737
+ 6 Brazil       1999 population  172006362
+ 7 Brazil       2000 cases           80488
+ 8 Brazil       2000 population  174504898
+ 9 China        1999 cases          212258
+10 China        1999 population 1272915272
+11 China        2000 cases          213766
+12 China        2000 population 1280428583
+</code></pre>
+<pre><code class='language-r'><code>table2 %>% <br>&nbsp;&nbsp;# key = column with the variable name, here `type`<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>spread</span>(key = type, <br>&nbsp;&nbsp;# value = column with the value that will be assigned<br>&nbsp;&nbsp;# to new columns<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value = count)</code></code></pre>
+<pre><code>
+# A tibble: 6 x 4
+  country      year  cases population
+  &lt;chr&gt;       &lt;int&gt;  &lt;int&gt;      &lt;int&gt;
+1 Afghanistan  1999    745   19987071
+2 Afghanistan  2000   2666   20595360
+3 Brazil       1999  37737  172006362
+4 Brazil       2000  80488  174504898
+5 China        1999 212258 1272915272
+6 China        2000 213766 1280428583
+</code></pre>
+<pre><code class='language-r'><code>table2 %>% <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>pivot_wider</span>(names_from = type,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;values_from = count)</code></code></pre>
+<pre><code>
+# A tibble: 6 x 4
+  country      year  cases population
+  &lt;chr&gt;       &lt;int&gt;  &lt;int&gt;      &lt;int&gt;
+1 Afghanistan  1999    745   19987071
+2 Afghanistan  2000   2666   20595360
+3 Brazil       1999  37737  172006362
+4 Brazil       2000  80488  174504898
+5 China        1999 212258 1272915272
+6 China        2000 213766 1280428583
+</code></pre>
+<div id="exercises-1" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Why are <code>pivot_longer()</code> and <code>pivot_wider()</code> not perfectly symmetrical?<br />
+Carefully consider the following example:</p>
+<pre class="r"><code>(stocks &lt;- tibble(
+  year   = c(2015, 2015, 2016, 2016),
+  half  = c(   1,    2,     1,    2),
+  return = c(1.88, 0.59, 0.92, 0.17)
+))</code></pre>
+<pre><code># A tibble: 4 x 3
+   year  half return
+  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1  2015     1   1.88
+2  2015     2   0.59
+3  2016     1   0.92
+4  2016     2   0.17</code></pre>
+<pre class="r"><code>stocks %&gt;% 
+  pivot_wider(names_from = year, values_from = return) %&gt;% 
+  pivot_longer(`2015`:`2016`, names_to = &quot;year&quot;, values_to = &quot;return&quot;)</code></pre>
+<pre><code># A tibble: 4 x 3
+   half year  return
+  &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;
+1     1 2015    1.88
+2     1 2016    0.92
+3     2 2015    0.59
+4     2 2016    0.17</code></pre>
+<p>(Hint: look at the variable types and think about column <em>names</em>.)</p>
+<p><code>pivot_longer()</code> has a <code>names_ptypes</code> argument, e.g.  <code>names_ptypes = list(year = double())</code>. What does it do?</p>
+<pre class="r"><code># vignette(&quot;pivot&quot;)
+stocks %&gt;% 
+    pivot_wider(names_from = year, values_from = return)</code></pre>
+<pre><code># A tibble: 2 x 3
+   half `2015` `2016`
+  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1     1   1.88   0.92
+2     2   0.59   0.17</code></pre>
+<p>Let’s have a look at the first part - here we take the year and make it a variable. That means that <code>2015</code> and <code>2016</code> become variables (new columns) in our new tibble, and the return gets pulled into the appropriate column (<code>2015</code>/<code>2016</code>) against the appropriate <code>half</code>. By nature of this move we changed year which was a double into two new column names which are <code>2015</code> and <code>2016</code> and hence “character”.</p>
+<pre class="r"><code>(stocks_ &lt;- stocks %&gt;% 
+  pivot_wider(names_from = year, values_from = return) %&gt;% 
+  pivot_longer(`2015`:`2016`, names_to = &quot;year&quot;, values_to = &quot;return&quot;))</code></pre>
+<pre><code># A tibble: 4 x 3
+   half year  return
+  &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;
+1     1 2015    1.88
+2     1 2016    0.92
+3     2 2015    0.59
+4     2 2016    0.17</code></pre>
+<pre class="r"><code>colnames(stocks)</code></pre>
+<pre><code>[1] &quot;year&quot;   &quot;half&quot;   &quot;return&quot;</code></pre>
+<pre class="r"><code>colnames(stocks_)</code></pre>
+<pre><code>[1] &quot;half&quot;   &quot;year&quot;   &quot;return&quot;</code></pre>
+<p>So following on that we take these new columns and then collapse them into a column <code>year</code> again. But now we have changed the type given we made them columns in the <code>pivot_wider()</code> step. So they keep their “character” nature when they are made longer again. Final result is <code>year</code> started off double (when we created it) but ends up character (after the pivot_wider and pivot_longer steps).</p>
+<p>Th columns also get rearranged since the pivot_wider spreads the <code>year</code> column into <code>2015</code> and <code>2016</code> which come after <code>half</code> in that initial step. When we subsequently pivot_longer <code>half</code> remains as the first column, followed by the <code>names_to =</code> column (year in this case), and finally the <code>values_to =</code> column (return in this case).</p>
+<p><strong>Q</strong>: <code>pivot_longer()</code> has a <code>names_ptypes</code> argument, e.g.  <code>names_ptypes = list(year = double())</code>. What does it do?</p>
+<p>Okay so upon reading the help page and the <a href="https://rdrr.io/github/tidyverse/tidyr/man/pivot_longer.html">info</a> I expected that this function would convert my <code>character</code> column year created after the pivot_wider() step into a double, but instead it throws an error. 😕</p>
+<pre class="r"><code>stocks %&gt;% 
+  pivot_wider(names_from = year, values_from = return) %&gt;% 
+  pivot_longer(`2015`:`2016`, 
+               names_to = &quot;year&quot;, 
+               names_ptypes = list(year = double()),
+               values_to = &quot;return&quot;
+               )</code></pre>
+<pre><code>Error: Can&#39;t convert &lt;character&gt; to &lt;double&gt;.</code></pre>
+<p>We use this to <strong>confirm</strong> that the columns we create are of the type / class we expect - so here it provides a <span style="color: #008080;background-color:#9FDDBA"><strong>check</strong></span> it seems 🤷. <br></p>
+<p>To transform the column from character to double you would need to use the <span style="color: #008080;background-color:#9FDDBA"><code>names_transform</code></span>.</p>
+<pre class="r"><code>(stocks_ptypes &lt;- stocks %&gt;% 
+  pivot_wider(names_from = year, values_from = return) %&gt;% 
+  pivot_longer(`2015`:`2016`, 
+               names_to = &quot;year&quot;, 
+               names_transform = list(year = as.double),
+               values_to = &quot;return&quot;,
+               # is the value column of the type expected
+               values_ptypes = list(return = double())
+               ))</code></pre>
+<pre><code># A tibble: 4 x 3
+   half  year return
+  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1     1  2015   1.88
+2     1  2016   0.92
+3     2  2015   0.59
+4     2  2016   0.17</code></pre>
+<p>Strangely though I would expect that if I transform a column from x to y (using <code>names_transform</code>), and then use <code>names_ptypes</code> to check if my name column is indeed now of type y that would be fine? It still throws an error, so my thinking is flawed here.</p>
+<pre class="r"><code>stocks %&gt;% 
+  pivot_wider(names_from = year, values_from = return) %&gt;% 
+  pivot_longer(`2015`:`2016`, 
+               names_to = &quot;year&quot;, 
+               names_transform = list(year = as.double),
+               names_ptypes = list(year = double()),
+               values_to = &quot;return&quot;,
+               # is the value column of the type expected
+               values_ptypes = list(return = double())
+               )</code></pre>
+<pre><code>Error: Can&#39;t convert &lt;character&gt; to &lt;double&gt;.</code></pre></li>
+<li><p>Why does this code fail?</p>
+<pre class="r"><code>table4a %&gt;% 
+  pivot_longer(c(1999, 2000), names_to = &quot;year&quot;, values_to = &quot;cases&quot;)</code></pre>
+<pre><code>Error: Can&#39;t subset columns that don&#39;t exist.
+[31mx[39m Locations 1999 and 2000 don&#39;t exist.
+[34mi[39m There are only 3 columns.</code></pre>
+<pre class="r"><code>  # Error: Can&#39;t subset columns that don&#39;t exist.
+  # x Locations 1999 and 2000 don&#39;t exist.
+  # i There are only 3 columns.</code></pre>
+<pre class="r"><code># fixing it
+table4a %&gt;% 
+  pivot_longer(c(&quot;1999&quot;, `2000`), names_to = &quot;year&quot;, values_to = &quot;cases&quot;)</code></pre>
+<pre><code># A tibble: 6 x 3
+  country     year   cases
+  &lt;chr&gt;       &lt;chr&gt;  &lt;int&gt;
+1 Afghanistan 1999     745
+2 Afghanistan 2000    2666
+3 Brazil      1999   37737
+4 Brazil      2000   80488
+5 China       1999  212258
+6 China       2000  213766</code></pre>
+<p>The <code>1999</code> and <code>2000</code> are non-syntactically named columns. These have to be surrounded by backticks (``) or quotations <code>""</code>. Here tidyr is trying to read columns numbered 1999, and 2000 which don’t exist.</p></li>
+<li><p>What would happen if you widen this table? Why? How could you add a new column to uniquely identify each value?</p>
+<pre class="r"><code>people &lt;- tribble(
+  ~name,             ~names,  ~values,
+  #-----------------|--------|------
+  &quot;Phillip Woods&quot;,   &quot;age&quot;,       45,
+  &quot;Phillip Woods&quot;,   &quot;height&quot;,   186,
+  &quot;Phillip Woods&quot;,   &quot;age&quot;,       50,
+  &quot;Jessica Cordero&quot;, &quot;age&quot;,       37,
+  &quot;Jessica Cordero&quot;, &quot;height&quot;,   156
+)</code></pre>
+<p>You get a warning and it has a list for each variable <code>age</code> and <code>height</code> since <em>Philips Woods</em> has two ages which are different.</p>
+<pre class="r"><code>people %&gt;% 
+  pivot_wider(names_from = names,
+              values_from = &quot;values&quot;)</code></pre>
+<pre><code># A tibble: 2 x 3
+  name            age       height   
+  &lt;chr&gt;           &lt;list&gt;    &lt;list&gt;   
+1 Phillip Woods   &lt;dbl [2]&gt; &lt;dbl [1]&gt;
+2 Jessica Cordero &lt;dbl [1]&gt; &lt;dbl [1]&gt;</code></pre>
+<pre class="r"><code>people2 &lt;- tribble(
+  ~name,             ~names,  ~values,
+  #-----------------|--------|------
+  &quot;Phillip Woods&quot;,   &quot;age&quot;,       45,
+  &quot;Phillip Woods&quot;,   &quot;height&quot;,   186,
+  &quot;Phillip Woods&quot;,   &quot;age2&quot;,      50, # second age gets diff col name
+  &quot;Jessica Cordero&quot;, &quot;age&quot;,       37,
+  &quot;Jessica Cordero&quot;, &quot;height&quot;,   156
+)</code></pre>
+<pre class="r"><code>people2 %&gt;% 
+  pivot_wider(names_from = names,
+              values_from = &quot;values&quot;)</code></pre>
+<pre><code># A tibble: 2 x 4
+  name              age height  age2
+  &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 Phillip Woods      45    186    50
+2 Jessica Cordero    37    156    NA</code></pre></li>
+<li><p>Tidy the simple tibble below. Do you need to make it wider or longer? What are the variables?</p>
+<pre class="r"><code>(preg &lt;- tribble(
+  ~pregnant, ~male, ~female,
+  &quot;yes&quot;,     NA,    10,
+  &quot;no&quot;,      20,    12
+))</code></pre>
+<pre><code># A tibble: 2 x 3
+  pregnant  male female
+  &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+1 yes         NA     10
+2 no          20     12</code></pre>
+<p>We need to make it longer. The variable’s are <code>pregnant</code> (yes or no), and the number of male(s)/female(s) in each outcome of <code>pregnant</code>.</p>
+<pre class="r"><code>preg %&gt;% 
+  pivot_longer(c(&#39;male&#39;, &#39;female&#39;), 
+               names_to = &#39;sex&#39;,
+               values_to = &#39;count&#39;)</code></pre>
+<pre><code># A tibble: 4 x 3
+  pregnant sex    count
+  &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;
+1 yes      male      NA
+2 yes      female    10
+3 no       male      20
+4 no       female    12</code></pre></li>
+</ol>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.3 (2020-02-29)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 18363)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_South Africa.1252  LC_CTYPE=English_South Africa.1252   
+[3] LC_MONETARY=English_South Africa.1252 LC_NUMERIC=C                         
+[5] LC_TIME=English_South Africa.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] tidyquant_1.0.0            quantmod_0.4.17           
+ [3] TTR_0.23-6                 PerformanceAnalytics_2.0.4
+ [5] xts_0.12-0                 zoo_1.8-7                 
+ [7] magrittr_1.5               lubridate_1.7.8           
+ [9] emo_0.0.0.9000             flair_0.0.2               
+[11] forcats_0.5.0              stringr_1.4.0             
+[13] dplyr_1.0.0                purrr_0.3.4               
+[15] readr_1.3.1                tidyr_1.1.0               
+[17] tibble_3.0.3               ggplot2_3.3.0             
+[19] tidyverse_1.3.0            workflowr_1.6.2           
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.2       sass_0.2.0       jsonlite_1.7.0   modelr_0.1.6    
+ [5] assertthat_0.2.1 cellranger_1.1.0 yaml_2.2.1       pillar_1.4.6    
+ [9] backports_1.1.6  lattice_0.20-38  glue_1.4.1       quadprog_1.5-8  
+[13] digest_0.6.25    promises_1.1.0   checkmate_2.0.0  rvest_0.3.5     
+[17] snakecase_0.11.0 colorspace_1.4-1 htmltools_0.5.0  httpuv_1.5.2    
+[21] pkgconfig_2.0.3  broom_0.5.6      haven_2.2.0      scales_1.1.0    
+[25] whisker_0.4      later_1.0.0      git2r_0.26.1     generics_0.0.2  
+[29] farver_2.0.3     ellipsis_0.3.1   withr_2.2.0      janitor_2.0.1   
+[33] cli_2.0.2        crayon_1.3.4     readxl_1.3.1     evaluate_0.14   
+[37] fs_1.4.1         fansi_0.4.1      nlme_3.1-144     xml2_1.3.2      
+[41] tools_3.6.3      hms_0.5.3        lifecycle_0.2.0  munsell_0.5.0   
+[45] reprex_0.3.0     compiler_3.6.3   rlang_0.4.7      grid_3.6.3      
+[49] gt_0.2.2         rstudioapi_0.11  labeling_0.3     rmarkdown_2.4   
+[53] gtable_0.3.0     DBI_1.1.0        curl_4.3         R6_2.4.1        
+[57] knitr_1.28       utf8_1.1.4       rprojroot_1.3-2  Quandl_2.10.0   
+[61] stringi_1.4.6    Rcpp_1.0.4.6     vctrs_0.3.2      dbplyr_1.4.3    
+[65] tidyselect_1.1.0 xfun_0.13       </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
