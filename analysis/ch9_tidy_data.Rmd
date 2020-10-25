@@ -595,11 +595,694 @@ decorate("tidy3") %>%
                    values_to = 'count')
     ```
     
-    
-```{r}
+## Separating and Uniting
 
+### Separate
+
+`separate()` pulls apart one column into multiple columns, by splitting wherever a separator character appears, and by default, `separate()` will split values wherever it sees a non-alphanumeric character (i.e. a character that isn't a number or letter e.g. `,`, `;`, etc.).
+
+In `tidyr::table3` we have a column `rate` that has a combination of the
+cases and population in one column separated by a _/_.
+
+```{r}
+table3
 ```
+
+#### No __sep__ specified
+
+```{r sep1, include=FALSE}
+table3 %>% 
+  # separate without specifying the separator
+  separate(rate, into = c("cases", "population"))
+```
+
+```{r, echo=FALSE}
+decorate("sep1") %>% 
+  flair("separate", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("into =", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+#### __sep__ specified as single value
+
+<span style="color: #008080;background-color:#9FDDBA">`sep`</span> is
+a regular expression, so more complicated sequences than "/" maybe supplied,
+e.g. `sep = '[0-9]'` will separate on any digit encountered.
+
+```{r sep2, include=FALSE}
+table3 %>% 
+  # separate with specifying the separator
+  separate(rate, into = c("cases", "population"),
+           sep = '/')
+
+as_tibble("This0is1a2test.with3a4deliberate5mistake.") %>%
+  separate(value, into = c(glue::glue("col_{c(1:7)}")),
+         sep = '[0-9]')
+```
+
+```{r, echo=FALSE}
+decorate("sep2") %>% 
+  flair("sep = '/'", background = "#9FDDBA", 
+        color = "#008080") 
+```
+
+
+#### __sep__ specified as vector of integers / position
+
+You can also pass a vector of integers to `sep`. `separate()` will interpret the integers as positions to split at.
+
+- Positive values start at 1 and start counting from the left of the string
+- Negative values start at -1 and start counting from the right of the string
+
+
+```{r sep4, include=FALSE}
+table3 %>% 
+  # separate with specifying the separator
+  separate(year, into = c("century", "year"),
+           # here we use a single value
+           # use c(2, 5) to split in multiple places
+           sep = 2,
+           convert = TRUE)
+```
+
+```{r, echo=FALSE}
+decorate("sep4") %>% 
+  flair("sep = 2", background = "#9FDDBA", 
+        color = "#008080") 
+```
+
+#### convert = TRUE
+
+`separate()` retains the character type of the original field.
+Use <span style="color: #008080;background-color:#9FDDBA">`convert = TRUE`</span> to get `separate()` to make a guess at a better type
+for the resulting columns. 
+
+```{r sep3, include=FALSE}
+table3 %>% 
+  # separate with specifying the separator
+  separate(rate, into = c("cases", "population"),
+           sep = '/',
+           convert = TRUE)
+```
+
+```{r, echo=FALSE}
+decorate("sep3") %>% 
+  flair("convert = TRUE", background = "#9FDDBA", 
+        color = "#008080") 
+```
+
+### Unite
+
+`unite()` is the inverse of `separate()`: it combines multiple columns into a single column.
+
+The year column was deliberately made untidy by splitting it into century and year in `tidyr::table5`. We can concat these using <span style="color: #008080;background-color:#9FDDBA">`unite`</span>.
+
+```{r unite1, include=FALSE}
+table5 %>% 
+  unite(new, century, year)
+```
+
+```{r, echo=FALSE}
+decorate("unite1") %>% 
+  flair("unite", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+If you look at the help page of unite (?unite) you will see that
+the default separator is ___ (`sep = "_"`). To override this behaviour
+we need to specify the `sep` argument.
+
+
+```{r unite2, include=FALSE}
+table5 %>% 
+  unite(new, century, year, sep = '')
+```
+
+```{r, echo=FALSE}
+decorate("unite2") %>% 
+  flair("sep = ''", background = "#9FDDBA", 
+        color = "#008080")  
+```
+
+### Exercises
+
+1.  What do the `extra` and `fill` arguments do in `separate()`? 
+    Experiment with the various options for the following two toy datasets.
     
+    ```{r, eval = FALSE}
+    tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+      separate(x, c("one", "two", "three"))
+    
+    tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
+      separate(x, c("one", "two", "three"))
+    ```
+    
+    - The default for _extra_ is "warn".
+    - `extra` warns if during the splitting more columns are found than
+    those specified in _into_. For example I may have 
+    `into = c("year_of_birth", "month_of_birth")` but upon splitting on `-`
+    three columns are found. If I don't specify `extra` then _separate_
+    function will warn me there are more columns found, but these will be
+    missing from my result.
+    - `extra` can be _warn_ (default), _drop_ (drop any extra values
+    without a warning) or _merge_ (only splits at most length(into) times).
+    
+    ```{r ex1_1, include=FALSE, warning = TRUE}
+    tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+      separate(x, c("one", "two", "three"))
+    tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+      separate(x, c("one", "two", "three"),
+               extra = 'drop')
+    tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+      separate(x, c("one", "two", "three"),
+               extra = 'merge')
+    ```
+
+    ```{r, echo=FALSE}
+    decorate("ex1_1") %>% 
+      flair("extra = 'drop'", background = "#9FDDBA", 
+            color = "#008080") %>% 
+      flair("extra = 'merge'", background = "#9FDDBA", 
+            color = "#008080")
+    ``` 
+    
+    - The default for _fill_ is "warn".
+    - `fill` warns if during the splitting less columns are found than
+    those specified in _into_. <br>
+    For example I may have 
+    `into = c("year_of_birth", "month_of_birth", "day_of_birth", "sex")` 
+    but upon splitting on `-` only three columns are found. 
+    If I don't specify `fill` then the _separate_
+    function will warn me there are less columns than expected 
+    and these will be filled with NA.
+    - `fill` can be:
+    
+      * _warn_ (default)
+      * _right_ (fill with missing values on the right) - i.e. if there are
+      not enough values for the columns in the tibble the right hand side
+      columns must be filled with NA. 
+      You'd use this if you expect that more of the end columns are
+      missing.
+      * _left_ (fill with missing values on the left) - i.e. if there are
+      not enough values for the columns in the tibble the left hand side
+      columns must be filled with NA. 
+      You'd use this if you expect that more of the beginning columns
+      you're making are likely to be missing.
+      
+    ```{r ex1_2, include=FALSE, warning = TRUE}
+    tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
+      separate(x, c("one", "two", "three"))
+    tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
+      separate(x, c("one", "two", "three"),
+               fill = 'right')    
+    tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
+      separate(x, c("one", "two", "three"),
+               fill = 'left')    
+    ```
+
+    ```{r, echo=FALSE}
+    decorate("ex1_2") %>% 
+      flair("fill = 'right'", background = "#9FDDBA", 
+            color = "#008080") %>% 
+      flair("fill = 'left'", background = "#9FDDBA", 
+            color = "#008080")
+    ``` 
+    
+1.  Both `unite()` and `separate()` have a `remove` argument. What does it
+    do? Why would you set it to `FALSE`?
+    
+    - `remove` is by default TRUE.
+    - It means remove the column(s) from which you are 
+    separating / uniting.
+    - You would set it to _FALSE_ if you'd like to perform the action
+    (separate / unite) but __also__ keep the original column(s).
+    
+    ```{r ex2, include=FALSE, warning = TRUE}
+    tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+      separate(x, c("one", "two", "three"))
+    tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+      separate(x, c("one", "two", "three"),
+               remove = FALSE)
+    ```
+
+    ```{r, echo=FALSE}
+    decorate("ex2") %>% 
+      flair("remove = FALSE", background = "#9FDDBA", 
+            color = "#008080")
+    ```     
+    
+    Notice that initially `x` does not exist. In the second call we
+    added the <span style="color: #008080;background-color:#9FDDBA">remove = FALSE</span> and `x` is kept.
+    
+1.  Compare and contrast `separate()` and `extract()`.  Why are there
+    three variations of separation (by position, by separator, and with
+    groups), but only one unite?
+    
+    - separate has by position, by separator, and with groups because it
+    takes a string and splits it into multiple parts; unite on the other
+    hand combines separate columns and there is only one way to do
+    it - specify the columns you want to join, in the order
+    they should be joined, and with the separator that is appropriate.
+    
+    - separate does not throw away any part of the string unless it
+    "falls over the edge" so to say. I.e. if we have extra string left
+    over after the splitting, and it has run out of columns to place it
+    in. You may kinda simulate this by saying "Hey, keep only the
+    second column" as this help example shows. While __sep__ is a 
+    regex it tells you how to split the string.
+    
+      ```{r}
+      # If you want to split by any non-alphanumeric value (the default):
+      df <- data.frame(x = c(NA, "a.b", "a.d", "b.c"))
+      df %>% separate(x, c("A", "B"))
+      
+      # If you just want the second variable:
+      df %>% separate(x, c(NA, "B"))
+      
+      ```
+      
+    - extract will give you back only the "groups" you are interested
+    in, and "throws" away the rest, and maybe better to use when
+    you have complex patterns you want to extract. `r emo::ji("shrug")`
+    
+    ```{r}
+    df <- tibble(x = c(NA, "a-b", "a-d", "b-c", "d-e"))
+    
+    df %>% tidyr::extract(x,
+                         # make 2 columns
+                         c("A", "B"), 
+                         # here's the groups I want - surrounded by ()
+                         "([a-d]+)-([a-d]+)")
+    
+    df %>% 
+      tidyr::extract(col = x,
+                    into = c("A"),
+                    regex = "([a-d]+)")
+    
+    df <- tibble(x = c(NA, "a-b-c", "a-d-e", "b-c-d", "d-e-f"))
+    
+    df %>% tidyr::extract(x,
+                         # make 2 columns
+                         c("A", "C"), 
+                         # here's the groups I want - surrounded by ()
+                         # only first, and last
+                         "([a-z]+)-[a-z]-([a-z]+)")
+    
+    
+    df %>% tidyr::separate(x,
+                         # You can also do it using separate
+                         # make 2 columns
+                         c("A", "C"), 
+                         # here's the groups I want - surrounded by ()
+                         # only first, and last
+                         "-[a-z]-")
+    
+    ```
+
+### Missing values    
+
+A value can be missing in one of two possible ways:
+
+* __Explicitly__, i.e. flagged with `NA`.
+* __Implicitly__, i.e. simply not present in the data.
+
+For example here we have explicit _NA_ as well as _2016_ is missing
+quarter 1.
+
+```{r miss, include=FALSE}
+(stocks <- tibble(
+  year   = c(2015, 2015, 2015, 2015, 2016, 2016, 2016),
+  qtr    = c(   1,    2,    3,    4,    2,    3,    4),
+  return = c(1.88, 0.59, 0.35,   NA, 0.92, 0.17, 2.66)
+))
+```
+
+```{r, echo=FALSE}
+decorate("miss") %>% 
+  flair("NA", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("2016", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+Representing the dataset can make the missing values more clear.
+
+1. Show implicit missing values.
+    
+    ```{r}
+    stocks %>% 
+      pivot_wider(names_from = year, values_from = return)
+    ```
+    
+1. Turn explicit missing values, into implicit missing values.
+
+    ```{r}
+    stocks %>% 
+      pivot_wider(names_from = year, values_from = return) %>% 
+      pivot_longer(
+        cols = c(`2015`, `2016`), 
+        names_to = "year", 
+        values_to = "return", 
+        values_drop_na = TRUE
+      )
+    ```
+
+1. Use <span style="color: #008080;background-color:#9FDDBA">`complete()`</span> : make missing values explicit, by looking
+at a set of columns and finding all combinations. The gaps are filled
+with NA explicitly.
+
+    ```{r}
+    stocks %>% 
+      complete(year, qtr)
+    ```
+
+1. Sometimes when working with data the missing are an indication
+that the previous rows value must be filled down. 
+    
+    ```{r}
+    (treatment <- tribble(
+      ~ person,           ~ treatment, ~response,
+      "Derrick Whitmore", 1,           7,
+      NA,                 2,           10,
+      NA,                 3,           9,
+      "Katherine Burke",  1,           4
+    ))
+    ```
+    
+    Using <span style="color: #008080;background-color:#9FDDBA">`fill()`</span> allows you to fill 
+    a columns values with the most recent non-missing value.
+    
+    ```{r}
+    treatment %>% 
+      fill(person)
+    ```    
+
+### Exercises
+
+1.  Compare and contrast the `fill` arguments to `pivot_wider()` and `complete()`. 
+
+    - Both fill missing values with something other than NA.
+    - In pivot_wider() it is called `values_fill`, and the spec
+    is either a `scalar` or `named list`.
+    - In complete() it is called fill, and the spec
+    is a `named list`.
+
+    ```{r}
+    (df <- tibble(
+         group = c(1:2, NA_real_, 1),
+         item_id = c(1:2, 1, 2),
+         item_name = c("a", "NA", "b", "b"),
+         value1 = 1:4,
+         value2 = 4:7
+     ))
+    
+    df %>% 
+      pivot_wider(names_from = item_name, 
+                  values_from = value1,
+                  # the values are filled with 0 if missing
+                  values_fill = 0)
+    
+    df %>% 
+      complete(group, item_id,
+               # explicitly list cols you want filled
+               # with alternate to NA
+               fill = list(group = 0,
+               item_name = "0"))
+    ```
+
+1.  What does the direction argument to `fill()` do?    
+
+    The argument is `.direction` and tells you in which 
+    direction the fill() must occur, and can be one of 4
+    different values.
+    
+      > .direction = c("down", "up", "downup", "updown")
+
+    ```{r}
+    # Value (n_squirrels) is missing above and below within a group
+    (squirrels <- tibble::tribble(
+      ~group,    ~name,     ~role,     ~n_squirrels,
+      1,      "Sam",    "Observer",   NA,
+      1,     "Mara", "Scorekeeper",    8,
+      1,    "Jesse",    "Observer",   NA,
+      1,      "Tom",    "Observer",   NA,
+      2,     "Mike",    "Observer",   NA,
+      2,  "Rachael",    "Observer",   NA,
+      2,  "Sydekea", "Scorekeeper",   14,
+      2, "Gabriela",    "Observer",   NA,
+      3,  "Derrick",    "Observer",   NA,
+      3,     "Kara", "Scorekeeper",    9,
+      3,    "Emily",    "Observer",   NA,
+      3, "Danielle",    "Observer",   NA
+    ))
+    
+    # The values are inconsistently missing by position within the group
+    # Use .direction = "downup" to fill missing values in both directions
+    squirrels %>%
+      dplyr::group_by(group) %>%
+      fill(n_squirrels, .direction = "downup") %>%
+      dplyr::ungroup()
+    
+    # contrast with "updown"
+    squirrels %>%
+      dplyr::group_by(group) %>%
+      # should be the same in this e.g.
+      fill(n_squirrels, .direction = "updown") %>%
+      dplyr::ungroup()
+    
+    # contrast with "down"
+    squirrels %>%
+      dplyr::group_by(group) %>%
+      fill(n_squirrels, .direction = "down") %>%
+      dplyr::ungroup()
+    
+    # contrast with "up"
+    squirrels %>%
+      dplyr::group_by(group) %>%
+      fill(n_squirrels, .direction = "up") %>%
+      dplyr::ungroup()
+    ```
+    
+### Case Study
+
+```{r}
+who
+```
+
+```{r}
+(
+  who1 <- who %>% 
+          # change the wide data to long data
+          pivot_longer(
+            cols = new_sp_m014:newrel_f65, 
+            names_to = "key", 
+            values_to = "cases", 
+            values_drop_na = TRUE
+          )
+)
+```
+
+```{r}
+who1 %>% 
+  # how many keys do we have?
+  count(key, sort = TRUE) %>% 
+  DT::datatable()
+```
+
+To parse the columns, refer to Chaper 9 ([Chapter 12 online](https://r4ds.had.co.nz/tidy-data.html#case-study)).
+
+```{r}
+(who2 <- who1 %>% 
+  # Look in key. Do you see any strings that have "newrel"?
+  # If you do replace these with new_rel for consistent
+  # key values for easier parsing
+  mutate(key = stringr::str_replace(key,
+                                    "newrel",
+                                    "new_rel")))
+```
+
+```{r}
+(
+  who3 <- who2 %>% 
+    separate(key,
+             c("new", "type", "sexage"),
+             sep = "_")
+)
+```
+
+Ok, from the chapter text it seems we only have __new__ cases, so let us
+verify that.
+
+```{r}
+who3 %>% 
+  count(new)
+```
+
+This is indeed the case! The count == the dataset count so we can drop
+this column
+
+```{r}
+(
+  who4 <- who3 %>% 
+    select(-new, -iso2, iso3)
+)
+```
+
+Let's separate the `sexage` column.
+
+```{r}
+(
+  who5 <- who4 %>% 
+    separate(sexage, c("sex", "age"),
+             sep = 1)
+)
+```
+
+__Pipeline version__
+
+```{r}
+who %>% 
+  pivot_longer(cols = new_sp_m014:newrel_f65,
+               names_to = "key",
+               values_to = "cases",
+               values_drop_na = TRUE) %>% 
+  mutate(key = stringr::str_replace(key, "newrel", "new_rel")) %>% 
+  separate(key, c("new", "type", "sexage"),
+                  sep = "_") %>% 
+  select(-new, -iso2, -iso3) %>% 
+  separate(sexage, c("sex", "age"),
+           # first pos = sex, rest = age group
+           sep = 1)
+```
+
+### Exercises
+
+1.  In this case study I set `values_drop_na = TRUE` just to make it easier to
+    check that we had the correct values. Is this reasonable? Think about
+    how missing values are represented in this dataset. Are there implicit
+    missing values? What's the difference between an `NA` and zero? 
+    
+    If we consider the missing values in this data set, it does
+    seem reasonable.
+    
+    ```{r}
+    who %>% 
+      select(new_sp_m014:newrel_f65) %>% 
+      skimr::skim()
+
+    who %>% 
+      select(new_sp_m014) %>% 
+      filter(new_sp_m014 == 0 |
+             is.na(new_sp_m014)) %>% 
+      skimr::skim()   
+    
+    who %>% 
+      select(new_sp_m014) %>% 
+      filter(new_sp_m014 == 0) %>% 
+      skimr::skim()   
+    
+    who %>% 
+      select(new_sp_m014) %>% 
+      filter(is.na(new_sp_m014)) %>% 
+      skimr::skim()   
+    
+    ```
+    
+    There may be implicit values if a year is missing for a country.
+    
+    __0__ means I received a measure for that variable and it is no cases.
+    __NA__ could mean I received no information for that variable so
+    cases may or may not exist.
+
+1.  What happens if you neglect the `mutate()` step?
+    (`mutate(names_from = stringr::str_replace(key, "newrel", "new_rel"))`)
+    
+    For some of the steps we will have misaligned data when we
+    separate these later in the pipeline. 
+    
+    Let's take for example `newrel_m3544`
+    
+    - in the separate(key, ...) step _new = newrel_, _type = m3544_
+    - this will complicate the dropping of "new"
+    - it will also mean that type would be m3544.
+    
+
+1.  I claimed that `iso2` and `iso3` were redundant with `country`. 
+    Confirm this claim.
+    
+    ```{r}
+    who %>% 
+      count(country, sort = TRUE)
+    
+    who %>% 
+      count(iso2, sort = TRUE)
+    
+    who %>% 
+      count(iso3, sort = TRUE)
+    
+    who %>% 
+      select(country, iso2, iso3) %>% 
+      skimr::skim()
+    ```
+    
+    In the skim for character variables the min tells you the min chars in
+    a observation, and max is the max chars in a variable.
+    
+
+1.  For each country, year, and sex compute the total number of cases of 
+    TB. Make an informative visualisation of the data.
+    
+    ```{r}
+    who5 %>% 
+      group_by(country, year, sex) %>% 
+      summarise(total_cases = sum(cases)) %>% 
+      ungroup() %>% 
+      arrange(country, year, sex) %>% 
+      filter(country %in% c("South Africa", "Botswana",
+                           "Zimbabwe", "Namibia", "Swaziland",
+                           "Lesotho", "Mozambique")) %>% 
+      ggplot(aes(x = year, y = total_cases, colour = sex)) +
+      geom_point(alpha = 0.5) +
+      facet_wrap(~ country, scales = "free_y") +
+      labs(title = "Total Cases Across South Africa 
+           and neighbouring countries over time",
+           subtitle = "The number of cases is growing quite a bit over time",
+           x = "", 
+           y = "Cases Per Year") +
+      scale_colour_tq()
+    
+    who5 %>% 
+      group_by(country, year, sex) %>% 
+      summarise(total_cases = sum(cases)) %>% 
+      ungroup() %>% 
+      arrange(country, year, sex) %>% 
+      group_by(year, sex) %>% 
+      summarise(cases_per_year = sum(total_cases)) %>% 
+      ungroup() %>% 
+      ggplot(aes(x = year, y = cases_per_year, fill = sex)) +
+      geom_col(alpha = 0.5) +
+      scale_fill_tq() +
+      scale_y_log10() +
+      labs(title = "Total Cases Across all countries over time",
+           subtitle = "The number of cases is growing quite a bit over time",
+           x = "", 
+           y = "Cases Per Year")
+    
+    ```
+    
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
