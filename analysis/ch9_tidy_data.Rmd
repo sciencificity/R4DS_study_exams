@@ -1,0 +1,607 @@
+---
+title: "Chapter 9 - Tidy Data with tidyr"
+author: "Vebash Naidoo"
+date: "23/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+options(scipen=10000)
+library(tidyverse)
+library(flair)
+library(emo)
+library(lubridate)
+library(magrittr)
+library(tidyquant)
+theme_set(theme_tq())
+```
+
+## What's __tidy__ data anyway?
+
+1.  Each variable must have its own column.
+1.  Each observation must have its own row.
+1.  Each value must have its own cell.
+
+In all the examples _tidyr::table_ to _tidyr::table4b_, only `tidyr::table1` is tidy.
+
+```{r}
+(
+  # practising the read_csv function to create table1
+  # just note however that table1 is in tidyr ;)
+  # tidyr::table1 etc. 
+  # In all honesty, I only figured this out after "practising" :P
+  table1 <- read_csv("country, year, cases, population
+                     Afghanistan, 1999, 745, 19987071
+                     Afghanistan, 2000, 2666, 20595360
+                     Brazil, 1999, 37737, 172006362
+                     Brazil, 2000, 80488, 174504898
+                     China, 1999, 212258, 1272915272
+                     China, 2000, 213766, 1280428583")
+)
+```
+
+### Working with tidy data
+
+```{r}
+table1 %>% 
+  mutate(rate = cases/population * 10000)
+
+table1 %>% 
+  count(year, wt=cases) # same as group_by and sum
+
+table1 %>% 
+  group_by(year) %>% 
+  summarise(sum(cases))
+
+ggplot(table1, aes(year, cases)) +
+  geom_line(aes(group = country), colour = "grey50") +
+  geom_point(aes(colour = country)) +
+  scale_colour_tq()
+
+```
+
+### Exercises
+
+1.  Using prose, describe how the variables and observations are organised in
+    each of the sample tables.
+        
+    ```{r}
+    tidyr::table1
+    ```
+    
+    - Each column is a variable `r emo::ji("check")`
+    - Each observation is in a row `r emo::ji("check")`
+    - Each value is in a cell `r emo::ji("check")` 
+    - The table describes the number of cases, and the population
+    count (each in its own column) for each country and year combination. 
+    
+    <br>
+    
+    ```{r}
+    tidyr::table2
+    ```
+    
+    - Each column is a variable `r emo::ji("x")`
+    - Each observation is in a row `r emo::ji("check")`
+    - Each value is in a cell `r emo::ji("check")` 
+    - Each row contains either the number of cases, or the population
+    count for each country and year combination. 
+    
+    <br>
+    
+    ```{r}
+    tidyr::table3
+    ```
+    
+    - Each column is a variable `r emo::ji("x")`
+    - Each observation is in a row `r emo::ji("check")`
+    - Each value is in a cell `r emo::ji("x")` 
+    - Each row considers the country and year combination, and
+    shows the number of cases and the population count (separated by a /) in
+    one variable named `rate`.
+    
+    <br>
+        
+    ```{r}
+    tidyr::table4a
+    ```
+    
+    - Each column is a variable `r emo::ji("check")`
+    - Each observation is in a row `r emo::ji("x")`
+    - Each value is in a cell `r emo::ji("check")` 
+    
+    <br>
+    
+    ```{r}
+    tidyr::table4b
+    ```
+    
+    - Each column is a variable `r emo::ji("check")`
+    - Each observation is in a row `r emo::ji("x")`
+    - Each value is in a cell `r emo::ji("check")`  
+    - Each table houses either the number of cases, or the
+    population count for each country, in separated 
+    columns for each year.
+    
+    <br> 
+    
+    ```{r}
+    tidyr::table5
+    ```
+    
+    - Each column is a variable `r emo::ji("x")`
+    - Each observation is in a row `r emo::ji("check")`
+    - Each value is in a cell `r emo::ji("x")` 
+    - The table considers each year separated into century and year
+    for each country and then similar to table3 it combines the
+    cases and population count in one variable `rate` (separated within
+    the column by /) 
+    
+    <br>
+
+1.  Compute the `rate` for `table2`, and `table4a` + `table4b`. 
+    You will need to perform four operations:
+
+    1.  Extract the number of TB cases per country per year.
+    1.  Extract the matching population per country per year.
+    1.  Divide cases by population, and multiply by 10000.
+    1.  Store back in the appropriate place.
+    
+    Which representation is easiest to work with? Which is hardest? Why?
+    
+    ```{r}
+    (
+      tbl1 <- tidyr::table2 %>% 
+      filter(type == "cases") %>% 
+      group_by(country, year) %>% 
+      mutate(cases = count) %>% 
+      ungroup() %>% 
+      select(country, year, cases) %>% 
+      arrange(country, year)
+    )
+    
+    (
+      tbl2 <- tidyr::table2 %>% 
+      filter(type == "population") %>% 
+      group_by(country, year) %>% 
+      mutate(population = count) %>% 
+      ungroup() %>% 
+      select(country_temp = country, 
+             year_temp = year, 
+             population) %>% 
+      arrange(country_temp, year_temp)
+    )
+    
+    (
+    tbl3 <- tbl1 %>% 
+      bind_cols(tbl2) %>% 
+      select(c(1:3,6)) %>% 
+      mutate(rate = (cases / population) * 10000) %>% 
+      arrange(country, year) %>% 
+      select(country, year, rate) %>% 
+      mutate(type = "rate",
+             count = rate) %>% 
+      select(c(1,2,4,5))
+    )
+    
+    tidyr::table2 %>% 
+      bind_rows(tbl3) %>% 
+      mutate(count = round(count, 2)) %>% 
+      arrange(country, year, type) %>% 
+      gt::gt()
+    ```
+    
+    <br> <br>
+    
+    ```{r}
+    
+    (
+      tbl1_cases <- tidyr::table4a %>% 
+      select(country, `1999`) %>% 
+      mutate(year = 1999,
+             cases  = `1999`) %>% 
+      select(country, year, cases)
+    )
+    
+    (
+      tbl2_cases <- tidyr::table4a %>% 
+      select(country, "2000") %>% 
+      mutate(year = 2000, 
+             cases = `2000`) %>% 
+      select(country, year, cases)
+    )
+    
+    (
+      tbl_cases <- tbl1_cases %>% 
+      bind_rows(tbl2_cases) %>% 
+      arrange(country, year)
+    )
+    
+    (
+      tbl1_pop <- tidyr::table4b %>% 
+      select(country, `1999`) %>% 
+      mutate(year = 1999,
+             population  = `1999`) %>% 
+      select(country, year, population)
+    )
+    
+    (
+      tbl2_pop <- tidyr::table4b %>% 
+      select(country, "2000") %>% 
+      mutate(year = 2000, 
+             population = `2000`) %>% 
+      select(country, year, population)
+    )
+    
+    (
+      tbl_pop <- tbl1_pop %>% 
+      bind_rows(tbl2_pop) %>% 
+      arrange(country, year)
+    )
+    
+    (
+      tbl_rate <- tbl_cases %>% 
+        bind_cols(tbl_pop) %>% 
+        janitor::clean_names() %>% 
+        select(country = country_1,
+               year = year_2,
+               cases, population) %>% 
+        mutate(rate = cases / population * 10000)
+    )
+    
+    (
+      tbl_1999 <- tbl_rate %>% 
+        select(country, year, rate) %>% 
+        filter(year == 1999) %>% 
+        mutate(`1999` = rate) %>% 
+        select(country, `1999`)
+    )
+    
+    (
+      tbl_2000 <- tbl_rate %>% 
+        select(country, year, rate) %>% 
+        filter(year == 2000) %>% 
+        mutate(`2000` = rate) %>% 
+        select(country_temp = country, `2000`)
+    )
+    
+    (
+      tbl_4c <- 
+        tbl_1999 %>% 
+        bind_cols(tbl_2000) %>% 
+        select(country, `1999`, `2000`)
+    )
+    
+    ```
+    
+
+1.  Recreate the plot showing change in cases over time using `table2`
+    instead of `table1`. What do you need to do first?
+    
+    ```{r}
+    
+    tidyr::table1
+    
+    ggplot(table1, aes(year, cases)) +
+      geom_line(aes(group = country), colour = "grey50") +
+      geom_point(aes(colour = country)) +
+      scale_colour_tq()
+    
+    tidyr::table2
+    
+    table2 %>% 
+      filter(type == "cases") %>% 
+      ggplot(aes(year, count)) +
+      geom_line(aes(group = country), colour = "grey50") +
+      geom_point(aes(colour = country)) +
+      scale_colour_tq()
+    
+    ```
+    
+Sometimes you will have to resolve one of two common problems:
+
+1. One variable might be spread across multiple columns.
+
+1. One observation might be scattered across multiple rows. 
+
+## Pivot Longer / Gather 
+
+`pivot_longer()` makes datasets longer by increasing the number of rows and decreasing the number of columns.
+
+```{r tidy1, include=FALSE}
+table4a
+
+table4a %>% 
+  # gather(list out columns you want to gather like dplyr::select() style,
+  #        key = what do you want to call the column
+  #              these column names go into,
+  #        value = the values of the columns will go here)
+  gather(`1999`, `2000`, 
+         key = "year",
+         value = "cases" )
+
+(tidy_4a <- table4a %>% 
+  # cols = list the columns you want to pivot
+  # names_to = what will you call the new column these
+  #            column names go into
+  # values_to = the values in the columns will go here
+  pivot_longer(cols = c(`1999`, `2000`),
+               names_to = "year",
+               values_to = "cases"))
+```
+
+```{r, echo=FALSE}
+decorate("tidy1") %>% 
+  flair("gather", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("pivot_longer", background = "#9FDDBA", 
+        color = "#008080")  
+```
+
+```{r tidy2, include=FALSE}
+table4b
+
+table4b %>% 
+  gather(`1999`, `2000`, 
+         key = "year",
+         value = "population")
+
+(tidy_4b <- table4b %>% 
+  pivot_longer(cols = c(`1999`, `2000`),
+               names_to = "year",
+               values_to = "population"))
+
+left_join(tidy_4a, tidy_4b) %>% 
+  arrange(country, year)
+```
+
+```{r, echo=FALSE}
+decorate("tidy2") %>% 
+  flair("gather", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("pivot_longer", background = "#9FDDBA", 
+        color = "#008080")
+  
+```
+
+## Pivot Wider / Spread
+
+`pivot_wider()` is the opposite of `pivot_longer()`. You use it when an observation is scattered across multiple rows.
+
+```{r tidy3, include=FALSE}
+table2
+
+table2 %>% 
+  # key = column with the variable name, here `type`
+  spread(key = type, 
+  # value = column with the value that will be assigned
+  # to new columns
+         value = count)
+
+table2 %>% 
+  pivot_wider(names_from = type,
+              values_from = count)
+```
+
+```{r, echo=FALSE}
+decorate("tidy3") %>% 
+  flair("spread", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("pivot_wider", background = "#9FDDBA", 
+        color = "#008080")
+  
+```
+
+### Exercises
+
+1.  Why are `pivot_longer()` and `pivot_wider()` not perfectly symmetrical?  
+    Carefully consider the following example:
+    
+    ```{r}
+    (stocks <- tibble(
+      year   = c(2015, 2015, 2016, 2016),
+      half  = c(   1,    2,     1,    2),
+      return = c(1.88, 0.59, 0.92, 0.17)
+    ))
+    stocks %>% 
+      pivot_wider(names_from = year, values_from = return) %>% 
+      pivot_longer(`2015`:`2016`, names_to = "year", values_to = "return")
+    ```
+    
+    (Hint: look at the variable types and think about column _names_.)
+    
+    `pivot_longer()` has a `names_ptypes` argument, e.g. 
+    `names_ptypes = list(year = double())`. What does it do?
+    
+    ```{r}
+    # vignette("pivot")
+    stocks %>% 
+        pivot_wider(names_from = year, values_from = return)
+    ```
+    
+    Let's have a look at the first part - here we take the year
+    and make it a variable. That means that `2015` and `2016` become
+    variables (new columns) in our new tibble, and the return
+    gets pulled into the appropriate column (`2015`/`2016`) against the
+    appropriate `half`. By nature of this move we changed year which was a 
+    double into two new column names which are `2015` and `2016` and hence
+    "character".
+    
+    ```{r}
+    (stocks_ <- stocks %>% 
+      pivot_wider(names_from = year, values_from = return) %>% 
+      pivot_longer(`2015`:`2016`, names_to = "year", values_to = "return"))
+    colnames(stocks)
+    colnames(stocks_)
+    ```
+    
+    So following on that we take these new columns and then collapse
+    them into a column `year` again. But now we have changed the type
+    given we made them columns in the `pivot_wider()` step. So they keep
+    their "character" nature when they are made longer again. Final result
+    is `year` started off double (when we created it) but ends up character
+    (after the pivot_wider and pivot_longer steps).
+    
+    Th columns also get rearranged since the pivot_wider spreads the `year`
+    column into `2015` and `2016` which come after `half` in that
+    initial step. 
+    When we subsequently pivot_longer `half` remains as the first 
+    column, followed by the `names_to = ` column (year in this case), and 
+    finally the `values_to = ` column (return in this case).
+    
+    __Q__: `pivot_longer()` has a `names_ptypes` argument, e.g. 
+    `names_ptypes = list(year = double())`. What does it do?
+    
+    Okay so upon reading the help page and the [info](https://rdrr.io/github/tidyverse/tidyr/man/pivot_longer.html)
+    I expected that this function would convert my `character`
+    column year created after the pivot_wider() step into a double, 
+    but instead it throws an error. `r emo::ji("confused")`
+    
+    ```{r, error = TRUE}
+    stocks %>% 
+      pivot_wider(names_from = year, values_from = return) %>% 
+      pivot_longer(`2015`:`2016`, 
+                   names_to = "year", 
+                   names_ptypes = list(year = double()),
+                   values_to = "return"
+                   )
+    ```
+
+    We use this to __confirm__ that the columns we create are
+    of the type / class we expect - so here it provides a <span style="color: #008080;background-color:#9FDDBA">__check__</span> it seems
+    `r emo::ji("shrug")`. <br>
+    
+    To transform the column from character to double you would need
+    to use the <span style="color: #008080;background-color:#9FDDBA">`names_transform`</span>.
+    
+        
+    ```{r}
+    (stocks_ptypes <- stocks %>% 
+      pivot_wider(names_from = year, values_from = return) %>% 
+      pivot_longer(`2015`:`2016`, 
+                   names_to = "year", 
+                   names_transform = list(year = as.double),
+                   values_to = "return",
+                   # is the value column of the type expected
+                   values_ptypes = list(return = double())
+                   ))
+    ```
+    
+    Strangely though I would expect that if I transform a column
+    from x to y (using `names_transform`), and then use `names_ptypes` 
+    to check if my name column is indeed now of type y that would be fine? 
+    It still throws an error, so my thinking is flawed here.
+    
+    ```{r, error = TRUE}
+    stocks %>% 
+      pivot_wider(names_from = year, values_from = return) %>% 
+      pivot_longer(`2015`:`2016`, 
+                   names_to = "year", 
+                   names_transform = list(year = as.double),
+                   names_ptypes = list(year = double()),
+                   values_to = "return",
+                   # is the value column of the type expected
+                   values_ptypes = list(return = double())
+                   )
+    ```
+    
+
+
+1.  Why does this code fail?
+
+    ```{r, error = TRUE}
+    table4a %>% 
+      pivot_longer(c(1999, 2000), names_to = "year", values_to = "cases")
+      # Error: Can't subset columns that don't exist.
+      # x Locations 1999 and 2000 don't exist.
+      # i There are only 3 columns.
+    ```
+    
+    ```{r}
+    # fixing it
+    table4a %>% 
+      pivot_longer(c("1999", `2000`), names_to = "year", values_to = "cases")
+    ```
+    
+    The `1999` and `2000` are non-syntactically named columns. These 
+    have to be surrounded by backticks (\`\`) or quotations `""`. Here tidyr
+    is trying to read columns numbered 1999, and 2000 which don't
+    exist.
+
+1.  What would happen if you widen this table? Why? How could you add a 
+    new column to uniquely identify each value?
+
+    ```{r}
+    people <- tribble(
+      ~name,             ~names,  ~values,
+      #-----------------|--------|------
+      "Phillip Woods",   "age",       45,
+      "Phillip Woods",   "height",   186,
+      "Phillip Woods",   "age",       50,
+      "Jessica Cordero", "age",       37,
+      "Jessica Cordero", "height",   156
+    )
+    ```
+    
+    You get a warning and it has a list for each variable `age` 
+    and `height` since _Philips Woods_ has two ages which are different.
+        
+    ```{r}
+    people %>% 
+      pivot_wider(names_from = names,
+                  values_from = "values")
+    ```
+
+    ```{r}
+    people2 <- tribble(
+      ~name,             ~names,  ~values,
+      #-----------------|--------|------
+      "Phillip Woods",   "age",       45,
+      "Phillip Woods",   "height",   186,
+      "Phillip Woods",   "age2",      50, # second age gets diff col name
+      "Jessica Cordero", "age",       37,
+      "Jessica Cordero", "height",   156
+    )
+    ```
+    
+    ```{r}
+    people2 %>% 
+      pivot_wider(names_from = names,
+                  values_from = "values")
+    ```
+
+1.  Tidy the simple tibble below. Do you need to make it wider or longer?
+    What are the variables?
+
+    ```{r}
+    (preg <- tribble(
+      ~pregnant, ~male, ~female,
+      "yes",     NA,    10,
+      "no",      20,    12
+    ))
+    ```
+    
+    We need to make it longer. The variable's are `pregnant` (yes or no), 
+    and the number of male(s)/female(s) in each outcome of `pregnant`.
+    
+    ```{r}
+    preg %>% 
+      pivot_longer(c('male', 'female'), 
+                   names_to = 'sex',
+                   values_to = 'count')
+    ```
+    
+    
+```{r}
+
+```
+    
+
+
+
+
+
