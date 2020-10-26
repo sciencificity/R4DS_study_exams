@@ -9,19 +9,31 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Vebash Naidoo" />
 
 
-<title>License</title>
+<title>Chapter 23 - Rmd Formats</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="site_libs/leaflet-binding-2.0.3/leaflet.js"></script>
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -265,6 +277,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -272,6 +347,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -309,7 +394,9 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">License</h1>
+<h1 class="title toc-ignore">Chapter 23 - Rmd Formats</h1>
+<h4 class="author">Vebash Naidoo</h4>
+<h4 class="date">26/10/2020</h4>
 
 </div>
 
@@ -337,7 +424,7 @@ $(document).ready(function () {
 <strong>Last updated:</strong> 2020-10-26
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>r4ds_book/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -365,6 +452,66 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200814code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200814)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200814code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200814)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
 <a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreeb7ebd723b997a5e26d69e69c537a439de0a85d99targetblankb7ebd72a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/b7ebd723b997a5e26d69e69c537a439de0a85d99" target="_blank">b7ebd72</a> </a>
 </p>
 </div>
@@ -384,7 +531,6 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Untracked files:
-    Untracked:  analysis/ch10_relations_dplyr.Rmd
     Untracked:  analysis/images/
     Untracked:  code_snipp.txt
 
@@ -401,7 +547,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/license.Rmd</code>) and HTML (<code>docs/license.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/ch23_rmd_formats.Rmd</code>) and HTML (<code>docs/ch23_rmd_formats.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -427,10 +573,10 @@ Message
 <tbody>
 <tr>
 <td>
-html
+Rmd
 </td>
 <td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/822454427b20b7ef6d961df5a9dca161d63958d6/docs/license.html" target="_blank">8224544</a>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/b7ebd723b997a5e26d69e69c537a439de0a85d99/analysis/ch23_rmd_formats.Rmd" target="_blank">b7ebd72</a>
 </td>
 <td>
 sciencificity
@@ -439,500 +585,7 @@ sciencificity
 2020-10-26
 </td>
 <td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/2f8dcc02f6d491ddff7cdfe117b498782b3a549a/docs/license.html" target="_blank">2f8dcc0</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-25
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/61e232417041e9fdc7c3918948a7fe3d492720e5/docs/license.html" target="_blank">61e2324</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-25
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/570c0bba9460451db4e861d26d122e0f7f4c65cb/docs/license.html" target="_blank">570c0bb</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-22
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/cfbefe68681ad4c3490fe028029c92711bf9ae35/docs/license.html" target="_blank">cfbefe6</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-21
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/4497db4a779ca510b0a1e2bccce4f393a6c73012/docs/license.html" target="_blank">4497db4</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-18
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/1a3bebed6aae2c272fcdaa79e18410ad30d73262/docs/license.html" target="_blank">1a3bebe</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-18
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/ce8c214bdd8dad411142f64342ae54f8f3dd9d17/docs/license.html" target="_blank">ce8c214</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-16
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/1fa6c06f801f7ae7ccd15c16f6966b80870106ea/docs/license.html" target="_blank">1fa6c06</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-16
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/9ae58618edba4e2eb84fc2113bb131bd9797ca37/docs/license.html" target="_blank">9ae5861</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-13
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/76c2bc460c59f4d690f4091bd02ea7a901c3a1db/docs/license.html" target="_blank">76c2bc4</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-10
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/226cd16443d6f476c331f2c8d7ae945c62f5a59e/docs/license.html" target="_blank">226cd16</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-10
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/ceae49506e0f0722f8325fe337405a33d772bd68/docs/license.html" target="_blank">ceae495</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-09-17
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/b8fde7d4b92d9bab0424481570766b7a5d14ca5c/docs/license.html" target="_blank">b8fde7d</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-09-13
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/0bab89d6921d38d878ed6b2e3fb8b743dc51f18c/docs/license.html" target="_blank">0bab89d</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-09-12
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/720a89b0311d91cb4f2479429627207efe894384/docs/license.html" target="_blank">720a89b</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-09-02
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/4612bb8876b14e8f9ea24b2cd49fcb23cb3cc272/docs/license.html" target="_blank">4612bb8</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-09-02
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/d627f04f54250399381f24742655d9eb831d3a98/docs/license.html" target="_blank">d627f04</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-26
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/b3395ae2306a4bd2331198e7dc2bfa6db1fce804/docs/license.html" target="_blank">b3395ae</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-23
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/6373aef674a3f94db47e5b2545fb6c20c9e72690/docs/license.html" target="_blank">6373aef</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-23
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/28dbedfcb6ea3a77a40d20df427f18908df746ad/docs/license.html" target="_blank">28dbedf</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-23
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/5c5ee455b97833904f6cfbdef06fd4549ddb3e01/docs/license.html" target="_blank">5c5ee45</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-23
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/051fc23191428d2dfd311b8d374cf2eb671b6c66/docs/license.html" target="_blank">051fc23</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-22
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/404509011bffaa50a4297b2298334c5f6d34e632/docs/license.html" target="_blank">4045090</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-21
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/f8f5ce118d1773e949b5e104d56c012a40713af2/docs/license.html" target="_blank">f8f5ce1</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-21
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/589a0cab5736950bd10a3bec233a4aa8db394d49/docs/license.html" target="_blank">589a0ca</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-18
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/801c1d7e74a88cf74b6c2760f0a1e99463d4625c/docs/license.html" target="_blank">801c1d7</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-18
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/9ea828099cb28c2857df68af0bf91167f59a3f7e/docs/license.html" target="_blank">9ea8280</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-14
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/e2cdeb50d0fb85499f3667853bb42e71c893a1dc/docs/license.html" target="_blank">e2cdeb5</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-14
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/sciencificity/R4DS_study_exams/blob/9a6e95f957fb6dab45157cbc612c1e9f9c75743f/analysis/license.Rmd" target="_blank">9a6e95f</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-08-14
-</td>
-<td>
-Start workflowr project.
+added Ch23
 </td>
 </tr>
 </tbody>
@@ -942,9 +595,122 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<p>What license are you using for your code? See <a href="http://choosealicense.com/">choosealicense.com</a> for help deciding. It’s a convention to save a file <code>LICENSE</code> in the root of your Git repo that contains the license text.</p>
-<p>What license are you using for the written content on your site? It is traditional to choose a <a href="https://creativecommons.org/choose/">Creative Commons</a> license for this type of content.</p>
-<p>How should others cite your work? It’s a convention to save a file <code>CITATION</code> in the root of your Git repo that contains the citation information.</p>
+<div id="set-output-format" class="section level2">
+<h2>Set output format</h2>
+<p>There are two ways to set the output of a document:</p>
+<ol style="list-style-type: decimal">
+<li><p>Modify the YAML header:</p>
+<pre class="yaml"><code>title: &quot;Viridis Demo&quot;
+output: html_document</code></pre></li>
+<li><p>Call <code>rmarkdown::render()</code> (useful if you want to produce multiple types of output):</p>
+<pre class="r"><code>rmarkdown::render(&quot;diamond-sizes.Rmd&quot;, output_format = &quot;word_document&quot;)</code></pre></li>
+</ol>
+<p>To get help: <code>?rmarkdown::html_document</code></p>
+</div>
+<div id="useful-options" class="section level2">
+<h2>Useful options</h2>
+<ol style="list-style-type: decimal">
+<li><p>Sending to decision makers? Use <span style="color: #008080;background-color:#9FDDBA">echo = FALSE</span> in opts_chunk.</p>
+<pre class="r"><code>knitr::opts_chunk$set(echo = FALSE)</code></pre></li>
+<li><p>Want to include code but hide it? Use <span style="color: #008080;background-color:#9FDDBA">code_folding</span> in YAML Header.</p>
+<pre class="yaml"><code>output:
+  html_document:
+    code_folding: hide</code></pre></li>
+</ol>
+</div>
+<div id="dashboard" class="section level2">
+<h2>Dashboard</h2>
+<p>You can create a flexdashboard using the code:</p>
+<pre><code>---
+title: &quot;Diamonds distribution dashboard&quot;
+output: flexdashboard::flex_dashboard
+---
+
+```{r setup, include = FALSE}
+library(ggplot2)
+library(dplyr)
+knitr::opts_chunk$set(fig.width = 5, fig.asp = 1/3)
+```
+
+## Column 1
+
+### Carat
+
+```{r}
+ggplot(diamonds, aes(carat)) + geom_histogram(binwidth = 0.1)
+```
+
+### Cut
+
+```{r}
+ggplot(diamonds, aes(cut)) + geom_bar()
+```
+
+### Colour
+
+```{r}
+ggplot(diamonds, aes(color)) + geom_bar()
+```
+
+## Column 2
+
+### The largest diamonds
+
+```{r}
+diamonds %&gt;% 
+  arrange(desc(carat)) %&gt;% 
+  head(100) %&gt;% 
+  select(carat, cut, color, price) %&gt;% 
+  DT::datatable()
+```</code></pre>
+<p>The rendered dashboard is <a href="flex_trial.html">here</a>.</p>
+</div>
+<div id="interactivity" class="section level2">
+<h2>Interactivity</h2>
+<pre class="r"><code>library(leaflet)
+leaflet() %&gt;%
+  setView(174.764, -36.877, zoom = 16) %&gt;% 
+  addTiles() %&gt;%
+  addMarkers(174.764, -36.877, popup = &quot;Maungawhau&quot;) </code></pre>
+<div id="htmlwidget-092a7ce9087b17ef7cc3" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-092a7ce9087b17ef7cc3">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[-36.877,174.764],16,[]],"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[-36.877,174.764,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Maungawhau",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[-36.877,-36.877],"lng":[174.764,174.764]}},"evals":[],"jsHooks":[]}</script>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.3 (2020-02-29)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 18363)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_South Africa.1252  LC_CTYPE=English_South Africa.1252   
+[3] LC_MONETARY=English_South Africa.1252 LC_NUMERIC=C                         
+[5] LC_TIME=English_South Africa.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] leaflet_2.0.3   workflowr_1.6.2
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.4.6      knitr_1.28        whisker_0.4       magrittr_1.5     
+ [5] hms_0.5.3         R6_2.4.1          rlang_0.4.7       stringr_1.4.0    
+ [9] tools_3.6.3       xfun_0.13         git2r_0.26.1      crosstalk_1.1.0.1
+[13] ellipsis_0.3.1    htmltools_0.5.0   yaml_2.2.1        digest_0.6.25    
+[17] rprojroot_1.3-2   lifecycle_0.2.0   tibble_3.0.3      crayon_1.3.4     
+[21] readr_1.3.1       later_1.0.0       htmlwidgets_1.5.1 vctrs_0.3.2      
+[25] promises_1.1.0    fs_1.4.1          glue_1.4.1        evaluate_0.14    
+[29] rmarkdown_2.4     stringi_1.4.6     pillar_1.4.6      compiler_3.6.3   
+[33] backports_1.1.6   jsonlite_1.7.0    httpuv_1.5.2      pkgconfig_2.0.3  </code></pre>
+</div>
+</div>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
@@ -960,6 +726,8 @@ footer is added to webpages before the MathJax javascript. -->
 </script>
 
 
+</div>
+</div>
 
 </div>
 
@@ -992,6 +760,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
