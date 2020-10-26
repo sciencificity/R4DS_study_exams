@@ -1,0 +1,138 @@
+---
+title: "Chapter 21 - R Markdown"
+author: "Vebash Naidoo"
+date: "25/10/2020"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE,
+                      comment = "#>", collapse = TRUE)
+```
+
+```{r libs}
+options(scipen=10000)
+library(tidyverse)
+library(flair)
+library(emo)
+library(lubridate)
+library(magrittr)
+library(tidyquant)
+theme_set(theme_tq())
+```
+
+### Overview of commands
+
+```{r cat1, echo = FALSE, comment = ""}
+cat(readr::read_file("docs/assets/markdown.Rmd"))
+```
+
+<br>
+
+```{r cat_cv, echo = FALSE, comment = ""}
+cat(readr::read_file("docs/mock_cv.Rmd"))
+```
+
+[Mock CV](mock_cv.html) <br>
+<br>
+
+### Options
+
+The following table summarises which types of output each <span style="color: #008080;background-color:#9FDDBA">option suppresses</span>:
+
+Option             | Run code | Show code | Output | Plots | Messages | Warnings 
+-------------------|----------|-----------|--------|-------|----------|---------
+`eval = FALSE`     | -        |           | -      | -     | -        | -
+`include = FALSE`  |          | -         | -      | -     | -        | -
+`echo = FALSE`     |          | -         |        |       |          |
+`results = "hide"` |          |           | -      |       |          | 
+`fig.show = "hide"`|          |           |        | -     |          |
+`message = FALSE`  |          |           |        |       | -        |
+`warning = FALSE`  |          |           |        |       |          | -
+
+
+<br> 
+
+The code below generates Table \@ref(tab:kable).
+
+```{r}
+knitr::kable(
+  mtcars[1:5, ],
+  caption = "A knir table"
+)
+```
+
+### Caching
+
+Each knit of a document starts from a <span style="color: #008080;background-color:#9FDDBA">completely clean slate</span>. 
+
+- Pro: great for <span style="color: #008080;background-color:#9FDDBA">reproducibility</span>.
+- Con: It can be <span style="color: #FFE4E1;background-color:#E3242B">painful</span> if you have some computations that take a long time. 
+- The solution is <span style="color: #008080;background-color:#9FDDBA">`cache = TRUE`</span>. When set, the output of the chunk is saved to a specially named file on disk. On subsequent runs, knitr will check to see if the code has changed, and if it hasn't, it will reuse the cached results.
+- Note: The caching system must be used with care, because by default it is based on the code only, not its dependencies. For example, here the `processed_data` chunk depends on the `raw_data` chunk:
+  
+  ````markdown
+  
+      `r ''````{r raw_data}
+      rawdata <- readr::read_csv("a_very_large_file.csv")
+      `r ''````
+      
+      `r ''````{r processed_data, cache = TRUE}
+      processed_data <- rawdata %>% 
+        filter(!is.na(import_var)) %>% 
+        mutate(new_variable = complicated_transformation(x, y, z))
+      `r ''````
+  ````
+
+    Caching the `processed_data` chunk means that it will get re-run 
+    if the dplyr pipeline is changed, but it won't get rerun if 
+    the `read_csv()` call changes. You can avoid that problem with the 
+    <span style="color: #008080;background-color:#9FDDBA">`dependson`</span>
+    chunk option:
+
+  ````markdown
+      `r ''````{r processed_data, cache = TRUE, dependson = "raw_data"}
+      processed_data <- rawdata %>% 
+        filter(!is.na(import_var)) %>% 
+        mutate(new_variable = complicated_transformation(x, y, z))
+      `r ''````
+  ````
+
+    `dependson` should contain a character vector of *every* chunk 
+    that the cached chunk depends on.    
+
+
+- Note that the chunks won't update if `a_very_large_file.csv` changes, because knitr caching only tracks changes within the `.Rmd` file. Use the <span style="color: #008080;background-color:#9FDDBA">`cache.extra`</span>  option to track changes to the file. The R expression will invalidate the cache whenever it changes. A good function to use is <span style="color: #008080;background-color:#9FDDBA">`file.info()`</span>: it returns a bunch of information about the file including when it was last modified. 
+
+  ````markdown
+      `r ''````{r raw_data, cache.extra = file.info("a_very_large_file.csv")}
+      rawdata <- readr::read_csv("a_very_large_file.csv")
+      `r ''````
+  ````
+
+- It's a good idea to regularly clear out all your caches with <span style="color: #008080;background-color:#9FDDBA">`knitr::clean_cache()`</span>.  
+
+### Inline code
+
+```{r}
+comma <- function(x) format(x, digits = 2, big.mark = ',')
+# `r comma(3452345)` to produce the inline result
+```
+
+This year has felt `r comma(3452345)` days long. Formatting decimals is a breeze using the `comma` function: `r comma(.12358124331)`.
+
+### Exercises
+
+1.  Set up a network of chunks where `d` depends on `c` and `b`, and
+    both `b` and `c` depend on `a`. Have each chunk print `lubridate::now()`,
+    set `cache = TRUE`, then verify your understanding of caching.
+    
+    ```{r cat3, echo = FALSE, comment = ""}
+    cat(readr::read_file("docs/ex_for_ch21.Rmd"))
+    ```
+    
+    <br> <br>
+    
+    [Rendered file](ex_for_ch21.html)
+

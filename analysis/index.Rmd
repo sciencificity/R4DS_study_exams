@@ -40,6 +40,7 @@ fundamentally flawed, so please do let [me](https://twitter.com/sciencificity) k
 [Chapter 8:  Data Import](ch8_import_data.html) <br>
 [Chapter 9:  Tidy Data with tidyr](ch9_tidy_data.html) <br>
 [Chapter 14:  Pipes](ch14_pipes.html) <br>
+[Chapter 21:  RMarkdown](ch21_rmd.html) <br>
 
 ### Miscellaneous
 
