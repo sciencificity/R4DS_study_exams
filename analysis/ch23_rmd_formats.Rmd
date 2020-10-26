@@ -1,0 +1,65 @@
+---
+title: "Chapter 23 - Rmd Formats"
+author: "Vebash Naidoo"
+date: "26/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Set output format
+
+There are two ways to set the output of a document:
+
+1.  Modify the YAML header: 
+    
+    ```yaml
+    title: "Viridis Demo"
+    output: html_document
+    ```
+    
+1.  Call `rmarkdown::render()` (useful if you want to produce multiple types of output):
+    
+    ```{r eval = FALSE}
+    rmarkdown::render("diamond-sizes.Rmd", output_format = "word_document")
+    ```
+    
+To get help: `?rmarkdown::html_document`    
+
+## Useful options
+
+1. Sending to decision makers? Use <span style="color: #008080;background-color:#9FDDBA">echo = FALSE</span> in opts_chunk.
+
+    ```{r, eval = FALSE}
+    knitr::opts_chunk$set(echo = FALSE)
+    ```
+    
+1. Want to include code but hide it? Use <span style="color: #008080;background-color:#9FDDBA">code_folding</span> in YAML Header.
+
+    ```yaml
+    output:
+      html_document:
+        code_folding: hide
+    ```
+
+## Dashboard
+
+You can create a flexdashboard using the code:
+
+```{r comment = "", echo = FALSE}
+cat(readr::read_file("docs/flex_trial.Rmd"))
+```
+
+The rendered dashboard is [here](flex_trial.html).
+
+## Interactivity
+
+```{r}
+library(leaflet)
+leaflet() %>%
+  setView(174.764, -36.877, zoom = 16) %>% 
+  addTiles() %>%
+  addMarkers(174.764, -36.877, popup = "Maungawhau") 
+```

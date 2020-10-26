@@ -41,6 +41,7 @@ fundamentally flawed, so please do let [me](https://twitter.com/sciencificity) k
 [Chapter 9:  Tidy Data with tidyr](ch9_tidy_data.html) <br>
 [Chapter 14:  Pipes](ch14_pipes.html) <br>
 [Chapter 21:  RMarkdown](ch21_rmd.html) <br>
+[Chapter 23:  RMarkdown Formats](ch23_rmd_formats.html) <br>
 
 ### Miscellaneous
 

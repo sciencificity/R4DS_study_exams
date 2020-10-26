@@ -1,0 +1,127 @@
+---
+title: "sensitivity"
+author: "Vebash Naidoo"
+date: "26/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(deSolve)
+```
+
+```{r}
+SIR <- function(t, x, parms) {
+with(as.list(c(parms, x)), {
+N = S + I + R
+dS = -beta*(S/N)*(I)
+dI = beta*(S/N)*(I) -gamma*I
+dR = gamma*I
+output <- c(dS, dI,dR)
+list(output)
+})
+}
+#the Initial values
+start<-c(S=10000,I=2,R=0)
+parms <- c(beta=0.4,gamma=1/4)
+1
+## vector of timesteps
+times <- seq(0, 100, 1)
+run_d<-ode(times=times, y=start, func=SIR,parms=parms)
+(pop<-run_d[,2]+run_d[,3]+run_d[,4])
+plot(times,run_d[,2], col="green", ylim=c(0,11000), type="l", main="SIR
+Model",ylab="Number of people",xlab="Times in Days")
+lines(times,run_d[,3], col="red")
+lines(times, run_d[,4], col="blue")
+lines(times,pop,type="l")
+legend("topright",legend=c("S","I","R"),col=c("green", "red","blue", "black"),
+lty=c(1,1,1,1))
+
+```
+
+```{r}
+betasens<-NULL #creating a vector to store our random betas
+for (i in 1:1000){
+parms <- c(beta=runif(1,0,1),gamma=1/4)
+run_d<-ode(times=times, y=start, func=SIR,parms=parms)
+betasens<-rbind(betasens,c(parms[1],run_d[length(run_d[,1]),4]/pop))
+}
+hist(betasens[,2],xlab="Proportion of Recovered",ylab="Frequency",
+main="Histogram of sensitivity of Beta",col=2)
+```
+
+```{r}
+plot(betasens[,1],betasens[,2],xlab="beta",ylab="Proportion of Recovered",col=2)
+```
+
+```{r}
+gammasens<-NULL #creating a vector to store our random betas
+for (i in 1:1000){
+parms <- c(beta=0.4, gamma = 1/runif(1,0,1))
+run_d<-ode(times=times, y=start, func=SIR,parms=parms)
+gammasens<-rbind(gammasens,c(parms[1],
+                             run_d[length(run_d[,1]),4]/pop))
+}
+hist(gammasens[,2],xlab="Proportion of Recovered",ylab="Frequency",
+main="Histogram of sensitivity of Gamma",col=2)
+```
+
+```{r}
+SIR <- function(t, x, parms) {
+with(as.list(c(parms, x)), {
+N = S + I + R
+dS = -beta*(S/N)*(I)
+dI = beta*(S/N)*(I) -gamma*I
+dR = gamma*I
+output <- c(dS, dI,dR)
+list(output)
+})
+}
+#the Initial values
+start<-c(S=10000,I=2,R=0)
+parms <- c(beta=0.4,gamma=1/4)
+## vector of timesteps
+times <- seq(0, 100, 1)
+run_d<-ode(times=times, y=start, func=SIR,parms=parms)
+pop<-run_d[,2]+run_d[,3]+run_d[,4]
+plot(times,run_d[,2], col="green", ylim=c(0,11000), type="l", main="SIR
+Model",ylab="Number of people",xlab="Times in Days")
+lines(times,run_d[,3], col="red")
+lines(times, run_d[,4], col="blue")
+lines(times,pop,type="l")
+legend("topright",legend=c("S","I","R"),col=c("green", "red","blue", "black"),
+lty=c(1,1,1,1))
+for ( i in 1:200){
+Inc=runif(1,2,6)
+parms <- c(beta=runif(1,0,1), gamma=1/Inc)
+run_d<-ode(times=times, y=start, func=SIR,parms=parms)
+lines(run_d[,2], col="green")
+lines(run_d[,3], col="red")
+lines(run_d[,4], col="blue")
+}
+
+CIdata<-NULL
+for ( i in 1:20){
+Inc=runif(1,2,6)
+parms <- c(beta=runif(1,0,1), gamma=1/Inc)
+run_d<-ode(times=times, y=start, func=SIR,parms=parms)
+CIdata<-cbind(CIdata,run_d[,4])
+}
+CIsd<-CIuci<-CIlci<-NULL
+CIMean<-rowMeans(CIdata)
+for (i in 1:(dim(CIdata)[1])){
+CIsd[i]<-sd(CIdata[i,])
+CIuci[i]<-CIMean[i]+1.96*CIsd[i]/sqrt(20)
+CIlci[i]<-CIMean[i]-1.96*CIsd[i]/sqrt(20)
+}
+plot(times, CIMean, type="l")
+lines(times, CIlci, col="red")
+lines(times, CIuci, col="red")
+polygon(c(times,rev(times)), c(CIuci, rev(CIlci)), col="red")
+lines(times,CIMean, type = "l", col = "green")
+
+```
+
+
+
+
