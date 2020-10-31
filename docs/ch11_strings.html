@@ -413,7 +413,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-10-31
+<strong>Last updated:</strong> 2020-11-01
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree72ad7d9fd9acac971aa29328e28745c8b8a9c43ftargetblank72ad7d9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/72ad7d9fd9acac971aa29328e28745c8b8a9c43f" target="_blank">72ad7d9</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreea8057e7cfddbc25dacf6708958678864c9b9e493targetblanka8057e7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/a8057e7cfddbc25dacf6708958678864c9b9e493" target="_blank">a8057e7</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree72ad7d9fd9acac971aa29328e28745c8b8a9c43ftargetblank72ad7d9a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreea8057e7cfddbc25dacf6708958678864c9b9e493targetblanka8057e7a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/72ad7d9fd9acac971aa29328e28745c8b8a9c43f" target="_blank">72ad7d9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/a8057e7cfddbc25dacf6708958678864c9b9e493" target="_blank">a8057e7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -568,6 +568,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/a8057e7cfddbc25dacf6708958678864c9b9e493/analysis/ch11_strings.Rmd" target="_blank">a8057e7</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-01
+</td>
+<td>
+added ch11
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/0aef1b0f9b5a050cc31609e13af14bc8129cc186/docs/ch11_strings.html" target="_blank">0aef1b0</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-10-31
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/sciencificity/R4DS_study_exams/blob/72ad7d9fd9acac971aa29328e28745c8b8a9c43f/analysis/ch11_strings.Rmd" target="_blank">72ad7d9</a>
 </td>
 <td>
@@ -598,6 +632,258 @@ String Basics
 </h2>
 <div id="string-basics" class="section level2">
 <h2>String Basics</h2>
+<pre><code class='language-r'><code>(string1 <- <span style='background-color:#9FDDBA;color:#008080'>"</span>This is a string<span style='background-color:#9FDDBA;color:#008080'>"</span>)<br>#> [1] <span style='background-color:#9FDDBA;color:#008080'>"</span>This is a string<span style='background-color:#9FDDBA;color:#008080'>"</span><br>(string2 <- <span style='background-color:#e5989b;color:#6d6875'>'</span>To put a <span style='background-color:#9FDDBA;color:#008080'>"</span>quote<span style='background-color:#9FDDBA;color:#008080'>"</span> inside a string, use single quotes<span style='background-color:#e5989b;color:#6d6875'>'</span>)<br>#> [1] <span style='background-color:#9FDDBA;color:#008080'>"</span>To put a \<span style='background-color:#9FDDBA;color:#008080'>"</span>quote\<span style='background-color:#9FDDBA;color:#008080'>"</span> inside a string, use single quotes<span style='background-color:#9FDDBA;color:#008080'>"</span><br><br>writeLines(string1)<br>#> This is a string<br>writeLines(string2)<br>#> To put a <span style='background-color:#9FDDBA;color:#008080'>"</span>quote<span style='background-color:#9FDDBA;color:#008080'>"</span> inside a string, use single quotes</code></code></pre>
+<pre class="r"><code>double_quote &lt;- &quot;\&quot;&quot; # or &#39;&quot;&#39;
+single_quote &lt;- &#39;\&#39;&#39; # or &quot;&#39;&quot;</code></pre>
+<p>If you want to include a literal backslash, you’ll need to <span style="color: #008080;background-color:#9FDDBA">double it up: <code>"\\"</code></span>.</p>
+<p>The printed representation of a string is not the same as string itself, because the printed representation shows the escapes. To see the <span style="color: #008080;background-color:#9FDDBA">raw contents of the string, use <code>writeLines()</code></span>:</p>
+<pre><code class='language-r'><code>x <- c("\"", "\\")<br>x<br>#> [1] "\"" "\\"<br><span style='background-color:#9FDDBA;color:#008080'>writeLines</span>(x)<br>#> "<br>#> \</code></code></pre>
+<p><strong>Other useful ones</strong>:</p>
+<ul>
+<li><code>"\n"</code>: newline</li>
+<li><code>"\t"</code>: tab</li>
+<li>See the complete list by getting help on <code>"</code>: <code>?'"'</code>, or <code>?"'"</code>.</li>
+<li>When you see strings like <code>"\u00b5"</code>, this is a way of writing non-English characters.</li>
+</ul>
+<pre class="r"><code>(string3 &lt;- &quot;This\tis\ta\tstring\twith\t\ttabs\tin\tit.\nHow about that?&quot;)
+#&gt; [1] &quot;This\tis\ta\tstring\twith\t\ttabs\tin\tit.\nHow about that?&quot;
+writeLines(string3)
+#&gt; This is  a   string  with        tabs    in  it.
+#&gt; How about that?
+
+## From `?&#39;&quot;&#39;` help page
+## Backslashes need doubling, or they have a special meaning.
+x &lt;- &quot;In ALGOL, you could do logical AND with /\\.&quot;
+print(x)      # shows it as above (&quot;input-like&quot;)
+#&gt; [1] &quot;In ALGOL, you could do logical AND with /\\.&quot;
+writeLines(x) # shows it as you like it ;-)
+#&gt; In ALGOL, you could do logical AND with /\.</code></pre>
+<h2>
+Some String Functions
+</h2>
+</div>
+<div id="some-string-functions" class="section level2">
+<h2>Some String Functions</h2>
+<div id="string-length" class="section level3">
+<h3>String Length</h3>
+<p>Use <span style="color: #008080;background-color:#9FDDBA"><code>str_length()</code></span>.</p>
+<pre><code class='language-r'><code><span style='background-color:#9FDDBA;color:#008080'>str_length</span>(c("a", "R for Data Science", NA))<br>#> [1] &nbsp;1 18 NA</code></code></pre>
+</div>
+<div id="combining-strings" class="section level3">
+<h3>Combining Strings</h3>
+<p>Use <span style="color: #008080;background-color:#9FDDBA"><code>str_c()</code></span>.</p>
+<ul>
+<li>Use <code>sep = some_char</code> to separate values with a character, the default separator is the empty string.</li>
+<li>Shorter length vectors are recycled.</li>
+<li>Use <code>str_replace_na(list)</code> to replace NAs with literal <strong>NA</strong>.</li>
+<li>Objects of length 0 are silently dropped.</li>
+<li>Use `collapse to reduce a <strong>vector of strings</strong> to a single string.</li>
+</ul>
+<pre><code class='language-r'><code><span style='background-color:#9FDDBA;color:#008080'>str_c</span>("a", "R for Data Science")<br>#> [1] "aR for Data Science"<br><br><span style='background-color:#9FDDBA;color:#008080'>str_c</span>("x", "y", "z")<br>#> [1] "xyz"<br><br><span style='background-color:#9FDDBA;color:#008080'>str_c</span>("x", "y", "z", <span style='background-color:#9FDDBA;color:#008080'>sep = </span>", ") # separate using character<br>#> [1] "x, y, z"<br><br><span style='background-color:#9FDDBA;color:#008080'>str_c</span>("prefix-", c("a","b", "c"), "-suffix")<br>#> [1] "prefix-a-suffix" "prefix-b-suffix" "prefix-c-suffix"</code></code></pre>
+<pre><code class='language-r'><code>x <- c("abc", <span style='background-color:#9FDDBA;color:#008080'>NA</span>)<br><br>str_c("|=", x, "=|") # concatenating a 1 long, with 2 long, with 1 long<br>#> [1] "|=abc=|" <span style='background-color:#9FDDBA;color:#008080'>NA</span><br><br>str_c("|=", <span style='background-color:#9FDDBA;color:#008080'>str_replace_na(x)</span>, "=|") # to actually show the <span style='background-color:#9FDDBA;color:#008080'>NA</span><br>#> [1] "|=abc=|" "|=<span style='background-color:#9FDDBA;color:#008080'>NA</span>=|"</code></code></pre>
+<p>Notice that the shorter vector is recycled.</p>
+<p>Objects of 0 length are dropped.</p>
+<pre><code class='language-r'><code>name <- "Vebash"<br>time_of_day <- "evening"<br>birthday <- FALSE<br><br>str_c("Good ", time_of_day, " ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name, <span style='background-color:#9FDDBA;color:#008080'>if(birthday) ' and Happy Birthday!'</span>)<br>#> [1] "Good evening Vebash"<br><br>str_c("prefix-", c("a","b", "c"), "-suffix", <span style='background-color:#9FDDBA;color:#008080'>collapse = ', '</span>)<br>#> [1] "prefix-a-suffix, prefix-b-suffix, prefix-c-suffix"<br><br>str_c("prefix-", c("a","b", "c"), "-suffix") # note the diff without<br>#> [1] "prefix-a-suffix" "prefix-b-suffix" "prefix-c-suffix"</code></code></pre>
+</div>
+<div id="subsetting-strings" class="section level3">
+<h3>Subsetting Strings</h3>
+<p>Use <span style="color: #008080;background-color:#9FDDBA"><code>str_sub()</code></span>.</p>
+<ul>
+<li><code>start</code> and <code>end</code> args give the (inclusive) position of the substring you’re looking for.</li>
+<li>does not fail if string too short, returns as much as it can.</li>
+<li>can use the assignment operator of <code>str_sub()</code> to modify strings.</li>
+</ul>
+<pre class="r"><code>x &lt;- c(&quot;Apple&quot;, &quot;Banana&quot;, &quot;Pear&quot;)
+
+str_sub(x, 1, 3) # get 1st three chars of each
+#&gt; [1] &quot;App&quot; &quot;Ban&quot; &quot;Pea&quot;
+
+str_sub(x, -3, -1) # get last three chars of each
+#&gt; [1] &quot;ple&quot; &quot;ana&quot; &quot;ear&quot;
+
+str_sub(&quot;a&quot;, 1, 5) # too short but no failure
+#&gt; [1] &quot;a&quot;
+
+x # before change
+#&gt; [1] &quot;Apple&quot;  &quot;Banana&quot; &quot;Pear&quot;
+
+# Go get from x the 1st char, and assign to it
+# the lower version of its character
+str_sub(x, 1, 1) &lt;- str_to_lower(str_sub(x, 1, 1))
+
+x # after the str_sub assign above
+#&gt; [1] &quot;apple&quot;  &quot;banana&quot; &quot;pear&quot;</code></pre>
+</div>
+<div id="locales" class="section level3">
+<h3>Locales</h3>
+<p><code>str_to_lower()</code>, <code>str_to_upper()</code> and <code>str_to_title()</code> are all functions that amend case. Amending case may be dependant on your locale though.</p>
+<pre class="r"><code># Turkish has two i&#39;s: with and without a dot, and it
+# has a different rule for capitalising them:
+str_to_upper(c(&quot;i&quot;, &quot;ı&quot;))
+#&gt; [1] &quot;I&quot; &quot;I&quot;
+str_to_upper(c(&quot;i&quot;, &quot;ı&quot;), locale = &quot;tr&quot;)
+#&gt; [1] &quot;I&quot; &quot;I&quot;</code></pre>
+<p>Sorting is also affected by <code>locales</code>. In Base R we use <code>sort</code> or <code>order</code>, in {stringr} we use <code>str_sort()</code> and <code>str_order()</code> with the additional argument <code>locale</code>.</p>
+<pre class="r"><code>x &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;eggplant&quot;)
+
+str_sort(x, locale = &quot;en&quot;)
+#&gt; [1] &quot;apple&quot;    &quot;banana&quot;   &quot;eggplant&quot;
+
+str_sort(x, locale = &quot;haw&quot;)
+#&gt; [1] &quot;apple&quot;    &quot;eggplant&quot; &quot;banana&quot;
+
+str_order(x, locale = &quot;en&quot;)
+#&gt; [1] 1 2 3
+
+str_order(x, locale = &quot;haw&quot;)
+#&gt; [1] 1 3 2</code></pre>
+</div>
+<div id="exercises" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>In code that doesn’t use stringr, you’ll often see <code>paste()</code> and <code>paste0()</code>. What’s the difference between the two functions? What stringr function are they equivalent to? How do the functions differ in their handling of <code>NA</code>?</p>
+<pre class="r"><code># from the help page
+## When passing a single vector, paste0 and paste work like as.character.
+paste0(1:12)
+#&gt;  [1] &quot;1&quot;  &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;10&quot; &quot;11&quot; &quot;12&quot;
+paste(1:12)        # same
+#&gt;  [1] &quot;1&quot;  &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;10&quot; &quot;11&quot; &quot;12&quot;
+as.character(1:12) # same
+#&gt;  [1] &quot;1&quot;  &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;10&quot; &quot;11&quot; &quot;12&quot;
+
+## If you pass several vectors to paste0, they are concatenated in a
+## vectorized way.
+(nth &lt;- paste0(1:12, c(&quot;st&quot;, &quot;nd&quot;, &quot;rd&quot;, rep(&quot;th&quot;, 9))))
+#&gt;  [1] &quot;1st&quot;  &quot;2nd&quot;  &quot;3rd&quot;  &quot;4th&quot;  &quot;5th&quot;  &quot;6th&quot;  &quot;7th&quot;  &quot;8th&quot;  &quot;9th&quot;  &quot;10th&quot;
+#&gt; [11] &quot;11th&quot; &quot;12th&quot;
+
+(nth &lt;- paste(1:12, c(&quot;st&quot;, &quot;nd&quot;, &quot;rd&quot;, rep(&quot;th&quot;, 9))))
+#&gt;  [1] &quot;1 st&quot;  &quot;2 nd&quot;  &quot;3 rd&quot;  &quot;4 th&quot;  &quot;5 th&quot;  &quot;6 th&quot;  &quot;7 th&quot;  &quot;8 th&quot;  &quot;9 th&quot; 
+#&gt; [10] &quot;10 th&quot; &quot;11 th&quot; &quot;12 th&quot;
+
+(nth &lt;- str_c(1:12, c(&quot;st&quot;, &quot;nd&quot;, &quot;rd&quot;, rep(&quot;th&quot;, 9))))
+#&gt;  [1] &quot;1st&quot;  &quot;2nd&quot;  &quot;3rd&quot;  &quot;4th&quot;  &quot;5th&quot;  &quot;6th&quot;  &quot;7th&quot;  &quot;8th&quot;  &quot;9th&quot;  &quot;10th&quot;
+#&gt; [11] &quot;11th&quot; &quot;12th&quot;
+
+
+(na_th &lt;- paste0(1:13, c(&quot;st&quot;, &quot;nd&quot;, &quot;rd&quot;, rep(&quot;th&quot;, 9), NA)))
+#&gt;  [1] &quot;1st&quot;  &quot;2nd&quot;  &quot;3rd&quot;  &quot;4th&quot;  &quot;5th&quot;  &quot;6th&quot;  &quot;7th&quot;  &quot;8th&quot;  &quot;9th&quot;  &quot;10th&quot;
+#&gt; [11] &quot;11th&quot; &quot;12th&quot; &quot;13NA&quot;
+
+(na_th &lt;- paste(1:13, c(&quot;st&quot;, &quot;nd&quot;, &quot;rd&quot;, rep(&quot;th&quot;, 9), NA)))
+#&gt;  [1] &quot;1 st&quot;  &quot;2 nd&quot;  &quot;3 rd&quot;  &quot;4 th&quot;  &quot;5 th&quot;  &quot;6 th&quot;  &quot;7 th&quot;  &quot;8 th&quot;  &quot;9 th&quot; 
+#&gt; [10] &quot;10 th&quot; &quot;11 th&quot; &quot;12 th&quot; &quot;13 NA&quot;
+
+(na_th &lt;- str_c(1:13, c(&quot;st&quot;, &quot;nd&quot;, &quot;rd&quot;, rep(&quot;th&quot;, 9), NA)))
+#&gt;  [1] &quot;1st&quot;  &quot;2nd&quot;  &quot;3rd&quot;  &quot;4th&quot;  &quot;5th&quot;  &quot;6th&quot;  &quot;7th&quot;  &quot;8th&quot;  &quot;9th&quot;  &quot;10th&quot;
+#&gt; [11] &quot;11th&quot; &quot;12th&quot; NA</code></pre>
+<ul>
+<li><p><code>paste()</code> inserts a space between values, and may be overridden with <code>sep = ""</code>. In other words the default separator is a space.</p></li>
+<li><p><code>paste0()</code> has a separator that is by default the empty string so resulting vector values have no spaces in between.</p></li>
+<li><p><code>str_c()</code> is the stringr equivalent.</p></li>
+<li><p><code>paste()</code> and <code>paste0()</code> treat NA values as literal string NA, whereas <code>str_c</code> treats NA as missing and that vectorised operation results in an NA.</p></li>
+</ul></li>
+<li><p>In your own words, describe the difference between the <code>sep</code> and <code>collapse</code> arguments to <code>str_c()</code>.</p>
+<ul>
+<li><code>sep</code> is the separator that appears between vector values when these are concatenated in a vectorised fashion.</li>
+<li><code>collapse</code> is the separator between values when all vectors are collapsed into a single contiguous string value.</li>
+</ul>
+<pre class="r"><code>(na_th_sep &lt;- str_c(1:12, c(&quot;st&quot;, &quot;nd&quot;, &quot;rd&quot;, rep(&quot;th&quot;, 9)),
+                    # sep only
+                    sep = &quot;&#39;&quot;))
+#&gt;  [1] &quot;1&#39;st&quot;  &quot;2&#39;nd&quot;  &quot;3&#39;rd&quot;  &quot;4&#39;th&quot;  &quot;5&#39;th&quot;  &quot;6&#39;th&quot;  &quot;7&#39;th&quot;  &quot;8&#39;th&quot;  &quot;9&#39;th&quot; 
+#&gt; [10] &quot;10&#39;th&quot; &quot;11&#39;th&quot; &quot;12&#39;th&quot;
+
+(na_th_col &lt;- str_c(1:12, c(&quot;st&quot;, &quot;nd&quot;, &quot;rd&quot;, rep(&quot;th&quot;, 9)),
+                    # collapse only
+                    collapse = &quot;; &quot;))
+#&gt; [1] &quot;1st; 2nd; 3rd; 4th; 5th; 6th; 7th; 8th; 9th; 10th; 11th; 12th&quot;
+
+(na_th &lt;- str_c(1:12, c(&quot;st&quot;, &quot;nd&quot;, &quot;rd&quot;, rep(&quot;th&quot;, 9)),
+                # both
+                sep = &quot; &quot;, collapse = &quot;, &quot;))
+#&gt; [1] &quot;1 st, 2 nd, 3 rd, 4 th, 5 th, 6 th, 7 th, 8 th, 9 th, 10 th, 11 th, 12 th&quot;</code></pre></li>
+<li><p>Use <code>str_length()</code> and <code>str_sub()</code> to extract the middle character from a string. What will you do if the string has an even number of characters?</p>
+<pre class="r"><code>x &lt;- &quot;This is a string.&quot;
+
+y &lt;- &quot;This is a string, no full stop&quot;
+
+z &lt;- &quot;I&quot;
+
+str_length(x)/2
+#&gt; [1] 8.5
+str_length(y)/2
+#&gt; [1] 15
+
+str_sub(x, ceiling(str_length(x)/2),
+        ceiling(str_length(x)/2))
+#&gt; [1] &quot;a&quot;
+
+str_sub(y, str_length(y)/2,
+        str_length(y)/2 + 1)
+#&gt; [1] &quot;ng&quot;
+
+str_sub(z, ceiling(str_length(z)/2),
+        ceiling(str_length(z)/2))
+#&gt; [1] &quot;I&quot;</code></pre></li>
+<li><p>What does <code>str_wrap()</code> do? When might you want to use it?</p>
+<p>It is a wrapper around stringi::stri_wrap() which implements the Knuth-Plass paragraph wrapping algorithm.</p>
+<p>The text is wrapped based on a given width. The default is 80, overridding this to 40 will mean 40 characters on a line. Further arguments such as <code>indent</code> (the indentation of start of each paragraph) may be specified.</p></li>
+<li><p>What does <code>str_trim()</code> do? What’s the opposite of <code>str_trim()</code>?</p>
+<p>It removes whitespace from the left and right of a string. <code>str_pad()</code> is the opposite functionality.</p>
+<p><code>str_squish()</code> removes extra whitepace, in beginning of string, end of string and the middle. 🥂</p>
+<pre class="r"><code>(x &lt;- str_trim(&quot;  This has \n some spaces   in the     middle and end    &quot;))
+#&gt; [1] &quot;This has \n some spaces   in the     middle and end&quot;
+# whitespace removed from begin and end of string
+writeLines(x)
+#&gt; This has 
+#&gt;  some spaces   in the     middle and end
+
+(y &lt;- str_squish(&quot;  This has \n some spaces   in the     middle and end    ... oh, not any more ;)&quot;))
+#&gt; [1] &quot;This has some spaces in the middle and end ... oh, not any more ;)&quot;
+# whitespace removed from begin, middle and end of string
+writeLines(y)
+#&gt; This has some spaces in the middle and end ... oh, not any more ;)</code></pre></li>
+<li><p>Write a function that turns (e.g.) a vector <code>c("a", "b", "c")</code> into the string <code>a, b, and c</code>. Think carefully about what it should do if given a vector of length 0, 1, or 2.</p>
+<ul>
+<li>length 0: return empty string</li>
+<li>length 1: return string</li>
+<li>length 2: return first part “and” second part</li>
+<li>length 3: return first part “,” second part “and” third part.</li>
+</ul>
+<pre class="r"><code>stringify &lt;- function(v){
+  if (length(v) == 0 | length(v) == 1){
+    v
+  }
+  else if (length(v) == 2){
+    str_c(v, collapse = &quot; and &quot;)
+  }
+  else if (length(v) &gt; 2){
+    str_c(c(rep(&quot;&quot;, (length(v) - 1)), &quot; and &quot;),
+          v, c(rep(&quot;, &quot;, (length(v) - 2)), rep(&quot;&quot;, 2)), 
+           collapse = &quot;&quot;)
+  }
+}
+emp &lt;- &quot;&quot;
+stringify(emp)
+#&gt; [1] &quot;&quot;
+
+x &lt;- &quot;a&quot;
+stringify(x)
+#&gt; [1] &quot;a&quot;
+
+y &lt;- c(&quot;a&quot;, &quot;b&quot;)
+stringify(y)
+#&gt; [1] &quot;a and b&quot;
+
+z &lt;- c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
+stringify(z)
+#&gt; [1] &quot;a, b and c&quot;
+
+l &lt;- letters
+stringify(letters)
+#&gt; [1] &quot;a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y and z&quot;</code></pre></li>
+</ol>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -648,6 +934,7 @@ String Basics
 #&gt; [49] generics_0.0.2   vctrs_0.3.2      tools_3.6.3      glue_1.4.1      
 #&gt; [53] hms_0.5.3        yaml_2.2.1       colorspace_1.4-1 rvest_0.3.5     
 #&gt; [57] knitr_1.28       haven_2.2.0</code></pre>
+</div>
 </div>
 </div>
 </div>
