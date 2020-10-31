@@ -30,4 +30,368 @@ __Click on the tab buttons below for each section__
 <h2>String Basics</h2>
 ## String Basics
 
+```{r str1, include=FALSE}
+(string1 <- "This is a string")
+(string2 <- 'To put a "quote" inside a string, use single quotes')
+
+writeLines(string1)
+writeLines(string2)
+```
+
+```{r, echo = FALSE}
+decorate('str1') %>% 
+  flair("\"", 
+        background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("\'", 
+        background = "#e5989b", 
+        color = "#6d6875") 
+```
+
+```{r}
+double_quote <- "\"" # or '"'
+single_quote <- '\'' # or "'"
+```
+
+If you want to include a literal backslash, you'll need to <span style="color: #008080;background-color:#9FDDBA">double it up: `"\\"`</span>.
+
+The printed representation of a string is not the same as string itself, because the printed representation shows the escapes. To see the <span style="color: #008080;background-color:#9FDDBA">raw contents of the string, use  `writeLines()`</span>:
+
+```{r write, include=FALSE}
+x <- c("\"", "\\")
+x
+writeLines(x)
+```
+
+```{r, echo=FALSE}
+decorate("write") %>% 
+  flair("writeLines", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+__Other useful ones__:
+
+- `"\n"`: newline
+- `"\t"`: tab
+- See the complete list by getting help on `"`: `?'"'`, or `?"'"`. 
+- When you see strings like `"\u00b5"`, this is a way of writing non-English characters.
+
+```{r}
+(string3 <- "This\tis\ta\tstring\twith\t\ttabs\tin\tit.\nHow about that?")
+writeLines(string3)
+
+## From `?'"'` help page
+## Backslashes need doubling, or they have a special meaning.
+x <- "In ALGOL, you could do logical AND with /\\."
+print(x)      # shows it as above ("input-like")
+writeLines(x) # shows it as you like it ;-)
+```
+
+<h2>Some String Functions</h2>
+## Some String Functions
+
+### String Length
+
+Use <span style="color: #008080;background-color:#9FDDBA">`str_length()`</span>.
+
+```{r str_len, include=FALSE}
+str_length(c("a", "R for Data Science", NA))
+```
+
+```{r, echo=FALSE}
+decorate("str_len") %>% 
+  flair("str_length", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+### Combining Strings
+
+Use <span style="color: #008080;background-color:#9FDDBA">`str_c()`</span>.
+
+- Use `sep = some_char` to separate values with a character, the 
+default separator is the empty string.
+- Shorter length vectors are recycled.
+- Use `str_replace_na(list)` to replace NAs with literal __NA__.
+- Objects of length 0 are silently dropped.
+- Use `collapse to reduce a __vector of strings__ to a single
+string.
+
+```{r str_com, include=FALSE}
+str_c("a", "R for Data Science")
+
+str_c("x", "y", "z")
+
+str_c("x", "y", "z", sep = ", ") # separate using character
+
+str_c("prefix-", c("a","b", "c"), "-suffix")
+```
+
+```{r, echo=FALSE}
+decorate("str_com") %>% 
+  flair("str_c", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("sep = ", background = "#9FDDBA", 
+        color = "#008080")  
+```
+
+```{r str_com2, include=FALSE}
+x <- c("abc", NA)
+
+str_c("|=", x, "=|") # concatenating a 1 long, with 2 long, with 1 long
+
+str_c("|=", str_replace_na(x), "=|") # to actually show the NA
+```
+
+```{r, echo=FALSE}
+decorate("str_com2") %>% 
+  flair("NA", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("str_replace_na(x)", background = "#9FDDBA", 
+        color = "#008080")  
+```
+
+Notice that the shorter vector is recycled.
+
+Objects of 0 length are dropped.
+
+```{r str_com3, include=FALSE}
+name <- "Vebash"
+time_of_day <- "evening"
+birthday <- FALSE
+
+str_c("Good ", time_of_day, " ",
+      name, if(birthday) ' and Happy Birthday!')
+
+str_c("prefix-", c("a","b", "c"), "-suffix", collapse = ', ')
+
+str_c("prefix-", c("a","b", "c"), "-suffix") # note the diff without
+```
+
+```{r, echo=FALSE}
+decorate("str_com3") %>% 
+  flair("if(birthday) ' and Happy Birthday!'", 
+        background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("collapse = ', '", 
+        background = "#9FDDBA", 
+        color = "#008080")
+```
+
+
+### Subsetting Strings
+
+Use <span style="color: #008080;background-color:#9FDDBA">`str_sub()`</span>.
+
+- `start` and `end` args  give the (inclusive) position of the substring you're looking for.
+- does not fail if string too short, returns as much as it can.
+- can use the assignment operator of `str_sub()` to modify strings.
+
+```{r}
+x <- c("Apple", "Banana", "Pear")
+
+str_sub(x, 1, 3) # get 1st three chars of each
+
+str_sub(x, -3, -1) # get last three chars of each
+
+str_sub("a", 1, 5) # too short but no failure
+
+x # before change
+
+# Go get from x the 1st char, and assign to it
+# the lower version of its character
+str_sub(x, 1, 1) <- str_to_lower(str_sub(x, 1, 1))
+
+x # after the str_sub assign above
+```
+
+### Locales
+
+`str_to_lower()`, `str_to_upper()` and `str_to_title()` are all
+functions that amend case. Amending case may be dependant on your
+locale though.
+
+```{r}
+# Turkish has two i's: with and without a dot, and it
+# has a different rule for capitalising them:
+str_to_upper(c("i", "ı"))
+str_to_upper(c("i", "ı"), locale = "tr")
+```
+
+Sorting is also affected by `locales`. In Base R we use `sort` or `order`, in {stringr} we use `str_sort()` and `str_order()` with the
+additional argument `locale`.
+
+```{r}
+x <- c("apple", "banana", "eggplant")
+
+str_sort(x, locale = "en")
+
+str_sort(x, locale = "haw")
+
+str_order(x, locale = "en")
+
+str_order(x, locale = "haw")
+```
+
+### Exercises
+
+1.  In code that doesn't use stringr, you'll often see `paste()` and `paste0()`.
+    What's the difference between the two functions? What stringr function are
+    they equivalent to? How do the functions differ in their handling of 
+    `NA`?
+    
+    ```{r}
+    # from the help page
+    ## When passing a single vector, paste0 and paste work like as.character.
+    paste0(1:12)
+    paste(1:12)        # same
+    as.character(1:12) # same
+    
+    ## If you pass several vectors to paste0, they are concatenated in a
+    ## vectorized way.
+    (nth <- paste0(1:12, c("st", "nd", "rd", rep("th", 9))))
+    
+    (nth <- paste(1:12, c("st", "nd", "rd", rep("th", 9))))
+    
+    (nth <- str_c(1:12, c("st", "nd", "rd", rep("th", 9))))
+    
+    
+    (na_th <- paste0(1:13, c("st", "nd", "rd", rep("th", 9), NA)))
+    
+    (na_th <- paste(1:13, c("st", "nd", "rd", rep("th", 9), NA)))
+    
+    (na_th <- str_c(1:13, c("st", "nd", "rd", rep("th", 9), NA)))
+    ```
+
+    - `paste()` inserts a space between values, and may be overridden
+    with `sep = ""`. In other words the default separator is a 
+    space.
+    
+    - `paste0()` has a separator that is by default the empty 
+    string so resulting vector values have no spaces in
+    between.
+    
+    - `str_c()` is the stringr equivalent.
+    
+    - `paste()` and `paste0()` treat NA values as literal string NA,
+    whereas `str_c` treats NA as missing and that vectorised
+    operation results in an NA.
+    
+    
+1.  In your own words, describe the difference between the `sep` and `collapse`
+    arguments to `str_c()`.
+    
+    - `sep` is the separator that appears between vector values
+    when these are concatenated in a vectorised fashion.
+    - `collapse` is the separator between values when all 
+    vectors are collapsed into a single contiguous string value.
+    
+    ```{r}
+    (na_th_sep <- str_c(1:12, c("st", "nd", "rd", rep("th", 9)),
+                        # sep only
+                        sep = "'"))
+    
+    (na_th_col <- str_c(1:12, c("st", "nd", "rd", rep("th", 9)),
+                        # collapse only
+                        collapse = "; "))
+    
+    (na_th <- str_c(1:12, c("st", "nd", "rd", rep("th", 9)),
+                    # both
+                    sep = " ", collapse = ", "))
+    ```
+
+1.  Use `str_length()` and `str_sub()` to extract the middle character from 
+    a string. What will you do if the string has an even number of characters?
+    
+    ```{r}
+    x <- "This is a string."
+    
+    y <- "This is a string, no full stop"
+    
+    z <- "I"
+    
+    str_length(x)/2
+    str_length(y)/2
+    
+    str_sub(x, ceiling(str_length(x)/2),
+            ceiling(str_length(x)/2))
+    
+    str_sub(y, str_length(y)/2,
+            str_length(y)/2 + 1)
+    
+    str_sub(z, ceiling(str_length(z)/2),
+            ceiling(str_length(z)/2))
+    ```
+    
+
+1.  What does `str_wrap()` do? When might you want to use it?
+
+    It is a wrapper around stringi::stri_wrap() which implements 
+    the Knuth-Plass paragraph wrapping algorithm.
+    
+    The text is wrapped based on a given width. The default
+    is 80, overridding this to 40 will mean 40 characters
+    on a line. Further arguments such as `indent` (the indentation
+    of start of each paragraph) may be specified.
+
+1.  What does `str_trim()` do? What's the opposite of `str_trim()`?
+
+    It removes whitespace from the left and right of a string.
+    `str_pad()` is the opposite functionality.
+    
+    `str_squish()` removes extra whitepace, in beginning of string,
+    end of string and the middle. `r emo::ji("celebrate")`
+    
+    ```{r}
+    (x <- str_trim("  This has \n some spaces   in the     middle and end    "))
+    # whitespace removed from begin and end of string
+    writeLines(x)
+    
+    (y <- str_squish("  This has \n some spaces   in the     middle and end    ... oh, not any more ;)"))
+    # whitespace removed from begin, middle and end of string
+    writeLines(y)
+    ```
+    
+
+1.  Write a function that turns (e.g.) a vector `c("a", "b", "c")` into 
+    the string `a, b, and c`. Think carefully about what it should do if
+    given a vector of length 0, 1, or 2.
+    
+    - length 0: return empty string
+    - length 1: return string
+    - length 2: return first part "and" second part
+    - length 3: return first part "," second part "and" third part.
+    
+    ```{r}
+    stringify <- function(v){
+      if (length(v) == 0 | length(v) == 1){
+        v
+      }
+      else if (length(v) == 2){
+        str_c(v, collapse = " and ")
+      }
+      else if (length(v) > 2){
+        str_c(c(rep("", (length(v) - 1)), " and "),
+              v, c(rep(", ", (length(v) - 2)), rep("", 2)), 
+               collapse = "")
+      }
+    }
+    emp <- ""
+    stringify(emp)
+    
+    x <- "a"
+    stringify(x)
+    
+    y <- c("a", "b")
+    stringify(y)
+    
+    z <- c("a", "b", "c")
+    stringify(z)
+    
+    l <- letters
+    stringify(letters)
+    ```
+    
+
+
+
 
