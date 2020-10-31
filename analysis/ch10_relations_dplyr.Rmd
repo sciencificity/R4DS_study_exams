@@ -1,0 +1,1259 @@
+---
+title: "Chapter 10 - Relational Data with {dplyr}" 
+author: "Vebash Naidoo"
+date: "26/10/2020"
+output:
+  rmarkdown::html_document:
+    theme: lumen
+---
+
+<!-- I wanted the TOC to change depending on which tab we are in. This SO -->
+<!-- Post has some info but doesn't work https://stackoverflow.com/questions/54803465/rmarkdown-is-it-possible-to-display-the-toc-of-the-current-tab-only-in-a-tabse -->
+
+```{css, echo = FALSE}
+.tabset h2 {display: none;}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE,
+                      comment = "#>", collapse = TRUE)
+
+options(scipen=10000)
+library(tidyverse)
+library(flair)
+library(emo)
+library(lubridate)
+library(magrittr)
+library(tidyquant)
+library(nycflights13)
+theme_set(theme_tq())
+```
+# Relational Data {#buttons .tabset .tabset-fade .tabset-pills}
+
+__Click on the tab buttons below for each section__
+
+<h2>Main types of joins</h2>
+## Main types of joins
+
+* __Mutating joins__, which add new variables to one data frame from matching
+  observations in another.
+
+* __Filtering joins__, which filter observations from one data frame based on
+  whether or not they match an observation in the other table.
+
+* __Set operations__, which treat observations as if they were set elements.
+
+### Dataset
+
+These are the datasets we will be using to learn about __joins__ which come
+from the _nycflights13_ package.
+
+*   `airlines` lets you look up the full carrier name from its abbreviated
+    code:
+
+    ```{r}
+    airlines
+    ```
+
+*   `airports` gives information about each airport, identified by the `faa`
+    airport code:
+
+    ```{r}
+    airports
+    ```
+
+*   `planes` gives information about each plane, identified by its `tailnum`:
+
+    ```{r}
+    planes
+    ```
+
+*   `weather` gives the weather at each NYC airport for each hour:
+
+    ```{r}
+    weather
+    ```
+    
+*   `flights` gives the flights departing a NYC airport:
+
+    ```{r}
+    flights
+    ```    
+    
+<figure>
+  <img src="assets/relational-nycflights.png" width="800" height="600" alt="ERD">
+
+  <figcaption>Enterprise Relation Diagram from
+  [R4DS](https://r4ds.had.co.nz/relational-data.html)
+  </figcaption>
+</figure>
+<br>
+
+
+For nycflights13:
+
+* `flights` connects to `planes` via a single variable, `tailnum`. 
+
+* `flights` connects to `airlines` through the `carrier` variable.
+
+* `flights` connects to `airports` in two ways: via the `origin` and
+  `dest` variables.
+
+* `flights` connects to `weather` via `origin` (the location), and
+  `year`, `month`, `day` and `hour` (the time).
+
+### Exercises
+
+1.  Imagine you wanted to draw (approximately) the route each plane flies from
+    its origin to its destination. What variables would you need? What tables
+    would you need to combine?
+    
+    We would need the origin and dest from `flights` and the lat and lon
+    for each origin / dest from `airports`.
+
+1.  I forgot to draw the relationship between `weather` and `airports`.
+    What is the relationship and how should it appear in the diagram?
+    
+    `weather` has origin, and `airports` has faa. These could be joined 
+    to get all weather conditions for each day and each hour in the
+    dataset.
+
+1.  `weather` only contains information for the origin (NYC) airports. If
+    it contained weather records for all airports in the USA, what additional
+    relation would it define with `flights`?
+    
+    There would be a relation with dest.
+
+1.  We know that some days of the year are "special", and fewer people than
+    usual fly on them. How might you represent that data as a data frame?
+    What would be the primary keys of that table? How would it connect to the
+    existing tables?
+    
+    I would have a table called `holidays` and it would have a 
+    _year_, _month_ and _day_ variable that can be used to connect
+    to flights, and weather.
+
+<h2>Keys</h2>
+## Keys 
+
+* A table has a name, a column too has a name. 
+
+* Rows however don't have names, and need a way to be identified. This is done
+through a __primary key__. A primary key identifies a single row in a table. It
+is unique since no two rows can have the same primary key. It may be simple (a single column serves as the primary key) or composite (multiple columns serve as the primary key). <br>
+For example, `planes$tailnum` is a primary key because it uniquely identifies
+each plane in the `planes` table.
+
+* Data is spread among several columns. A __foreign key__ allows you to associate the different tables you have. A _foreign key_ is either a single column or
+multiple columns that reference values in some other table.<br>
+  For example, `flights$tailnum` is a foreign key because it appears in the 
+  `flights` table where it matches each flight to a unique plane in the `planes`
+  table.
+
+* A variable can be both a primary key _and_ a foreign key. For example, `origin` is part of the `weather` primary key, and is also a foreign key for the `airports` table.
+
+```{r findkey, include=FALSE}
+airlines %>% 
+  count(carrier) %>% 
+  filter(n > 1)
+
+airports %>% 
+  count(faa) %>% 
+  filter(n > 1)
+
+planes %>% 
+  count(tailnum) %>% 
+  filter(n > 1)
+
+weather %>% 
+  count(year, month, day, hour, origin) %>% 
+  filter(n > 1)  
+  
+weather %>% 
+  filter(year == 2013,
+         month == 11,
+         day == 3,
+         hour == 1) %>% 
+  print(width = Inf)
+
+weather %>% 
+  filter(year == 2013,
+         month == 11,
+         day == 3,
+         hour == 1) %>% 
+  mutate(lag = lag(time_hour),
+         lead = lead(time_hour),
+         diff = time_hour - lag) %>% 
+  print(width = Inf)
+  
+
+weather %>% 
+  count(year, month, day, hour, origin, time_hour) %>% 
+  filter(n > 1)
+
+weather %>% 
+  print(width = Inf)
+
+flights %>% 
+  count(year, month, day, hour, 
+        origin, dest, carrier,
+        tailnum) %>% 
+  filter(n > 1)
+
+# Let's have a look at a few
+flights %>% 
+  filter(year == 2013, month == 1, day == 7, hour == "6",
+         origin == "LGA", dest == "ORD",
+         carrier == "AA", tailnum == "N3CYAA") %>% 
+  print(width = Inf)
+
+flights %>% 
+  count(year, month, day, hour, 
+        origin, dest, carrier,
+        tailnum, flight) %>% 
+  filter(n > 1)
+```
+
+```{r, echo=FALSE}
+decorate("findkey") %>% 
+  flair("count", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("filter(n > 1)", background = "#9FDDBA", 
+        color = "#008080")  
+```
+
+When even a combination of columns does not seem to identify an observation
+you may add your own primary key. The best is to use <span style="color: #008080;background-color:#9FDDBA">__mutate__</span> with <span style="color: #008080;background-color:#9FDDBA">`row_number()`</span>. This is called a _surrogate key_.
+
+### Exercises
+
+1.  Add a surrogate key to `flights`.
+
+    ```{r}
+    (flights_pk <- flights %>% 
+      mutate(pk = row_number())) %T>%
+       print(width = Inf)
+    ```
+
+
+1.  Identify the keys in the following datasets
+
+    a.  `Lahman::Batting`
+        
+        Wondering how to figure out what datasets are available to you to use?
+        
+        Call <span style="color: #008080;background-color:#9FDDBA">`data(package = 'XXX')`</span> to get a listing.
+        
+        ```{r, eval = FALSE}
+        data(package = "Lahman") %>% 
+          print()
+        
+        ```
+        
+        The above produces a list like this `r emo::ji("down")`:
+        
+        <figure>
+        <img src="assets/data_cmd.PNG" width="650" height="500" alt="Data in a package Lahman">
+        <figcaption>data(package = 'name_of_pkg')</figcaption>
+    
+        </figure>
+    
+        <br>
+    
+        ```{r}
+        data("Batting", package = "Lahman")
+        # data("Salaries", package = "Lahman")
+        # data("People", package = "Lahman")
+      
+        as_tibble(Batting) %>% 
+        # first try
+        count(playerID, yearID, teamID) %>% 
+        filter(n > 1)
+      
+        as_tibble(Batting) %>%  
+          # let's have a look at one to see what else
+          # differentiates it
+          filter(playerID == "alyeabr01",
+                yearID == 1972,
+                teamID == "OAK")
+      
+        as_tibble(Batting) %>% 
+          count(playerID, yearID, teamID, stint) %>% 
+          filter(n > 1)
+        ```
+        
+        Looks like the key is `playerID`, `yearID`, `teamID` and `stint`.
+
+    a.  `babynames::babynames`
+    
+        ```{r}
+        data(babynames, package = "babynames")
+        class(babynames)
+        babynames
+        babynames %>% 
+          # n is in the columns so we need to name our variable
+          # something else
+          dplyr::count(year, sex, name,
+                      name = "count",
+          # without the wt = 1, it was using n as a weight in count                  
+          # Using `n` as weighting variable
+          # i Quiet this message with `wt = n` or count rows with `wt = 1`
+                      wt = 1) %>% 
+          filter(count > 1)
+        
+        babynames %>% 
+          group_by(year, sex, name) %>% 
+          summarise(nn = n())
+        
+        babynames %>% 
+          # confirming there is only one row for each
+          filter(year == 1880, 
+                 sex == 'F',
+                 name == 'Abby' | name == "Adda")
+        ```
+    
+        Looks like the key is `year`, `sex`, `name`. So, we had some issues
+        here, since the dataset had an `n` variable in it. The <span style="color: #008080;background-color:#9FDDBA">`count() / tally()`</span> function 
+        uses `n` as a weighting variable.
+    
+        To fix this we need to:
+    
+        - explicitly name the output variable something other than `n`
+        - add a `wt = 1` to not tally up the `n`.
+    
+        Let's see this with the example tribble in the help docs. 
+    
+        First as it should be:
+    
+        ```{r}
+        # use the `wt` argument to perform a weighted count. This is useful
+        # when the data has already been aggregated once
+        (df <- tribble(
+          ~name,    ~gender,   ~runs,
+          "Max",    "male",       10,
+          "Sandra", "female",      1,
+          "Susan",  "female",      4
+        ))
+        # counts rows:
+        df %>% count(gender)
+        # counts runs:
+        df %>% count(gender, wt = runs)
+        ```
+    
+        Now let's rename `runs` to `n`, and we see the difference:
+    
+        ```{r}
+        # use the `wt` argument to perform a weighted count. This is useful
+        # when the data has already been aggregated once
+        (df <- tribble(
+          ~name,    ~gender,      ~n,
+          "Max",    "male",       10,
+          "Sandra", "female",      1,
+          "Susan",  "female",      4
+        ))
+        # counts rows:
+        df %>% count(gender) # weight(wt) = n implicit
+        ```
+    
+        Adding a new name and a `wt = 1` we should get the original output 
+        as when we used the variable named `runs`. Here it shows `female` as 1 
+        which is not correct. `r emo::ji("horror")`
+      
+        ```{r}
+        # use the `wt` argument to perform a weighted count. This is useful
+        # when the data has already been aggregated once
+        (df <- tribble(
+          ~name,    ~gender,      ~n,
+          "Max",    "male",       10,
+          "Sandra", "female",      1,
+          "Susan",  'female',      4
+        ))
+        # counts rows:
+        df %>% count(gender, 
+                     name = "count", 
+                     wt = 1
+                     )
+        # counts n's:
+        df %>% count(gender, name = "count", wt = n)
+        ```
+    
+        I am <span style="color: #FFE4E1;background-color:#E3242B">unsure what is really going on above</span>, 
+        as I expected `female = 2`, but I don't have time to investigate. 
+        It does work for the `babynames` case so this may be some 
+        other anomaly - maybe convert to a factor and see?
+    
+    
+    a.  `nasaweather::atmos`
+    
+        ```{r}
+        data("atmos", package = "nasaweather")
+        
+        atmos %>% 
+          count(lat, long, year, month) %>% 
+          filter(n > 1)
+        ```
+      
+        Looks like the key is `lat`, `long`, `year` and `month`.
+  
+    a.  `fueleconomy::vehicles`
+    
+        ```{r}
+        fueleconomy::vehicles %>% 
+          count(id) %>% 
+          filter(n > 1)
+        ```
+    
+        Looks like the key is `id`.
+    
+    a.  `ggplot2::diamonds`
+    
+        ```{r}
+        ggplot2::diamonds %>% 
+          count(carat, cut, color, clarity, price, depth, table, x, y, z) %>% 
+          filter(n > 1)
+        ```
+    
+        There is not a clear key for diamonds so here we would create one using
+        a surrogate key via a mutate and row_number().
+
+
+1.  Draw a diagram illustrating the connections between the `Batting`,
+    `People`, and `Salaries` tables in the Lahman package. Draw another diagram
+    that shows the relationship between `People`, `Managers`, `AwardsManagers`.
+
+    How would you characterise the relationship between the `Batting`,
+    `Pitching`, and `Fielding` tables?
+    
+    ```{r}
+    # the connections between the `Batting`, `People`, and `Salaries` 
+    data('Batting', package = "Lahman")
+    data('People', package = "Lahman")
+    data('Salaries', package = "Lahman")
+    
+    Batting <- Batting %>% 
+      as_tibble() 
+    
+    Batting %>% 
+      head(15) %>% 
+      DT::datatable()
+    
+    People <- People %>% 
+      as_tibble() 
+    
+    People %>% 
+      head(15) %>% 
+      DT::datatable()  
+    
+    Batting %>% 
+      # how many distinct "players"?
+      distinct(playerID) %>% 
+      nrow()
+    
+    People %>% 
+      # how many distinct "people"?
+      distinct(playerID) %>% 
+      # ahh, notice num_people > num_players
+      # this accounts for the managers etc. I believe
+      nrow()
+    
+    Salaries <- Salaries %>% 
+      as_tibble()
+    
+    Salaries %>% 
+      head(15) %>% 
+      DT::datatable()  
+    
+    Salaries %>% 
+      # how many distinct "people" do we have salaries for?
+      distinct(playerID) %>% 
+      # ahh, notice we have very few salary records
+      nrow()  
+    ```
+    
+    
+    <figure>
+      <img src="assets/players.PNG" width="650" height="550" alt="ERD for a few tables">
+    
+      <figcaption>Enterprise Relationship Diagram (ERD) for a couple of tables</figcaption>
+    </figure>
+    <br>
+    
+    ```{r}
+    # the relationship between `People`, `Managers`, `AwardsManagers`.
+    Lahman::People %>% 
+      as_tibble() %>% 
+      head()
+    
+    Lahman::Managers %>% 
+      as_tibble() %>% 
+      head()
+    
+    Lahman::AwardsManagers %>% 
+      as_tibble() %>% 
+      head()
+    ```
+    
+    <figure>
+      <img src="assets/players2.PNG" width="650" height="550" alt="ERD for a few tables">
+    
+      <figcaption>Enterprise Relationship Diagram (ERD) for a couple of tables</figcaption>
+    </figure>
+    <br>
+    
+    ```{r}
+    Lahman::Batting %>% 
+      as_tibble() %>% 
+      head()
+    
+    Lahman::Pitching %>% 
+      as_tibble() %>% 
+      head()
+    
+    Lahman::Fielding %>% 
+      as_tibble() %>% 
+      head()
+    
+    Lahman::battingLabels %>% 
+      as_tibble() %>% 
+      DT::datatable()
+    
+    Lahman::pitchingLabels %>% 
+      as_tibble() %>% 
+      DT::datatable()
+    
+    Lahman::fieldingLabels %>% 
+      as_tibble() %>% 
+      DT::datatable()
+    ```
+
+    I think these are complementary tables which all together make
+    up the different aspects of the game of baseball, and the stats
+    for each player.
+
+<h2>Mutating joins</h2>
+## Mutating joins
+
+Just as `mutate()` adds new variables to a dataset <span style="color: #008080;background-color:#9FDDBA">mutating joins</span> joins two datasets
+and tags on the extra variables on the right.
+
+- Tables are joined using <span style="color: #008080;background-color:#9FDDBA">keys</span>.
+- Additional variables are <span style="color: #008080;background-color:#9FDDBA">copied over</span> 
+from one table to another.
+
+```{r}
+(flights2 <- flights %>% 
+   select(year:day, hour, origin, dest, tailnum, carrier)
+)
+```
+
+Let's say we want to add the actual airline.
+
+- Need to figure out where we would get this ... looking at our tables 
+it seems `airlines` would be appropriate.
+- Need to figure out which field we can use to join it to `flights` ...
+looks like `carrier` will do.
+
+```{r}
+flights2 %>% 
+  left_join(airlines, by = "carrier") %>% 
+  print(width = Inf)
+```
+
+```{r, eval = FALSE, echo = FALSE}
+flights2 %>% 
+  # base R way
+  mutate(name = airlines$name[match(carrier, airlines$carrier)]) %>% 
+  print(width = Inf)
+```
+
+__Ok, let's create a few tables to see joins in action.__
+
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+  1,    "x1",
+  2,    "x2",
+  3,    "x3"
+)
+
+y <- tribble(
+  ~key, ~val_x,
+  1,    "y1",
+  2,    "y2",
+  4,    "y3"
+)
+```
+
+### Inner Join
+
+- Only joins wherever <span style="color: #008080;background-color:#9FDDBA">keys are equivalent</span>  (i.e. the key must be present in both tables).
+- Unmatched rows are __not__ included in the result.
+- I.e. we __lose__ observations.
+
+```{r inner1, include=FALSE}
+x %>% 
+  inner_join(y, by = "key")
+```
+
+```{r, echo=FALSE}
+decorate("inner1") %>% 
+  flair("inner_join", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+_Observation_: key = 3 in table x is not kept, and key = 4 in table y
+also falls away.
+
+### Outer Joins
+
+- `Left join` keeps all observations in x.
+- `Right join` keeps all observations in y.
+- `Full join` keeps all observations in x and y.
+- Observations from __at least__ one table is kept.
+- The most commonly used join is the __left join__. It looks up additional data from another table, and it preserves the original observations even when there isn't a match.
+
+<figure>
+  <img src="assets/join-outer.PNG" width="350" height="500" alt="Outer Join">
+
+  <figcaption>Outer Joins</figcaption>
+</figure>
+<br>
+
+#### Left Join
+
+```{r lj, include=FALSE}
+x %>% 
+  left_join(y, by = "key")
+```
+
+```{r, echo=FALSE}
+decorate("lj") %>% 
+  flair("left_join", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+#### Right Join
+
+```{r rj, include=FALSE}
+x %>% 
+  right_join(y, by = "key")
+```
+
+```{r, echo=FALSE}
+decorate("rj") %>% 
+  flair("right_join", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+
+#### Full Join
+
+```{r fj, include=FALSE}
+x %>% 
+  full_join(y, by = "key")
+```
+
+```{r, echo=FALSE}
+decorate("fj") %>% 
+  flair("full_join", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+### Duplicate Keys
+
+Sometimes the keys are not unique.
+
+1.  One table has duplicate keys - there is typically a one-to-many
+    relationship.
+    
+     <figure>
+    <img src="assets/join-one-to-many.PNG" width="300" height="150" alt="One to many">
+      <figcaption><span style="color: #6d6875;background-color:#e5989b">One to many</span></figcaption>
+    </figure>
+
+    <br>
+
+    ```{r dupkey1, include=FALSE}
+    x <- tribble(
+      ~key, ~val_x,
+      1,    "x1",
+      2,    "x2",
+      2,    "x3",
+      1,    "x4"
+    )
+    
+    y <- tribble(
+      ~key, ~val_y,
+      1,    "y1",
+      2,    "y2"
+    )
+    
+    left_join(x, y, by = "key")
+    ```
+    
+    ```{r, echo=FALSE}
+    decorate("dupkey1") %>% 
+      flair("left_join", background = "#9FDDBA", 
+            color = "#008080")
+    ```
+    
+    Notice that:
+    
+    - The result has _two_ `key == 1`, and _two_ `key == 2`. 
+    - I.e. the observations from `x`, the `left table`, is preserved.
+
+1.  Both tables have duplicate keys. When you join tables with
+    duplicated keys, you get all possible combinations, 
+    called the <span style="color: #008080;background-color:#9FDDBA">Cartesian product</span>.
+    
+         <figure>
+    <img src="assets/join-many-to-many.PNG" width="480" height="300" alt="Many to many">
+      <figcaption><span style="color: #6d6875;background-color:#e5989b">Many to many</span></figcaption>
+    </figure>
+    <br>
+    
+    
+    ```{r}
+    x <- tribble(
+      ~key, ~val_x,
+         1,  "x1",
+         2,  "x2",
+         2,  "x3",
+         1,  "x4"
+    )
+
+    y <- tribble(
+      ~key, ~val_y,
+         1, "y1",
+         2, "y2",
+         2, "y3",
+         3, "y4"
+    )
+    
+    left_join(x, y, by = "key")
+    ```
+    
+    Notice that we have _two_ `key == 2` in table `x` and _two_ `key == 2` 
+    in table `y`. That means that both the `key == 2` in `x` matches both the 
+    `key == 2` in `y` resulting in __4__ entries in the resulting table.
+
+
+<h2>Defining Key Columns</h2>
+## Defining Key Columns
+
+We've been lucky so far that the __key__ column in both tables we are joining
+is called _key_. That's not usually the case, and tables often have 
+composite keys (keys made up of several columns). 
+
+- The default joining happens using 
+<span style="color: #008080;background-color:#9FDDBA">`by = NULL`</span>, which uses all variables that appear in both tables.
+For example, the flights and weather tables match on their common variables:
+`year`, `month`, `day`, `hour` and `origin`.
+
+    ```{r, message = TRUE}
+    flights2 %>% 
+      left_join(weather)
+    ```
+- <span style="color: #008080;background-color:#9FDDBA">A character vector</span> as we have been using thus far, <span style="color: #008080;background-color:#9FDDBA">`by = "x"`</span>. 
+This uses some of the common variables. 
+For example, `flights` and `planes` have `year` variables, but they mean different things so we only want to join by `tailnum`. The variable
+which is named the same `year` but which mean completely different things in
+each table, is uniquely named in the output by adding a `.x` and `.y` at the 
+end of its name.
+
+    ```{r, message=TRUE}
+    flights2 %>% 
+      left_join(planes, by = "tailnum") %>% 
+      print(width = Inf)
+    ```
+
+- A <span style="color: #008080;background-color:#9FDDBA">named character vector</span>: `by = c("a" = "b")`. This will
+    match variable `a` in table `x` to variable `b` in table `y`. 
+
+    For example, to draw a map we need to combine the flights data
+    with the airports data which contains the geographical coordinates
+    (`lat` and `lon`) of the airport. 
+    Each flight has an origin and destination `airport`, so we
+    need to specify which one we want to join to.
+
+    ```{r lj_diff, include = FALSE}
+    flights2 %>% 
+      left_join(airports, c('dest' = 'faa')) %>% 
+      print(width = Inf)
+    
+    flights2 %>% 
+      left_join(airports, c('origin' = 'faa')) %>% 
+      print(width = Inf)
+    ```
+    
+    ```{r, echo=FALSE}
+    decorate("lj_diff") %>% 
+      flair("c('dest' = 'faa')", background = "#9FDDBA", 
+            color = "#008080") %>% 
+      flair("c('origin' = 'faa')", background = "#9FDDBA", 
+            color = "#008080")
+    ```
+
+### Exercises
+
+1.  Compute the average delay by destination, then join on the `airports`
+    data frame so you can show the spatial distribution of delays. Here's an
+    easy way to draw a map of the United States:
+
+    ```{r, eval = FALSE}
+    airports %>%
+      semi_join(flights, c("faa" = "dest")) %>%
+      ggplot(aes(lon, lat)) +
+        borders("state") +
+        geom_point() +
+        coord_quickmap()
+    ```
+
+    (Don't worry if you don't understand what `semi_join()` does --- you'll
+    learn about it next.)
+
+    You might want to use the `size` or `colour` of the points to display
+    the average delay for each airport.
+    
+    ```{r}
+    flights %>% 
+      group_by(dest) %>% 
+      summarise(mean_delay = mean(arr_delay, na.rm = TRUE)) %>% 
+      inner_join(airports, c("dest" = "faa")) %>% 
+      ggplot(aes(lon, lat, colour = mean_delay)) +
+        borders("state") +
+        geom_point() +
+        coord_quickmap() +
+        scale_colour_viridis_b()
+    ```
+    
+
+1.  Add the location of the origin _and_ destination (i.e. the `lat` and `lon`)
+    to `flights`.
+    
+    ```{r}
+    flights %>% 
+      left_join(airports, by = c("origin" = "faa")) %>% 
+      left_join(airports, by = c("dest" = "faa")) %>% 
+      print(width = Inf)
+    ```
+    
+
+1.  Is there a relationship between the age of a plane and its delays?
+
+    Let's have a look at the total delay, i.e. considering the departure 
+    and arrival delays.
+
+    ```{r}
+    (flights_sub <- flights %>% 
+       # get subset of fields
+       select(year:day, dep_delay, arr_delay, origin, dest,
+              tailnum))
+    
+    flights_sub %>% 
+      # join on tailnum
+      inner_join(planes, by = ("tailnum" = "tailnum")) %>% 
+      # subset data again from the planes tbl
+      select(dep_delay, arr_delay, origin, dest,
+             tailnum, year.x, year.y,type, manufacturer) %>% 
+      # need stats for a plane, so group by tailnum the
+      # unique id for a plane
+      group_by(tailnum) %>% 
+      # add variables to calc age of plane
+      # and various delay stats
+      mutate(age_plane_in_2013 = year.x - year.y,
+             mean_dep_delay = mean(dep_delay, na.rm = TRUE),
+             mean_arr_delay = mean(arr_delay, na.rm = TRUE),
+             tot_delay = mean_dep_delay + mean_arr_delay) %>% 
+      # we only care about planes where delay exists
+      # and where we know the planes age
+      filter(tot_delay > 0,
+             age_plane_in_2013 > 0) %>% 
+      select(tailnum, year = year.y, age_plane_in_2013, type, manufacturer,
+             mean_dep_delay, mean_arr_delay, tot_delay) %>% 
+      ungroup() %>% 
+      distinct() %>% 
+      ggplot(aes(x = age_plane_in_2013, y = tot_delay)) +
+      geom_col()
+    
+    ```
+    
+    The planes delay increases as the plane ages, but starts decreasing
+    around age = 12, and drops further past that age. Perhaps the 
+    maintenance cycle gets more rigourous as the plane ages? `r emo::ji("shrug")`
+
+1.  What weather conditions make it more likely to see a delay?
+
+    ```{r}
+    
+    flights %>% 
+      select("year", "month", "day", "origin", "hour", "time_hour",
+             "dep_delay") %>% 
+      inner_join(weather) %>% 
+      group_by(origin, year, month, day, hour) %>% 
+      mutate(avg_dep_delay = mean(dep_delay, na.rm = TRUE)) %>% 
+      ungroup() %>% 
+      filter(avg_dep_delay > 0) %>% 
+      select("year", "month", "day", "origin", "hour", 
+             "avg_dep_delay", "temp":"visib") %>% 
+      distinct() %>% 
+      arrange(-avg_dep_delay) %>% 
+      # slice_head(n = 10) %>% 
+      # print(width = Inf) %>% 
+      pivot_longer(cols = "temp":"visib",
+                   names_to = "type",
+                   values_to = "measure") %>% 
+      ggplot(aes(y = avg_dep_delay, x = measure)) +
+      geom_point(alpha = 0.1) +
+      facet_wrap(~ type, scales = "free_x") 
+    ```
+
+    It seems that the higher the dewp and humidity (and to some degree
+    temp) the higher the delay. The visibility in miles also seems to increase
+    the departure delay.
+    
+    The precipitation seems to decrease the delay which is a bit strange for me,
+    I was under the impression that would lead to longer delays. 
+
+
+1.  What happened on June 13 2013? Display the spatial pattern of delays,
+    and then use Google to cross-reference with the weather.
+
+    ```{r}
+    worst <- filter(flights, !is.na(dep_time), month == 6, day == 13)
+    worst %>%
+      group_by(dest) %>%
+      summarise(delay = mean(arr_delay), n = n()) %>%
+      filter(n > 5) %>%
+      inner_join(airports, by = c("dest" = "faa")) %>%
+      ggplot(aes(lon, lat)) +
+        borders("state") +
+        geom_point(aes(size = n, colour = delay)) +
+        coord_quickmap()
+    ```
+    
+    It seems there was [intense storms](https://www.washingtonpost.com/news/capital-weather-gang/wp/2013/06/14/june-13-2013-severe-weather-hypestorm-or-the-real-deal/) on June 13th, 2013.
+    
+
+### Other ways
+
+`base::merge()` can perform all four types of mutating join:
+
+dplyr              | merge
+-------------------|-------------------------------------------
+`inner_join(x, y)` | `merge(x, y)`
+`left_join(x, y)`  | `merge(x, y, all.x = TRUE)`
+`right_join(x, y)` | `merge(x, y, all.y = TRUE)`,
+`full_join(x, y)`  | `merge(x, y, all.x = TRUE, all.y = TRUE)`
+
+Pros for {dplyr}:
+
+- Easier to understand what the code is doing, 
+- Translates better to SQL (which is a language by the way, and not an acronym - found out from `SQL: Visual QuickStart Guide, by Chris Fehily`,
+- Is _faster_, and
+- Does not mess with row order.
+
+SQL translation
+
+dplyr                        | SQL
+-----------------------------|-------------------------------------------
+`inner_join(x, y, by = "z")` | `SELECT * FROM x INNER JOIN y USING (z)`
+`left_join(x, y, by = "z")`  | `SELECT * FROM x LEFT OUTER JOIN y USING (z)`
+`right_join(x, y, by = "z")` | `SELECT * FROM x RIGHT OUTER JOIN y USING (z)`
+`full_join(x, y, by = "z")`  | `SELECT * FROM x FULL OUTER JOIN y USING (z)`
+
+Joining different variables between the tables, e.g. `inner_join(x, y, by = c("a" = "b"))` uses a slightly different syntax in SQL: <span style="color: #008080;background-color:#9FDDBA">`SELECT * FROM x INNER JOIN y ON x.a = y.b`</span>.
+
+
+<h2>Filtering Joins</h2>
+## Filtering Joins
+
+* <span style="color: #008080;background-color:#9FDDBA">`semi_join(x, y)`</span>:
+    __keeps__ all observations in x with a corresponding observation
+    in y. Semi-joins are useful for matching filtered summary tables back to the original tbl. 
+    
+    You can think of `semi_join(x, y)` as observations in x asking each observation in y - "Hey, yoohoo, over there, for the columns we have in common, do you 
+    also have the same values in those columns as I do?"
+    
+    * if yes (doppelgänger found), x observation kept
+    
+    * if no (no doppelgänger found), x observation dropped
+    
+    * Keep __ONLY__ the observations of me you can find in y
+  
+* <span style="color: #008080;background-color:#9FDDBA">`anti_join(x, y)`</span>:
+   __drops__ all observations in `x` that have a match in `y`. I.e. it 
+   keeps the rows that _don't_ have a match.
+   
+   You can think of `anti_join(x, y)` as observations in x asking each
+   observation in y the same question as above, but taking the opposite action! 
+  
+    * if yes (doppelgänger found), x observation __dropped__ [I want to be
+    unique!]
+    
+    * if no (doppelgänger not found), x observation __retained__ [Yay, I'm the
+    only one]
+    
+    * Keeps __ONLY__ Unique entries of me
+    
+    <img src="assets/tvd_dopplegangers.gif" width="500" height="300" alt="gif for fun">
+    
+```{r}
+(top_dest <- flights %>%
+  count(dest, sort = TRUE) %>%
+  head(10))
+```
+
+Now to find flights that went to one of those destinations you could construct a filter yourself ...
+
+```{r}
+flights %>% 
+  filter(dest %in% top_dest$dest)
+```    
+
+But this gets tricky if you have multiple columns you're summarising
+something for.
+
+```{r}
+flights %>% 
+  semi_join(top_dest)
+```
+
+   <figure>
+    <img src="assets/join-semi.PNG" width="480" height="220" alt="Semi join">
+      <figcaption><span style="color: #6d6875;background-color:#e5989b">Semi-join x and y</span></figcaption>
+    </figure>
+    <br>
+    
+    <figure>
+    <img src="assets/join-semi-many.PNG" width="480" height="180" alt="Semi join">
+      <figcaption><span style="color: #6d6875;background-color:#e5989b">Semi-join x and y (multi match)</span></figcaption>
+    </figure>
+    <br>
+    
+    <figure>
+    <img src="assets/join-anti.PNG" width="480" height="220" alt="Anti join">
+      <figcaption><span style="color: #6d6875;background-color:#e5989b">Anti-join x and y</span></figcaption>
+    </figure>
+    <br>
+    
+
+How many flights don't have a match in `plane`?
+
+
+```{r anti, include=FALSE}
+flights %>% 
+  anti_join(planes, by = "tailnum") %>% 
+  count(tailnum, sort = TRUE)
+```
+
+```{r, echo=FALSE}
+decorate("anti") %>% 
+  flair("anti_join", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+### Exercises
+
+1.  What does it mean for a flight to have a missing `tailnum`? What do the
+    tail numbers that don't have a matching record in `planes` have in common?
+    (Hint: one variable explains ~90% of the problems.)
+    
+    ```{r}
+    flights %>% 
+      filter(is.na(tailnum),
+             is.na(dep_time),
+             is.na(dep_delay),
+             is.na(arr_time),
+             is.na(arr_delay))
+    ```
+    
+    The flights that were cancelled seem to be the ones with missing `tailnum`.
+
+    What about those that have a tailnum but we don't have an entry for it
+    in planes?
+    
+    ```{r}
+    (missing_planes <- flights %>% 
+      anti_join(planes, by = "tailnum") %>% 
+      count(tailnum, sort = TRUE))
+    
+    flights %>% 
+      filter(!is.na(tailnum)) %>% 
+      semi_join(missing_planes, by = "tailnum") %>% 
+      select(tailnum, carrier) %>% 
+      left_join(airlines, by = "carrier") %>% 
+      count(carrier, name, sort = TRUE) 
+    
+    planes %>% 
+       filter(stringr::str_detect(tailnum, "MQ")|
+              stringr::str_detect(tailnum, "AA"))
+    
+    (carrier_missing <- airlines %>% 
+      filter(carrier == "MQ" | carrier == "AA"))
+      
+    ```
+    
+    These seem to be mostly for carriers `r carrier_missing$carrier`, which
+    are `r carrier_missing$name`.
+    
+
+1.  Filter flights to only show flights with planes that have flown at least 100
+    flights.
+    
+    ```{r}
+    (flights_100 <- flights %>% 
+       filter(!is.na(tailnum)) %>% 
+       select(tailnum) %>% 
+       add_count(tailnum) %>% 
+       filter(n >= 100)
+    )
+    
+    flights %>% 
+      semi_join(flights_100)
+    ```
+    
+
+1.  Combine `fueleconomy::vehicles` and `fueleconomy::common` to find only the
+    records for the most common models.
+    
+    ```{r}
+    fueleconomy::common %>% 
+      left_join(fueleconomy::vehicles,
+                by = c("make"="make", "model"="model"))
+    ```
+    
+
+1.  Find the 48 hours (over the course of the whole year) that have the worst
+    delays. Cross-reference it with the `weather` data. Can you see any
+    patterns?
+    
+    I am going to assume that the question just wants the top 48 hours that 
+    constitute the worst delays, and not the worst consecutive 48 hour 
+    block of time.
+    
+    ```{r}
+    flights %>% 
+      group_by(year, month, day, hour, origin) %>% 
+      summarise(mean_dep_delay = mean(dep_delay, na.rm = TRUE)) %>% 
+      # ungroup removes grouping - without this we get weird
+      # results! Try it with and without to see diff.
+      ungroup() %>% 
+      arrange(-mean_dep_delay) %>% 
+      slice_head(n = 48) %>% 
+      left_join(weather) %>% 
+      pivot_longer(cols = temp:visib,
+                   names_to = "type",
+                   values_to = "measure") %>% 
+      ggplot(aes(y = mean_dep_delay, x = measure )) +
+        geom_point(alpha = 0.2) +
+        facet_wrap(~ type, scales = "free_x")
+    ```
+    
+    If we look at the `Defining Key Columns` under question 4, we see that these
+    flights with the top delays have humidity in the higher humidity range we saw
+    overall, and same for temperature.
+
+
+1.  What does `anti_join(flights, airports, by = c("dest" = "faa"))` tell you?
+    What does `anti_join(airports, flights, by = c("faa" = "dest"))` tell you?
+
+    ```{r}
+    anti_join(flights, airports, by = c("dest" = "faa"))
+    
+    anti_join(flights, airports, by = c("dest" = "faa")) %>% 
+      distinct(dest)
+    
+    anti_join(airports, flights, by = c("faa" = "dest"))
+    
+    airports %>% 
+      distinct(tz)
+    ```
+    
+    `anti_join(flights, airports, by = c("dest" = "faa"))` gives us any
+    flights where the destination does not exist in airports.
+  
+    If you google the airport names you will see that most flight destinations
+    that are not in `airports` are located in Puerto Rico, or US Virgin Islands.
+    Perhaps these were not in the FAA listing of airports when this data 
+    was extracted? Because the wiki pages for these show that the FAA code is
+    the same as we see here.
+    
+    `anti_join(airports, flights, by = c("faa" = "dest"))` gives us airports
+    that don't exist in flights. These will be destinations that are not
+    flown to directing from New York.
+
+1.  You might expect that there's an implicit relationship between plane
+    and airline, because each plane is flown by a single airline. Confirm
+    or reject this hypothesis using the tools you've learned above.
+    
+    Ok so what would we believe here? I would suspect that a plane belongs
+    to a single airline. But some counters to this view is that surely 
+    planes can be bought and sold between carriers. 
+    The question would be in that case would the plane change `tailnum`?
+    
+    Working on the first assumption what sort of join would help me
+    determine if a plane belongs to one airline?
+    
+    I would do a `left_join(planes, flights, by = "tailnum")` and then get 
+    the carrier(s) per plane, and join with airlines. 
+    
+    ```{r}
+    flights %>% 
+      select(tailnum, carrier) %>% 
+      distinct() %>% 
+      left_join(airlines, by = "carrier") %>% 
+      inner_join(planes, by = "tailnum") %>% 
+      count(tailnum, carrier) %>% 
+      filter(n > 1)
+    ```
+
+### Tips for joins
+
+1. Determine the primary key
+1. Check that none of the primary key variables are NULL
+1. Check that foreign keys match primary keys in other tables.
+1. Don't just rely on counts before and after joins! These can
+be misleading.
+
+<h2>Set operations</h2>
+## Set operations
+
+* `intersect(x, y)`: return only observations in both `x` and `y`.
+* `union(x, y)`: return unique observations in `x` and `y`.
+* `setdiff(x, y)`: return observations in `x`, but not in `y`.
+
+```{r}
+df1 <- tribble(
+  ~x, ~y,
+   1,  1,
+   2,  1
+)
+df2 <- tribble(
+  ~x, ~y,
+   1,  1,
+   1,  2
+)
+```
+
+### Intersect
+
+```{r}
+dplyr::intersect(df1, df2)
+```
+
+### Union
+
+```{r}
+dplyr::union(df1, df2)
+```
+
+### Setdiff
+
+```{r}
+setdiff(df1, df2)
+setdiff(df2, df1)
+```    
+    
+
+

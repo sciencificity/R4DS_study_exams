@@ -1,0 +1,33 @@
+---
+title: "Chapter 11 - Strings with {stringr}"
+author: "Vebash Naidoo"
+date: "31/10/2020"
+output: html_document
+---
+
+```{css, echo = FALSE}
+.tabset h2 {display: none;}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE,
+                      comment = "#>", collapse = TRUE)
+
+options(scipen=10000)
+library(tidyverse)
+library(flair)
+library(emo)
+library(lubridate)
+library(magrittr)
+library(tidyquant)
+library(stringr)
+theme_set(theme_tq())
+```
+# Strings {#buttons .tabset .tabset-fade .tabset-pills}
+
+__Click on the tab buttons below for each section__
+
+<h2>String Basics</h2>
+## String Basics
+
+
