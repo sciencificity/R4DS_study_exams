@@ -507,16 +507,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree3ec3460be4a39b45ca459d0c0ff638d364186a2btargetblank3ec3460a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/3ec3460be4a39b45ca459d0c0ff638d364186a2b" target="_blank">3ec3460</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree2cd35133e3a03c75bb67c65dae7270a49a0aa60ctargetblank2cd3513a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/2cd35133e3a03c75bb67c65dae7270a49a0aa60c" target="_blank">2cd3513</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree3ec3460be4a39b45ca459d0c0ff638d364186a2btargetblank3ec3460a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree2cd35133e3a03c75bb67c65dae7270a49a0aa60ctargetblank2cd3513a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/3ec3460be4a39b45ca459d0c0ff638d364186a2b" target="_blank">3ec3460</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/2cd35133e3a03c75bb67c65dae7270a49a0aa60c" target="_blank">2cd3513</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -566,6 +566,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/2cd35133e3a03c75bb67c65dae7270a49a0aa60c/analysis/ch11_strings.Rmd" target="_blank">2cd3513</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-01
+</td>
+<td>
+more of ch11
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/d8813e9e0385ceead4d53e252cce4c4334f3bdb2/docs/ch11_strings.html" target="_blank">d8813e9</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1187,6 +1221,468 @@ str_view(c(&quot;0828907654&quot;, &quot;+27(0)862345678&quot;, &quot;777-8923-1
          reg_ex)</code></pre>
 <div id="htmlwidget-e084e969194466983c14" style="width:960px;height:100%;" class="str_view html-widget"></div>
     <script type="application/json" data-for="htmlwidget-e084e969194466983c14">{"x":{"html":"<ul>\n  <li>0828907654<\/li>\n  <li><span class='match'>+27(0)862345678<\/span><\/li>\n  <li>777-8923-111<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script></li>
+</ol>
+<h2>
+Repetition
+</h2>
+</div>
+</div>
+<div id="repetition" class="section level2">
+<h2>Repetition</h2>
+<p>The next step up in power involves controlling how many times a pattern matches:</p>
+<ul>
+<li><code>?</code>: 0 or 1</li>
+<li><code>+</code>: 1 or more</li>
+<li><code>*</code>: 0 or more</li>
+</ul>
+<p>You can also specify the number of matches precisely:</p>
+<ul>
+<li><code>{n}</code>: exactly n</li>
+<li><code>{n,}</code>: n or more</li>
+<li><code>{,m}</code>: at most m</li>
+<li><code>{n,m}</code>: between n and m</li>
+</ul>
+<pre class="r"><code>x &lt;- &quot;1888 is the longest year in Roman numerals: MDCCCLXXXVIII&quot;
+
+str_view(x, &quot;CC?&quot;) # C or CC if exists</code></pre>
+<div id="htmlwidget-615e7a50afa33eb386ae" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-615e7a50afa33eb386ae">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CC<\/span>CLXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>
+str_view(x, &quot;CC+&quot;) # CC or CCC or CCCC etc. at least two C&#39;s</code></pre>
+<div id="htmlwidget-84fdb3d4803e78cbf358" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-84fdb3d4803e78cbf358">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CCC<\/span>LXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>
+# CL or CX or CLX at least 1 C, followed by one of more L&#39;s &amp; X&#39;s
+str_view(x, &quot;C[LX]+&quot;) </code></pre>
+<div id="htmlwidget-b3f5b15dcbc957e64297" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b3f5b15dcbc957e64297">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MDCC<span class='match'>CLXXX<\/span>VIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>
+str_view(x, &quot;C{2}&quot;) # find exactly 2 C&#39;s</code></pre>
+<div id="htmlwidget-d6fd9c2791781dd21c22" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d6fd9c2791781dd21c22">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CC<\/span>CLXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>
+str_view(x, &quot;C{1,}&quot;) # find 1 or more C&#39;s</code></pre>
+<div id="htmlwidget-8ab7d96f12d755845454" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8ab7d96f12d755845454">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CCC<\/span>LXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>
+str_view(x, &quot;C{1,2}&quot;) # min 1 C, max 2 C&#39;s</code></pre>
+<div id="htmlwidget-e93a9c4282629f7b76c6" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e93a9c4282629f7b76c6">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CC<\/span>CLXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>
+(y &lt;- &#39;&amp;lt;span style=&quot;color:#008080;background-color:#9FDDBA&quot;&amp;gt;`alpha`&amp;lt;//span&amp;gt;&#39;)
+#&gt; [1] &quot;&amp;lt;span style=\&quot;color:#008080;background-color:#9FDDBA\&quot;&amp;gt;`alpha`&amp;lt;//span&amp;gt;&quot;
+writeLines(y)
+#&gt; &amp;lt;span style=&quot;color:#008080;background-color:#9FDDBA&quot;&amp;gt;`alpha`&amp;lt;//span&amp;gt;
+
+# .*? - find to the first &gt; otherwise greedy
+str_view(y, &#39;^&amp;lt;.*?(&amp;gt;){1,}&#39;) </code></pre>
+<div id="htmlwidget-0253e4dd0fa6e544ba00" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0253e4dd0fa6e544ba00">{"x":{"html":"<ul>\n  <li><span class='match'>&lt;span style=\"color:#008080;background-color:#9FDDBA\"&gt;<\/span>`alpha`&lt;//span&gt;<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>The <code>?</code> after <code>.*</code> makes the matching less greedy. It finds the first multiple characters until a <code>&gt;</code> is encountered</p>
+<div id="exercises-4" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Describe the equivalents of <code>?</code>, <code>+</code>, <code>*</code> in <code>{m,n}</code> form.</p>
+<ul>
+<li><code>?</code> - {0,1} 0 or 1</li>
+<li><code>+</code> - {1,} 1 or more</li>
+<li><code>*</code> - {0,} 0 or more</li>
+</ul></li>
+<li><p>Describe in words what these regular expressions match: (read carefully to see if I’m using a regular expression or a string that defines a regular expression.)</p>
+<ol style="list-style-type: decimal">
+<li><p><code>^.*$</code> Matches any string that does not contain a newline character in it. String defining regular expression.</p>
+<pre class="r"><code>reg_ex &lt;-  &quot;^.*$&quot;
+(x &lt;- &quot;This is a string with 0 newline chars&quot;)
+#&gt; [1] &quot;This is a string with 0 newline chars&quot;
+writeLines(x)
+#&gt; This is a string with 0 newline chars
+str_view(x, reg_ex)</code></pre>
+<div id="htmlwidget-24493fdcec3bd24fa9f2" style="width:960px;height:100%;" class="str_view html-widget"></div>
+        <script type="application/json" data-for="htmlwidget-24493fdcec3bd24fa9f2">{"x":{"html":"<ul>\n  <li><span class='match'>This is a string with 0 newline chars<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>
+(y &lt;- &quot;This is a string with a couple \n\n newline chars&quot;)
+#&gt; [1] &quot;This is a string with a couple \n\n newline chars&quot;
+writeLines(y)
+#&gt; This is a string with a couple 
+#&gt; 
+#&gt;  newline chars
+str_view(y, reg_ex)</code></pre>
+<div id="htmlwidget-6567daaf2f155d138303" style="width:960px;height:100%;" class="str_view html-widget"></div>
+        <script type="application/json" data-for="htmlwidget-6567daaf2f155d138303">{"x":{"html":"<ul>\n  <li>This is a string with a couple \n\n newline chars<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>Notice no match for y (none of the text highlighted).</p></li>
+<li><p><code>"\\{.+\\}"</code></p>
+<p>Matches a <code>{</code> followed by one or more of any character but the newline character followed by the <code>}</code>. String defining a regular expression.</p>
+<pre class="r"><code>reg_ex &lt;- &quot;\\{.+\\}&quot;
+str_view(c(&quot;{a}&quot;, &quot;{}&quot;, &quot;{a,b,c}&quot;, &quot;{a, b\n, c}&quot;), reg_ex)</code></pre>
+<div id="htmlwidget-4aa650b1220167fb6cfc" style="width:960px;height:100%;" class="str_view html-widget"></div>
+        <script type="application/json" data-for="htmlwidget-4aa650b1220167fb6cfc">{"x":{"html":"<ul>\n  <li><span class='match'>{a}<\/span><\/li>\n  <li>{}<\/li>\n  <li><span class='match'>{a,b,c}<\/span><\/li>\n  <li>{a, b\n, c}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>Notice that <code>{a, b , c}</code> is not highlighted, this is because there is a <code>\n</code> (newline sequence) after the b.</p></li>
+<li><p><code>\d{4}-\d{2}-\d{2}</code></p>
+<p>Matches exactly 4 digits followed by a - followed by exactly 2 digits, followed by a -, followed by exactly 2 digits. Regular expression (the <code>\d</code> needs another ).</p>
+<pre class="r"><code>reg_ex &lt;- &quot;\\d{4}-\\d{2}-\\d{2}&quot; 
+str_view(c(&quot;1234-34-12&quot;, &quot;12345-34-23&quot;, &quot;084-87-98&quot;,
+           &quot;2020-01-01&quot;), reg_ex)</code></pre>
+<div id="htmlwidget-66694ea167f0b1cf78ce" style="width:960px;height:100%;" class="str_view html-widget"></div>
+        <script type="application/json" data-for="htmlwidget-66694ea167f0b1cf78ce">{"x":{"html":"<ul>\n  <li><span class='match'>1234-34-12<\/span><\/li>\n  <li>1<span class='match'>2345-34-23<\/span><\/li>\n  <li>084-87-98<\/li>\n  <li><span class='match'>2020-01-01<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script></li>
+<li><p><code>"\\\\{4}"</code></p>
+<p>Matches exactly 4 backslashes. String defining reg expr.</p>
+<pre class="r"><code>reg_ex &lt;- &quot;\\\\{4}&quot;
+str_view(c(&quot;\\\\&quot;, &quot;\\\\\\\\&quot;),
+         reg_ex)</code></pre>
+<div id="htmlwidget-9315700db27471a4ab78" style="width:960px;height:100%;" class="str_view html-widget"></div>
+        <script type="application/json" data-for="htmlwidget-9315700db27471a4ab78">{"x":{"html":"<ul>\n  <li>\\\\<\/li>\n  <li><span class='match'>\\\\\\\\<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script></li>
+</ol></li>
+<li><p>Create regular expressions to find all words that:</p>
+<ol style="list-style-type: decimal">
+<li>Start with three consonants.</li>
+</ol>
+<pre class="r"><code>reg_ex &lt;- &quot;^[^aeiou]{3}.*&quot;
+str_view(c(&quot;fry&quot;, &quot;fly&quot;, &quot;scrape&quot;, &quot;scream&quot;, &quot;ate&quot;, &quot;women&quot;,
+           &quot;strap&quot;, &quot;splendid&quot;, &quot;test&quot;), reg_ex)</code></pre>
+<div id="htmlwidget-a70f155e74ca7df5aeee" style="width:960px;height:100%;" class="str_view html-widget"></div>
+      <script type="application/json" data-for="htmlwidget-a70f155e74ca7df5aeee">{"x":{"html":"<ul>\n  <li><span class='match'>fry<\/span><\/li>\n  <li><span class='match'>fly<\/span><\/li>\n  <li><span class='match'>scrape<\/span><\/li>\n  <li><span class='match'>scream<\/span><\/li>\n  <li>ate<\/li>\n  <li>women<\/li>\n  <li><span class='match'>strap<\/span><\/li>\n  <li><span class='match'>splendid<\/span><\/li>\n  <li>test<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<ol style="list-style-type: decimal">
+<li>Have three or more vowels in a row.</li>
+</ol>
+<pre class="r"><code>reg_ex &lt;- &quot;.*[aeiou]{3,}.*&quot;
+str_view(stringr::words, reg_ex, match=TRUE)</code></pre>
+<div id="htmlwidget-6d9cd94bc69781bb3f5d" style="width:960px;height:100%;" class="str_view html-widget"></div>
+      <script type="application/json" data-for="htmlwidget-6d9cd94bc69781bb3f5d">{"x":{"html":"<ul>\n  <li><span class='match'>beauty<\/span><\/li>\n  <li><span class='match'>obvious<\/span><\/li>\n  <li><span class='match'>previous<\/span><\/li>\n  <li><span class='match'>quiet<\/span><\/li>\n  <li><span class='match'>serious<\/span><\/li>\n  <li><span class='match'>various<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<ol style="list-style-type: decimal">
+<li>Have two or more vowel-consonant pairs in a row.</li>
+</ol>
+<pre class="r"><code>reg_ex &lt;- &quot;.*([aeiou][^aeiou]){2,}.*&quot;
+str_view(stringr::words, reg_ex, match = TRUE)</code></pre>
+<div id="htmlwidget-3a13cf1e960a13a3df07" style="width:960px;height:100%;" class="str_view html-widget"></div>
+      <script type="application/json" data-for="htmlwidget-3a13cf1e960a13a3df07">{"x":{"html":"<ul>\n  <li><span class='match'>absolute<\/span><\/li>\n  <li><span class='match'>agent<\/span><\/li>\n  <li><span class='match'>along<\/span><\/li>\n  <li><span class='match'>america<\/span><\/li>\n  <li><span class='match'>another<\/span><\/li>\n  <li><span class='match'>apart<\/span><\/li>\n  <li><span class='match'>apparent<\/span><\/li>\n  <li><span class='match'>authority<\/span><\/li>\n  <li><span class='match'>available<\/span><\/li>\n  <li><span class='match'>aware<\/span><\/li>\n  <li><span class='match'>away<\/span><\/li>\n  <li><span class='match'>balance<\/span><\/li>\n  <li><span class='match'>basis<\/span><\/li>\n  <li><span class='match'>become<\/span><\/li>\n  <li><span class='match'>before<\/span><\/li>\n  <li><span class='match'>begin<\/span><\/li>\n  <li><span class='match'>behind<\/span><\/li>\n  <li><span class='match'>benefit<\/span><\/li>\n  <li><span class='match'>business<\/span><\/li>\n  <li><span class='match'>character<\/span><\/li>\n  <li><span class='match'>closes<\/span><\/li>\n  <li><span class='match'>community<\/span><\/li>\n  <li><span class='match'>consider<\/span><\/li>\n  <li><span class='match'>cover<\/span><\/li>\n  <li><span class='match'>debate<\/span><\/li>\n  <li><span class='match'>decide<\/span><\/li>\n  <li><span class='match'>decision<\/span><\/li>\n  <li><span class='match'>definite<\/span><\/li>\n  <li><span class='match'>department<\/span><\/li>\n  <li><span class='match'>depend<\/span><\/li>\n  <li><span class='match'>design<\/span><\/li>\n  <li><span class='match'>develop<\/span><\/li>\n  <li><span class='match'>difference<\/span><\/li>\n  <li><span class='match'>difficult<\/span><\/li>\n  <li><span class='match'>direct<\/span><\/li>\n  <li><span class='match'>divide<\/span><\/li>\n  <li><span class='match'>document<\/span><\/li>\n  <li><span class='match'>during<\/span><\/li>\n  <li><span class='match'>economy<\/span><\/li>\n  <li><span class='match'>educate<\/span><\/li>\n  <li><span class='match'>elect<\/span><\/li>\n  <li><span class='match'>electric<\/span><\/li>\n  <li><span class='match'>eleven<\/span><\/li>\n  <li><span class='match'>encourage<\/span><\/li>\n  <li><span class='match'>environment<\/span><\/li>\n  <li><span class='match'>europe<\/span><\/li>\n  <li><span class='match'>even<\/span><\/li>\n  <li><span class='match'>evening<\/span><\/li>\n  <li><span class='match'>ever<\/span><\/li>\n  <li><span class='match'>every<\/span><\/li>\n  <li><span class='match'>evidence<\/span><\/li>\n  <li><span class='match'>exact<\/span><\/li>\n  <li><span class='match'>example<\/span><\/li>\n  <li><span class='match'>exercise<\/span><\/li>\n  <li><span class='match'>exist<\/span><\/li>\n  <li><span class='match'>family<\/span><\/li>\n  <li><span class='match'>figure<\/span><\/li>\n  <li><span class='match'>final<\/span><\/li>\n  <li><span class='match'>finance<\/span><\/li>\n  <li><span class='match'>finish<\/span><\/li>\n  <li><span class='match'>friday<\/span><\/li>\n  <li><span class='match'>future<\/span><\/li>\n  <li><span class='match'>general<\/span><\/li>\n  <li><span class='match'>govern<\/span><\/li>\n  <li><span class='match'>holiday<\/span><\/li>\n  <li><span class='match'>honest<\/span><\/li>\n  <li><span class='match'>hospital<\/span><\/li>\n  <li><span class='match'>however<\/span><\/li>\n  <li><span class='match'>identify<\/span><\/li>\n  <li><span class='match'>imagine<\/span><\/li>\n  <li><span class='match'>individual<\/span><\/li>\n  <li><span class='match'>interest<\/span><\/li>\n  <li><span class='match'>introduce<\/span><\/li>\n  <li><span class='match'>item<\/span><\/li>\n  <li><span class='match'>jesus<\/span><\/li>\n  <li><span class='match'>level<\/span><\/li>\n  <li><span class='match'>likely<\/span><\/li>\n  <li><span class='match'>limit<\/span><\/li>\n  <li><span class='match'>local<\/span><\/li>\n  <li><span class='match'>major<\/span><\/li>\n  <li><span class='match'>manage<\/span><\/li>\n  <li><span class='match'>meaning<\/span><\/li>\n  <li><span class='match'>measure<\/span><\/li>\n  <li><span class='match'>minister<\/span><\/li>\n  <li><span class='match'>minus<\/span><\/li>\n  <li><span class='match'>minute<\/span><\/li>\n  <li><span class='match'>moment<\/span><\/li>\n  <li><span class='match'>money<\/span><\/li>\n  <li><span class='match'>music<\/span><\/li>\n  <li><span class='match'>nature<\/span><\/li>\n  <li><span class='match'>necessary<\/span><\/li>\n  <li><span class='match'>never<\/span><\/li>\n  <li><span class='match'>notice<\/span><\/li>\n  <li><span class='match'>okay<\/span><\/li>\n  <li><span class='match'>open<\/span><\/li>\n  <li><span class='match'>operate<\/span><\/li>\n  <li><span class='match'>opportunity<\/span><\/li>\n  <li><span class='match'>organize<\/span><\/li>\n  <li><span class='match'>original<\/span><\/li>\n  <li><span class='match'>over<\/span><\/li>\n  <li><span class='match'>paper<\/span><\/li>\n  <li><span class='match'>paragraph<\/span><\/li>\n  <li><span class='match'>parent<\/span><\/li>\n  <li><span class='match'>particular<\/span><\/li>\n  <li><span class='match'>photograph<\/span><\/li>\n  <li><span class='match'>police<\/span><\/li>\n  <li><span class='match'>policy<\/span><\/li>\n  <li><span class='match'>politic<\/span><\/li>\n  <li><span class='match'>position<\/span><\/li>\n  <li><span class='match'>positive<\/span><\/li>\n  <li><span class='match'>power<\/span><\/li>\n  <li><span class='match'>prepare<\/span><\/li>\n  <li><span class='match'>present<\/span><\/li>\n  <li><span class='match'>presume<\/span><\/li>\n  <li><span class='match'>private<\/span><\/li>\n  <li><span class='match'>probable<\/span><\/li>\n  <li><span class='match'>process<\/span><\/li>\n  <li><span class='match'>produce<\/span><\/li>\n  <li><span class='match'>product<\/span><\/li>\n  <li><span class='match'>project<\/span><\/li>\n  <li><span class='match'>proper<\/span><\/li>\n  <li><span class='match'>propose<\/span><\/li>\n  <li><span class='match'>protect<\/span><\/li>\n  <li><span class='match'>provide<\/span><\/li>\n  <li><span class='match'>quality<\/span><\/li>\n  <li><span class='match'>realise<\/span><\/li>\n  <li><span class='match'>reason<\/span><\/li>\n  <li><span class='match'>recent<\/span><\/li>\n  <li><span class='match'>recognize<\/span><\/li>\n  <li><span class='match'>recommend<\/span><\/li>\n  <li><span class='match'>record<\/span><\/li>\n  <li><span class='match'>reduce<\/span><\/li>\n  <li><span class='match'>refer<\/span><\/li>\n  <li><span class='match'>regard<\/span><\/li>\n  <li><span class='match'>relation<\/span><\/li>\n  <li><span class='match'>remember<\/span><\/li>\n  <li><span class='match'>report<\/span><\/li>\n  <li><span class='match'>represent<\/span><\/li>\n  <li><span class='match'>result<\/span><\/li>\n  <li><span class='match'>return<\/span><\/li>\n  <li><span class='match'>saturday<\/span><\/li>\n  <li><span class='match'>second<\/span><\/li>\n  <li><span class='match'>secretary<\/span><\/li>\n  <li><span class='match'>secure<\/span><\/li>\n  <li><span class='match'>separate<\/span><\/li>\n  <li><span class='match'>seven<\/span><\/li>\n  <li><span class='match'>similar<\/span><\/li>\n  <li><span class='match'>specific<\/span><\/li>\n  <li><span class='match'>strategy<\/span><\/li>\n  <li><span class='match'>student<\/span><\/li>\n  <li><span class='match'>stupid<\/span><\/li>\n  <li><span class='match'>telephone<\/span><\/li>\n  <li><span class='match'>television<\/span><\/li>\n  <li><span class='match'>therefore<\/span><\/li>\n  <li><span class='match'>thousand<\/span><\/li>\n  <li><span class='match'>today<\/span><\/li>\n  <li><span class='match'>together<\/span><\/li>\n  <li><span class='match'>tomorrow<\/span><\/li>\n  <li><span class='match'>tonight<\/span><\/li>\n  <li><span class='match'>total<\/span><\/li>\n  <li><span class='match'>toward<\/span><\/li>\n  <li><span class='match'>travel<\/span><\/li>\n  <li><span class='match'>unit<\/span><\/li>\n  <li><span class='match'>unite<\/span><\/li>\n  <li><span class='match'>university<\/span><\/li>\n  <li><span class='match'>upon<\/span><\/li>\n  <li><span class='match'>visit<\/span><\/li>\n  <li><span class='match'>water<\/span><\/li>\n  <li><span class='match'>woman<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script></li>
+<li><p>Solve the beginner regexp crosswords at <a href="https://regexcrossword.com/challenges/beginner" class="uri">https://regexcrossword.com/challenges/beginner</a>.</p>
+<p><img src="assets/exercise.PNG" width="1167" height="258" alt="regex complete"></p></li>
+</ol>
+<h2>
+Backreferences
+</h2>
+</div>
+</div>
+<div id="backreferences" class="section level2">
+<h2>Backreferences</h2>
+<p>Parentheses can be used to make complex expressions more clear, and can also create a <em>numbered</em> capturing group (number 1, 2 etc.). A capturing group stores <em>the part of the string</em> matched by the part of the regular expression inside the parentheses. You can refer to the same text as previously matched by a capturing group with <em>backreferences</em>, like <code>\1</code>, <code>\2</code> etc.</p>
+<p>The following regex finds all fruits that have a repeated pair of letters.</p>
+<pre class="r"><code># (..)\\1 says find any two letters - these are a group, is 
+# this then followed by the same 2 letters?
+# Yes - match found
+# No - whawha
+str_view(fruit, &quot;(..)\\1&quot;, match = TRUE)</code></pre>
+<div id="htmlwidget-e7df6ca6239e3336c21b" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e7df6ca6239e3336c21b">{"x":{"html":"<ul>\n  <li>b<span class='match'>anan<\/span>a<\/li>\n  <li><span class='match'>coco<\/span>nut<\/li>\n  <li><span class='match'>cucu<\/span>mber<\/li>\n  <li><span class='match'>juju<\/span>be<\/li>\n  <li><span class='match'>papa<\/span>ya<\/li>\n  <li>s<span class='match'>alal<\/span> berry<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>For e.g. for <code>banana</code>:</p>
+<ul>
+<li>It starts at “ba” that becomes the group 1, then it moves it along and says is the next 2 letters “ba” (i.e. equivalent to group 1) too? Nope.</li>
+<li>It moves along to “an” and that is the new group 1. Then it moves along and says - are the next two letters equivalent to group 1 (i.e. is it “an”) - Yes it is! found a word that matches.</li>
+</ul>
+<div id="exercises-5" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Describe, in words, what these expressions will match:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>(.)\1\1</code></p>
+<p>This matches any character repeated three times.</p>
+<pre class="r"><code>reg_ex &lt;- &quot;(.)\\1\\1&quot;
+str_view(c(&quot;Oooh&quot;, &quot;Ahhh&quot;, &quot;Awww&quot;, &quot;Ergh&quot;), reg_ex)</code></pre>
+<div id="htmlwidget-196019c2d8a3b6e00009" style="width:960px;height:100%;" class="str_view html-widget"></div>
+        <script type="application/json" data-for="htmlwidget-196019c2d8a3b6e00009">{"x":{"html":"<ul>\n  <li>Oooh<\/li>\n  <li>A<span class='match'>hhh<\/span><\/li>\n  <li>A<span class='match'>www<\/span><\/li>\n  <li>Ergh<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>Note that <code>O</code> and <code>o</code> are different.</p></li>
+<li><p><code>"(.)(.)\\2\\1"</code></p>
+<p>This matches any two characters repeated once in reverse order. e.g. abba</p>
+<pre class="r"><code>reg_ex &lt;- &quot;(.)(.)\\2\\1&quot;
+str_view(c(&quot;abba&quot;), reg_ex)</code></pre>
+<div id="htmlwidget-d7b14b363a83ec405888" style="width:960px;height:100%;" class="str_view html-widget"></div>
+        <script type="application/json" data-for="htmlwidget-d7b14b363a83ec405888">{"x":{"html":"<ul>\n  <li><span class='match'>abba<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_view(words, reg_ex, match=TRUE)</code></pre>
+<div id="htmlwidget-9f436fbe9bee3728e0c6" style="width:960px;height:100%;" class="str_view html-widget"></div>
+        <script type="application/json" data-for="htmlwidget-9f436fbe9bee3728e0c6">{"x":{"html":"<ul>\n  <li>after<span class='match'>noon<\/span><\/li>\n  <li><span class='match'>appa<\/span>rent<\/li>\n  <li><span class='match'>arra<\/span>nge<\/li>\n  <li>b<span class='match'>otto<\/span>m<\/li>\n  <li>br<span class='match'>illi<\/span>ant<\/li>\n  <li>c<span class='match'>ommo<\/span>n<\/li>\n  <li>d<span class='match'>iffi<\/span>cult<\/li>\n  <li><span class='match'>effe<\/span>ct<\/li>\n  <li>f<span class='match'>ollo<\/span>w<\/li>\n  <li>in<span class='match'>deed<\/span><\/li>\n  <li>l<span class='match'>ette<\/span>r<\/li>\n  <li>m<span class='match'>illi<\/span>on<\/li>\n  <li><span class='match'>oppo<\/span>rtunity<\/li>\n  <li><span class='match'>oppo<\/span>se<\/li>\n  <li>tom<span class='match'>orro<\/span>w<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script></li>
+<li><p><code>(..)\1</code></p>
+<p>This matches two letters that appear twice. b<code>anan</code>a.</p>
+<pre class="r"><code>str_view(fruit, &quot;(..)\\1&quot;, match = TRUE)</code></pre>
+<div id="htmlwidget-6d6e9fbe70e206fc32b4" style="width:960px;height:100%;" class="str_view html-widget"></div>
+        <script type="application/json" data-for="htmlwidget-6d6e9fbe70e206fc32b4">{"x":{"html":"<ul>\n  <li>b<span class='match'>anan<\/span>a<\/li>\n  <li><span class='match'>coco<\/span>nut<\/li>\n  <li><span class='match'>cucu<\/span>mber<\/li>\n  <li><span class='match'>juju<\/span>be<\/li>\n  <li><span class='match'>papa<\/span>ya<\/li>\n  <li>s<span class='match'>alal<\/span> berry<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script></li>
+<li><p><code>"(.).\\1.\\1"</code></p>
+<p>This matches a character followed by another char followed by the same character as the start, followed by another char, followed by the character. e.g. abaca</p>
+<pre class="r"><code>str_view(words, &quot;(.).\\1.\\1&quot;, match = TRUE)</code></pre>
+<div id="htmlwidget-de56f5029a60d05ddb47" style="width:960px;height:100%;" class="str_view html-widget"></div>
+        <script type="application/json" data-for="htmlwidget-de56f5029a60d05ddb47">{"x":{"html":"<ul>\n  <li><span class='match'>eleve<\/span>n<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script></li>
+<li><p><code>"(.)(.)(.).*\\3\\2\\1"</code></p>
+<p>This matches three characters followed by 0 or more other characters, ending with the 3 characters at the start in reverse order.</p>
+<pre class="r"><code>reg_ex &lt;- &quot;(.)(.)(.).*\\3\\2\\1&quot;
+str_view(c(&quot;bbccbb&quot;), reg_ex)</code></pre>
+<div id="htmlwidget-e9d914822fb347172d96" style="width:960px;height:100%;" class="str_view html-widget"></div>
+        <script type="application/json" data-for="htmlwidget-e9d914822fb347172d96">{"x":{"html":"<ul>\n  <li><span class='match'>bbccbb<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_view(words, reg_ex, match=TRUE)</code></pre>
+<div id="htmlwidget-eedd14382ba9fb3d96b5" style="width:960px;height:100%;" class="str_view html-widget"></div>
+        <script type="application/json" data-for="htmlwidget-eedd14382ba9fb3d96b5">{"x":{"html":"<ul>\n  <li><span class='match'>paragrap<\/span>h<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script></li>
+</ol></li>
+<li><p>Construct regular expressions to match words that:</p>
+<ol style="list-style-type: decimal">
+<li>Start and end with the same character.</li>
+</ol>
+<pre class="r"><code>reg_ex &lt;- &quot;^(.).*\\1$&quot;
+str_view(words, reg_ex, match = TRUE)</code></pre>
+<div id="htmlwidget-4469d5f1b6ab0617246f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+      <script type="application/json" data-for="htmlwidget-4469d5f1b6ab0617246f">{"x":{"html":"<ul>\n  <li><span class='match'>america<\/span><\/li>\n  <li><span class='match'>area<\/span><\/li>\n  <li><span class='match'>dad<\/span><\/li>\n  <li><span class='match'>dead<\/span><\/li>\n  <li><span class='match'>depend<\/span><\/li>\n  <li><span class='match'>educate<\/span><\/li>\n  <li><span class='match'>else<\/span><\/li>\n  <li><span class='match'>encourage<\/span><\/li>\n  <li><span class='match'>engine<\/span><\/li>\n  <li><span class='match'>europe<\/span><\/li>\n  <li><span class='match'>evidence<\/span><\/li>\n  <li><span class='match'>example<\/span><\/li>\n  <li><span class='match'>excuse<\/span><\/li>\n  <li><span class='match'>exercise<\/span><\/li>\n  <li><span class='match'>expense<\/span><\/li>\n  <li><span class='match'>experience<\/span><\/li>\n  <li><span class='match'>eye<\/span><\/li>\n  <li><span class='match'>health<\/span><\/li>\n  <li><span class='match'>high<\/span><\/li>\n  <li><span class='match'>knock<\/span><\/li>\n  <li><span class='match'>level<\/span><\/li>\n  <li><span class='match'>local<\/span><\/li>\n  <li><span class='match'>nation<\/span><\/li>\n  <li><span class='match'>non<\/span><\/li>\n  <li><span class='match'>rather<\/span><\/li>\n  <li><span class='match'>refer<\/span><\/li>\n  <li><span class='match'>remember<\/span><\/li>\n  <li><span class='match'>serious<\/span><\/li>\n  <li><span class='match'>stairs<\/span><\/li>\n  <li><span class='match'>test<\/span><\/li>\n  <li><span class='match'>tonight<\/span><\/li>\n  <li><span class='match'>transport<\/span><\/li>\n  <li><span class='match'>treat<\/span><\/li>\n  <li><span class='match'>trust<\/span><\/li>\n  <li><span class='match'>window<\/span><\/li>\n  <li><span class='match'>yesterday<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<ol style="list-style-type: decimal">
+<li>Contain a repeated pair of letters (e.g. “church” contains “ch” repeated twice.)</li>
+</ol>
+<pre class="r"><code>reg_ex &lt;- &quot;(..).*\\1&quot;
+str_view(&quot;church&quot;, reg_ex)</code></pre>
+<div id="htmlwidget-36fc671162926c94f33e" style="width:960px;height:100%;" class="str_view html-widget"></div>
+      <script type="application/json" data-for="htmlwidget-36fc671162926c94f33e">{"x":{"html":"<ul>\n  <li><span class='match'>church<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_view(words, reg_ex, match=TRUE)</code></pre>
+<div id="htmlwidget-fe7a38c11abf16b1e2c7" style="width:960px;height:100%;" class="str_view html-widget"></div>
+      <script type="application/json" data-for="htmlwidget-fe7a38c11abf16b1e2c7">{"x":{"html":"<ul>\n  <li>ap<span class='match'>propr<\/span>iate<\/li>\n  <li><span class='match'>church<\/span><\/li>\n  <li>c<span class='match'>ondition<\/span><\/li>\n  <li><span class='match'>decide<\/span><\/li>\n  <li><span class='match'>environmen<\/span>t<\/li>\n  <li>l<span class='match'>ondon<\/span><\/li>\n  <li>pa<span class='match'>ragra<\/span>ph<\/li>\n  <li>p<span class='match'>articular<\/span><\/li>\n  <li><span class='match'>photograph<\/span><\/li>\n  <li>p<span class='match'>repare<\/span><\/li>\n  <li>p<span class='match'>ressure<\/span><\/li>\n  <li>r<span class='match'>emem<\/span>ber<\/li>\n  <li><span class='match'>repre<\/span>sent<\/li>\n  <li><span class='match'>require<\/span><\/li>\n  <li><span class='match'>sense<\/span><\/li>\n  <li>the<span class='match'>refore<\/span><\/li>\n  <li>u<span class='match'>nderstand<\/span><\/li>\n  <li>w<span class='match'>hethe<\/span>r<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<ol style="list-style-type: decimal">
+<li>Contain one letter repeated in at least three places (e.g. “eleven” contains three “e”s.)</li>
+</ol>
+<pre class="r"><code>reg_ex &lt;- &quot;(.).*\\1.*\\1&quot;
+str_view(words, reg_ex, match = TRUE)</code></pre>
+<div id="htmlwidget-0f1928dcbff0273e6d43" style="width:960px;height:100%;" class="str_view html-widget"></div>
+      <script type="application/json" data-for="htmlwidget-0f1928dcbff0273e6d43">{"x":{"html":"<ul>\n  <li>a<span class='match'>pprop<\/span>riate<\/li>\n  <li><span class='match'>availa<\/span>ble<\/li>\n  <li>b<span class='match'>elieve<\/span><\/li>\n  <li>b<span class='match'>etwee<\/span>n<\/li>\n  <li>bu<span class='match'>siness<\/span><\/li>\n  <li>d<span class='match'>egree<\/span><\/li>\n  <li>diff<span class='match'>erence<\/span><\/li>\n  <li>di<span class='match'>scuss<\/span><\/li>\n  <li><span class='match'>eleve<\/span>n<\/li>\n  <li>e<span class='match'>nvironmen<\/span>t<\/li>\n  <li><span class='match'>evidence<\/span><\/li>\n  <li><span class='match'>exercise<\/span><\/li>\n  <li><span class='match'>expense<\/span><\/li>\n  <li><span class='match'>experience<\/span><\/li>\n  <li><span class='match'>indivi<\/span>dual<\/li>\n  <li>p<span class='match'>aragra<\/span>ph<\/li>\n  <li>r<span class='match'>eceive<\/span><\/li>\n  <li>r<span class='match'>emembe<\/span>r<\/li>\n  <li>r<span class='match'>eprese<\/span>nt<\/li>\n  <li>t<span class='match'>elephone<\/span><\/li>\n  <li>th<span class='match'>erefore<\/span><\/li>\n  <li>t<span class='match'>omorro<\/span>w<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script></li>
+</ol>
+<h2>
+Detect Matches
+</h2>
+</div>
+</div>
+<div id="detect-matches" class="section level2">
+<h2>Detect Matches</h2>
+<div id="str_detect" class="section level4">
+<h4>str_detect()</h4>
+<p>Use <span style="color: #008080;background-color:#9FDDBA"><code>str_detect()</code></span>. It returns a logical vector the same length as the input.</p>
+<p>Since it is a logical vector and numerically TRUE == 1 and FALSE == 0 we can also use <code>sum()</code>, <code>mean()</code> to get information about matches found.</p>
+<pre><code class='language-r'><code>(x <- c("apple", "banana", "pear"))<br>#> [1] "apple" &nbsp;"banana" "pear"<br><span style='background-color:#9FDDBA;color:#008080'>str_detect</span>(x, "e")<br>#> [1] &nbsp;<span style='background-color:#9FDDBA;color:#008080'>TRUE</span> FALSE &nbsp;<span style='background-color:#9FDDBA;color:#008080'>TRUE</span></code></code></pre>
+<pre><code class='language-r'><code>x<br>#> [1] "apple" &nbsp;"banana" "pear"<br><span style='background-color:#9FDDBA;color:#008080'>sum</span>(str_detect(x, "e"))<br>#> [1] 2<br># How many common words start with t?<br><span style='background-color:#9FDDBA;color:#008080'>sum</span>(str_detect(words, "^t"))<br>#> [1] 65<br># What proportion of common words end with a vowel?<br><span style='background-color:#9FDDBA;color:#008080'>mean</span>(str_detect(words, "[aeiou]$"))<br>#> [1] 0.2765306</code></code></pre>
+<pre class="r"><code># Find all words containing at least one vowel, and negate
+no_vowels_1 &lt;- !str_detect(words, &quot;[aeiou]&quot;)
+# Find all words consisting only of consonants (non-vowels)
+no_vowels_2 &lt;- str_detect(words, &quot;^[^aeiou]+$&quot;)
+identical(no_vowels_1, no_vowels_2)
+#&gt; [1] TRUE
+# you can also use `negate = TRUE`
+no_vowels_3 &lt;- str_detect(words, &quot;[aeiou]&quot;, negate = TRUE)
+identical(no_vowels_1, no_vowels_3)
+#&gt; [1] TRUE
+identical(no_vowels_3, no_vowels_2)
+#&gt; [1] TRUE</code></pre>
+</div>
+<div id="str_subset" class="section level4">
+<h4>str_subset()</h4>
+<p>We use <code>str_detect()</code> often to match patterns using the wrapper <span style="color: #008080;background-color:#9FDDBA"><code>str_subset()</code></span>.</p>
+<pre><code class='language-r'><code>words[str_detect(words, "x$")]<br>#> [1] "box" "sex" "six" "tax"<br># <span style='background-color:#9FDDBA;color:#008080'>str_subset</span>() is a wrapper around x[str_detect(x, pattern)]<br><span style='background-color:#9FDDBA;color:#008080'>str_subset</span>(words, "x$")<br>#> [1] "box" "sex" "six" "tax"</code></code></pre>
+</div>
+<div id="filterstr_detect" class="section level4">
+<h4>filter(str_detect())</h4>
+<p>When we want to find matches in a column in a dataframe we can combine <code>str_detect()</code> with <code>filter()</code>.</p>
+<pre><code class='language-r'><code>(df <- tibble(<br>&nbsp;&nbsp;word = words,<br>&nbsp;&nbsp;i = seq_along(word)<br>))<br>#> # A tibble: 980 x 2<br>#> &nbsp;&nbsp;&nbsp;word &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i<br>#> &nbsp;&nbsp;&nbsp;<chr> &nbsp;&nbsp;&nbsp;<int><br>#> &nbsp;1 a &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>#> &nbsp;2 able &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>#> &nbsp;3 about &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3<br>#> &nbsp;4 absolute &nbsp;&nbsp;&nbsp;&nbsp;4<br>#> &nbsp;5 accept &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5<br>#> &nbsp;6 account &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6<br>#> &nbsp;7 achieve &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7<br>#> &nbsp;8 across &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8<br>#> &nbsp;9 act &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9<br>#> 10 active &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10<br>#> # ... with 970 more rows<br><br>df %>% <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>filter</span>(<span style='background-color:#9FDDBA;color:#008080'>str_detect</span>(word, "x$"))<br>#> # A tibble: 4 x 2<br>#> &nbsp;&nbsp;word &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i<br>#> &nbsp;&nbsp;<chr> <int><br>#> 1 box &nbsp;&nbsp;&nbsp;&nbsp;108<br>#> 2 sex &nbsp;&nbsp;&nbsp;&nbsp;747<br>#> 3 six &nbsp;&nbsp;&nbsp;&nbsp;772<br>#> 4 tax &nbsp;&nbsp;&nbsp;&nbsp;841</code></code></pre>
+</div>
+<div id="str_count" class="section level4">
+<h4>str_count()</h4>
+<p>Instead of using <code>str_detect()</code> which returns a <strong>TRUE</strong> OR <strong>FALSE</strong> we can use <span style="color: #008080;background-color:#9FDDBA"><code>str_count()</code></span> which gives us a number of matches in each string.</p>
+<pre><code class='language-r'><code>(x <- c("apple", "banana", "pear"))<br>#> [1] "apple" &nbsp;"banana" "pear"<br><span style='background-color:#9FDDBA;color:#008080'>str_count</span>(x, "e")<br>#> [1] 1 0 1<br><span style='background-color:#9FDDBA;color:#008080'>str_count</span>(x, "a")<br>#> [1] 1 3 1<br># On average, how many vowels per word?<br>mean(<span style='background-color:#9FDDBA;color:#008080'>str_count</span>(words, "[aeiou]"))<br>#> [1] 1.991837</code></code></pre>
+<p>We often use <code>str_count()</code> with <code>mutate()</code>.</p>
+<pre class="r"><code>df %&gt;% 
+  mutate(vowels = str_count(word, &quot;[aeiou]&quot;),
+         consonants = str_count(word, &quot;[^aeiou]&quot;))
+#&gt; # A tibble: 980 x 4
+#&gt;    word         i vowels consonants
+#&gt;    &lt;chr&gt;    &lt;int&gt;  &lt;int&gt;      &lt;int&gt;
+#&gt;  1 a            1      1          0
+#&gt;  2 able         2      2          2
+#&gt;  3 about        3      3          2
+#&gt;  4 absolute     4      4          4
+#&gt;  5 accept       5      2          4
+#&gt;  6 account      6      3          4
+#&gt;  7 achieve      7      4          3
+#&gt;  8 across       8      2          4
+#&gt;  9 act          9      1          2
+#&gt; 10 active      10      3          3
+#&gt; # ... with 970 more rows</code></pre>
+<p>Matches never overlap. For example, in <code>"abababa"</code>, the pattern <code>"aba"</code> matches twice. You can think of it as placing a marker at the beginning of the string, then moving along looking for <code>pattern</code>, it sees <code>a</code> then <code>b</code> then <code>a</code>, so it has found one <code>pattern == aba</code>. The marker is lying at the 4th letter in the string. It proceeds from there to look for more occurrences of the pattern. <code>b</code> does not do it, so it skips over and goes to the 5th character <code>a</code>, then the 6th <code>b</code>, then the 7th <code>a</code> and has found another occurrence. Hence 2 occurrences found. I.e it moves sequentially over the string, and does not brute force every combination in the string.</p>
+<p><img src="assets/str_count.PNG" width="650" height="550" alt="how matching proceeds"></p>
+<pre class="r"><code>str_count(&quot;abababa&quot;, &quot;aba&quot;)
+#&gt; [1] 2
+str_view_all(&quot;abababa&quot;, &quot;aba&quot;)</code></pre>
+<div id="htmlwidget-b20308754c29ceef2291" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b20308754c29ceef2291">{"x":{"html":"<ul>\n  <li><span class='match'>aba<\/span>b<span class='match'>aba<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="exercises-6" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>For each of the following challenges, try solving it by using both a single regular expression, and a combination of multiple <code>str_detect()</code> calls.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Find all words that start or end with <code>x</code>.</p>
+<pre class="r"><code>reg_ex &lt;- &quot;(^x.*|.*x$)&quot;
+str_view(words, reg_ex, match = TRUE)</code></pre>
+<div id="htmlwidget-5372303e58b29f3d3d42" style="width:960px;height:100%;" class="str_view html-widget"></div>
+        <script type="application/json" data-for="htmlwidget-5372303e58b29f3d3d42">{"x":{"html":"<ul>\n  <li><span class='match'>box<\/span><\/li>\n  <li><span class='match'>sex<\/span><\/li>\n  <li><span class='match'>six<\/span><\/li>\n  <li><span class='match'>tax<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_detect(c(&quot;xray&quot;, &quot;box&quot;, &quot;text&quot;, &quot;vex&quot;), reg_ex)
+#&gt; [1]  TRUE  TRUE FALSE  TRUE
+
+reg_ex &lt;- &quot;(^x.*|.*x$)&quot;
+str_detect(c(&quot;xray&quot;, &quot;box&quot;, &quot;text&quot;, &quot;vex&quot;), &quot;^x&quot;) |
+  str_detect(c(&quot;xray&quot;, &quot;box&quot;, &quot;text&quot;, &quot;vex&quot;), &quot;x$&quot;)
+#&gt; [1]  TRUE  TRUE FALSE  TRUE</code></pre></li>
+<li><p>Find all words that start with a vowel and end with a consonant.</p>
+<pre class="r"><code>reg_ex &lt;- &quot;^[aeiou].*[^aeiou]$&quot;
+df %&gt;% 
+  filter(str_detect(word, reg_ex))
+#&gt; # A tibble: 122 x 2
+#&gt;    word        i
+#&gt;    &lt;chr&gt;   &lt;int&gt;
+#&gt;  1 about       3
+#&gt;  2 accept      5
+#&gt;  3 account     6
+#&gt;  4 across      8
+#&gt;  5 act         9
+#&gt;  6 actual     11
+#&gt;  7 add        12
+#&gt;  8 address    13
+#&gt;  9 admit      14
+#&gt; 10 affect     16
+#&gt; # ... with 112 more rows</code></pre></li>
+<li><p>Are there any words that contain at least one of each different vowel?</p>
+<pre class="r"><code># https://stackoverflow.com/questions/54267095/what-is-the-regex-to-match-the-words-containing-all-the-vowels
+reg_ex &lt;- &quot;\\b(?=\\w*?a)(?=\\w*?e)(?=\\w*?i)(?=\\w*?o)(?=\\w*?u)[a-zA-Z]+\\b&quot;
+str_detect(c(&quot;eunomia&quot;, &quot;eutopia&quot;, &quot;sequoia&quot;), reg_ex)
+#&gt; [1] TRUE TRUE TRUE
+str_view(c(&quot;eunomia&quot;, &quot;eutopia&quot;, &quot;sequoia&quot;), reg_ex)</code></pre>
+<div id="htmlwidget-38182d719dd9c7256dc7" style="width:960px;height:100%;" class="str_view html-widget"></div>
+        <script type="application/json" data-for="htmlwidget-38182d719dd9c7256dc7">{"x":{"html":"<ul>\n  <li><span class='match'>eunomia<\/span><\/li>\n  <li><span class='match'>eutopia<\/span><\/li>\n  <li><span class='match'>sequoia<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script></li>
+<li><p>What word has the highest number of vowels? What word has the highest proportion of vowels? (Hint: what is the denominator?)</p>
+<pre class="r"><code>df %&gt;% 
+  mutate(vowels = str_count(word, &quot;[aeiou]+&quot;),
+         len_word = str_length(word),
+         prop_vowels = vowels / len_word) %&gt;% 
+  arrange(-prop_vowels)
+#&gt; # A tibble: 980 x 5
+#&gt;    word        i vowels len_word prop_vowels
+#&gt;    &lt;chr&gt;   &lt;int&gt;  &lt;int&gt;    &lt;int&gt;       &lt;dbl&gt;
+#&gt;  1 a           1      1        1       1    
+#&gt;  2 age        22      2        3       0.667
+#&gt;  3 ago        24      2        3       0.667
+#&gt;  4 eye       296      2        3       0.667
+#&gt;  5 one       577      2        3       0.667
+#&gt;  6 use       912      2        3       0.667
+#&gt;  7 aware      63      3        5       0.6  
+#&gt;  8 unite     906      3        5       0.6  
+#&gt;  9 america    36      4        7       0.571
+#&gt; 10 educate   258      4        7       0.571
+#&gt; # ... with 970 more rows
+
+df %&gt;% 
+  mutate(vowels = str_count(word, &quot;[aeiou]+&quot;),
+         len_word = str_length(word),
+         prop_vowels = vowels / len_word) %&gt;% 
+  arrange(-vowels, -prop_vowels)          
+#&gt; # A tibble: 980 x 5
+#&gt;    word         i vowels len_word prop_vowels
+#&gt;    &lt;chr&gt;    &lt;int&gt;  &lt;int&gt;    &lt;int&gt;       &lt;dbl&gt;
+#&gt;  1 america     36      4        7       0.571
+#&gt;  2 educate    258      4        7       0.571
+#&gt;  3 imagine    415      4        7       0.571
+#&gt;  4 operate    580      4        7       0.571
+#&gt;  5 absolute     4      4        8       0.5  
+#&gt;  6 definite   220      4        8       0.5  
+#&gt;  7 evidence   283      4        8       0.5  
+#&gt;  8 exercise   288      4        8       0.5  
+#&gt;  9 organize   585      4        8       0.5  
+#&gt; 10 original   586      4        8       0.5  
+#&gt; # ... with 970 more rows</code></pre>
+<p>I see these are two different things. The highest number of vowels, is just the word with the most vowels. The proportion on the other hand is <code>num_vowels_in_word / num_letters_in_word</code>.</p></li>
+</ol></li>
+</ol>
+<h2>
+Extract Matches
+</h2>
+</div>
+</div>
+<div id="extract-matches" class="section level2">
+<h2>Extract Matches</h2>
+<p>To extract the actual text of a match, use <span style="color: #008080;background-color:#9FDDBA"><code>str_extract()</code></span>.</p>
+<pre class="r"><code>length(sentences)
+#&gt; [1] 720
+head(sentences)
+#&gt; [1] &quot;The birch canoe slid on the smooth planks.&quot; 
+#&gt; [2] &quot;Glue the sheet to the dark blue background.&quot;
+#&gt; [3] &quot;It&#39;s easy to tell the depth of a well.&quot;     
+#&gt; [4] &quot;These days a chicken leg is a rare dish.&quot;   
+#&gt; [5] &quot;Rice is often served in round bowls.&quot;       
+#&gt; [6] &quot;The juice of lemons makes fine punch.&quot;</code></pre>
+<p>Let’s say we want to find all sentences that contain a colour.</p>
+<pre class="r"><code>colours &lt;- c(&quot;red&quot;, &quot;orange&quot;, &quot;yellow&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;purple&quot;)
+# make a match string by saying red|orange|...|purple
+(colour_match &lt;- str_c(colours, collapse = &quot;|&quot;))
+#&gt; [1] &quot;red|orange|yellow|green|blue|purple&quot;</code></pre>
+<pre class="r"><code>has_colour &lt;- str_subset(sentences, colour_match)
+matches &lt;- str_extract(has_colour, colour_match)
+head(matches)
+#&gt; [1] &quot;blue&quot; &quot;blue&quot; &quot;red&quot;  &quot;red&quot;  &quot;red&quot;  &quot;blue&quot;</code></pre>
+<pre class="r"><code>more &lt;- sentences[str_count(sentences, colour_match) &gt; 1]
+str_view_all(more, colour_match)</code></pre>
+<div id="htmlwidget-7b1e614c56309d3ffd54" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7b1e614c56309d3ffd54">{"x":{"html":"<ul>\n  <li>It is hard to erase <span class='match'>blue<\/span> or <span class='match'>red<\/span> ink.<\/li>\n  <li>The <span class='match'>green<\/span> light in the brown box flicke<span class='match'>red<\/span>.<\/li>\n  <li>The sky in the west is tinged with <span class='match'>orange<\/span> <span class='match'>red<\/span>.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<ul>
+<li>To extract multiple matches, use <span style="color: #008080;background-color:#9FDDBA"><code>str_extract_all()</code></span>.</li>
+<li>This returns a list.</li>
+<li>To get this in matrix format use <code>simplify = TRUE</code></li>
+</ul>
+<div id="exercises-7" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>In the previous example, you might have noticed that the regular expression matched “flickered”, which is not a colour. Modify the regex to fix the problem.</p>
+<pre class="r"><code>colours &lt;- c(&quot;red&quot;, &quot;orange&quot;, &quot;yellow&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;purple&quot;)
+# make a match string by saying red|orange|...|purple
+(colour_match &lt;- str_c(prefix = &quot;\\b&quot;, colours, 
+                       suffix = &quot;\\b&quot;, collapse = &quot;|&quot;))
+#&gt; [1] &quot;\\bred\\b|\\borange\\b|\\byellow\\b|\\bgreen\\b|\\bblue\\b|\\bpurple\\b&quot;
+more &lt;- sentences[str_count(sentences, colour_match) &gt; 1]
+str_view_all(more, colour_match)</code></pre>
+<div id="htmlwidget-9b29c9f68415ca482d0e" style="width:960px;height:100%;" class="str_view html-widget"></div>
+    <script type="application/json" data-for="htmlwidget-9b29c9f68415ca482d0e">{"x":{"html":"<ul>\n  <li>It is hard to erase <span class='match'>blue<\/span> or <span class='match'>red<\/span> ink.<\/li>\n  <li>The sky in the west is tinged with <span class='match'>orange<\/span> <span class='match'>red<\/span>.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script></li>
+<li><p>From the Harvard sentences data, extract:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>The first word from each sentence.</p>
+<pre class="r"><code>reg_ex &lt;- &quot;^[A-Za-z&#39;]+\\b&quot;
+first_word &lt;- str_extract(sentences, reg_ex)
+head(first_word)
+#&gt; [1] &quot;The&quot;   &quot;Glue&quot;  &quot;It&#39;s&quot;  &quot;These&quot; &quot;Rice&quot;  &quot;The&quot;</code></pre></li>
+<li><p>All words ending in <code>ing</code>.</p>
+<pre class="r"><code>reg_ex &lt;- &quot;\\b[a-zA-Z&#39;]+ing\\b&quot;
+words_ &lt;- str_extract_all(str_subset(sentences, reg_ex),
+                          reg_ex, simplify = TRUE)
+head(words_)
+#&gt;      [,1]     
+#&gt; [1,] &quot;spring&quot; 
+#&gt; [2,] &quot;evening&quot;
+#&gt; [3,] &quot;morning&quot;
+#&gt; [4,] &quot;winding&quot;
+#&gt; [5,] &quot;living&quot; 
+#&gt; [6,] &quot;king&quot;</code></pre></li>
+<li><p>All plurals.</p>
+<p>Ok so some words end with <code>s</code> but are NOT plurals! For e.g. <code>bass</code>, <code>mass</code> etc.</p>
+<pre class="r"><code>reg_ex &lt;- &quot;\\b[a-zA-Z]{4,}(es|ies|s)\\b&quot;
+words_ &lt;- str_extract_all(sentences, reg_ex,
+                      simplify = TRUE)
+head(words_, 10)
+#&gt;       [,1]        [,2]    [,3]
+#&gt;  [1,] &quot;planks&quot;    &quot;&quot;      &quot;&quot;  
+#&gt;  [2,] &quot;&quot;          &quot;&quot;      &quot;&quot;  
+#&gt;  [3,] &quot;&quot;          &quot;&quot;      &quot;&quot;  
+#&gt;  [4,] &quot;&quot;          &quot;&quot;      &quot;&quot;  
+#&gt;  [5,] &quot;bowls&quot;     &quot;&quot;      &quot;&quot;  
+#&gt;  [6,] &quot;lemons&quot;    &quot;makes&quot; &quot;&quot;  
+#&gt;  [7,] &quot;&quot;          &quot;&quot;      &quot;&quot;  
+#&gt;  [8,] &quot;&quot;          &quot;&quot;      &quot;&quot;  
+#&gt;  [9,] &quot;hours&quot;     &quot;&quot;      &quot;&quot;  
+#&gt; [10,] &quot;stockings&quot; &quot;&quot;      &quot;&quot;</code></pre></li>
+</ol></li>
 </ol>
 <br>
 <p>
