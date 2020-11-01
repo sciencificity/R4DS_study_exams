@@ -672,6 +672,525 @@ str_view(c("grey", "gray"), "gr(e|a)y")
     ```
     
 
+<h2>Repetition</h2>
+## Repetition
+
+The next step up in power involves controlling how many times a pattern matches:
+
+* `?`: 0 or 1
+* `+`: 1 or more
+* `*`: 0 or more
+
+You can also specify the number of matches precisely:
+
+* `{n}`: exactly n
+* `{n,}`: n or more
+* `{,m}`: at most m
+* `{n,m}`: between n and m
+
+```{r}
+x <- "1888 is the longest year in Roman numerals: MDCCCLXXXVIII"
+
+str_view(x, "CC?") # C or CC if exists
+
+str_view(x, "CC+") # CC or CCC or CCCC etc. at least two C's
+
+# CL or CX or CLX at least 1 C, followed by one of more L's & X's
+str_view(x, "C[LX]+") 
+
+str_view(x, "C{2}") # find exactly 2 C's
+
+str_view(x, "C{1,}") # find 1 or more C's
+
+str_view(x, "C{1,2}") # min 1 C, max 2 C's
+
+(y <- '&lt;span style="color:#008080;background-color:#9FDDBA"&gt;`alpha`&lt;//span&gt;')
+writeLines(y)
+
+# .*? - find to the first > otherwise greedy
+str_view(y, '^&lt;.*?(&gt;){1,}') 
+```
+
+The `?` after `.*` makes the matching less greedy. It finds the
+first multiple characters until a `>` is encountered
+
+### Exercises
+
+1.  Describe the equivalents of `?`, `+`, `*` in `{m,n}` form.
+
+    - `?` - {0,1} 0 or 1
+    - `+` - {1,} 1 or more
+    - `*` - {0,} 0 or more
+
+1.  Describe in words what these regular expressions match:
+    (read carefully to see if I'm using a regular expression 
+    or a string that defines a regular expression.)
+
+    1. `^.*$`
+        Matches any string that does not contain a newline
+        character in it. String defining regular expression.
+        
+        ```{r}
+        reg_ex <-  "^.*$"
+        (x <- "This is a string with 0 newline chars")
+        writeLines(x)
+        str_view(x, reg_ex)
+        
+        (y <- "This is a string with a couple \n\n newline chars")
+        writeLines(y)
+        str_view(y, reg_ex)
+        ```
+        
+        Notice no match for y (none of the text highlighted).
+        
+        
+    1. `"\\{.+\\}"`
+    
+        Matches a `{` followed by one or more of any character 
+        but the newline character followed by the `}`. String
+        defining a regular expression.
+        
+        ```{r}
+        reg_ex <- "\\{.+\\}"
+        str_view(c("{a}", "{}", "{a,b,c}", "{a, b\n, c}"), reg_ex)
+        ```
+        
+        Notice that `{a, b , c}` is not highlighted, this is because
+        there is a `\n` (newline sequence) after the b.
+        
+    1. `\d{4}-\d{2}-\d{2}`
+    
+        Matches exactly 4 digits followed by a - followed by exactly
+        2 digits, followed by a -, followed by exactly 2 digits.
+        Regular expression (the `\d` needs another \).
+        
+        ```{r}
+        reg_ex <- "\\d{4}-\\d{2}-\\d{2}" 
+        str_view(c("1234-34-12", "12345-34-23", "084-87-98",
+                   "2020-01-01"), reg_ex)
+        ```
+        
+    1. `"\\\\{4}"`
+      
+        Matches exactly 4 backslashes. String defining reg expr.
+        
+        ```{r}
+        reg_ex <- "\\\\{4}"
+        str_view(c("\\\\", "\\\\\\\\"),
+                 reg_ex)
+        ```
+        
+
+1.  Create regular expressions to find all words that:
+
+    1. Start with three consonants.
+    
+      ```{r}
+      reg_ex <- "^[^aeiou]{3}.*"
+      str_view(c("fry", "fly", "scrape", "scream", "ate", "women",
+                 "strap", "splendid", "test"), reg_ex)
+      ```
+    
+    1. Have three or more vowels in a row.
+    
+      ```{r}
+      reg_ex <- ".*[aeiou]{3,}.*"
+      str_view(stringr::words, reg_ex, match=TRUE)
+      ```
+    
+    1. Have two or more vowel-consonant pairs in a row.
+    
+      ```{r}
+      reg_ex <- ".*([aeiou][^aeiou]){2,}.*"
+      str_view(stringr::words, reg_ex, match = TRUE)
+      ```
+    
+
+1.  Solve the beginner regexp crosswords at
+    <https://regexcrossword.com/challenges/beginner>.
+    
+    <img src="assets/exercise.PNG" width="1167" height="258" alt="regex complete">
+
+
+<h2>Backreferences</h2>
+## Backreferences
+
+Parentheses can be used to make complex expressions more clear, and can also create a _numbered_ capturing group (number 1, 2 etc.). A capturing group stores _the part of the string_ matched by the part of the regular expression inside the parentheses. You can refer to the same text as previously matched by a capturing group with _backreferences_, like `\1`, `\2` etc. 
+
+The following regex finds all fruits that have a repeated pair of letters.
+
+```{r}
+# (..)\\1 says find any two letters - these are a group, is 
+# this then followed by the same 2 letters?
+# Yes - match found
+# No - whawha
+str_view(fruit, "(..)\\1", match = TRUE)
+```
+
+For e.g. for `banana`:
+
+- It starts at "ba" that becomes the group 1, then it moves it along 
+and says is the next 2 letters "ba" (i.e. equivalent to group 1) too? Nope.
+- It moves along to "an" and that is the new group 1. Then it moves along and says - are the next two letters equivalent to group 1 (i.e. is it "an") - Yes it is! found a word that matches.
+
+### Exercises
+
+1.  Describe, in words, what these expressions will match:
+
+    1. `(.)\1\1`
+    
+        This matches any character repeated three times.
+        
+        ```{r}
+        reg_ex <- "(.)\\1\\1"
+        str_view(c("Oooh", "Ahhh", "Awww", "Ergh"), reg_ex)
+        ```
+        
+        Note that `O` and `o` are different.
+        
+        
+    1. `"(.)(.)\\2\\1"`
+    
+        This matches any two characters repeated once in 
+        reverse order. e.g. abba
+        
+        ```{r}
+        reg_ex <- "(.)(.)\\2\\1"
+        str_view(c("abba"), reg_ex)
+        str_view(words, reg_ex, match=TRUE)
+        ```
+        
+    1. `(..)\1`
+        
+        This matches two letters that appear twice. b`anan`a.
+        
+        ```{r}
+        str_view(fruit, "(..)\\1", match = TRUE)
+        ```
+        
+    1. `"(.).\\1.\\1"`
+    
+        This matches a character followed by another char followed 
+        by the same character as the start, followed by another char,
+        followed by the character. e.g. abaca
+        
+        ```{r}
+        str_view(words, "(.).\\1.\\1", match = TRUE)
+        ```        
+        
+    1. `"(.)(.)(.).*\\3\\2\\1"`
+    
+        This matches three characters followed by 0 or more other
+        characters, ending with the 3 characters at the start in
+        reverse order.
+        
+        ```{r}
+        reg_ex <- "(.)(.)(.).*\\3\\2\\1"
+        str_view(c("bbccbb"), reg_ex)
+        str_view(words, reg_ex, match=TRUE)
+        ```        
+        
+
+1.  Construct regular expressions to match words that:
+
+    1. Start and end with the same character.
+    
+      ```{r}
+      reg_ex <- "^(.).*\\1$"
+      str_view(words, reg_ex, match = TRUE)
+      ```
+    
+    1. Contain a repeated pair of letters
+       (e.g. "church" contains "ch" repeated twice.)
+       
+      ```{r}
+      reg_ex <- "(..).*\\1"
+      str_view("church", reg_ex)
+      str_view(words, reg_ex, match=TRUE)
+      ```
+    
+    1. Contain one letter repeated in at least three places
+       (e.g. "eleven" contains three "e"s.)
+       
+      ```{r}
+      reg_ex <- "(.).*\\1.*\\1"
+      str_view(words, reg_ex, match = TRUE)
+      ```
+
+<h2>Detect Matches</h2>
+## Detect Matches
+
+#### str_detect()
+
+Use <span style="color: #008080;background-color:#9FDDBA">`str_detect()`</span>. It returns a logical vector the same length as the input.
+
+Since it is a logical vector and numerically TRUE == 1 and FALSE == 0
+we can also use `sum()`, `mean()` to get information about
+matches found.
+
+```{r detect1, include=FALSE}
+(x <- c("apple", "banana", "pear"))
+str_detect(x, "e")
+```
+
+```{r, echo=FALSE}
+decorate("detect1") %>% 
+  flair("str_detect", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("TRUE", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+```{r detect2, include=FALSE}
+x
+sum(str_detect(x, "e"))
+# How many common words start with t?
+sum(str_detect(words, "^t"))
+# What proportion of common words end with a vowel?
+mean(str_detect(words, "[aeiou]$"))
+```
+
+```{r, echo=FALSE}
+decorate("detect2") %>% 
+  flair("sum", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("mean", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+```{r}
+# Find all words containing at least one vowel, and negate
+no_vowels_1 <- !str_detect(words, "[aeiou]")
+# Find all words consisting only of consonants (non-vowels)
+no_vowels_2 <- str_detect(words, "^[^aeiou]+$")
+identical(no_vowels_1, no_vowels_2)
+# you can also use `negate = TRUE`
+no_vowels_3 <- str_detect(words, "[aeiou]", negate = TRUE)
+identical(no_vowels_1, no_vowels_3)
+identical(no_vowels_3, no_vowels_2)
+```
+
+#### str_subset()
+
+We use `str_detect()` often to match patterns using the wrapper
+<span style="color: #008080;background-color:#9FDDBA">`str_subset()`</span>.
+
+```{r sub1, include=FALSE}
+words[str_detect(words, "x$")]
+# str_subset() is a wrapper around x[str_detect(x, pattern)]
+str_subset(words, "x$")
+```
+
+```{r, echo=FALSE}
+decorate("sub1") %>% 
+  flair("str_subset", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+#### filter(str_detect())
+
+When we want to find matches in a column in a dataframe we can combine `str_detect()` with `filter()`.
+
+```{r sub2, include=FALSE}
+(df <- tibble(
+  word = words,
+  i = seq_along(word)
+))
+
+df %>% 
+  filter(str_detect(word, "x$"))
+```
+
+```{r, echo=FALSE}
+decorate("sub2") %>% 
+  flair("filter", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("str_detect", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+#### str_count()
+
+Instead of using `str_detect()` which returns a __TRUE__ OR __FALSE__ we can use <span style="color: #008080;background-color:#9FDDBA">`str_count()`</span> which gives
+us a number of matches in each string.
+
+```{r count1, include=FALSE}
+(x <- c("apple", "banana", "pear"))
+str_count(x, "e")
+str_count(x, "a")
+# On average, how many vowels per word?
+mean(str_count(words, "[aeiou]"))
+```
+
+```{r, echo=FALSE}
+decorate("count1") %>% 
+  flair("str_count", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+We often use `str_count()` with `mutate()`.
+
+```{r}
+df %>% 
+  mutate(vowels = str_count(word, "[aeiou]"),
+         consonants = str_count(word, "[^aeiou]"))
+```
+
+Matches never overlap. For example, in `"abababa"`, the pattern `"aba"` matches twice. You can think of it as placing a marker at the beginning of the string, then moving along looking for `pattern`, it sees `a` then `b` then `a`, so it has found one 
+`pattern == aba`. The marker is lying at the 4th letter in the string. It proceeds from there to look for more occurrences of the pattern. `b` does not do it, so it skips over and goes to the 5th
+character `a`, then the 6th `b`, then the 7th `a` and has found another occurrence. Hence 2 occurrences found. I.e it moves sequentially over the string, and does not brute force every combination in the string.
+
+  <img src="assets/str_count.PNG" width="650" height="550" alt="how matching proceeds">
+
+```{r}
+str_count("abababa", "aba")
+str_view_all("abababa", "aba")
+```
+
+### Exercises
+
+1.  For each of the following challenges, try solving it by using both a single
+    regular expression, and a combination of multiple `str_detect()` calls.
+    
+    a.  Find all words that start or end with `x`.
+    
+        ```{r}
+        reg_ex <- "(^x.*|.*x$)"
+        str_view(words, reg_ex, match = TRUE)
+        str_detect(c("xray", "box", "text", "vex"), reg_ex)
+        
+        reg_ex <- "(^x.*|.*x$)"
+        str_detect(c("xray", "box", "text", "vex"), "^x") |
+          str_detect(c("xray", "box", "text", "vex"), "x$")
+        ```
+    
+    
+    a.  Find all words that start with a vowel and end 
+    with a consonant.
+    
+        ```{r}
+        reg_ex <- "^[aeiou].*[^aeiou]$"
+        df %>% 
+          filter(str_detect(word, reg_ex))
+        ```
+    
+    
+    a.  Are there any words that contain at least one of each different
+        vowel?
+        ```{r}
+        # https://stackoverflow.com/questions/54267095/what-is-the-regex-to-match-the-words-containing-all-the-vowels
+        reg_ex <- "\\b(?=\\w*?a)(?=\\w*?e)(?=\\w*?i)(?=\\w*?o)(?=\\w*?u)[a-zA-Z]+\\b"
+        str_detect(c("eunomia", "eutopia", "sequoia"), reg_ex)
+        str_view(c("eunomia", "eutopia", "sequoia"), reg_ex)
+        ```
+        
+
+    a.  What word has the highest number of vowels? What word 
+    has the highest proportion of vowels? (Hint: what 
+    is the denominator?)
+    
+        ```{r}
+        df %>% 
+          mutate(vowels = str_count(word, "[aeiou]+"),
+                 len_word = str_length(word),
+                 prop_vowels = vowels / len_word) %>% 
+          arrange(-prop_vowels)
+          
+        df %>% 
+          mutate(vowels = str_count(word, "[aeiou]+"),
+                 len_word = str_length(word),
+                 prop_vowels = vowels / len_word) %>% 
+          arrange(-vowels, -prop_vowels)          
+        ```
+        
+        I see these are two different things.
+        The highest number of vowels, is just the word with the
+        most vowels. The proportion on the other hand is
+        `num_vowels_in_word / num_letters_in_word`.
+
+<h2>Extract Matches</h2>  
+## Extract Matches
+
+To extract the actual text of a match, use <span style="color: #008080;background-color:#9FDDBA">`str_extract()`</span>.
+
+```{r}
+length(sentences)
+head(sentences)
+```
+
+Let's say we want to find all sentences that contain a colour.
+
+```{r}
+colours <- c("red", "orange", "yellow", "green", "blue", "purple")
+# make a match string by saying red|orange|...|purple
+(colour_match <- str_c(colours, collapse = "|"))
+```
+
+```{r}
+has_colour <- str_subset(sentences, colour_match)
+matches <- str_extract(has_colour, colour_match)
+head(matches)
+```
+
+```{r}
+more <- sentences[str_count(sentences, colour_match) > 1]
+str_view_all(more, colour_match)
+```
+
+- To extract multiple matches, use <span style="color: #008080;background-color:#9FDDBA">`str_extract_all()`</span>. 
+- This returns a list.
+- To get this in matrix format use `simplify = TRUE`
+
+### Exercises
+
+1.  In the previous example, you might have noticed that the regular
+    expression matched "flickered", which is not a colour. Modify the     regex to fix the problem.
+    
+    ```{r}
+    colours <- c("red", "orange", "yellow", "green", "blue", "purple")
+    # make a match string by saying red|orange|...|purple
+    (colour_match <- str_c(prefix = "\\b", colours, 
+                           suffix = "\\b", collapse = "|"))
+    more <- sentences[str_count(sentences, colour_match) > 1]
+    str_view_all(more, colour_match)
+    ```
+    
+
+1.  From the Harvard sentences data, extract:
+
+    a. The first word from each sentence.
+    
+        ```{r}
+        reg_ex <- "^[A-Za-z']+\\b"
+        first_word <- str_extract(sentences, reg_ex)
+        head(first_word)
+        ```
+    
+    a. All words ending in `ing`.
+    
+        ```{r}
+        reg_ex <- "\\b[a-zA-Z']+ing\\b"
+        words_ <- str_extract_all(str_subset(sentences, reg_ex),
+                                  reg_ex, simplify = TRUE)
+        head(words_)
+        ```
+    
+    a. All plurals.
+    
+        Ok so some words end with `s` but are NOT plurals! For e.g.
+        `bass`, `mass` etc.
+    
+        ```{r}
+        reg_ex <- "\\b[a-zA-Z]{4,}(es|ies|s)\\b"
+        words_ <- str_extract_all(sentences, reg_ex,
+                              simplify = TRUE)
+        head(words_, 10)
+        ```
+    
+
+
+
+
 
 
 
