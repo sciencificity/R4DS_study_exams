@@ -16,14 +16,11 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE,
 options(scipen=10000)
 library(tidyverse)
 library(flair)
-library(emo)
-library(lubridate)
 library(magrittr)
-library(tidyquant)
 library(stringr)
-theme_set(theme_tq())
 ```
 # Strings {#buttons .tabset .tabset-fade .tabset-pills}
+
 
 __Click on the tab buttons below for each section__
 
@@ -390,7 +387,294 @@ str_order(x, locale = "haw")
     l <- letters
     stringify(letters)
     ```
+
+<h2>Pattern Matching with Regex</h2>
+## Pattern Matching with Regex
+
+- Find a specific pattern
     
+  ```{r view1, include=FALSE}
+  x <- c("apple", "banana", "pear")
+  # find any "an" char seq in vector x
+  str_view(x, "an") 
+  ```
+    
+  ```{r, echo=FALSE}
+  decorate("view1") %>% 
+    flair("str_view", background = "#9FDDBA", 
+          color = "#008080")
+  ```
+
+- Find any character besides the newline char.
+
+    ```{r}
+    # find any char followed by an "a" followed by any char
+    str_view(x, ".a.") 
+    ```
+    
+- What if we want to literally match `.`? 
+
+    We need to escape the `.` to say "hey, literally find me a
+    . char in the string, I don't want to use it's special
+    behaviour this time".
+    
+    `\\.`
+
+    ```{r}
+    (dot <- "\\.")
+    writeLines(dot)
+    
+    str_view(c("abc", "a$c", "a.c", "b.e"), 
+             # find a char 
+             # followed by a literal . 
+             # followed by another char
+             ".\\..")
+    
+    ```
+
+- What if we want the literal `\`?
+
+    Recall that to add a literal backslash in a string we have to
+    escape it using `\\`.
+    
+    ```{r}
+    (backslash <- "This string contains the \\ char and we
+    want to find it.")
+    writeLines(backslash)
+    ```
+    
+    So to find it using regex we need to escape each backslash
+    in our regex i.e. `\\\\`. `r emo::ji("horns")`
+    
+    ```{r}
+    writeLines(backslash)
+    str_view(backslash, "\\\\")
+    ```
+
+#### Exercises
+
+1.  Explain why each of these strings don't match a `\`: `"\"`, `"\\"`, `"\\\"`.
+
+    As we saw above in a string to literally print a `\` 
+    we use `"\\"`.
+    If we need to match it we need to escape each `\`, 
+    with a `\`. Since we have __two__ `\`'s in a string, 
+    matching requires 2 * 2 i.e. `r 2*2` `\`
+
+1.  How would you match the sequence `"'\`?
+
+    ```{r}
+    (string4 <- "This is the funky string: \"\'\\")
+    writeLines(string4)
+    str_view(string4, "\\\"\\\'\\\\")
+    ```
+
+
+1.  What patterns will the regular expression `\..\..\..` match? 
+    How would you represent it as a string?
+    
+    It matches the pattern literal . followed by any character x 3.
+    
+    ```{r}
+    (string5 <- ".x.y.z something else .z.a.r")
+    writeLines(string5)
+    str_view_all(string5, "\\..\\..\\..")
+    ```
+
+<h2>Anchors</h2>
+## Anchors 
+
+Use:
+
+* `^` to match the start of the string.
+* `$` to match the end of the string.
+
+    ```{r}
+    x
+    str_view(x, "^a") # any starting with a?
+    str_view(x, "a$") # any ending with a?
+    ```
+
+* To match a full string (not just the string being a part 
+of a bigger string).
+
+    ```{r}
+    (x <- c("apple pie", "apple", "apple cake"))
+    str_view(x, "apple") # match any "apple"
+    str_view(x, "^apple$") # match the word "apple"
+    ```
+    
+* Match boundary between words with `\b`.
+
+### Exercises
+
+1.  How would you match the literal string `"$^$"`?
+
+    ```{r}
+    (x <- "How would you match the literal string $^$?")
+    str_view(x, "\\$\\^\\$")
+    ```
+
+1.  Given the corpus of common words in `stringr::words`, create regular
+    expressions that find all words that:
+    
+    a. Start with "y".
+    
+      ```{r}
+      stringr::words %>% 
+          as_tibble()
+          
+      str_view(stringr::words, "^y", match = TRUE)
+
+      ```
+    a. End with "x"
+    
+      ```{r}
+      str_view(stringr::words, "x$", match = TRUE)
+      ```
+    
+    a. Are exactly three letters long. (Don't cheat by using `str_length()`!)
+    
+      ```{r}
+      str_view(stringr::words, "^...$", match = TRUE)
+      ```
+    
+    a. Have seven letters or more.
+    
+      ```{r}
+      str_view(stringr::words, "^.......", match = TRUE)
+      ```
+
+    Since this list is long, you might want to use the `match` argument to
+    `str_view()` to show only the matching or non-matching words.
+
+<h2>Character classes</h2>
+## Character classes
+
+* `\d`: matches any digit.
+* `\s`: matches any whitespace (e.g. space, tab, newline).
+* `[abc]`: matches a, b, or c.
+* `[^abc]`: matches anything except a, b, or c.
+
+To create a regular expression containing `\d` or `\s`, we'll need to escape the `\` for the string, so we'll type `"\\d"` or `"\\s"`.
+
+A character class containing a single character is a nice alternative to backslash escapes when we're looking for a single metacharacter in a regex.
+
+```{r}
+(x <- "How would you match the literal string $^$?")
+str_view(x, "[$][\\^][$]")
+
+(y <- "This sentence has a full stop. Can we find it?")
+str_view(y, "[.]")
+
+# Look for a literal character that normally has special meaning in a regex
+str_view(c("abc", "a.c", "a*c", "a c"), "a[.]c")
+str_view(c("abc", "a.c", "a*c", "a c"), ".[*]c")
+str_view(c("abc", "a.c", "a*c", "a c"), "a[ ]")
+```
+
+This works for most (but not all) regex metacharacters: 
+
+- __Works for__: `$` `.` `|` `?` `*` `+` `(` `)` `[` `{`. 
+- __Does not work for__: Some characters have special meaning even inside a character class, and hence must be handled with backslash escapes. These are `]` `\` `^` and `-`. E.g. In the first example above.
+
+You can use _alternation_ to pick between one or more alternative patterns. For example, `abc|d..f` will match either '"abc"', or `"deaf"`. Note that the precedence for `|` is low, and
+hence may be confusing (e.g. we may have expected the above to match either _abc_ or _abdeaf_ or _abchgf_, but it does not - it matches either the first part abc OR the second part dxxf). We need to use parentheses to make it clear what we are looking for.
+
+```{r}
+str_view(c("grey", "gray"), "gr(e|a)y")
+```
+
+#### Exercises
+
+1.  Create regular expressions to find all words that:
+
+    1. Start with a vowel.
+    
+        ```{r}
+        reg_ex <- "^[aeiou]"
+        (x <- c("aardvark", "bat", "umbrella", 
+                "escape", "xray", "owl"))
+        str_view(x, reg_ex)
+        ```
+    
+
+    1. That only contain consonants. (Hint: thinking about matching 
+       "not"-vowels.)
+       
+       I don't know how to do this with only the tools we have 
+       learnt so far so you will see a new character below `+` 
+       that is after the character class end bracket - this 
+       means one or more, i.e. find words that contain one or more
+       non-vowel words in `stringr::words`.
+
+        ```{r}
+        reg_ex <- "^[^aeiou]+$"
+        str_view(stringr::words, reg_ex, match = TRUE)
+        ```       
+
+    1. End with `ed`, but not with `eed`.
+    
+        ```{r}
+        reg_ex <- "[^e][e][d]$"
+        str_view(stringr::words, reg_ex, match = TRUE)
+        ```        
+    
+    1. End with `ing` or `ise`.
+    
+        ```{r}
+        reg_ex <- "i(ng|se)$"
+        str_view(stringr::words, reg_ex, match = TRUE)
+        ```          
+    
+1.  Empirically verify the rule "i before e except after c".
+
+    ```{r}
+    correct_reg_ex <- "[^c]ie|[c]ei"
+    str_view(stringr::words, correct_reg_ex, match = TRUE)
+    opp_reg_ex <- "[^c]ei|[c]ie" # opp is e before i before a non c
+    str_view(stringr::words, opp_reg_ex, match = TRUE)
+    ```
+
+
+1.  Is "q" always followed by a "u"?
+
+    ```{r}
+    reg_ex <- "q[^u]"
+    str_view(stringr::words, reg_ex, match = TRUE)
+    reg_ex <- "qu"
+    str_view(stringr::words, reg_ex, match = TRUE)
+    ```
+    
+    In the `stringr::words` dataset yes.
+
+
+1.  Write a regular expression that matches a word if it's probably written
+    in British English, not American English.
+    
+    ```{r}
+    reg_ex <- "col(o|ou)r"
+    str_view(c("colour", "color", "colouring"), reg_ex)
+    reg_ex <- "visuali(s|z)(e|ation)"
+    str_view(c("visualisation", "visualization", 
+               "visualise", "visualize"), 
+             reg_ex)
+    ```
+    
+
+1.  Create a regular expression that will match telephone numbers as commonly
+    written in your country.
+    
+    ```{r}
+    reg_ex <- "[+]27[(]0[)][\\d]+"
+    str_view(c("0828907654", "+27(0)862345678", "777-8923-111"),
+             reg_ex)
+    ```
+    
+
+
+
+
 
 
 
