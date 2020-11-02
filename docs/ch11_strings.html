@@ -416,7 +416,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-11-01
+<strong>Last updated:</strong> 2020-11-02
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -507,16 +507,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree2cd35133e3a03c75bb67c65dae7270a49a0aa60ctargetblank2cd3513a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/2cd35133e3a03c75bb67c65dae7270a49a0aa60c" target="_blank">2cd3513</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree967fd8a5d349435838720a008162d0de88bf5086targetblank967fd8aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/967fd8a5d349435838720a008162d0de88bf5086" target="_blank">967fd8a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree2cd35133e3a03c75bb67c65dae7270a49a0aa60ctargetblank2cd3513a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree967fd8a5d349435838720a008162d0de88bf5086targetblank967fd8aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/2cd35133e3a03c75bb67c65dae7270a49a0aa60c" target="_blank">2cd3513</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/967fd8a5d349435838720a008162d0de88bf5086" target="_blank">967fd8a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -566,6 +566,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/967fd8a5d349435838720a008162d0de88bf5086/analysis/ch11_strings.Rmd" target="_blank">967fd8a</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-02
+</td>
+<td>
+finished ch11
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/db5a796c13f0cb36022a2fdc96cb9282a2304286/docs/ch11_strings.html" target="_blank">db5a796</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1633,6 +1667,29 @@ str_view_all(more, colour_match)</code></pre>
 <li>This returns a list.</li>
 <li>To get this in matrix format use <code>simplify = TRUE</code></li>
 </ul>
+<pre class="r"><code>str_extract_all(more, colour_match)
+#&gt; [[1]]
+#&gt; [1] &quot;blue&quot; &quot;red&quot; 
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] &quot;green&quot; &quot;red&quot;  
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] &quot;orange&quot; &quot;red&quot;
+
+str_extract_all(more, colour_match, simplify = TRUE)
+#&gt;      [,1]     [,2] 
+#&gt; [1,] &quot;blue&quot;   &quot;red&quot;
+#&gt; [2,] &quot;green&quot;  &quot;red&quot;
+#&gt; [3,] &quot;orange&quot; &quot;red&quot;</code></pre>
+<pre class="r"><code>x &lt;- c(&quot;a&quot;, &quot;a b&quot;, &quot;a b c&quot;)
+str_extract(x, &quot;[a-z]&quot;)
+#&gt; [1] &quot;a&quot; &quot;a&quot; &quot;a&quot;
+str_extract_all(x, &quot;[a-z]&quot;, simplify = TRUE)
+#&gt;      [,1] [,2] [,3]
+#&gt; [1,] &quot;a&quot;  &quot;&quot;   &quot;&quot;  
+#&gt; [2,] &quot;a&quot;  &quot;b&quot;  &quot;&quot;  
+#&gt; [3,] &quot;a&quot;  &quot;b&quot;  &quot;c&quot;</code></pre>
 <div id="exercises-7" class="section level3">
 <h3>Exercises</h3>
 <ol style="list-style-type: decimal">
@@ -1684,6 +1741,967 @@ head(words_, 10)
 #&gt; [10,] &quot;stockings&quot; &quot;&quot;      &quot;&quot;</code></pre></li>
 </ol></li>
 </ol>
+<h2>
+Grouped Matches
+</h2>
+</div>
+</div>
+<div id="grouped-matches" class="section level2">
+<h2>Grouped Matches</h2>
+<p>So far we have seen parentheses used for:</p>
+<ul>
+<li>disambiguating complex parts of a match <code>"col(o|ou)r"</code></li>
+<li>creating groups that can be used as backreferences <code>"(..)\\1"</code></li>
+<li><strong>Another</strong> use is to extract parts of complex matches</li>
+</ul>
+<p>As an example let’s say we want to get nouns from the sentences dataset.</p>
+<p>We can look for <em>a</em> / <em>the</em></p>
+<pre class="r"><code>noun &lt;- &quot;(a|the) [^ ]+&quot; # a / the followed by some word (not a space)
+
+(has_noun &lt;- sentences %&gt;% 
+  str_subset(noun) %&gt;% 
+  head(10))
+#&gt;  [1] &quot;The birch canoe slid on the smooth planks.&quot;       
+#&gt;  [2] &quot;Glue the sheet to the dark blue background.&quot;      
+#&gt;  [3] &quot;It&#39;s easy to tell the depth of a well.&quot;           
+#&gt;  [4] &quot;These days a chicken leg is a rare dish.&quot;         
+#&gt;  [5] &quot;The box was thrown beside the parked truck.&quot;      
+#&gt;  [6] &quot;The boy was there when the sun rose.&quot;             
+#&gt;  [7] &quot;The source of the huge river is the clear spring.&quot;
+#&gt;  [8] &quot;Kick the ball straight and follow through.&quot;       
+#&gt;  [9] &quot;Help the woman get back to her feet.&quot;             
+#&gt; [10] &quot;A pot of tea helps to pass the evening.&quot;
+
+has_noun %&gt;% 
+  # str_extract gives us entire match and each group in a matrix col
+  str_extract(noun)
+#&gt;  [1] &quot;the smooth&quot; &quot;the sheet&quot;  &quot;the depth&quot;  &quot;a chicken&quot;  &quot;the parked&quot;
+#&gt;  [6] &quot;the sun&quot;    &quot;the huge&quot;   &quot;the ball&quot;   &quot;the woman&quot;  &quot;a helps&quot;
+
+# in tidyr we can do this for df&#39;s using tidyr::extract()
+tibble(sentence = sentences) %&gt;% 
+  tidyr::extract(sentence,# from where? sentence
+                 # rename the resulting cols article, and noun
+                 c(&quot;article&quot;, &quot;noun&quot;),
+                 # pattern with groups for article then noun
+                 &quot;(a|the) ([^ ]+)&quot;,
+                 remove = FALSE # keep original sentence col
+                 )
+#&gt; # A tibble: 720 x 3
+#&gt;    sentence                                    article noun   
+#&gt;    &lt;chr&gt;                                       &lt;chr&gt;   &lt;chr&gt;  
+#&gt;  1 The birch canoe slid on the smooth planks.  the     smooth 
+#&gt;  2 Glue the sheet to the dark blue background. the     sheet  
+#&gt;  3 It&#39;s easy to tell the depth of a well.      the     depth  
+#&gt;  4 These days a chicken leg is a rare dish.    a       chicken
+#&gt;  5 Rice is often served in round bowls.        &lt;NA&gt;    &lt;NA&gt;   
+#&gt;  6 The juice of lemons makes fine punch.       &lt;NA&gt;    &lt;NA&gt;   
+#&gt;  7 The box was thrown beside the parked truck. the     parked 
+#&gt;  8 The hogs were fed chopped corn and garbage. &lt;NA&gt;    &lt;NA&gt;   
+#&gt;  9 Four hours of steady work faced us.         &lt;NA&gt;    &lt;NA&gt;   
+#&gt; 10 Large size in stockings is hard to sell.    &lt;NA&gt;    &lt;NA&gt;   
+#&gt; # ... with 710 more rows</code></pre>
+<p>Like <code>str_extract()</code>, <code>str_match()</code> also has an <strong>all</strong> equivalent <code>str_match_all()</code>.</p>
+<div id="exercises-8" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Find all words that come after a “number” like “one”, “two”, “three” etc. Pull out both the number and the word.</p>
+<pre class="r"><code>(pattern &lt;- str_c(prefix = &quot;\\b&quot;,
+                 c(&quot;one&quot;, &quot;two&quot;, &quot;three&quot;, &quot;four&quot;,
+                   &quot;five&quot;, &quot;six&quot;, &quot;seven&quot;, &quot;eight&quot;,
+                   &quot;nine&quot;, &quot;ten&quot;, &quot;eleven&quot;, &quot;twelve&quot;),
+                 collapse = &quot;|&quot;))
+#&gt; [1] &quot;\\bone|\\btwo|\\bthree|\\bfour|\\bfive|\\bsix|\\bseven|\\beight|\\bnine|\\bten|\\beleven|\\btwelve&quot;
+pattern &lt;- glue::glue(&quot;({pattern}) ([^ ]+)&quot;)
+tibble(sentence = sentences) %&gt;% 
+  tidyr::extract(sentence,
+                 c(&quot;number&quot;, &quot;word&quot;),
+                 pattern,
+                 remove = FALSE) %&gt;% 
+  filter(!is.na(number))
+#&gt; # A tibble: 22 x 3
+#&gt;    sentence                                     number word    
+#&gt;    &lt;chr&gt;                                        &lt;chr&gt;  &lt;chr&gt;   
+#&gt;  1 The rope will bind the seven books at once.  seven  books   
+#&gt;  2 The two met while playing on the sand.       two    met     
+#&gt;  3 There are more than two factors here.        two    factors 
+#&gt;  4 Type out three lists of orders.              three  lists   
+#&gt;  5 Two plus seven is less than ten.             seven  is      
+#&gt;  6 Drop the two when you add the figures.       two    when    
+#&gt;  7 There the flood mark is ten inches.          ten    inches. 
+#&gt;  8 We are sure that one war is enough.          one    war     
+#&gt;  9 His shirt was clean but one button was gone. one    button  
+#&gt; 10 The fight will end in just six minutes.      six    minutes.
+#&gt; # ... with 12 more rows
+
+# using str_extract
+sentences %&gt;% 
+  # first get only the sentences containing this pattern
+  str_subset(pattern) %&gt;% 
+  # now words that match the pattern
+  str_match(pattern) %&gt;% 
+  head(10)
+#&gt;       [,1]           [,2]    [,3]      
+#&gt;  [1,] &quot;seven books&quot;  &quot;seven&quot; &quot;books&quot;   
+#&gt;  [2,] &quot;two met&quot;      &quot;two&quot;   &quot;met&quot;     
+#&gt;  [3,] &quot;two factors&quot;  &quot;two&quot;   &quot;factors&quot; 
+#&gt;  [4,] &quot;three lists&quot;  &quot;three&quot; &quot;lists&quot;   
+#&gt;  [5,] &quot;seven is&quot;     &quot;seven&quot; &quot;is&quot;      
+#&gt;  [6,] &quot;two when&quot;     &quot;two&quot;   &quot;when&quot;    
+#&gt;  [7,] &quot;ten inches.&quot;  &quot;ten&quot;   &quot;inches.&quot; 
+#&gt;  [8,] &quot;one war&quot;      &quot;one&quot;   &quot;war&quot;     
+#&gt;  [9,] &quot;one button&quot;   &quot;one&quot;   &quot;button&quot;  
+#&gt; [10,] &quot;six minutes.&quot; &quot;six&quot;   &quot;minutes.&quot;
+
+sentences %&gt;% 
+  # first get only the sentences containing this pattern
+  str_subset(pattern) %&gt;% 
+  # now words that match the pattern
+  str_match_all(pattern) %&gt;% 
+  head(10)
+#&gt; [[1]]
+#&gt;      [,1]          [,2]    [,3]   
+#&gt; [1,] &quot;seven books&quot; &quot;seven&quot; &quot;books&quot;
+#&gt; 
+#&gt; [[2]]
+#&gt;      [,1]      [,2]  [,3] 
+#&gt; [1,] &quot;two met&quot; &quot;two&quot; &quot;met&quot;
+#&gt; 
+#&gt; [[3]]
+#&gt;      [,1]          [,2]  [,3]     
+#&gt; [1,] &quot;two factors&quot; &quot;two&quot; &quot;factors&quot;
+#&gt; 
+#&gt; [[4]]
+#&gt;      [,1]          [,2]    [,3]   
+#&gt; [1,] &quot;three lists&quot; &quot;three&quot; &quot;lists&quot;
+#&gt; 
+#&gt; [[5]]
+#&gt;      [,1]       [,2]    [,3]
+#&gt; [1,] &quot;seven is&quot; &quot;seven&quot; &quot;is&quot;
+#&gt; 
+#&gt; [[6]]
+#&gt;      [,1]       [,2]  [,3]  
+#&gt; [1,] &quot;two when&quot; &quot;two&quot; &quot;when&quot;
+#&gt; 
+#&gt; [[7]]
+#&gt;      [,1]          [,2]  [,3]     
+#&gt; [1,] &quot;ten inches.&quot; &quot;ten&quot; &quot;inches.&quot;
+#&gt; 
+#&gt; [[8]]
+#&gt;      [,1]      [,2]  [,3] 
+#&gt; [1,] &quot;one war&quot; &quot;one&quot; &quot;war&quot;
+#&gt; 
+#&gt; [[9]]
+#&gt;      [,1]         [,2]  [,3]    
+#&gt; [1,] &quot;one button&quot; &quot;one&quot; &quot;button&quot;
+#&gt; 
+#&gt; [[10]]
+#&gt;      [,1]           [,2]  [,3]      
+#&gt; [1,] &quot;six minutes.&quot; &quot;six&quot; &quot;minutes.&quot;</code></pre></li>
+<li><p>Find all contractions. Separate out the pieces before and after the apostrophe.</p>
+<pre class="r"><code>pattern &lt;- &quot;\\b([a-zA-Z]+)&#39;([a-zA-Z]+)&quot;
+
+tibble(sentence = sentences) %&gt;% 
+  tidyr::extract(sentence,
+                 c(&quot;one&quot;, &quot;two&quot;),
+                 pattern,
+                 remove = FALSE) %&gt;% 
+  filter(!is.na(one))
+#&gt; # A tibble: 15 x 3
+#&gt;    sentence                                     one      two  
+#&gt;    &lt;chr&gt;                                        &lt;chr&gt;    &lt;chr&gt;
+#&gt;  1 It&#39;s easy to tell the depth of a well.       It       s    
+#&gt;  2 The soft cushion broke the man&#39;s fall.       man      s    
+#&gt;  3 Open the crate but don&#39;t break the glass.    don      t    
+#&gt;  4 Add the store&#39;s account to the last cent.    store    s    
+#&gt;  5 The beam dropped down on the workmen&#39;s head. workmen  s    
+#&gt;  6 Let&#39;s all join as we sing the last chorus.   Let      s    
+#&gt;  7 The copper bowl shone in the sun&#39;s rays.     sun      s    
+#&gt;  8 A child&#39;s wit saved the day for us.          child    s    
+#&gt;  9 A ripe plum is fit for a king&#39;s palate.      king     s    
+#&gt; 10 It&#39;s a dense crowd in two distinct ways.     It       s    
+#&gt; 11 We don&#39;t get much money but we have fun.     don      t    
+#&gt; 12 Ripe pears are fit for a queen&#39;s table.      queen    s    
+#&gt; 13 We don&#39;t like to admit our small faults.     don      t    
+#&gt; 14 Dig deep in the earth for pirate&#39;s gold.     pirate   s    
+#&gt; 15 She saw a cat in the neighbor&#39;s house.       neighbor s
+
+# the str_match way
+sentences %&gt;% 
+  str_subset(pattern) %&gt;% # only consider rows with pattern
+  str_match(pattern)
+#&gt;       [,1]         [,2]       [,3]
+#&gt;  [1,] &quot;It&#39;s&quot;       &quot;It&quot;       &quot;s&quot; 
+#&gt;  [2,] &quot;man&#39;s&quot;      &quot;man&quot;      &quot;s&quot; 
+#&gt;  [3,] &quot;don&#39;t&quot;      &quot;don&quot;      &quot;t&quot; 
+#&gt;  [4,] &quot;store&#39;s&quot;    &quot;store&quot;    &quot;s&quot; 
+#&gt;  [5,] &quot;workmen&#39;s&quot;  &quot;workmen&quot;  &quot;s&quot; 
+#&gt;  [6,] &quot;Let&#39;s&quot;      &quot;Let&quot;      &quot;s&quot; 
+#&gt;  [7,] &quot;sun&#39;s&quot;      &quot;sun&quot;      &quot;s&quot; 
+#&gt;  [8,] &quot;child&#39;s&quot;    &quot;child&quot;    &quot;s&quot; 
+#&gt;  [9,] &quot;king&#39;s&quot;     &quot;king&quot;     &quot;s&quot; 
+#&gt; [10,] &quot;It&#39;s&quot;       &quot;It&quot;       &quot;s&quot; 
+#&gt; [11,] &quot;don&#39;t&quot;      &quot;don&quot;      &quot;t&quot; 
+#&gt; [12,] &quot;queen&#39;s&quot;    &quot;queen&quot;    &quot;s&quot; 
+#&gt; [13,] &quot;don&#39;t&quot;      &quot;don&quot;      &quot;t&quot; 
+#&gt; [14,] &quot;pirate&#39;s&quot;   &quot;pirate&quot;   &quot;s&quot; 
+#&gt; [15,] &quot;neighbor&#39;s&quot; &quot;neighbor&quot; &quot;s&quot;</code></pre></li>
+</ol>
+<h2>
+Replacing matches
+</h2>
+</div>
+</div>
+<div id="replacing-matches" class="section level2">
+<h2>Replacing matches</h2>
+<p><code>str_replace()</code> and <code>str_replace_all()</code> allow you to replace matches with new strings.</p>
+<pre class="r"><code>x &lt;- c(&quot;apple&quot;, &quot;pear&quot;, &quot;banana&quot;)
+# replace the 1st occurrence of a vowel in x with a -
+str_replace(x, &quot;[aeiou]&quot;, &quot;-&quot;)
+#&gt; [1] &quot;-pple&quot;  &quot;p-ar&quot;   &quot;b-nana&quot;
+# replace all occurrences of a vowel in x with a - 
+str_replace_all(x, &quot;[aeiou]&quot;, &quot;-&quot;)
+#&gt; [1] &quot;-ppl-&quot;  &quot;p--r&quot;   &quot;b-n-n-&quot;</code></pre>
+<p>With <code>str_replace_all()</code> you may also supply a named vector to perform multiple replacements.</p>
+<pre class="r"><code>x &lt;- c(&quot;1 house&quot;, &quot;2 cars&quot;, &quot;3 people&quot;)
+str_replace_all(x,
+                c(&quot;1&quot; = &quot;one&quot;, &quot;2&quot; = &quot;two&quot;, &quot;3&quot; = &quot;three&quot;))
+#&gt; [1] &quot;one house&quot;    &quot;two cars&quot;     &quot;three people&quot;</code></pre>
+<p>We can also use <code>backreferences</code> to do replacements.</p>
+<pre class="r"><code># swap the second and third words
+sentences %&gt;% 
+  # look for pattern word another_word another_one with
+  # spaces in between
+  # without the spaces it swaps the letter in the first word
+  str_replace(&quot;([^ ]+) ([^ ]+) ([^ ]+)&quot;, &quot;\\1 \\3 \\2&quot;) %&gt;% 
+  head()
+#&gt; [1] &quot;The canoe birch slid on the smooth planks.&quot; 
+#&gt; [2] &quot;Glue sheet the to the dark blue background.&quot;
+#&gt; [3] &quot;It&#39;s to easy tell the depth of a well.&quot;     
+#&gt; [4] &quot;These a days chicken leg is a rare dish.&quot;   
+#&gt; [5] &quot;Rice often is served in round bowls.&quot;       
+#&gt; [6] &quot;The of juice lemons makes fine punch.&quot;</code></pre>
+<div id="exercises-9" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Replace all forward slashes in a string with backslashes.</p>
+<pre class="r"><code>x &lt;- &quot;This is / an arbitrary / contrived example&quot;
+writeLines(x)
+#&gt; This is / an arbitrary / contrived example
+(replace &lt;- str_replace_all(x, &quot;/&quot;, &quot;\\\\&quot;))
+#&gt; [1] &quot;This is \\ an arbitrary \\ contrived example&quot;
+writeLines(replace)
+#&gt; This is \ an arbitrary \ contrived example</code></pre></li>
+<li><p>Implement a simple version of <code>str_to_lower()</code> using <code>replace_all()</code>.</p>
+<pre class="r"><code>x &lt;- &quot;The Quick Brown Fox Jumped Over the Lazy DOG&quot;
+str_replace_all(x, c(&quot;A&quot; = &quot;a&quot;, &quot;B&quot; = &quot;b&quot;, &quot;C&quot; = &quot;c&quot;, &quot;D&quot; = &quot;d&quot;,
+                     &quot;E&quot; = &quot;e&quot;, &quot;F&quot; = &quot;f&quot;, &quot;G&quot; = &quot;g&quot;, &quot;H&quot; = &quot;h&quot;,
+                     &quot;I&quot; = &quot;i&quot;, &quot;J&quot; = &quot;j&quot;, &quot;K&quot; = &quot;k&quot;, &quot;L&quot; = &quot;l&quot;,
+                     &quot;M&quot; = &quot;m&quot;, &quot;N&quot; = &quot;n&quot;, &quot;O&quot; = &quot;o&quot;, &quot;P&quot; =&quot;p&quot;,
+                     &quot;Q&quot; = &quot;q&quot;, &quot;R&quot; = &quot;r&quot;, &quot;S&quot; = &quot;s&quot;, &quot;T&quot; = &quot;t&quot;,
+                     &quot;U&quot; = &quot;u&quot;, &quot;V&quot; = &quot;v&quot;, &quot;W&quot; = &quot;w&quot;, &quot;X&quot; = &quot;x&quot;,
+                     &quot;Y&quot; = &quot;y&quot;, &quot;Z&quot; = &quot;z&quot;))
+#&gt; [1] &quot;the quick brown fox jumped over the lazy dog&quot;</code></pre></li>
+<li><p>Switch the first and last letters in <code>words</code>. Which of those strings are still words?</p>
+<pre class="r"><code>(replaces &lt;- stringr::words %&gt;% 
+  str_replace(&quot;^([^ ])([^ ]*)([^ ])$&quot;, &quot;\\3\\2\\1&quot;))
+#&gt;   [1] &quot;a&quot;           &quot;ebla&quot;        &quot;tboua&quot;       &quot;ebsoluta&quot;    &quot;tccepa&quot;     
+#&gt;   [6] &quot;tccouna&quot;     &quot;echieva&quot;     &quot;scrosa&quot;      &quot;tca&quot;         &quot;ectiva&quot;     
+#&gt;  [11] &quot;lctuaa&quot;      &quot;dda&quot;         &quot;sddresa&quot;     &quot;tdmia&quot;       &quot;edvertisa&quot;  
+#&gt;  [16] &quot;tffeca&quot;      &quot;dffora&quot;      &quot;rftea&quot;       &quot;nfternooa&quot;   &quot;ngaia&quot;      
+#&gt;  [21] &quot;tgainsa&quot;     &quot;ega&quot;         &quot;tgena&quot;       &quot;oga&quot;         &quot;egrea&quot;      
+#&gt;  [26] &quot;ria&quot;         &quot;lla&quot;         &quot;wlloa&quot;       &quot;tlmosa&quot;      &quot;glona&quot;      
+#&gt;  [31] &quot;ylreada&quot;     &quot;tlrigha&quot;     &quot;olsa&quot;        &quot;hlthouga&quot;    &quot;slwaya&quot;     
+#&gt;  [36] &quot;america&quot;     &quot;tmouna&quot;      &quot;dna&quot;         &quot;rnothea&quot;     &quot;rnswea&quot;     
+#&gt;  [41] &quot;yna&quot;         &quot;tpara&quot;       &quot;tpparena&quot;    &quot;rppeaa&quot;      &quot;yppla&quot;      
+#&gt;  [46] &quot;tppoina&quot;     &quot;hpproaca&quot;    &quot;eppropriata&quot; &quot;area&quot;        &quot;ergua&quot;      
+#&gt;  [51] &quot;mra&quot;         &quot;drouna&quot;      &quot;erranga&quot;     &quot;tra&quot;         &quot;sa&quot;         
+#&gt;  [56] &quot;ksa&quot;         &quot;essociata&quot;   &quot;essuma&quot;      &quot;ta&quot;          &quot;dttena&quot;     
+#&gt;  [61] &quot;yuthorita&quot;   &quot;evailabla&quot;   &quot;ewara&quot;       &quot;ywaa&quot;        &quot;lwfua&quot;      
+#&gt;  [66] &quot;yabb&quot;        &quot;kacb&quot;        &quot;dab&quot;         &quot;gab&quot;         &quot;ealancb&quot;    
+#&gt;  [71] &quot;lalb&quot;        &quot;kanb&quot;        &quot;rab&quot;         &quot;easb&quot;        &quot;sasib&quot;      
+#&gt;  [76] &quot;eb&quot;          &quot;reab&quot;        &quot;teab&quot;        &quot;yeautb&quot;      &quot;eecausb&quot;    
+#&gt;  [81] &quot;eecomb&quot;      &quot;deb&quot;         &quot;eeforb&quot;      &quot;negib&quot;       &quot;dehinb&quot;     
+#&gt;  [86] &quot;eelievb&quot;     &quot;tenefib&quot;     &quot;tesb&quot;        &quot;teb&quot;         &quot;netweeb&quot;    
+#&gt;  [91] &quot;gib&quot;         &quot;lilb&quot;        &quot;hirtb&quot;       &quot;tib&quot;         &quot;klacb&quot;      
+#&gt;  [96] &quot;elokb&quot;       &quot;dloob&quot;       &quot;wlob&quot;        &quot;elub&quot;        &quot;doarb&quot;      
+#&gt; [101] &quot;toab&quot;        &quot;yodb&quot;        &quot;koob&quot;        &quot;hotb&quot;        &quot;rotheb&quot;     
+#&gt; [106] &quot;eottlb&quot;      &quot;mottob&quot;      &quot;xob&quot;         &quot;yob&quot;         &quot;kreab&quot;      
+#&gt; [111] &quot;frieb&quot;       &quot;trillianb&quot;   &quot;grinb&quot;       &quot;nritaib&quot;     &quot;rrotheb&quot;    
+#&gt; [116] &quot;tudgeb&quot;      &quot;duilb&quot;       &quot;sub&quot;         &quot;susinesb&quot;    &quot;yusb&quot;       
+#&gt; [121] &quot;tub&quot;         &quot;yub&quot;         &quot;yb&quot;          &quot;eakc&quot;        &quot;lalc&quot;       
+#&gt; [126] &quot;nac&quot;         &quot;rac&quot;         &quot;darc&quot;        &quot;earc&quot;        &quot;yarrc&quot;      
+#&gt; [131] &quot;easc&quot;        &quot;tac&quot;         &quot;hatcc&quot;       &quot;eausc&quot;       &quot;tenc&quot;       
+#&gt; [136] &quot;eentrc&quot;      &quot;nertaic&quot;     &quot;rhaic&quot;       &quot;nhairmac&quot;    &quot;ehancc&quot;     
+#&gt; [141] &quot;ehangc&quot;      &quot;phac&quot;        &quot;rharactec&quot;   &quot;ehargc&quot;      &quot;pheac&quot;      
+#&gt; [146] &quot;khecc&quot;       &quot;dhilc&quot;       &quot;ehoicc&quot;      &quot;ehoosc&quot;      &quot;thrisC&quot;     
+#&gt; [151] &quot;shristmaC&quot;   &quot;hhurcc&quot;      &quot;yitc&quot;        &quot;mlaic&quot;       &quot;slasc&quot;      
+#&gt; [156] &quot;nleac&quot;       &quot;rleac&quot;       &quot;tlienc&quot;      &quot;klocc&quot;       &quot;elosc&quot;      
+#&gt; [161] &quot;slosec&quot;      &quot;elothc&quot;      &quot;bluc&quot;        &quot;eoffec&quot;      &quot;dolc&quot;       
+#&gt; [166] &quot;eolleaguc&quot;   &quot;tollecc&quot;     &quot;eollegc&quot;     &quot;rolouc&quot;      &quot;eomc&quot;       
+#&gt; [171] &quot;tommenc&quot;     &quot;tommic&quot;      &quot;eommittec&quot;   &quot;nommoc&quot;      &quot;yommunitc&quot;  
+#&gt; [176] &quot;yompanc&quot;     &quot;eomparc&quot;     &quot;eompletc&quot;    &quot;eomputc&quot;     &quot;noncerc&quot;    
+#&gt; [181] &quot;nonditioc&quot;   &quot;ronfec&quot;      &quot;ronsidec&quot;    &quot;tonsulc&quot;     &quot;tontacc&quot;    
+#&gt; [186] &quot;eontinuc&quot;    &quot;tontracc&quot;    &quot;lontroc&quot;     &quot;eonversc&quot;    &quot;kooc&quot;       
+#&gt; [191] &quot;yopc&quot;        &quot;rornec&quot;      &quot;torrecc&quot;     &quot;tosc&quot;        &quot;doulc&quot;      
+#&gt; [196] &quot;louncic&quot;     &quot;tounc&quot;       &quot;yountrc&quot;     &quot;yountc&quot;      &quot;eouplc&quot;     
+#&gt; [201] &quot;eoursc&quot;      &quot;tourc&quot;       &quot;rovec&quot;       &quot;ereatc&quot;      &quot;srosc&quot;      
+#&gt; [206] &quot;puc&quot;         &quot;turrenc&quot;     &quot;tuc&quot;         &quot;dad&quot;         &quot;ranged&quot;     
+#&gt; [211] &quot;eatd&quot;        &quot;yad&quot;         &quot;dead&quot;        &quot;lead&quot;        &quot;read&quot;       
+#&gt; [216] &quot;eebatd&quot;      &quot;eecidd&quot;      &quot;necisiod&quot;    &quot;peed&quot;        &quot;eefinitd&quot;   
+#&gt; [221] &quot;eegred&quot;      &quot;tepartmend&quot;  &quot;depend&quot;      &quot;eescribd&quot;    &quot;nesigd&quot;     
+#&gt; [226] &quot;letaid&quot;      &quot;pevelod&quot;     &quot;eid&quot;         &quot;eifferencd&quot;  &quot;tifficuld&quot;  
+#&gt; [231] &quot;rinned&quot;      &quot;tirecd&quot;      &quot;siscusd&quot;     &quot;tistricd&quot;    &quot;eividd&quot;     
+#&gt; [236] &quot;od&quot;          &quot;roctod&quot;      &quot;tocumend&quot;    &quot;god&quot;         &quot;rood&quot;       
+#&gt; [241] &quot;eoubld&quot;      &quot;toubd&quot;       &quot;nowd&quot;        &quot;wrad&quot;        &quot;sresd&quot;      
+#&gt; [246] &quot;krind&quot;       &quot;erivd&quot;       &quot;prod&quot;        &quot;yrd&quot;         &quot;eud&quot;        
+#&gt; [251] &quot;gurind&quot;      &quot;hace&quot;        &quot;yarle&quot;       &quot;tase&quot;        &quot;yase&quot;       
+#&gt; [256] &quot;tae&quot;         &quot;yconome&quot;     &quot;educate&quot;     &quot;tffece&quot;      &quot;gge&quot;        
+#&gt; [261] &quot;tighe&quot;       &quot;rithee&quot;      &quot;tlece&quot;       &quot;clectrie&quot;    &quot;nlevee&quot;     
+#&gt; [266] &quot;else&quot;        &quot;ymploe&quot;      &quot;encourage&quot;   &quot;dne&quot;         &quot;engine&quot;     
+#&gt; [271] &quot;hnglise&quot;     &quot;ynjoe&quot;       &quot;hnouge&quot;      &quot;rntee&quot;       &quot;tnvironmene&quot;
+#&gt; [276] &quot;lquae&quot;       &quot;lspeciae&quot;    &quot;europe&quot;      &quot;nvee&quot;        &quot;gvenine&quot;    
+#&gt; [281] &quot;rvee&quot;        &quot;yvere&quot;       &quot;evidence&quot;    &quot;txace&quot;       &quot;example&quot;    
+#&gt; [286] &quot;txcepe&quot;      &quot;excuse&quot;      &quot;exercise&quot;    &quot;txise&quot;       &quot;txpece&quot;     
+#&gt; [291] &quot;expense&quot;     &quot;experience&quot;  &quot;nxplaie&quot;     &quot;sxprese&quot;     &quot;axtre&quot;      
+#&gt; [296] &quot;eye&quot;         &quot;eacf&quot;        &quot;tacf&quot;        &quot;raif&quot;        &quot;lalf&quot;       
+#&gt; [301] &quot;yamilf&quot;      &quot;raf&quot;         &quot;marf&quot;        &quot;tasf&quot;        &quot;rathef&quot;     
+#&gt; [306] &quot;ravouf&quot;      &quot;deef&quot;        &quot;leef&quot;        &quot;wef&quot;         &quot;dielf&quot;      
+#&gt; [311] &quot;tighf&quot;       &quot;eigurf&quot;      &quot;eilf&quot;        &quot;lilf&quot;        &quot;milf&quot;       
+#&gt; [316] &quot;linaf&quot;       &quot;einancf&quot;     &quot;dinf&quot;        &quot;einf&quot;        &quot;hinisf&quot;     
+#&gt; [321] &quot;eirf&quot;        &quot;tirsf&quot;       &quot;hisf&quot;        &quot;tif&quot;         &quot;eivf&quot;       
+#&gt; [326] &quot;tlaf&quot;        &quot;rloof&quot;       &quot;ylf&quot;         &quot;wollof&quot;      &quot;doof&quot;       
+#&gt; [331] &quot;toof&quot;        &quot;rof&quot;         &quot;eorcf&quot;       &quot;torgef&quot;      &quot;morf&quot;       
+#&gt; [336] &quot;eortunf&quot;     &quot;dorwarf&quot;     &quot;rouf&quot;        &quot;erancf&quot;      &quot;eref&quot;       
+#&gt; [341] &quot;yridaf&quot;      &quot;drienf&quot;      &quot;mrof&quot;        &quot;tronf&quot;       &quot;lulf&quot;       
+#&gt; [346] &quot;nuf&quot;         &quot;nunctiof&quot;    &quot;dunf&quot;        &quot;rurthef&quot;     &quot;euturf&quot;     
+#&gt; [351] &quot;eamg&quot;        &quot;nardeg&quot;      &quot;sag&quot;         &quot;lenerag&quot;     &quot;yermang&quot;    
+#&gt; [356] &quot;teg&quot;         &quot;lirg&quot;        &quot;eivg&quot;        &quot;slasg&quot;       &quot;og&quot;         
+#&gt; [361] &quot;dog&quot;         &quot;doog&quot;        &quot;eoodbyg&quot;     &quot;noverg&quot;      &quot;drang&quot;      
+#&gt; [366] &quot;trang&quot;       &quot;treag&quot;       &quot;nreeg&quot;       &quot;droung&quot;      &quot;proug&quot;      
+#&gt; [371] &quot;wrog&quot;        &quot;suesg&quot;       &quot;yug&quot;         &quot;raih&quot;        &quot;falh&quot;       
+#&gt; [376] &quot;lalh&quot;        &quot;danh&quot;        &quot;ganh&quot;        &quot;nappeh&quot;      &quot;yapph&quot;      
+#&gt; [381] &quot;darh&quot;        &quot;eath&quot;        &quot;eavh&quot;        &quot;eh&quot;          &quot;deah&quot;       
+#&gt; [386] &quot;health&quot;      &quot;reah&quot;        &quot;tearh&quot;       &quot;teah&quot;        &quot;yeavh&quot;      
+#&gt; [391] &quot;lelh&quot;        &quot;pelh&quot;        &quot;eerh&quot;        &quot;high&quot;        &quot;yistorh&quot;    
+#&gt; [396] &quot;tih&quot;         &quot;dolh&quot;        &quot;yolidah&quot;     &quot;eomh&quot;        &quot;tonesh&quot;     
+#&gt; [401] &quot;eoph&quot;        &quot;eorsh&quot;       &quot;lospitah&quot;    &quot;toh&quot;         &quot;rouh&quot;       
+#&gt; [406] &quot;eoush&quot;       &quot;woh&quot;         &quot;roweveh&quot;     &quot;oullh&quot;       &quot;dundreh&quot;    
+#&gt; [411] &quot;dusbanh&quot;     &quot;adei&quot;        &quot;ydentifi&quot;    &quot;fi&quot;          &quot;emagini&quot;    
+#&gt; [416] &quot;tmportani&quot;   &quot;emprovi&quot;     &quot;ni&quot;          &quot;encludi&quot;     &quot;encomi&quot;     
+#&gt; [421] &quot;encreasi&quot;    &quot;dndeei&quot;      &quot;lndividuai&quot;  &quot;yndustri&quot;    &quot;mnfori&quot;     
+#&gt; [426] &quot;ensidi&quot;      &quot;dnsteai&quot;     &quot;ensuri&quot;      &quot;tnteresi&quot;    &quot;onti&quot;       
+#&gt; [431] &quot;entroduci&quot;   &quot;tnvesi&quot;      &quot;envolvi&quot;     &quot;essui&quot;       &quot;ti&quot;         
+#&gt; [436] &quot;mtei&quot;        &quot;sesuj&quot;       &quot;boj&quot;         &quot;noij&quot;        &quot;eudgj&quot;      
+#&gt; [441] &quot;pumj&quot;        &quot;tusj&quot;        &quot;peek&quot;        &quot;yek&quot;         &quot;dik&quot;        
+#&gt; [446] &quot;lilk&quot;        &quot;dink&quot;        &quot;gink&quot;        &quot;nitchek&quot;     &quot;knock&quot;      
+#&gt; [451] &quot;wnok&quot;        &quot;raboul&quot;      &quot;dal&quot;         &quot;yadl&quot;        &quot;danl&quot;       
+#&gt; [456] &quot;eanguagl&quot;    &quot;eargl&quot;       &quot;tasl&quot;        &quot;eatl&quot;        &quot;haugl&quot;      
+#&gt; [461] &quot;wal&quot;         &quot;yal&quot;         &quot;deal&quot;        &quot;nearl&quot;       &quot;eeavl&quot;      
+#&gt; [466] &quot;tefl&quot;        &quot;gel&quot;         &quot;sesl&quot;        &quot;tel&quot;         &quot;rettel&quot;     
+#&gt; [471] &quot;level&quot;       &quot;eil&quot;         &quot;eifl&quot;        &quot;tighl&quot;       &quot;eikl&quot;       
+#&gt; [476] &quot;yikell&quot;      &quot;timil&quot;       &quot;einl&quot;        &quot;kinl&quot;        &quot;tisl&quot;       
+#&gt; [481] &quot;nistel&quot;      &quot;eittll&quot;      &quot;eivl&quot;        &quot;doal&quot;        &quot;local&quot;      
+#&gt; [486] &quot;kocl&quot;        &quot;nondol&quot;      &quot;gonl&quot;        &quot;kool&quot;        &quot;dorl&quot;       
+#&gt; [491] &quot;eosl&quot;        &quot;tol&quot;         &quot;eovl&quot;        &quot;wol&quot;         &quot;kucl&quot;       
+#&gt; [496] &quot;huncl&quot;       &quot;eachinm&quot;     &quot;naim&quot;        &quot;rajom&quot;       &quot;eakm&quot;       
+#&gt; [501] &quot;nam&quot;         &quot;eanagm&quot;      &quot;yanm&quot;        &quot;karm&quot;        &quot;tarkem&quot;     
+#&gt; [506] &quot;yarrm&quot;       &quot;hatcm&quot;       &quot;rattem&quot;      &quot;yam&quot;         &quot;eaybm&quot;      
+#&gt; [511] &quot;neam&quot;        &quot;geaninm&quot;     &quot;eeasurm&quot;     &quot;teem&quot;        &quot;rembem&quot;     
+#&gt; [516] &quot;nentiom&quot;     &quot;eiddlm&quot;      &quot;tighm&quot;       &quot;eilm&quot;        &quot;kilm&quot;       
+#&gt; [521] &quot;nilliom&quot;     &quot;dinm&quot;        &quot;rinistem&quot;    &quot;sinum&quot;       &quot;einutm&quot;     
+#&gt; [526] &quot;sism&quot;        &quot;ristem&quot;      &quot;tomenm&quot;      &quot;yondam&quot;      &quot;yonem&quot;      
+#&gt; [531] &quot;hontm&quot;       &quot;eorm&quot;        &quot;gorninm&quot;     &quot;tosm&quot;        &quot;rothem&quot;     
+#&gt; [536] &quot;notiom&quot;      &quot;eovm&quot;        &quot;srm&quot;         &quot;hucm&quot;        &quot;cusim&quot;      
+#&gt; [541] &quot;tusm&quot;        &quot;eamn&quot;        &quot;nation&quot;      &quot;eaturn&quot;      &quot;rean&quot;       
+#&gt; [546] &quot;yecessarn&quot;   &quot;deen&quot;        &quot;reven&quot;       &quot;wen&quot;         &quot;sewn&quot;       
+#&gt; [551] &quot;texn&quot;        &quot;eicn&quot;        &quot;tighn&quot;       &quot;einn&quot;        &quot;on&quot;         
+#&gt; [556] &quot;non&quot;         &quot;eonn&quot;        &quot;lorman&quot;      &quot;hortn&quot;       &quot;ton&quot;        
+#&gt; [561] &quot;eotn&quot;        &quot;eoticn&quot;      &quot;won&quot;         &quot;rumben&quot;      &quot;sbviouo&quot;    
+#&gt; [566] &quot;nccasioo&quot;    &quot;ddo&quot;         &quot;fo&quot;          &quot;ffo&quot;         &quot;rffeo&quot;      
+#&gt; [571] &quot;effico&quot;      &quot;nfteo&quot;       &quot;ykao&quot;        &quot;dlo&quot;         &quot;no&quot;         
+#&gt; [576] &quot;enco&quot;        &quot;eno&quot;         &quot;ynlo&quot;        &quot;npeo&quot;        &quot;eperato&quot;    
+#&gt; [581] &quot;ypportunito&quot; &quot;epposo&quot;      &quot;ro&quot;          &quot;rrdeo&quot;       &quot;erganizo&quot;   
+#&gt; [586] &quot;lriginao&quot;    &quot;rtheo&quot;       &quot;etherwiso&quot;   &quot;tugho&quot;       &quot;tuo&quot;        
+#&gt; [591] &quot;rveo&quot;        &quot;nwo&quot;         &quot;kacp&quot;        &quot;eagp&quot;        &quot;tainp&quot;      
+#&gt; [596] &quot;raip&quot;        &quot;rapep&quot;       &quot;haragrapp&quot;   &quot;nardop&quot;      &quot;tarenp&quot;     
+#&gt; [601] &quot;karp&quot;        &quot;tarp&quot;        &quot;rarticulap&quot;  &quot;yartp&quot;       &quot;sasp&quot;       
+#&gt; [606] &quot;tasp&quot;        &quot;yap&quot;         &quot;eencp&quot;       &quot;nensiop&quot;     &quot;eeoplp&quot;     
+#&gt; [611] &quot;rep&quot;         &quot;tercenp&quot;     &quot;terfecp&quot;     &quot;serhapp&quot;     &quot;deriop&quot;     
+#&gt; [616] &quot;nersop&quot;      &quot;hhotograpp&quot;  &quot;kicp&quot;        &quot;eicturp&quot;     &quot;eiecp&quot;      
+#&gt; [621] &quot;elacp&quot;       &quot;nlap&quot;        &quot;ylap&quot;        &quot;eleasp&quot;      &quot;slup&quot;       
+#&gt; [626] &quot;toinp&quot;       &quot;eolicp&quot;      &quot;yolicp&quot;      &quot;colitip&quot;     &quot;roop&quot;       
+#&gt; [631] &quot;nositiop&quot;    &quot;eositivp&quot;    &quot;eossiblp&quot;    &quot;tosp&quot;        &quot;dounp&quot;      
+#&gt; [636] &quot;rowep&quot;       &quot;eractisp&quot;    &quot;ereparp&quot;     &quot;tresenp&quot;     &quot;sresp&quot;      
+#&gt; [641] &quot;eressurp&quot;    &quot;eresump&quot;     &quot;yrettp&quot;      &quot;srevioup&quot;    &quot;ericp&quot;      
+#&gt; [646] &quot;trinp&quot;       &quot;erivatp&quot;     &quot;erobablp&quot;    &quot;mroblep&quot;     &quot;droceep&quot;    
+#&gt; [651] &quot;srocesp&quot;     &quot;eroducp&quot;     &quot;troducp&quot;     &quot;erogrammp&quot;   &quot;trojecp&quot;    
+#&gt; [656] &quot;rropep&quot;      &quot;eroposp&quot;     &quot;trotecp&quot;     &quot;erovidp&quot;     &quot;cublip&quot;     
+#&gt; [661] &quot;lulp&quot;        &quot;eurposp&quot;     &quot;husp&quot;        &quot;tup&quot;         &quot;yualitq&quot;    
+#&gt; [666] &quot;ruarteq&quot;     &quot;nuestioq&quot;    &quot;kuicq&quot;       &quot;duiq&quot;        &quot;tuieq&quot;      
+#&gt; [671] &quot;euitq&quot;       &quot;oadir&quot;       &quot;lair&quot;        &quot;eaisr&quot;       &quot;eangr&quot;      
+#&gt; [676] &quot;eatr&quot;        &quot;rather&quot;      &quot;dear&quot;        &quot;yeadr&quot;       &quot;lear&quot;       
+#&gt; [681] &quot;eealisr&quot;     &quot;yeallr&quot;      &quot;neasor&quot;      &quot;eeceivr&quot;     &quot;tecenr&quot;     
+#&gt; [686] &quot;neckor&quot;      &quot;eecognizr&quot;   &quot;decommenr&quot;   &quot;decorr&quot;      &quot;der&quot;        
+#&gt; [691] &quot;eeducr&quot;      &quot;refer&quot;       &quot;degarr&quot;      &quot;negior&quot;      &quot;nelatior&quot;   
+#&gt; [696] &quot;remember&quot;    &quot;teporr&quot;      &quot;tepresenr&quot;   &quot;eequirr&quot;     &quot;hesearcr&quot;   
+#&gt; [701] &quot;eesourcr&quot;    &quot;tespecr&quot;     &quot;eesponsiblr&quot; &quot;tesr&quot;        &quot;tesulr&quot;     
+#&gt; [706] &quot;neturr&quot;      &quot;dir&quot;         &quot;tighr&quot;       &quot;ginr&quot;        &quot;eisr&quot;       
+#&gt; [711] &quot;doar&quot;        &quot;eolr&quot;        &quot;lolr&quot;        &quot;moor&quot;        &quot;dounr&quot;      
+#&gt; [716] &quot;eulr&quot;        &quot;nur&quot;         &quot;eafs&quot;        &quot;eals&quot;        &quot;eams&quot;       
+#&gt; [721] &quot;yaturdas&quot;    &quot;eavs&quot;        &quot;yas&quot;         &quot;echems&quot;      &quot;lchoos&quot;     
+#&gt; [726] &quot;eciencs&quot;     &quot;ecors&quot;       &quot;dcotlans&quot;    &quot;teas&quot;        &quot;decons&quot;     
+#&gt; [731] &quot;yecretars&quot;   &quot;nectios&quot;     &quot;eecurs&quot;      &quot;ees&quot;         &quot;mees&quot;       
+#&gt; [736] &quot;fels&quot;        &quot;lels&quot;        &quot;dens&quot;        &quot;eenss&quot;       &quot;eeparats&quot;   
+#&gt; [741] &quot;serious&quot;     &quot;eervs&quot;       &quot;eervics&quot;     &quot;tes&quot;         &quot;eettls&quot;     
+#&gt; [746] &quot;neves&quot;       &quot;xes&quot;         &quot;lhals&quot;       &quot;ehars&quot;       &quot;ehs&quot;        
+#&gt; [751] &quot;thees&quot;       &quot;ehos&quot;        &quot;thoos&quot;       &quot;phos&quot;        &quot;thors&quot;      
+#&gt; [756] &quot;dhouls&quot;      &quot;whos&quot;        &quot;thus&quot;        &quot;kics&quot;        &quot;eids&quot;       
+#&gt; [761] &quot;nigs&quot;        &quot;rimilas&quot;     &quot;eimpls&quot;      &quot;eincs&quot;       &quot;gins&quot;       
+#&gt; [766] &quot;eingls&quot;      &quot;ris&quot;         &quot;ristes&quot;      &quot;tis&quot;         &quot;eits&quot;       
+#&gt; [771] &quot;eituats&quot;     &quot;xis&quot;         &quot;eizs&quot;        &quot;plees&quot;       &quot;tlighs&quot;     
+#&gt; [776] &quot;wlos&quot;        &quot;lmals&quot;       &quot;emoks&quot;       &quot;os&quot;          &quot;locias&quot;     
+#&gt; [781] &quot;yociets&quot;     &quot;eoms&quot;        &quot;nos&quot;         &quot;noos&quot;        &quot;yorrs&quot;      
+#&gt; [786] &quot;tors&quot;        &quot;douns&quot;       &quot;houts&quot;       &quot;epacs&quot;       &quot;kpeas&quot;      
+#&gt; [791] &quot;lpecias&quot;     &quot;cpecifis&quot;    &quot;dpees&quot;       &quot;lpels&quot;       &quot;dpens&quot;      
+#&gt; [796] &quot;equars&quot;      &quot;ftafs&quot;       &quot;etags&quot;       &quot;stairs&quot;      &quot;dtans&quot;      
+#&gt; [801] &quot;dtandars&quot;    &quot;ttars&quot;       &quot;etats&quot;       &quot;ntatios&quot;     &quot;ytas&quot;       
+#&gt; [806] &quot;ptes&quot;        &quot;ktics&quot;       &quot;ltils&quot;       &quot;ptos&quot;        &quot;ytors&quot;      
+#&gt; [811] &quot;ttraighs&quot;    &quot;ytrategs&quot;    &quot;ttrees&quot;      &quot;etriks&quot;      &quot;gtrons&quot;     
+#&gt; [816] &quot;etructurs&quot;   &quot;ttudens&quot;     &quot;ytuds&quot;       &quot;ftufs&quot;       &quot;dtupis&quot;     
+#&gt; [821] &quot;tubjecs&quot;     &quot;duccees&quot;     &quot;hucs&quot;        &quot;nuddes&quot;      &quot;tuggess&quot;    
+#&gt; [826] &quot;tuis&quot;        &quot;rummes&quot;      &quot;nus&quot;         &quot;yundas&quot;      &quot;yuppls&quot;     
+#&gt; [831] &quot;tuppors&quot;     &quot;eupposs&quot;     &quot;eurs&quot;        &quot;eurpriss&quot;    &quot;hwitcs&quot;     
+#&gt; [836] &quot;mystes&quot;      &quot;eablt&quot;       &quot;eakt&quot;        &quot;kalt&quot;        &quot;eapt&quot;       
+#&gt; [841] &quot;xat&quot;         &quot;aet&quot;         &quot;heact&quot;       &quot;meat&quot;        &quot;eelephont&quot;  
+#&gt; [846] &quot;nelevisiot&quot;  &quot;lelt&quot;        &quot;net&quot;         &quot;dent&quot;        &quot;mert&quot;       
+#&gt; [851] &quot;eerriblt&quot;    &quot;test&quot;        &quot;nhat&quot;        &quot;khant&quot;       &quot;eht&quot;        
+#&gt; [856] &quot;nhet&quot;        &quot;ehert&quot;       &quot;eherefort&quot;   &quot;yhet&quot;        &quot;ghint&quot;      
+#&gt; [861] &quot;khint&quot;       &quot;nhirteet&quot;    &quot;yhirtt&quot;      &quot;shit&quot;        &quot;uhot&quot;       
+#&gt; [866] &quot;hhougt&quot;      &quot;dhousant&quot;    &quot;ehret&quot;       &quot;hhrougt&quot;     &quot;whrot&quot;      
+#&gt; [871] &quot;yhursdat&quot;    &quot;eit&quot;         &quot;eimt&quot;        &quot;ot&quot;          &quot;yodat&quot;      
+#&gt; [876] &quot;rogethet&quot;    &quot;womorrot&quot;    &quot;tonight&quot;     &quot;oot&quot;         &quot;pot&quot;        
+#&gt; [881] &quot;lotat&quot;       &quot;houct&quot;       &quot;dowart&quot;      &quot;nowt&quot;        &quot;eradt&quot;      
+#&gt; [886] &quot;craffit&quot;     &quot;nrait&quot;       &quot;transport&quot;   &quot;lravet&quot;      &quot;treat&quot;      
+#&gt; [891] &quot;eret&quot;        &quot;eroublt&quot;     &quot;erut&quot;        &quot;trust&quot;       &quot;yrt&quot;        
+#&gt; [896] &quot;yuesdat&quot;     &quot;nurt&quot;        &quot;ewelvt&quot;      &quot;ywentt&quot;      &quot;owt&quot;        
+#&gt; [901] &quot;eypt&quot;        &quot;rndeu&quot;       &quot;dnderstanu&quot;  &quot;nniou&quot;       &quot;tniu&quot;       
+#&gt; [906] &quot;enitu&quot;       &quot;yniversitu&quot;  &quot;snlesu&quot;      &quot;lntiu&quot;       &quot;pu&quot;         
+#&gt; [911] &quot;npou&quot;        &quot;esu&quot;         &quot;lsuau&quot;       &quot;ealuv&quot;       &quot;sariouv&quot;    
+#&gt; [916] &quot;yerv&quot;        &quot;oidev&quot;       &quot;wiev&quot;        &quot;eillagv&quot;     &quot;tisiv&quot;      
+#&gt; [921] &quot;eotv&quot;        &quot;eagw&quot;        &quot;taiw&quot;        &quot;kalw&quot;        &quot;lalw&quot;       
+#&gt; [926] &quot;tanw&quot;        &quot;raw&quot;         &quot;marw&quot;        &quot;hasw&quot;        &quot;eastw&quot;      
+#&gt; [931] &quot;hatcw&quot;       &quot;ratew&quot;       &quot;yaw&quot;         &quot;ew&quot;          &quot;reaw&quot;       
+#&gt; [936] &quot;yednesdaw&quot;   &quot;eew&quot;         &quot;keew&quot;        &quot;heigw&quot;       &quot;eelcomw&quot;    
+#&gt; [941] &quot;lelw&quot;        &quot;tesw&quot;        &quot;thaw&quot;        &quot;nhew&quot;        &quot;eherw&quot;      
+#&gt; [946] &quot;rhethew&quot;     &quot;hhicw&quot;       &quot;ehilw&quot;       &quot;ehitw&quot;       &quot;ohw&quot;        
+#&gt; [951] &quot;eholw&quot;       &quot;yhw&quot;         &quot;eidw&quot;        &quot;eifw&quot;        &quot;lilw&quot;       
+#&gt; [956] &quot;niw&quot;         &quot;dinw&quot;        &quot;window&quot;      &quot;hisw&quot;        &quot;hitw&quot;       
+#&gt; [961] &quot;nithiw&quot;      &quot;tithouw&quot;     &quot;nomaw&quot;       &quot;rondew&quot;      &quot;doow&quot;       
+#&gt; [966] &quot;dorw&quot;        &quot;korw&quot;        &quot;dorlw&quot;       &quot;yorrw&quot;       &quot;eorsw&quot;      
+#&gt; [971] &quot;hortw&quot;       &quot;doulw&quot;       &quot;eritw&quot;       &quot;gronw&quot;       &quot;reay&quot;       
+#&gt; [976] &quot;sey&quot;         &quot;yesterday&quot;   &quot;tey&quot;         &quot;uoy&quot;         &quot;gouny&quot;
+
+tibble(word = stringr::words) %&gt;% 
+  filter(word %in% replaces) %&gt;% 
+  head(20)
+#&gt; # A tibble: 20 x 1
+#&gt;    word      
+#&gt;    &lt;chr&gt;     
+#&gt;  1 a         
+#&gt;  2 america   
+#&gt;  3 area      
+#&gt;  4 dad       
+#&gt;  5 dead      
+#&gt;  6 deal      
+#&gt;  7 dear      
+#&gt;  8 depend    
+#&gt;  9 dog       
+#&gt; 10 educate   
+#&gt; 11 else      
+#&gt; 12 encourage 
+#&gt; 13 engine    
+#&gt; 14 europe    
+#&gt; 15 evidence  
+#&gt; 16 example   
+#&gt; 17 excuse    
+#&gt; 18 exercise  
+#&gt; 19 expense   
+#&gt; 20 experience</code></pre></li>
+</ol>
+<h2>
+Splitting
+</h2>
+</div>
+</div>
+<div id="splitting" class="section level2">
+<h2>Splitting</h2>
+<p>Use <code>str_split()</code> to split a string up into pieces.</p>
+<pre class="r"><code># we can split a sentence into words
+sentences %&gt;% 
+  head() %&gt;% 
+  str_split(&quot; &quot;)
+#&gt; [[1]]
+#&gt; [1] &quot;The&quot;     &quot;birch&quot;   &quot;canoe&quot;   &quot;slid&quot;    &quot;on&quot;      &quot;the&quot;     &quot;smooth&quot; 
+#&gt; [8] &quot;planks.&quot;
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] &quot;Glue&quot;        &quot;the&quot;         &quot;sheet&quot;       &quot;to&quot;          &quot;the&quot;        
+#&gt; [6] &quot;dark&quot;        &quot;blue&quot;        &quot;background.&quot;
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] &quot;It&#39;s&quot;  &quot;easy&quot;  &quot;to&quot;    &quot;tell&quot;  &quot;the&quot;   &quot;depth&quot; &quot;of&quot;    &quot;a&quot;     &quot;well.&quot;
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] &quot;These&quot;   &quot;days&quot;    &quot;a&quot;       &quot;chicken&quot; &quot;leg&quot;     &quot;is&quot;      &quot;a&quot;      
+#&gt; [8] &quot;rare&quot;    &quot;dish.&quot;  
+#&gt; 
+#&gt; [[5]]
+#&gt; [1] &quot;Rice&quot;   &quot;is&quot;     &quot;often&quot;  &quot;served&quot; &quot;in&quot;     &quot;round&quot;  &quot;bowls.&quot;
+#&gt; 
+#&gt; [[6]]
+#&gt; [1] &quot;The&quot;    &quot;juice&quot;  &quot;of&quot;     &quot;lemons&quot; &quot;makes&quot;  &quot;fine&quot;   &quot;punch.&quot;</code></pre>
+<p>This returns a list since the length of each is varying.</p>
+<p>To extract a component:</p>
+<pre class="r"><code>sentences %&gt;% 
+  head() %&gt;% 
+  str_split(&quot; &quot;) %&gt;% 
+  .[[1]]
+#&gt; [1] &quot;The&quot;     &quot;birch&quot;   &quot;canoe&quot;   &quot;slid&quot;    &quot;on&quot;      &quot;the&quot;     &quot;smooth&quot; 
+#&gt; [8] &quot;planks.&quot;
+
+&quot;a|b|c|d&quot; %&gt;% 
+  # list returned
+  str_split(&quot;\\|&quot;)
+#&gt; [[1]]
+#&gt; [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;
+
+&quot;a|b|c|d&quot; %&gt;% 
+  # list returned
+  str_split(&quot;\\|&quot;) %&gt;% 
+  # get first element
+  .[[1]]
+#&gt; [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;</code></pre>
+<p>Also like other <strong>{stringr}</strong> functions there is a <code>simplify = TRUE</code> that may be set.</p>
+<pre class="r"><code>sentences %&gt;% 
+  head(5) %&gt;% 
+  str_split(&quot; &quot;, simplify = TRUE)
+#&gt;      [,1]    [,2]    [,3]    [,4]      [,5]  [,6]    [,7]     [,8]         
+#&gt; [1,] &quot;The&quot;   &quot;birch&quot; &quot;canoe&quot; &quot;slid&quot;    &quot;on&quot;  &quot;the&quot;   &quot;smooth&quot; &quot;planks.&quot;    
+#&gt; [2,] &quot;Glue&quot;  &quot;the&quot;   &quot;sheet&quot; &quot;to&quot;      &quot;the&quot; &quot;dark&quot;  &quot;blue&quot;   &quot;background.&quot;
+#&gt; [3,] &quot;It&#39;s&quot;  &quot;easy&quot;  &quot;to&quot;    &quot;tell&quot;    &quot;the&quot; &quot;depth&quot; &quot;of&quot;     &quot;a&quot;          
+#&gt; [4,] &quot;These&quot; &quot;days&quot;  &quot;a&quot;     &quot;chicken&quot; &quot;leg&quot; &quot;is&quot;    &quot;a&quot;      &quot;rare&quot;       
+#&gt; [5,] &quot;Rice&quot;  &quot;is&quot;    &quot;often&quot; &quot;served&quot;  &quot;in&quot;  &quot;round&quot; &quot;bowls.&quot; &quot;&quot;           
+#&gt;      [,9]   
+#&gt; [1,] &quot;&quot;     
+#&gt; [2,] &quot;&quot;     
+#&gt; [3,] &quot;well.&quot;
+#&gt; [4,] &quot;dish.&quot;
+#&gt; [5,] &quot;&quot;</code></pre>
+<p>We can also specify we want <strong>xx</strong> number of pieces only, using <code>n = num_pieces</code>.</p>
+<pre class="r"><code>sentences %&gt;% 
+  head(5) %&gt;% 
+  str_split(&quot; &quot;, n = 5, simplify = TRUE)
+#&gt;      [,1]    [,2]    [,3]    [,4]      [,5]                       
+#&gt; [1,] &quot;The&quot;   &quot;birch&quot; &quot;canoe&quot; &quot;slid&quot;    &quot;on the smooth planks.&quot;    
+#&gt; [2,] &quot;Glue&quot;  &quot;the&quot;   &quot;sheet&quot; &quot;to&quot;      &quot;the dark blue background.&quot;
+#&gt; [3,] &quot;It&#39;s&quot;  &quot;easy&quot;  &quot;to&quot;    &quot;tell&quot;    &quot;the depth of a well.&quot;     
+#&gt; [4,] &quot;These&quot; &quot;days&quot;  &quot;a&quot;     &quot;chicken&quot; &quot;leg is a rare dish.&quot;      
+#&gt; [5,] &quot;Rice&quot;  &quot;is&quot;    &quot;often&quot; &quot;served&quot;  &quot;in round bowls.&quot;</code></pre>
+<p><span style="color: #6d6875;background-color:#e5989b">Notice</span> that the <span style="color: #6d6875;background-color:#e5989b">remaining part</span> of the string all goes into the <span style="color: #6d6875;background-color:#e5989b">last piece</span>!</p>
+<pre class="r"><code>fields &lt;- c(&quot;Name: Hadley&quot;, &quot;Country: NZ&quot;, &quot;Age: 35&quot;)
+fields %&gt;% 
+  str_split(&quot;: &quot;, n = 2, simplify = TRUE)
+#&gt;      [,1]      [,2]    
+#&gt; [1,] &quot;Name&quot;    &quot;Hadley&quot;
+#&gt; [2,] &quot;Country&quot; &quot;NZ&quot;    
+#&gt; [3,] &quot;Age&quot;     &quot;35&quot;</code></pre>
+<p>So far we split on a pattern. We may also split by:</p>
+<ul>
+<li>character</li>
+<li>line</li>
+<li>sentence</li>
+<li>word <code>boundary()</code></li>
+<li>The function <code>boundary()</code> has different types - e.g <code>line_break</code>, <code>word</code> etc.</li>
+</ul>
+<pre class="r"><code>x &lt;- &quot;This is a sentence.  This is another sentence.&quot;
+
+str_view_all(x, boundary(&quot;word&quot;))</code></pre>
+<div id="htmlwidget-772899c6d19abf727b7b" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-772899c6d19abf727b7b">{"x":{"html":"<ul>\n  <li><span class='match'>This<\/span> <span class='match'>is<\/span> <span class='match'>a<\/span> <span class='match'>sentence<\/span>.  <span class='match'>This<\/span> <span class='match'>is<\/span> <span class='match'>another<\/span> <span class='match'>sentence<\/span>.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>
+str_split(x, &quot; &quot;)[[1]]
+#&gt; [1] &quot;This&quot;      &quot;is&quot;        &quot;a&quot;         &quot;sentence.&quot; &quot;&quot;          &quot;This&quot;     
+#&gt; [7] &quot;is&quot;        &quot;another&quot;   &quot;sentence.&quot;
+
+str_split(x, boundary(&quot;word&quot;))[[1]]
+#&gt; [1] &quot;This&quot;     &quot;is&quot;       &quot;a&quot;        &quot;sentence&quot; &quot;This&quot;     &quot;is&quot;       &quot;another&quot; 
+#&gt; [8] &quot;sentence&quot;</code></pre>
+<div id="exercises-10" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Split up a string like <code>"apples, pears, and bananas"</code> into individual components.</p>
+<pre class="r"><code>test_str &lt;- &quot;apples, pears, and bananas&quot;
+str_split(test_str, &quot;, (and)?&quot;, n=3)[[1]]
+#&gt; [1] &quot;apples&quot;   &quot;pears&quot;    &quot; bananas&quot;</code></pre></li>
+<li><p>Why is it better to split up by <code>boundary("word")</code> than <code>" "</code>?</p>
+<pre class="r"><code>x &lt;- &quot;This is a sentence, this is another sentence.&quot;
+
+str_view_all(x, boundary(&quot;word&quot;))</code></pre>
+<div id="htmlwidget-47816d7ccb473df4accb" style="width:960px;height:100%;" class="str_view html-widget"></div>
+    <script type="application/json" data-for="htmlwidget-47816d7ccb473df4accb">{"x":{"html":"<ul>\n  <li><span class='match'>This<\/span> <span class='match'>is<\/span> <span class='match'>a<\/span> <span class='match'>sentence<\/span>, <span class='match'>this<\/span> <span class='match'>is<\/span> <span class='match'>another<\/span> <span class='match'>sentence<\/span>.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>
+str_split(x, &quot; &quot;)[[1]]
+#&gt; [1] &quot;This&quot;      &quot;is&quot;        &quot;a&quot;         &quot;sentence,&quot; &quot;this&quot;      &quot;is&quot;       
+#&gt; [7] &quot;another&quot;   &quot;sentence.&quot;
+
+str_split(x, boundary(&quot;word&quot;))[[1]]
+#&gt; [1] &quot;This&quot;     &quot;is&quot;       &quot;a&quot;        &quot;sentence&quot; &quot;this&quot;     &quot;is&quot;       &quot;another&quot; 
+#&gt; [8] &quot;sentence&quot;</code></pre>
+<p>As we saw in the example splitting by <code>" "</code> can lead to punctuation being added to a split word. Here: <code>sentence.</code> and <code>sentence,</code>.</p>
+<p>With using <code>boundary(word)</code> it ignores the puntuation resulting in pure words being picked up.</p></li>
+<li><p>What does splitting with an empty string (<code>""</code>) do? Experiment, and then read the documentation.</p>
+<pre class="r"><code>x &lt;- &quot;This is a sentence, this is another sentence.&quot;
+
+str_split(x, &quot;&quot;)[[1]]
+#&gt;  [1] &quot;T&quot; &quot;h&quot; &quot;i&quot; &quot;s&quot; &quot; &quot; &quot;i&quot; &quot;s&quot; &quot; &quot; &quot;a&quot; &quot; &quot; &quot;s&quot; &quot;e&quot; &quot;n&quot; &quot;t&quot; &quot;e&quot; &quot;n&quot; &quot;c&quot; &quot;e&quot; &quot;,&quot;
+#&gt; [20] &quot; &quot; &quot;t&quot; &quot;h&quot; &quot;i&quot; &quot;s&quot; &quot; &quot; &quot;i&quot; &quot;s&quot; &quot; &quot; &quot;a&quot; &quot;n&quot; &quot;o&quot; &quot;t&quot; &quot;h&quot; &quot;e&quot; &quot;r&quot; &quot; &quot; &quot;s&quot; &quot;e&quot;
+#&gt; [39] &quot;n&quot; &quot;t&quot; &quot;e&quot; &quot;n&quot; &quot;c&quot; &quot;e&quot; &quot;.&quot;
+
+str_split(x, boundary(&quot;character&quot;))[[1]]
+#&gt;  [1] &quot;T&quot; &quot;h&quot; &quot;i&quot; &quot;s&quot; &quot; &quot; &quot;i&quot; &quot;s&quot; &quot; &quot; &quot;a&quot; &quot; &quot; &quot;s&quot; &quot;e&quot; &quot;n&quot; &quot;t&quot; &quot;e&quot; &quot;n&quot; &quot;c&quot; &quot;e&quot; &quot;,&quot;
+#&gt; [20] &quot; &quot; &quot;t&quot; &quot;h&quot; &quot;i&quot; &quot;s&quot; &quot; &quot; &quot;i&quot; &quot;s&quot; &quot; &quot; &quot;a&quot; &quot;n&quot; &quot;o&quot; &quot;t&quot; &quot;h&quot; &quot;e&quot; &quot;r&quot; &quot; &quot; &quot;s&quot; &quot;e&quot;
+#&gt; [39] &quot;n&quot; &quot;t&quot; &quot;e&quot; &quot;n&quot; &quot;c&quot; &quot;e&quot; &quot;.&quot;</code></pre>
+<p>It splits on each character. It is equivalent to splitting on <code>boundary("character")</code></p></li>
+</ol>
+</div>
+<div id="find-matches" class="section level3">
+<h3>Find matches</h3>
+<p><code>str_locate()</code> and <code>str_locate_all()</code> give you the starting and ending positions of each match. Use <code>str_locate()</code> to find the matching pattern, <code>str_sub()</code> to extract.</p>
+<h2>
+Other Patterns
+</h2>
+</div>
+</div>
+<div id="other-patterns" class="section level2">
+<h2>Other Patterns</h2>
+<p>When you use a pattern that’s a string, it’s automatically wrapped into a call to <code>regex()</code></p>
+<pre class="r"><code># regular usage
+str_view(fruit, &quot;nana&quot;)</code></pre>
+<div id="htmlwidget-fafb59396b76956ec870" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fafb59396b76956ec870">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>apricot<\/li>\n  <li>avocado<\/li>\n  <li>ba<span class='match'>nana<\/span><\/li>\n  <li>bell pepper<\/li>\n  <li>bilberry<\/li>\n  <li>blackberry<\/li>\n  <li>blackcurrant<\/li>\n  <li>blood orange<\/li>\n  <li>blueberry<\/li>\n  <li>boysenberry<\/li>\n  <li>breadfruit<\/li>\n  <li>canary melon<\/li>\n  <li>cantaloupe<\/li>\n  <li>cherimoya<\/li>\n  <li>cherry<\/li>\n  <li>chili pepper<\/li>\n  <li>clementine<\/li>\n  <li>cloudberry<\/li>\n  <li>coconut<\/li>\n  <li>cranberry<\/li>\n  <li>cucumber<\/li>\n  <li>currant<\/li>\n  <li>damson<\/li>\n  <li>date<\/li>\n  <li>dragonfruit<\/li>\n  <li>durian<\/li>\n  <li>eggplant<\/li>\n  <li>elderberry<\/li>\n  <li>feijoa<\/li>\n  <li>fig<\/li>\n  <li>goji berry<\/li>\n  <li>gooseberry<\/li>\n  <li>grape<\/li>\n  <li>grapefruit<\/li>\n  <li>guava<\/li>\n  <li>honeydew<\/li>\n  <li>huckleberry<\/li>\n  <li>jackfruit<\/li>\n  <li>jambul<\/li>\n  <li>jujube<\/li>\n  <li>kiwi fruit<\/li>\n  <li>kumquat<\/li>\n  <li>lemon<\/li>\n  <li>lime<\/li>\n  <li>loquat<\/li>\n  <li>lychee<\/li>\n  <li>mandarine<\/li>\n  <li>mango<\/li>\n  <li>mulberry<\/li>\n  <li>nectarine<\/li>\n  <li>nut<\/li>\n  <li>olive<\/li>\n  <li>orange<\/li>\n  <li>pamelo<\/li>\n  <li>papaya<\/li>\n  <li>passionfruit<\/li>\n  <li>peach<\/li>\n  <li>pear<\/li>\n  <li>persimmon<\/li>\n  <li>physalis<\/li>\n  <li>pineapple<\/li>\n  <li>plum<\/li>\n  <li>pomegranate<\/li>\n  <li>pomelo<\/li>\n  <li>purple mangosteen<\/li>\n  <li>quince<\/li>\n  <li>raisin<\/li>\n  <li>rambutan<\/li>\n  <li>raspberry<\/li>\n  <li>redcurrant<\/li>\n  <li>rock melon<\/li>\n  <li>salal berry<\/li>\n  <li>satsuma<\/li>\n  <li>star fruit<\/li>\n  <li>strawberry<\/li>\n  <li>tamarillo<\/li>\n  <li>tangerine<\/li>\n  <li>ugli fruit<\/li>\n  <li>watermelon<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>
+# behind the scenes - note the Same result
+str_view(fruit, regex(&quot;nana&quot;))</code></pre>
+<div id="htmlwidget-d0faa244c43714d37042" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d0faa244c43714d37042">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>apricot<\/li>\n  <li>avocado<\/li>\n  <li>ba<span class='match'>nana<\/span><\/li>\n  <li>bell pepper<\/li>\n  <li>bilberry<\/li>\n  <li>blackberry<\/li>\n  <li>blackcurrant<\/li>\n  <li>blood orange<\/li>\n  <li>blueberry<\/li>\n  <li>boysenberry<\/li>\n  <li>breadfruit<\/li>\n  <li>canary melon<\/li>\n  <li>cantaloupe<\/li>\n  <li>cherimoya<\/li>\n  <li>cherry<\/li>\n  <li>chili pepper<\/li>\n  <li>clementine<\/li>\n  <li>cloudberry<\/li>\n  <li>coconut<\/li>\n  <li>cranberry<\/li>\n  <li>cucumber<\/li>\n  <li>currant<\/li>\n  <li>damson<\/li>\n  <li>date<\/li>\n  <li>dragonfruit<\/li>\n  <li>durian<\/li>\n  <li>eggplant<\/li>\n  <li>elderberry<\/li>\n  <li>feijoa<\/li>\n  <li>fig<\/li>\n  <li>goji berry<\/li>\n  <li>gooseberry<\/li>\n  <li>grape<\/li>\n  <li>grapefruit<\/li>\n  <li>guava<\/li>\n  <li>honeydew<\/li>\n  <li>huckleberry<\/li>\n  <li>jackfruit<\/li>\n  <li>jambul<\/li>\n  <li>jujube<\/li>\n  <li>kiwi fruit<\/li>\n  <li>kumquat<\/li>\n  <li>lemon<\/li>\n  <li>lime<\/li>\n  <li>loquat<\/li>\n  <li>lychee<\/li>\n  <li>mandarine<\/li>\n  <li>mango<\/li>\n  <li>mulberry<\/li>\n  <li>nectarine<\/li>\n  <li>nut<\/li>\n  <li>olive<\/li>\n  <li>orange<\/li>\n  <li>pamelo<\/li>\n  <li>papaya<\/li>\n  <li>passionfruit<\/li>\n  <li>peach<\/li>\n  <li>pear<\/li>\n  <li>persimmon<\/li>\n  <li>physalis<\/li>\n  <li>pineapple<\/li>\n  <li>plum<\/li>\n  <li>pomegranate<\/li>\n  <li>pomelo<\/li>\n  <li>purple mangosteen<\/li>\n  <li>quince<\/li>\n  <li>raisin<\/li>\n  <li>rambutan<\/li>\n  <li>raspberry<\/li>\n  <li>redcurrant<\/li>\n  <li>rock melon<\/li>\n  <li>salal berry<\/li>\n  <li>satsuma<\/li>\n  <li>star fruit<\/li>\n  <li>strawberry<\/li>\n  <li>tamarillo<\/li>\n  <li>tangerine<\/li>\n  <li>ugli fruit<\/li>\n  <li>watermelon<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p><span style="color: #008080;background-color:#9FDDBA">Other arguments of<code>regex()</code></span> to control details of the match are:</p>
+<ul>
+<li><code>ignore_case = TRUE</code> allows characters to match either their uppercase or lowercase versions.</li>
+</ul>
+<pre class="r"><code>bananas &lt;- c(&quot;banana&quot;, &quot;Banana&quot;, &quot;BANANA&quot;)
+# match case sensitive value
+str_view(bananas, &quot;banana&quot;)</code></pre>
+<div id="htmlwidget-93caa3daba8911dd2d2b" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-93caa3daba8911dd2d2b">{"x":{"html":"<ul>\n  <li><span class='match'>banana<\/span><\/li>\n  <li>Banana<\/li>\n  <li>BANANA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>
+# match case insensitive value
+str_view(bananas, regex(&quot;banana&quot;, ignore_case = TRUE))</code></pre>
+<div id="htmlwidget-e7331bd23dee9c876034" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e7331bd23dee9c876034">{"x":{"html":"<ul>\n  <li><span class='match'>banana<\/span><\/li>\n  <li><span class='match'>Banana<\/span><\/li>\n  <li><span class='match'>BANANA<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<ul>
+<li><code>multiline = TRUE</code> allows <code>^</code> and <code>$</code> to match the start and end of each line rather than the start and end of the complete string.</li>
+</ul>
+<pre class="r"><code>x &lt;- &quot;Line 1\nLine 2\nLine 3&quot;
+
+# extract where it starts with Line - only 1st caught
+str_extract_all(x, &quot;^Line&quot;)[[1]] 
+#&gt; [1] &quot;Line&quot;
+
+# using regex multiline
+str_extract_all(x, regex(&quot;^Line&quot;, multiline = TRUE))[[1]]
+#&gt; [1] &quot;Line&quot; &quot;Line&quot; &quot;Line&quot;</code></pre>
+<ul>
+<li><code>comments = TRUE</code> allows the use of comments and white space to make complex regular expressions more understandable. Spaces are ignored, as is everything after <code>#</code>. To match a literal space, escape it: <code>"\\ "</code>.</li>
+</ul>
+<pre class="r"><code>phone &lt;- regex(&quot;
+               \\(?     # optional opening parens
+               (\\d{3}) # area code
+               [)\\ -]?   # optional closing parens, dash or space
+               (\\d{3}) # another three numbers
+               [\\ -]?    # optional space or dash
+               (\\d{3}) # three more numbers
+               &quot;, comments = TRUE)
+
+str_match(c(&quot;514-791-8141&quot;,
+            &quot;(011)763-813&quot;,
+            &quot;200 900-453&quot;), phone)
+#&gt;      [,1]           [,2]  [,3]  [,4] 
+#&gt; [1,] &quot;514-791-814&quot;  &quot;514&quot; &quot;791&quot; &quot;814&quot;
+#&gt; [2,] &quot;(011)763-813&quot; &quot;011&quot; &quot;763&quot; &quot;813&quot;
+#&gt; [3,] &quot;200 900-453&quot;  &quot;200&quot; &quot;900&quot; &quot;453&quot;</code></pre>
+<ul>
+<li><code>dotall = TRUE</code> allows <code>.</code> to match everything, including <code>\n</code>.</li>
+</ul>
+<div id="other-functions" class="section level3">
+<h3>Other functions</h3>
+<ul>
+<li><p><code>fixed()</code>: matches exactly the specified sequence of bytes. It ignores all special regular expressions and can be much faster than regular expressions.</p>
+<pre class="r"><code>microbenchmark::microbenchmark(
+  fixed = str_detect(sentences, fixed(&quot;the&quot;)),
+  regex = str_detect(sentences, &quot;the&quot;),
+  times = 20
+)
+#&gt; Unit: microseconds
+#&gt;   expr     min       lq     mean   median      uq   max neval
+#&gt;  fixed  88.901  94.3005 106.3658  99.9005 104.151 236.2    20
+#&gt;  regex 249.701 250.7510 261.8961 252.1015 261.602 337.9    20</code></pre>
+<p>Using <code>fixed()</code> with non-English data is sometimes problematic because there are multiple ways of representing the same character. Here are two ways to define “á”:</p>
+<pre class="r"><code>a1 &lt;- &quot;\u00e1&quot;
+a2 &lt;- &quot;a\u0301&quot;
+c(a1, a2)
+#&gt; [1] &quot;á&quot; &quot;a´&quot;
+a1 == a2
+#&gt; [1] FALSE</code></pre>
+<p>While they render the same they’re defined differently, so <code>fixed()</code> doesn’t find a match. Instead, you can use <code>coll()</code> to respect human character rules.</p>
+<pre class="r"><code>str_detect(a1, fixed(a2))
+#&gt; [1] FALSE
+str_detect(a1, coll(a2))
+#&gt; [1] TRUE</code></pre></li>
+<li><p><code>coll()</code>: compare strings using standard <strong>coll</strong>ation rules - useful for doing case insensitive matching. <code>coll()</code> takes a <code>locale</code> parameter that controls which rules are used for comparing characters. <strong>Note: Changing locale, does not work as in the book</strong> <code>coll()</code> is <strong>slow</strong>.</p>
+<pre class="r"><code># That means you also need to be aware of the difference
+# when doing case insensitive matches:
+i &lt;- c(&quot;I&quot;, &quot;İ&quot;, &quot;i&quot;, &quot;ı&quot;)
+i
+#&gt; [1] &quot;I&quot; &quot;I&quot; &quot;i&quot; &quot;i&quot;
+
+str_subset(i, coll(&quot;i&quot;, ignore_case = TRUE))
+#&gt; [1] &quot;I&quot; &quot;I&quot; &quot;i&quot; &quot;i&quot;
+str_subset(i, coll(&quot;i&quot;, ignore_case = TRUE, locale = &quot;tr&quot;))
+#&gt; [1] &quot;i&quot; &quot;i&quot;</code></pre>
+<p>Both <code>fixed()</code> and <code>regex()</code> have <code>ignore_case</code> arguments, but they do not allow you to pick the locale: they always use the default locale.</p>
+<pre class="r"><code>stringi::stri_locale_info()
+#&gt; $Language
+#&gt; [1] &quot;en&quot;
+#&gt; 
+#&gt; $Country
+#&gt; [1] &quot;ZA&quot;
+#&gt; 
+#&gt; $Variant
+#&gt; [1] &quot;&quot;
+#&gt; 
+#&gt; $Name
+#&gt; [1] &quot;en_ZA&quot;</code></pre></li>
+<li><p>You can use <code>boundary()</code> to match boundaries with other functions besides <code>str_split()</code>.</p>
+<pre class="r"><code>x &lt;- &quot;This is a sentence.&quot;
+str_view_all(x, boundary(&quot;word&quot;))</code></pre>
+<div id="htmlwidget-34195e1ac2dc514c9b09" style="width:960px;height:100%;" class="str_view html-widget"></div>
+    <script type="application/json" data-for="htmlwidget-34195e1ac2dc514c9b09">{"x":{"html":"<ul>\n  <li><span class='match'>This<\/span> <span class='match'>is<\/span> <span class='match'>a<\/span> <span class='match'>sentence<\/span>.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_extract_all(x, boundary(&quot;word&quot;))
+#&gt; [[1]]
+#&gt; [1] &quot;This&quot;     &quot;is&quot;       &quot;a&quot;        &quot;sentence&quot;</code></pre></li>
+</ul>
+</div>
+<div id="exercises-11" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>How would you find all strings containing <code>\</code> with <code>regex()</code> vs. with <code>fixed()</code>?</p>
+<pre class="r"><code>(backslash &lt;- &quot;This string contains the \\ char and we
+want to find it.&quot;)
+#&gt; [1] &quot;This string contains the \\ char and we\nwant to find it.&quot;
+writeLines(backslash)
+#&gt; This string contains the \ char and we
+#&gt; want to find it.
+
+str_view(backslash, regex(&quot;\\\\&quot;))</code></pre>
+<div id="htmlwidget-f1b9330dd0602e77e08f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+    <script type="application/json" data-for="htmlwidget-f1b9330dd0602e77e08f">{"x":{"html":"<ul>\n  <li>This string contains the <span class='match'>\\<\/span> char and we\nwant to find it.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>
+str_view(backslash, fixed(&quot;\\&quot;))</code></pre>
+<div id="htmlwidget-d7febe0225a5b3e0ce7c" style="width:960px;height:100%;" class="str_view html-widget"></div>
+    <script type="application/json" data-for="htmlwidget-d7febe0225a5b3e0ce7c">{"x":{"html":"<ul>\n  <li>This string contains the <span class='match'>\\<\/span> char and we\nwant to find it.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script></li>
+<li><p>What are the five most common words in <code>sentences</code>?</p>
+<pre class="r"><code>tibble(word = unlist(str_split(sentences, 
+                               boundary(&quot;word&quot;)))) %&gt;% 
+  mutate(word = str_to_lower(word)) %&gt;% 
+  count(word, sort = TRUE)
+#&gt; # A tibble: 1,904 x 2
+#&gt;    word      n
+#&gt;    &lt;chr&gt; &lt;int&gt;
+#&gt;  1 the     751
+#&gt;  2 a       202
+#&gt;  3 of      132
+#&gt;  4 to      123
+#&gt;  5 and     118
+#&gt;  6 in       87
+#&gt;  7 is       81
+#&gt;  8 was      66
+#&gt;  9 on       60
+#&gt; 10 with     51
+#&gt; # ... with 1,894 more rows</code></pre></li>
+</ol>
+<h2>
+Other uses of regex
+</h2>
+</div>
+</div>
+<div id="other-uses-of-regex" class="section level2">
+<h2>Other uses of regex</h2>
+<ul>
+<li><p>Base R <code>apropos()</code> searches all objects available from the global environment. Useful if you can’t quite remember the name of the function.</p>
+<pre class="r"><code>apropos(&quot;replace&quot;)
+#&gt;  [1] &quot;%+replace%&quot;       &quot;replace&quot;          &quot;replace&quot;          &quot;replace_na&quot;      
+#&gt;  [5] &quot;replaces&quot;         &quot;setReplaceMethod&quot; &quot;str_replace&quot;      &quot;str_replace_all&quot; 
+#&gt;  [9] &quot;str_replace_na&quot;   &quot;theme_replace&quot;</code></pre></li>
+<li><p>Base R <code>dir()</code> lists all the files in a directory. The <code>pattern</code> argument takes a regular expression and only returns file names that match the pattern.</p>
+<pre class="r"><code>head(dir(&quot;analysis&quot;, pattern = &quot;\\.Rmd$&quot;)) # match all Rmd files
+#&gt; [1] &quot;about.Rmd&quot;                &quot;ch1_ggplot.Rmd&quot;          
+#&gt; [3] &quot;ch10_relations_dplyr.Rmd&quot; &quot;ch11_strings.Rmd&quot;        
+#&gt; [5] &quot;ch14_pipes.Rmd&quot;           &quot;ch2_workflow.Rmd&quot;</code></pre>
+<p>You may also use “globs” like <code>*.Rmd</code>, by converting them to regular expressions with <code>glob2rx()</code>:</p>
+<pre class="r"><code>head(dir(&quot;analysis&quot;, pattern = glob2rx(&quot;*.Rmd&quot;))) # match all Rmd files
+#&gt; [1] &quot;about.Rmd&quot;                &quot;ch1_ggplot.Rmd&quot;          
+#&gt; [3] &quot;ch10_relations_dplyr.Rmd&quot; &quot;ch11_strings.Rmd&quot;        
+#&gt; [5] &quot;ch14_pipes.Rmd&quot;           &quot;ch2_workflow.Rmd&quot;</code></pre></li>
+</ul>
+</div>
+<div id="stringi" class="section level2">
+<h2>stringi</h2>
+<p>stringr is built on top of the <strong>stringi</strong> package, which is more comprehensive than <code>stringr</code>.</p>
+<div id="exercises-12" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Find the stringi functions that:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Count the number of words.</p>
+<pre class="r"><code>s &lt;- &#39;Lorem ipsum dolor sit amet, consectetur adipisicing elit.&#39;
+stringi::stri_count(s, regex=&quot;\\w+&quot;)
+#&gt; [1] 8</code></pre></li>
+<li><p>Find duplicated strings.</p>
+<pre class="r"><code>stringi::stri_duplicated(c(&#39;a&#39;, &#39;b&#39;, &#39;a&#39;, NA, &#39;a&#39;, NA))
+#&gt; [1] FALSE FALSE  TRUE FALSE  TRUE  TRUE</code></pre></li>
+<li><p>Generate random text.</p>
+<pre class="r"><code>cat(sapply(
+   stringi::stri_wrap(stringi::stri_rand_lipsum(10),  80,
+                      simplify=FALSE),
+   stringi::stri_flatten, collapse=&#39;\n&#39;), sep=&#39;\n\n&#39;)
+#&gt; Lorem ipsum dolor sit amet, et, neque mollis amet quam vulputate, quam vitae
+#&gt; sit massa. Mauris ac. Libero ornare vitae facilisis sed. Nullam tristique nam,
+#&gt; eu eros placerat, lorem, duis porttitor. Placerat sed lacus leo et, pretium
+#&gt; eget, aptent. Urna mollis nibh augue porta vel quis commodo suspendisse tortor
+#&gt; aliquam. Scelerisque porta, ante sed et cum conubia hac? Eu finibus, sapien
+#&gt; senectus lectus mattis. Ut mus aptent, nec litora porta lobortis ultricies
+#&gt; rutrum? Semper consectetur nascetur litora mauris curabitur nec turpis taciti.
+#&gt; Facilisi quam nec velit. Ut augue mauris sed sed et justo scelerisque porttitor
+#&gt; tincidunt. Imperdiet ipsum sed senectus in vitae a turpis aliquam dignissim.
+#&gt; Fermentum lacus et eleifend gravida in mauris. Et litora ut sodales vel vitae
+#&gt; efficitur congue in tellus nunc. At, sagittis scelerisque pharetra nullam
+#&gt; facilisis purus mattis nec feugiat nisl nec et habitant elementum natoque eget.
+#&gt; Et at arcu habitasse ac pulvinar suspendisse aptent sed.
+#&gt; 
+#&gt; Varius penatibus. Facilisis leo fusce. Nec, aliquet lobortis et magnis nulla
+#&gt; vestibulum. Non nullam pretium quam condimentum diam arcu tellus, ultrices
+#&gt; nibh nibh praesent. Non etiam tempor, aliquam egestas. Nibh mauris massa, eget
+#&gt; consequat tortor, aenean natoque orci in dapibus curabitur. Nec ut mauris erat
+#&gt; conubia aliquam congue. Nunc, ullamcorper in pellentesque venenatis convallis
+#&gt; montes rhoncus. Quis justo sapien tempor nec. Sed, rutrum parturient, vestibulum
+#&gt; nulla dolor lacus ipsum.
+#&gt; 
+#&gt; Ultrices, pellentesque senectus luctus augue netus! In nascetur volutpat nec
+#&gt; urna. Per efficitur nec etiam in ut velit, non. Dignissim at ante curabitur ut,
+#&gt; nostra, ipsum luctus, efficitur felis. Et ultricies maecenas ultrices, sit a
+#&gt; enim ut lobortis ut ac nam. Amet cum amet. Pellentesque donec facilisi vehicula
+#&gt; eget eget donec tellus velit. Sollicitudin et in sed dapibus. Sit faucibus.
+#&gt; At aenean ipsum cubilia phasellus. Mauris mollis placerat justo sed sed ut et.
+#&gt; Malesuada integer ligula turpis in donec in aliquam ac sit. Maecenas class massa
+#&gt; ligula.
+#&gt; 
+#&gt; Cursus aliquam quis aptent nunc iaculis mollis odio a tellus! Quisque egestas
+#&gt; non donec lacus sapien cubilia tincidunt. Ac habitant turpis risus. Egestas
+#&gt; praesent fermentum dictum iaculis mauris sit purus auctor. Faucibus elementum
+#&gt; odio egestas felis ut porta ut. Congue dictumst cubilia sed ut tempor sapien
+#&gt; condimentum consequat. Et pharetra libero in torquent. Vulputate sapien inceptos
+#&gt; cursus congue aenean class, per augue.
+#&gt; 
+#&gt; Netus risus eget, efficitur egestas et. Mattis tortor amet quis pharetra luctus.
+#&gt; Sed nulla velit, nullam et donec ante. Ac mauris in nunc a quam class, in
+#&gt; egestas. Et himenaeos, penatibus proin auctor, tortor. Velit ipsum feugiat eget
+#&gt; aliquam auctor blandit luctus. Fusce, semper non tempor sed dignissim fusce
+#&gt; tempor habitant maecenas. Lacinia metus pharetra dictumst mauris elementum mi.
+#&gt; Parturient parturient semper dapibus egestas. Lobortis duis rutrum quisque sed
+#&gt; venenatis pharetra ac. Senectus ac. Turpis curae est sem elementum. Mi feugiat
+#&gt; aliquam gravida nunc.
+#&gt; 
+#&gt; Ligula congue libero laoreet consequat ipsum dapibus nec efficitur. Purus
+#&gt; vel diam ullamcorper et litora felis eu vestibulum. Montes in fringilla netus
+#&gt; faucibus vel ipsum. Senectus sed, vivamus felis nec consectetur sed suscipit
+#&gt; aliquet habitasse tempus. Nec ullamcorper, tincidunt efficitur ultrices
+#&gt; vulputate. Ridiculus magna sociosqu ut lectus enim, placerat. Nunc sed sapien
+#&gt; consectetur sed penatibus odio faucibus in lectus. Dapibus, suspendisse enim
+#&gt; senectus tellus tempus eget hac, elementum lacus accumsan. Praesent justo
+#&gt; gravida, imperdiet dolor elit aliquam metus mi.
+#&gt; 
+#&gt; Hendrerit vulputate magna, quis, nisl vitae magna. Gravida interdum, ante amet
+#&gt; posuere et et ac tincidunt. Ut scelerisque, non. Sed sed erat bibendum, sapien,
+#&gt; sapien inceptos torquent ipsum varius. Ut at eros et, in pellentesque nulla.
+#&gt; Convallis tristique pretium mollis, leo vitae augue. Et suspendisse varius
+#&gt; elementum lacus nam ac viverra! Mollis dictumst velit ligula sed primis nibh.
+#&gt; Lobortis, imperdiet! Euismod proin ullamcorper urna leo donec in diam rutrum!
+#&gt; Pulvinar ut, quisque ac suspendisse ante ornare, eget natoque. Non euismod
+#&gt; sed dui facilisis nisi. Interdum est potenti vestibulum dui adipiscing aptent
+#&gt; conubia nec mollis.
+#&gt; 
+#&gt; Molestie, aenean habitant nibh ac mauris, tempor et in at diam! A nullam commodo
+#&gt; cubilia. Consectetur nec ligula cursus ultricies dolor, sed at mollis dis et.
+#&gt; Et auctor nunc ac orci. Sit elit, malesuada facilisi curae nec dolor. Velit
+#&gt; penatibus sem sed et et. Tristique accumsan in quam non platea, dolor erat
+#&gt; nec. Quis vestibulum ut habitant consectetur tellus. In ante diam eu vitae
+#&gt; ac inceptos et nibh sociosqu sed nec fringilla eu tincidunt vitae, tristique
+#&gt; gravida nostra sit.
+#&gt; 
+#&gt; Ut in mauris sagittis maecenas nec. Blandit, sodales et nostra pellentesque
+#&gt; senectus sed, quam velit sed! A lorem quis id odio vel. Venenatis ultricies duis
+#&gt; libero sollicitudin lorem nec erat facilisi quis. Mus, dapibus eu molestie proin
+#&gt; amet. Cras netus lorem ac, in magna, tempor. Non metus a a quis cum suspendisse
+#&gt; purus, blandit nullam vehicula, pharetra id purus. Tempor lacinia, iaculis,
+#&gt; orci. Ligula quisque, in augue tincidunt adipiscing sapien.
+#&gt; 
+#&gt; Mi feugiat amet, rutrum laoreet sed cum. Vel amet, est proin augue in
+#&gt; condimentum eu lobortis, phasellus ut. Aliquam nulla massa ut ut lectus orci,
+#&gt; cras mi. Laoreet vel accumsan eros, eu finibus dignissim platea, varius potenti.
+#&gt; Id ut odio, inceptos sed justo at eget sed sed. Odio non egestas conubia
+#&gt; non non, praesent. Tellus penatibus a. Est proin, mi montes class tincidunt
+#&gt; suspendisse libero sed. Ac et ut leo interdum. Tellus sit iaculis lacinia. Metus
+#&gt; venenatis erat vitae ut? Ipsum fusce nisl, venenatis. Mauris a integer eget,
+#&gt; in sed vel dictumst mi lacus vivamus. Nec finibus augue sem risus sociis curae
+#&gt; tempor phasellus et. Arcu, tincidunt malesuada nisl ac, tortor.
+cat(stringi::stri_rand_lipsum(10), sep=&#39;\n\n&#39;)
+#&gt; Lorem ipsum dolor sit amet, donec potenti elit sed sed faucibus sit ultricies. Maximus blandit diam amet laoreet pharetra, posuere aptent quis auctor massa orci. Dapibus sollicitudin eget dictumst eu at urna. Ante in magnis morbi varius lacus elit nec at. Suspendisse lectus aliquam feugiat augue sapien nisi nec nostra. Ut vehicula ligula in leo sodales. Eu felis turpis taciti nulla cras sed. Torquent metus ac lacus dignissim quis auctor sed tristique purus dictumst.
+#&gt; 
+#&gt; Senectus, platea vitae. Finibus vitae nisl. Ante varius habitasse ac donec sit sit vestibulum, nam dui risus dictum turpis, ut. Euismod ullamcorper nibh risus vitae dui, sapien senectus. Vel leo aenean vitae vivamus nec tortor sed sed mattis cum quis pretium sed. Viverra, vel suscipit pellentesque nostra ante, praesent eu. Hac pretium non sed tincidunt. Mi sapien nec et amet sed sed sit, ac eu habitant in. Ultricies blandit nascetur in leo nam ipsum tempor duis parturient, sed sed. Semper interdum habitasse ultricies vestibulum lacus nulla. Arcu faucibus vestibulum amet. In sociis primis etiam sit ante, habitasse.
+#&gt; 
+#&gt; Suspendisse enim himenaeos amet erat accumsan. Turpis nunc ac, turpis, commodo in urna. Vestibulum eget iaculis nam malesuada eros turpis dolor potenti. Nisl nisi sit ornare nullam porttitor risus aenean lacinia finibus turpis. Risus eu suspendisse a nam. Nostra turpis odio et cursus venenatis dolor lobortis! Nam felis mi sed et non vehicula maecenas. Inceptos per id et scelerisque id sapien pellentesque sed. A sed, sem eu mattis venenatis sed.
+#&gt; 
+#&gt; Suspendisse sed ante sed metus fames maximus egestas non non. Ut aliquam ut tincidunt adipiscing aliquam augue fermentum finibus aliquam. Eros eleifend integer praesent pharetra condimentum rutrum non mauris donec congue. Imperdiet neque sed eu, ut sed sed mi libero cum. Rhoncus aliquam auctor himenaeos quam urna ipsum maecenas sed. Tortor leo orci conubia sapien eu porta. Aliquam torquent vitae platea mus vitae. Non id sit in et nibh, facilisis eget facilisis quis aptent risus. Vitae potenti, curabitur pulvinar parturient netus amet lacinia in dictum volutpat, pharetra sodales vestibulum eu. Sodales lorem, aenean, sed facilisis. Vestibulum ultricies, hendrerit efficitur viverra. Ullamcorper sapien id libero et non. Pulvinar felis enim, hendrerit ad ante integer purus purus, amet at ante suspendisse interdum. Cras gravida enim vestibulum eros imperdiet sed. Et sapien interdum, nec mi elementum donec torquent. Nec mauris cum et ut, enim faucibus nunc, et, id magnis blandit. Vitae in dis sit class eu et gravida viverra suspendisse? Ligula aenean magna cum augue eu vel, sem.
+#&gt; 
+#&gt; Facilisis aliquam est tellus ridiculus dolor odio id. Nec aliquam quam per felis. Viverra pharetra et amet sapien ut ad lacinia. Sapien tincidunt feugiat gravida, quisque blandit taciti aenean donec nunc sem sagittis. Primis, himenaeos tempus mauris dolor. Velit diam tortor. Mattis felis pulvinar vitae conubia ac ex dolor mattis magnis. Vel magna, amet malesuada vivamus eget montes lorem. Mauris natoque elit fermentum fermentum accumsan, malesuada aliquam. Sollicitudin donec felis purus, rutrum et vivamus imperdiet dapibus, nascetur, dignissim. Ut donec luctus. Semper nunc dui, vehicula vestibulum sed. Dapibus eu enim commodo cursus sapien, imperdiet ut nunc. Eleifend quam tempus lobortis curabitur enim risus duis senectus.
+#&gt; 
+#&gt; Ac velit est amet sociis, consectetur ac porttitor neque. Mauris ut vitae semper accumsan primis vehicula. Mauris proin nulla accumsan erat nulla, luctus, vel sed. Mus molestie, bibendum accumsan volutpat nibh, mauris metus erat nec, tincidunt. Curabitur ac finibus turpis nibh potenti nisl eget. Ultricies augue et maximus ac nec maecenas, velit tempus ac et etiam. Ultricies aliquam vehicula sed. Condimentum tincidunt ligula inceptos risus fringilla arcu nascetur aptent eros. Per sodales tortor faucibus sagittis velit, eros finibus et lacus cras dictum vulputate. Sociosqu in sem in, sed fermentum nulla volutpat sed, ut magna. Sem, a fermentum imperdiet purus arcu mollis felis id in donec.
+#&gt; 
+#&gt; Praesent odio proin accumsan habitasse vulputate eros. Inceptos velit lectus diam justo donec sem nostra placerat a pretium dolor. Dis mollis suspendisse senectus ex, nam varius faucibus magna ipsum eu. Ex sed leo risus ligula maecenas. Integer risus et aliquam ac sociosqu magnis lorem id blandit! Natoque varius quam sit arcu sociis. Sodales ac justo litora quis sapien mollis finibus et non himenaeos non. Ex, tempor sagittis varius tempus scelerisque, eleifend ligula.
+#&gt; 
+#&gt; Efficitur curabitur nam primis sed ac ligula ut molestie donec. Nostra nunc lectus tempor sed, nunc, euismod mi eu dapibus! Vulputate nisi eros netus eu, ipsum, adipiscing et curabitur id, eget. Iaculis, libero, sem donec sit iaculis. Etiam, potenti dictum, non amet, ut. At quam amet mauris ad laoreet! Lobortis sed ut eget, dignissim dictum, netus vitae eros in non, class. Sem vitae rhoncus ut quis, class, quisque. Sit tincidunt, quam tincidunt diam est pulvinar ex, convallis curae. Donec sed venenatis, velit maecenas posuere in donec mi potenti. Enim nisi cursus porta donec.
+#&gt; 
+#&gt; Eget vestibulum venenatis vivamus ligula vitae. Urna cursus potenti vestibulum. Ut tempus ridiculus interdum egestas, massa inceptos per. Eget augue laoreet at, ad. Ante nisl quis fames, dolor efficitur sed lacus tristique taciti egestas quam. Dolor lacinia sit vel hendrerit bibendum iaculis eleifend vehicula. Class mauris porttitor bibendum per phasellus purus imperdiet vulputate. Lectus bibendum. At lacus senectus condimentum ac et tempor blandit suscipit velit. Suscipit pellentesque nam, et, in aliquam rutrum. Bibendum donec mattis etiam amet tincidunt massa vehicula. Penatibus tellus natoque. Purus ridiculus justo, aliquet ultricies a mauris. Turpis volutpat netus mauris.
+#&gt; 
+#&gt; Neque dis natoque in elementum sed nisi. Porttitor, et dui varius, sed sagittis nam et neque. Enim eu, nunc finibus nisi id maecenas interdum magna augue ut non. Ac egestas fringilla orci et. Dui mauris sed turpis ac litora purus felis et. Vestibulum faucibus, nascetur in sed purus, egestas malesuada aliquam non ac. Cras metus bibendum non mi, sed metus, adipiscing. Ante suspendisse non a ante duis praesent neque non, facilisis vitae nibh. Suscipit placerat eros velit nunc velit volutpat, pretium eleifend vel duis morbi. Eu pellentesque, porttitor purus condimentum, tincidunt porttitor. In eros orci elementum ligula nisl fermentum nam et leo.</code></pre></li>
+</ol></li>
+<li><p>How do you control the language that <code>stri_sort()</code> uses for sorting?</p>
+<pre class="r"><code>stringi::stri_sort(c(&#39;hladny&#39;, &#39;chladny&#39;), locale=&#39;pl_PL&#39;)
+#&gt; [1] &quot;chladny&quot; &quot;hladny&quot;
+stringi::stri_sort(c(&#39;hladny&#39;, &#39;chladny&#39;), locale=&#39;sk_SK&#39;)
+#&gt; [1] &quot;hladny&quot;  &quot;chladny&quot;</code></pre></li>
+</ol>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1712,21 +2730,26 @@ head(words_, 10)
 #&gt;  [9] tibble_3.0.3    ggplot2_3.3.0   tidyverse_1.3.0 workflowr_1.6.2
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
-#&gt;  [1] tidyselect_1.1.0  xfun_0.13         haven_2.2.0       lattice_0.20-38  
-#&gt;  [5] colorspace_1.4-1  vctrs_0.3.2       generics_0.0.2    htmltools_0.5.0  
-#&gt;  [9] emo_0.0.0.9000    yaml_2.2.1        utf8_1.1.4        rlang_0.4.7      
-#&gt; [13] later_1.0.0       pillar_1.4.6      withr_2.2.0       glue_1.4.1       
-#&gt; [17] DBI_1.1.0         dbplyr_1.4.3      modelr_0.1.6      readxl_1.3.1     
-#&gt; [21] lifecycle_0.2.0   munsell_0.5.0     gtable_0.3.0      cellranger_1.1.0 
-#&gt; [25] rvest_0.3.5       htmlwidgets_1.5.1 evaluate_0.14     knitr_1.28       
-#&gt; [29] httpuv_1.5.2      fansi_0.4.1       broom_0.5.6       Rcpp_1.0.4.6     
-#&gt; [33] promises_1.1.0    backports_1.1.6   scales_1.1.0      jsonlite_1.7.0   
-#&gt; [37] fs_1.4.1          hms_0.5.3         digest_0.6.25     stringi_1.4.6    
-#&gt; [41] grid_3.6.3        rprojroot_1.3-2   cli_2.0.2         tools_3.6.3      
-#&gt; [45] crayon_1.3.4      whisker_0.4       pkgconfig_2.0.3   ellipsis_0.3.1   
-#&gt; [49] xml2_1.3.2        reprex_0.3.0      lubridate_1.7.8   rstudioapi_0.11  
-#&gt; [53] assertthat_0.2.1  rmarkdown_2.4     httr_1.4.2        R6_2.4.1         
-#&gt; [57] nlme_3.1-144      git2r_0.26.1      compiler_3.6.3</code></pre>
+#&gt;  [1] tidyselect_1.1.0     xfun_0.13            haven_2.2.0         
+#&gt;  [4] lattice_0.20-38      colorspace_1.4-1     vctrs_0.3.2         
+#&gt;  [7] generics_0.0.2       htmltools_0.5.0      emo_0.0.0.9000      
+#&gt; [10] yaml_2.2.1           utf8_1.1.4           rlang_0.4.7         
+#&gt; [13] later_1.0.0          pillar_1.4.6         withr_2.2.0         
+#&gt; [16] glue_1.4.1           DBI_1.1.0            dbplyr_1.4.3        
+#&gt; [19] modelr_0.1.6         readxl_1.3.1         lifecycle_0.2.0     
+#&gt; [22] munsell_0.5.0        gtable_0.3.0         cellranger_1.1.0    
+#&gt; [25] rvest_0.3.5          htmlwidgets_1.5.1    evaluate_0.14       
+#&gt; [28] knitr_1.28           httpuv_1.5.2         fansi_0.4.1         
+#&gt; [31] broom_0.5.6          Rcpp_1.0.4.6         promises_1.1.0      
+#&gt; [34] backports_1.1.6      scales_1.1.0         jsonlite_1.7.0      
+#&gt; [37] fs_1.4.1             microbenchmark_1.4-7 hms_0.5.3           
+#&gt; [40] digest_0.6.25        stringi_1.4.6        grid_3.6.3          
+#&gt; [43] rprojroot_1.3-2      cli_2.0.2            tools_3.6.3         
+#&gt; [46] crayon_1.3.4         whisker_0.4          pkgconfig_2.0.3     
+#&gt; [49] ellipsis_0.3.1       xml2_1.3.2           reprex_0.3.0        
+#&gt; [52] lubridate_1.7.8      rstudioapi_0.11      assertthat_0.2.1    
+#&gt; [55] rmarkdown_2.4        httr_1.4.2           R6_2.4.1            
+#&gt; [58] nlme_3.1-144         git2r_0.26.1         compiler_3.6.3</code></pre>
 </div>
 </div>
 </div>
