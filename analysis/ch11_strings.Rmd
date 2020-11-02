@@ -1141,6 +1141,19 @@ str_view_all(more, colour_match)
 - This returns a list.
 - To get this in matrix format use `simplify = TRUE`
 
+```{r}
+str_extract_all(more, colour_match)
+
+str_extract_all(more, colour_match, simplify = TRUE)
+```
+
+```{r}
+x <- c("a", "a b", "a b c")
+str_extract(x, "[a-z]")
+str_extract_all(x, "[a-z]", simplify = TRUE)
+```
+
+
 ### Exercises
 
 1.  In the previous example, you might have noticed that the regular
@@ -1186,11 +1199,518 @@ str_view_all(more, colour_match)
                               simplify = TRUE)
         head(words_, 10)
         ```
+  
+
+
+
+<h2>Grouped Matches</h2>
+## Grouped Matches
+
+So far we have seen parentheses used for:
+
+- disambiguating complex parts of a match `"col(o|ou)r"`
+- creating groups that can be used as backreferences
+`"(..)\\1"`
+- __Another__ use is to extract parts of complex matches
+
+As an example let's say we want to get nouns from the sentences dataset.
+
+We can look for _a_ / _the_
+
+```{r}
+noun <- "(a|the) [^ ]+" # a / the followed by some word (not a space)
+
+(has_noun <- sentences %>% 
+  str_subset(noun) %>% 
+  head(10))
+
+has_noun %>% 
+  # str_extract gives us entire match and each group in a matrix col
+  str_extract(noun)
+
+# in tidyr we can do this for df's using tidyr::extract()
+tibble(sentence = sentences) %>% 
+  tidyr::extract(sentence,# from where? sentence
+                 # rename the resulting cols article, and noun
+                 c("article", "noun"),
+                 # pattern with groups for article then noun
+                 "(a|the) ([^ ]+)",
+                 remove = FALSE # keep original sentence col
+                 )
+```
+
+Like `str_extract()`, `str_match()` also has an __all__ equivalent
+`str_match_all()`.
+
+### Exercises
+
+1. Find all words that come after a "number" like "one", "two", "three" etc.
+   Pull out both the number and the word.
+   
+    ```{r}
+    (pattern <- str_c(prefix = "\\b",
+                     c("one", "two", "three", "four",
+                       "five", "six", "seven", "eight",
+                       "nine", "ten", "eleven", "twelve"),
+                     collapse = "|"))
+    pattern <- glue::glue("({pattern}) ([^ ]+)")
+    tibble(sentence = sentences) %>% 
+      tidyr::extract(sentence,
+                     c("number", "word"),
+                     pattern,
+                     remove = FALSE) %>% 
+      filter(!is.na(number))
+    
+    # using str_extract
+    sentences %>% 
+      # first get only the sentences containing this pattern
+      str_subset(pattern) %>% 
+      # now words that match the pattern
+      str_match(pattern) %>% 
+      head(10)
+    
+    sentences %>% 
+      # first get only the sentences containing this pattern
+      str_subset(pattern) %>% 
+      # now words that match the pattern
+      str_match_all(pattern) %>% 
+      head(10)
+    ```
+   
+
+1. Find all contractions. Separate out the pieces before and after the 
+   apostrophe.
+   
+    ```{r}
+    pattern <- "\\b([a-zA-Z]+)'([a-zA-Z]+)"
+    
+    tibble(sentence = sentences) %>% 
+      tidyr::extract(sentence,
+                     c("one", "two"),
+                     pattern,
+                     remove = FALSE) %>% 
+      filter(!is.na(one))
+    
+    # the str_match way
+    sentences %>% 
+      str_subset(pattern) %>% # only consider rows with pattern
+      str_match(pattern)
+    ```
+
+<h2>Replacing matches</h2>
+## Replacing matches
+
+`str_replace()` and `str_replace_all()` allow you to replace matches with new strings.
+
+```{r}
+x <- c("apple", "pear", "banana")
+# replace the 1st occurrence of a vowel in x with a -
+str_replace(x, "[aeiou]", "-")
+# replace all occurrences of a vowel in x with a - 
+str_replace_all(x, "[aeiou]", "-")
+```
+
+With `str_replace_all()` you may also supply a named vector to perform multiple replacements.
+
+```{r}
+x <- c("1 house", "2 cars", "3 people")
+str_replace_all(x,
+                c("1" = "one", "2" = "two", "3" = "three"))
+```
+
+We can also use `backreferences` to do replacements.
+
+```{r}
+# swap the second and third words
+sentences %>% 
+  # look for pattern word another_word another_one with
+  # spaces in between
+  # without the spaces it swaps the letter in the first word
+  str_replace("([^ ]+) ([^ ]+) ([^ ]+)", "\\1 \\3 \\2") %>% 
+  head()
+```
+
+### Exercises
+
+1. Replace all forward slashes in a string with backslashes.
+
+    ```{r}
+    x <- "This is / an arbitrary / contrived example"
+    writeLines(x)
+    (replace <- str_replace_all(x, "/", "\\\\"))
+    writeLines(replace)
+    ```
+
+
+1. Implement a simple version of `str_to_lower()` using `replace_all()`.
+    
+    ```{r}
+    x <- "The Quick Brown Fox Jumped Over the Lazy DOG"
+    str_replace_all(x, c("A" = "a", "B" = "b", "C" = "c", "D" = "d",
+                         "E" = "e", "F" = "f", "G" = "g", "H" = "h",
+                         "I" = "i", "J" = "j", "K" = "k", "L" = "l",
+                         "M" = "m", "N" = "n", "O" = "o", "P" ="p",
+                         "Q" = "q", "R" = "r", "S" = "s", "T" = "t",
+                         "U" = "u", "V" = "v", "W" = "w", "X" = "x",
+                         "Y" = "y", "Z" = "z"))
+    ```
+
+
+1.   Switch the first and last letters in `words`. Which of those strings
+     are still words?
+     
+      ```{r}
+      (replaces <- stringr::words %>% 
+        str_replace("^([^ ])([^ ]*)([^ ])$", "\\3\\2\\1"))
+      
+      tibble(word = stringr::words) %>% 
+        filter(word %in% replaces) %>% 
+        head(20)
+      ```
+     
+
+<h2>Splitting</h2>
+## Splitting
+
+Use `str_split()` to split a string up into pieces.
+
+```{r}
+# we can split a sentence into words
+sentences %>% 
+  head() %>% 
+  str_split(" ")
+```
+
+This returns a list since the length of each is varying.
+
+To extract a component:
+
+```{r}
+sentences %>% 
+  head() %>% 
+  str_split(" ") %>% 
+  .[[1]]
+
+"a|b|c|d" %>% 
+  # list returned
+  str_split("\\|")
+
+"a|b|c|d" %>% 
+  # list returned
+  str_split("\\|") %>% 
+  # get first element
+  .[[1]]
+```
+
+Also like other __{stringr}__ functions there is a 
+`simplify = TRUE` that may be set.
+
+```{r}
+sentences %>% 
+  head(5) %>% 
+  str_split(" ", simplify = TRUE)
+```
+
+We can also specify we want __xx__ number of pieces only, using
+`n = num_pieces`.
+
+```{r}
+sentences %>% 
+  head(5) %>% 
+  str_split(" ", n = 5, simplify = TRUE)
+```
+
+<span style="color: #6d6875;background-color:#e5989b">Notice</span>  that the <span style="color: #6d6875;background-color:#e5989b">remaining part</span>  of the string all goes into the <span style="color: #6d6875;background-color:#e5989b">last piece</span>!
+
+```{r}
+fields <- c("Name: Hadley", "Country: NZ", "Age: 35")
+fields %>% 
+  str_split(": ", n = 2, simplify = TRUE)
+```
+
+So far we split on a pattern. We may also split by:
+
+- character
+- line
+- sentence
+- word `boundary()`
+- The function `boundary()` has different types - e.g `line_break`, `word` etc.
+
+```{r}
+x <- "This is a sentence.  This is another sentence."
+
+str_view_all(x, boundary("word"))
+
+str_split(x, " ")[[1]]
+
+str_split(x, boundary("word"))[[1]]
+```
+
+### Exercises
+
+1.  Split up a string like `"apples, pears, and bananas"` into individual
+    components.
+    
+    ```{r}
+    test_str <- "apples, pears, and bananas"
+    str_split(test_str, ", (and)?", n=3)[[1]]
+    ```
+    
+    
+1.  Why is it better to split up by `boundary("word")` than `" "`?
+
+    ```{r}
+    x <- "This is a sentence, this is another sentence."
+    
+    str_view_all(x, boundary("word"))
+    
+    str_split(x, " ")[[1]]
+    
+    str_split(x, boundary("word"))[[1]]
+    ```
+    
+    As we saw in the example splitting by `" "` can lead to
+    punctuation being added to a split word. Here: `sentence.`
+    and `sentence,`.
+    
+    With using `boundary(word)` it ignores the puntuation
+    resulting in pure words being picked up.
+
+
+1.  What does splitting with an empty string (`""`) do? Experiment, and
+    then read the documentation.
+    
+    ```{r}
+    x <- "This is a sentence, this is another sentence."
+    
+    str_split(x, "")[[1]]
+    
+    str_split(x, boundary("character"))[[1]]
+    ```
+    
+    It splits on each character. It is equivalent to splitting on
+    `boundary("character")`
     
 
+### Find matches
+
+`str_locate()` and `str_locate_all()` give you the starting and ending positions of each match. Use `str_locate()` to find the matching pattern, `str_sub()` to extract.
+
+<h2>Other Patterns</h2>
+## Other Patterns
+
+When you use a pattern that's a string, it's automatically wrapped into a call to `regex()`
+
+```{r}
+# regular usage
+str_view(fruit, "nana")
+
+# behind the scenes - note the Same result
+str_view(fruit, regex("nana"))
+```
+
+<span style="color: #008080;background-color:#9FDDBA">Other arguments of`regex()`</span> to control details of the match are:
+
+*   `ignore_case = TRUE` allows characters to match either 
+their uppercase or lowercase versions.
+
+```{r}
+bananas <- c("banana", "Banana", "BANANA")
+# match case sensitive value
+str_view(bananas, "banana")
+
+# match case insensitive value
+str_view(bananas, regex("banana", ignore_case = TRUE))
+```
+
+*   `multiline = TRUE` allows `^` and `$` to match the start and 
+end of each line rather than the start and end of the complete string.
+
+```{r}
+x <- "Line 1\nLine 2\nLine 3"
+
+# extract where it starts with Line - only 1st caught
+str_extract_all(x, "^Line")[[1]] 
+
+# using regex multiline
+str_extract_all(x, regex("^Line", multiline = TRUE))[[1]]
+```
 
 
+* `comments = TRUE` allows the use of comments and white space 
+ to make complex regular expressions more understandable. Spaces are ignored, as is everything after `#`. To match a literal space, escape it: `"\\ "`.
+ 
+```{r}
+phone <- regex("
+               \\(?     # optional opening parens
+               (\\d{3}) # area code
+               [)\\ -]?   # optional closing parens, dash or space
+               (\\d{3}) # another three numbers
+               [\\ -]?    # optional space or dash
+               (\\d{3}) # three more numbers
+               ", comments = TRUE)
 
+str_match(c("514-791-8141",
+            "(011)763-813",
+            "200 900-453"), phone)
+```
+ 
+*   `dotall = TRUE` allows `.` to match everything, including `\n`.
+
+### Other functions
+
+*   `fixed()`: matches exactly the specified sequence of bytes. It ignores
+    all special regular expressions and can be much faster than 
+    regular expressions. 
+  
+    ```{r}
+    microbenchmark::microbenchmark(
+      fixed = str_detect(sentences, fixed("the")),
+      regex = str_detect(sentences, "the"),
+      times = 20
+    )
+    ```
+    Using `fixed()` with non-English data is sometimes problematic
+    because there are multiple ways of representing the same character.     Here are two ways to define "á":
+    
+    ```{r}
+    a1 <- "\u00e1"
+    a2 <- "a\u0301"
+    c(a1, a2)
+    a1 == a2
+    ```
+
+    While they render the same they're defined differently, so
+    `fixed()` doesn't find a match. Instead, you can use `coll()` to
+    respect human character rules.
+
+    ```{r}
+    str_detect(a1, fixed(a2))
+    str_detect(a1, coll(a2))
+    ```    
+    
+*   `coll()`: compare strings using standard **coll**ation rules - 
+    useful for doing case insensitive matching. `coll()` takes a
+    `locale` parameter that controls which rules are used for comparing
+    characters. **Note: Changing locale, does not work as in the book**
+    `coll()` is __slow__.
+
+    ```{r}
+    # That means you also need to be aware of the difference
+    # when doing case insensitive matches:
+    i <- c("I", "İ", "i", "ı")
+    i
+    
+    str_subset(i, coll("i", ignore_case = TRUE))
+    str_subset(i, coll("i", ignore_case = TRUE, locale = "tr"))
+    ```
+    
+    Both `fixed()` and `regex()` have `ignore_case` arguments, but they
+    do not allow you to pick the locale: they always use the 
+    default locale.
+    
+    ```{r}
+    stringi::stri_locale_info()
+    ```
+  
+
+*   You can use `boundary()` to match boundaries with other functions
+besides `str_split()`.
+    
+    ```{r}
+    x <- "This is a sentence."
+    str_view_all(x, boundary("word"))
+    str_extract_all(x, boundary("word"))
+    ```
+
+### Exercises
+
+1.  How would you find all strings containing `\` with `regex()` vs.
+    with `fixed()`?
+    
+    ```{r}
+    (backslash <- "This string contains the \\ char and we
+    want to find it.")
+    writeLines(backslash)
+    
+    str_view(backslash, regex("\\\\"))
+    
+    str_view(backslash, fixed("\\"))
+    ```
+    
+
+1.  What are the five most common words in `sentences`?
+
+    ```{r}
+    tibble(word = unlist(str_split(sentences, 
+                                   boundary("word")))) %>% 
+      mutate(word = str_to_lower(word)) %>% 
+      count(word, sort = TRUE)
+    ```
+
+<h2>Other uses of regex</h2>
+## Other uses of regex
+
+*   Base R `apropos()` searches all objects available from the global
+environment. Useful if you can't quite remember the name of the function.
+    
+    ```{r}
+    apropos("replace")
+    ```
+    
+*   Base R `dir()` lists all the files in a directory. The `pattern` argument takes
+    a regular expression and only returns file names that match the pattern.
+    
+    ```{r}
+    head(dir("analysis", pattern = "\\.Rmd$")) # match all Rmd files
+    ```
+    
+    You may also use "globs" like `*.Rmd`, by converting
+    them to regular expressions with `glob2rx()`:
+    
+    ```{r}
+    head(dir("analysis", pattern = glob2rx("*.Rmd"))) # match all Rmd files
+    ```
+
+## stringi
+
+stringr is built on top of the __stringi__ package, which is more comprehensive than `stringr`.
+
+### Exercises
+
+1.  Find the stringi functions that:
+
+    a. Count the number of words.
+    
+        ```{r}
+        s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+        stringi::stri_count(s, regex="\\w+")
+        ```
+    
+    a. Find duplicated strings.
+    
+        ```{r}
+        stringi::stri_duplicated(c('a', 'b', 'a', NA, 'a', NA))
+        ```
+    
+    a. Generate random text.
+    
+        ```{r}
+        cat(sapply(
+           stringi::stri_wrap(stringi::stri_rand_lipsum(10),  80,
+                              simplify=FALSE),
+           stringi::stri_flatten, collapse='\n'), sep='\n\n')
+        cat(stringi::stri_rand_lipsum(10), sep='\n\n')
+        ```
+    
+
+1.  How do you control the language that `stri_sort()` uses for 
+    sorting?
+
+    ```{r}
+    stringi::stri_sort(c('hladny', 'chladny'), locale='pl_PL')
+    stringi::stri_sort(c('hladny', 'chladny'), locale='sk_SK')
+    ```
 
 
 
