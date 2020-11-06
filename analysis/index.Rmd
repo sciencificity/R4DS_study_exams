@@ -9,12 +9,13 @@ editor_options:
 ---
 
 Welcome to my exam prep website. The chapters follow the printed version
-of `R for Data Science` which is [online](https://r4ds.had.co.nz/) as well.
+of `R for Data Science` which is [online](https://r4ds.had.co.nz/) as well. I include notes, verbatim sage advice in some cases, as well as my exercise
+solutions.
 
 <strong>Assumptions:</strong>
 
 - You have worked through the material in the physical or online book.
-- You have attempted the exercises yourself. Learning by practicing
+- You have attempted the exercises yourself. Learning by practising
 is a really great way to get acclimatised to the language.
 - You understand that like you, I too am on a journey of learning, and therefore 
 will be kind with mistakes you may pick up. 
@@ -27,6 +28,7 @@ fundamentally flawed, so please do let [me](https://twitter.com/sciencificity) k
 - [R for Data Science Community](https://www.rfordatasci.com/)
 - [R Studio Education](https://education.rstudio.com/)
 - [Primers](https://rstudio.cloud/learn/primers)
+
 
 ### Chapter Exercises
 
@@ -41,6 +43,7 @@ fundamentally flawed, so please do let [me](https://twitter.com/sciencificity) k
 [Chapter 9:  Tidy Data with tidyr](ch9_tidy_data.html) <br>
 [Chapter 10:  Relational Data with dplyr](ch10_relations_dplyr.html) <br>
 [Chapter 11:  Strings with stringr](ch11_strings.html) <br>
+[Chapter 12:  Factors with forcats](ch12_forcats.html) <br>
 [Chapter 14:  Pipes](ch14_pipes.html) <br>
 [Chapter 21:  RMarkdown](ch21_rmd.html) <br>
 [Chapter 23:  RMarkdown Formats](ch23_rmd_formats.html) <br>
