@@ -45,6 +45,7 @@ fundamentally flawed, so please do let [me](https://twitter.com/sciencificity) k
 [Chapter 11:  Strings with stringr](ch11_strings.html) <br>
 [Chapter 12:  Factors with forcats](ch12_forcats.html) <br>
 [Chapter 14:  Pipes](ch14_pipes.html) <br>
+[Chapter 15:  Functions](ch15_functions.html) <br>
 [Chapter 21:  RMarkdown](ch21_rmd.html) <br>
 [Chapter 23:  RMarkdown Formats](ch23_rmd_formats.html) <br>
 

@@ -1,0 +1,959 @@
+---
+title: "Chapter 15 - Functions"
+author: "Vebash Naidoo"
+date: "06/11/2020"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning=FALSE, message=FALSE,
+                      comment = "#>", 
+                      collapse = TRUE)
+
+options(scipen=10000)
+library(tidyverse)
+library(flair)
+library(magrittr)
+```
+
+# Functions
+
+```{r rep1, include = FALSE}
+df <- tibble::tibble(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+df$a <- (df$a - min(df$a, na.rm = TRUE)) / 
+  (max(df$a, na.rm = TRUE) - min(df$a, na.rm = TRUE))
+df$b <- (df$b - min(df$b, na.rm = TRUE)) / 
+  (max(df$b, na.rm = TRUE) - min(df$a, na.rm = TRUE))
+df$c <- (df$c - min(df$c, na.rm = TRUE)) / 
+  (max(df$c, na.rm = TRUE) - min(df$c, na.rm = TRUE))
+df$d <- (df$d - min(df$d, na.rm = TRUE)) / 
+  (max(df$d, na.rm = TRUE) - min(df$d, na.rm = TRUE))
+```
+
+```{r, echo=FALSE}
+decorate("rep1") %>% 
+  flair('max(df$b, na.rm = TRUE) - min(df$a, na.rm = TRUE)',
+        background = "#E3242B", 
+        color = "#FFE4E1")
+```
+
+Note the mistake in the copy and paste - we're using `df$a` for the calculation
+for `df$b`!
+
+
+Let's isolate the main functionality that we are __repeating__.
+
+```{r}
+(df$a - min(df$a, na.rm = TRUE)) / 
+  (max(df$a, na.rm = TRUE) - min(df$a, na.rm = TRUE))
+```
+
+That's all good and well, but to write a function you should generalise the
+functionality as a test first.
+
+```{r}
+x <- df$a
+
+(x - min(x, na.rm = TRUE)) /
+  (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+```
+
+Even better, we're using the `range` when we use `max` and `min`. So let's re-write using that.
+
+```{r}
+rng <- range(x, na.rm=TRUE)
+(x - rng[1]) /
+  (rng[2] - rng[1])
+
+```
+
+Let's pull it all together in a <span style="color: #008080;background-color:#9FDDBA">function</span>.
+
+```{r fun1, include=FALSE}
+rescale01 <- function(x) {
+  # rescales a vector to lie between 0 and 1
+  rng <- range(x, na.rm = TRUE)
+  (x - rng[1]) /(rng[2] - rng[1])
+}
+
+rescale01(c(0,5,10))
+```
+
+```{r, echo=FALSE}
+decorate("fun1") %>% 
+  flair("function", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("{", background = "#cfdad4", 
+        color = "#6d6875") %>% 
+  flair("}", background = "#cfdad4", 
+        color = "#6d6875")
+```
+
+Key steps:
+
+1.  Pick a 
+<span style="color: #008080;background-color:#9FDDBA">__name__</span> for the function. 
+
+1.  List the inputs, or __arguments__, to the function inside 
+<span style="color: #008080;background-color:#9FDDBA">`function`</span>.
+    Example: 
+<span style="color: #008080;background-color:#9FDDBA">`function(x, y, z)`</span> .
+
+1.  Place your code in __body__ of the function, a 
+<span style="color: #008080;background-color:#9FDDBA">`{`</span>  block that immediately follows `function(...)`.
+
+1. Make it work with a small input.
+
+1. Check the function with a range of inputs.
+
+```{r}
+rescale01(c(-10,0,10))
+
+rescale01(c(1,2,3,NA,5))
+```
+
+Simplifying the original calcs:
+
+```{r}
+df$a <- rescale01(df$a)
+df$b <- rescale01(df$b)
+df$c <- rescale01(df$c)
+df$d <- rescale01(df$d)
+```
+
+Now changes can be made in a single place.
+
+```{r}
+x <- c(1:10, Inf)
+rescale01(x)
+```
+
+```{r}
+rescale01 <- function(x){
+  rng <- range(x, na.rm = TRUE, finite = TRUE)
+  (x - rng[1]) /(rng[2] - rng[1])
+}
+
+rescale01(x)
+```
+
+### Intro - Exercises
+
+1.  Why is `TRUE` not a parameter to `rescale01()`? What would happen if
+    `x` contained a single missing value, and `na.rm` was `FALSE`?
+
+    ```{r}
+    rescale01_miss <- function(x){
+      rng <- range(x, na.rm = FALSE)
+      (x - rng[1]) / (rng[2] - rng[1])
+    }
+    rescale01_miss(c(1:5, NA, 10))
+    
+    rescale01_miss <- function(x){
+      rng <- range(x, na.rm = FALSE, finite = TRUE)
+      (x - rng[1]) / (rng[2] - rng[1])
+    }
+    rescale01_miss(c(1:5, NA, 10))
+    
+    ```
+    
+    If any value is NA the range function returns NA as min and max of
+    range. If `finite = TRUE` is set only the NA value returns NA.
+    
+    According to the help page: "If finite is TRUE, the minimum and maximum 
+    of all finite values is computed, i.e., `finite = TRUE` includes 
+    `na.rm = TRUE`."
+    
+
+1.  In the second variant of `rescale01()`, infinite values are left
+    unchanged. Rewrite `rescale01()` so that `-Inf` is mapped to 0, and 
+    `Inf` is mapped to 1.
+    
+    ```{r}
+    rescale01_inf <- function(x){
+      rng <- range(x, na.rm = TRUE, finite = TRUE)
+      x[x == -Inf] <- 0
+      x[x == Inf] <- 1
+      (x - rng[1]) / (rng[2] - rng[1])
+    }
+    
+    rescale01_inf(c(1, Inf, 0, -Inf))
+    ```
+    
+
+1.  Practice turning the following code snippets into functions. Think about 
+    what each function does. What would you call it? How many arguments does it
+    need? Can you rewrite it to be more expressive or less duplicative?
+
+    ```{r, eval = FALSE}
+    mean(is.na(x))
+    
+    x / sum(x, na.rm = TRUE)
+    
+    sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
+    ```
+    
+    `mean(is.na(x))` finds what percentage of the data is NA.
+    
+    ```{r}
+    x <- c(NA, 1:10, NA, 5)
+    mean(is.na(x))
+    
+    mean_na <- function(x){
+      sum(x)/length(x)
+    }
+    mean_na(is.na(x))
+    ```
+    
+    `x / sum(x, na.rm = TRUE)` converts each x to a percentage it contributes 
+    towards 100%, not considering the NAs.
+    
+    ```{r}
+    contrib_to_one <- function(x) {
+      x / sum(x, na.rm = TRUE)
+    }
+
+    contrib_to_one(x)
+    ```
+    
+    `sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)` finds how the deviation
+    as a proportion of the mean. `sd` means standard deviation and 
+    is a measure of the variability in your data. The `mean` is the average
+    of your data.
+    
+    ```{r}
+    deviation <- function(x, na.rm = TRUE) {
+      sd(x, na.rm = na.rm) / mean(x, na.rm = na.rm)
+    }
+    
+    deviation(x)
+    ```
+    
+    
+
+1.  Write your own functions to compute the variance and skewness of a numeric vector.
+    Variance is defined as
+    $$
+    \mathrm{Var}(x) = \frac{1}{n - 1} \sum_{i=1}^n (x_i - \bar{x}) ^2 \text{,}
+    $$
+    where $\bar{x} = (\sum_i^n x_i) / n$ is the sample mean.
+    Skewness is defined as
+    $$
+    \mathrm{Skew}(x) = \frac{\frac{1}{n-2}\left(\sum_{i=1}^n(x_i - \bar x)^3\right)}{\mathrm{Var}(x)^{3/2}} \text{.}
+    $$
+    
+    ```{r}
+    
+    variance <- function(x){
+      # find non na length of vector x
+      n <- sum(!is.na(x))
+      avg <- mean(x, na.rm = TRUE)
+      (1/(n-1))*(sum((x - avg)^2, na.rm=TRUE))
+    }
+    
+    x <- c(1:10)
+    variance(x)
+    var(x, na.rm = TRUE)
+    
+    y <- c(1:5, 1:5)
+    variance(y)
+    var(y)
+    
+    z <- c(1:10, NA)
+    variance(z)
+    var(z, na.rm = TRUE)
+    ```
+    
+    ```{r}
+    skew <- function(x){
+        n <- sum(!is.na(x))
+        avg <- mean(x, na.rm = TRUE) 
+        summation <- sum((x - avg)^3, na.rm = TRUE)
+        variance_val <- (variance(x))^(3/2)
+        ((1/(n-2))*summation)/variance_val
+    }
+    
+    a <- c(1:10, 1000)
+    skew(a)
+    ```
+
+1.  Write `both_na()`, a function that takes two vectors of the same length 
+    and returns the number of positions that have an `NA` in both vectors.
+    
+    ```{r}
+    both_na <- function(x, y){
+      # find where x is NA - is.na(x) - returns a bunch of TRUE, FALSE
+      # find where y is NA - is.na(y) - returns a bunch of TRUE, FALSE
+      # where are they both NA - &
+      # sum where they are both NA 
+      # e.g. (T, F, T) & (T, F, F) == 1; only T in same place once
+      sum(is.na(x) & is.na(y))
+    }
+    
+    x <- c(1:10, NA, 12, NA)
+    y <- c(1:9, 10, NA, 12, 13)
+    both_na(x,y)
+    both_na(c(NA, 2, 4, 6, NA, 10, 12),
+            c(NA, 1, 3, 5, NA, 9, 11))
+    ```
+    
+
+1.  What do the following functions do? Why are they useful even though they
+    are so short?
+    
+    - `is_directory()` tells you whether a given path is a directory.
+    - `is_readable()` tells you whether you have permission to read
+    a file.
+    
+      ```{r}
+      is_directory <- function(x) file.info(x)$isdir
+      is_directory("C:/Personal")
+      is_directory("C:/Work/Learning/how-containers-work.pdf")
+      is_readable <- function(x) file.access(x, 4) == 0
+      is_readable("C:/Personal")
+      is_readable("C:/Work/Learning/how-containers-work.pdf")
+      ```
+
+1.  Read the [complete lyrics](https://en.wikipedia.org/wiki/Little_Bunny_Foo_Foo) 
+    to "Little Bunny Foo Foo". There's a lot of duplication in this song. 
+    Extend the initial piping example to recreate the complete song, and use 
+    functions to reduce the duplication.
+    
+    <pre>
+    Repeat (x3)
+    Little Bunny Foo Foo,
+    Hopping through the forest,
+    Scooping up the field mice,
+    And bopping them on the head.
+
+    (Spoken)
+    Down came the Good Fairy, and she said,
+
+    "Little Bunny Foo Foo,
+    I don't want to see you,
+    Scooping up the field mice
+    And bopping them on the head."
+
+    (Spoken)
+    "I'll give you three (two / one) chance(s),
+    And if you don't behave,
+    I'm gonna turn you into a goon!"
+    END Repeat
+
+    The next day... or That evening... or Later that night...
+    "I gave you three chances,
+    And you didn't behave,
+    And now I'm gonna turn you into a goon. POOF!"
+    
+    "And the moral of the story is: Hare today, goon tomorrow."
+    </pre>
+    
+    ```{r}
+    little_bunny <- function(bunny = ""){
+      str_glue("{bunny}Little Bunny Foo-Foo,\n\n")
+    }
+    
+    hop <- function(bunny, where = "forest"){
+      str_glue("{bunny}Hopping through the {where},\n\n")
+    }
+    
+    scoop <- function(bunny, what = "field mice"){
+      str_glue("{bunny}Scooping up the {what},\n\n")
+    }
+    
+    bop <- function(bunny, where = "head"){
+      str_glue("{bunny}And bopping them on the {where}.\n\n\n")
+    }
+    
+    chances <- function(bunny, num = "three"){
+      if(num == "one") {
+        str_glue("{bunny}I'll give you {num} chance,\n\n")
+      }
+      else {
+        str_glue("{bunny}I'll give you {num} chances,\n\n")
+      }
+    }
+    
+    static_line1 <- function(bunny){
+      str_glue("{bunny}I don't want to see you,\n\n")
+    }
+    
+    static_line2 <- function(bunny){
+      str_glue("{bunny}And if you don't behave,\nI'm gonna turn you into a goon!\n\n\n")
+    }
+    
+    static_line3 <- function(bunny){
+      str_glue("{bunny}Down came the Good Fairy, and she said,\n\n")
+    }
+    
+    
+    foo_foo <- little_bunny()
+    foo_foo %>% 
+      hop(where = "forest") %>% 
+      scoop(what = "field mice") %>% 
+      bop(where = "head") %>% 
+      static_line3() %>% 
+      little_bunny() %>% 
+      static_line1() %>% 
+      scoop(what = "field mice") %>% 
+      bop(where = "head") %>%
+      chances(num = "three") %>% 
+      static_line2() %>%
+      little_bunny() %>% 
+      hop(where = "forest") %>% 
+      scoop(what = "field mice") %>% 
+      bop(where = "head") %>% 
+      static_line3()%>% 
+      little_bunny() %>% 
+      static_line1()%>% 
+      scoop(what = "field mice") %>% 
+      bop(where = "head") %>%
+      chances(num = "two") %>% 
+      static_line2() %>% 
+      little_bunny() %>% 
+      hop(where = "forest") %>% 
+      scoop(what = "field mice") %>% 
+      bop(where = "head") %>% 
+      static_line3()%>% 
+      little_bunny() %>% 
+      static_line1() %>% 
+      scoop(what = "field mice") %>% 
+      bop(where = "head") %>%
+      chances(num = "one") %>% 
+      static_line2() %>%
+      little_bunny() %>% 
+      hop(where = "forest") %>% 
+      scoop(what = "field mice") %>% 
+      bop(where = "head") %>% 
+      static_line3() %>%   
+      str_glue("I gave you three chances,\nAnd you didn't behave,\nAnd now I'm gonna turn you into a goon. POOF!")
+    ```
+
+
+### Human Readable Functions - Exercises
+
+1.  Read the source code for each of the following three functions, puzzle out
+    what they do, and then brainstorm better names.
+    
+    ```{r}
+    f1 <- function(string, prefix) {
+      substr(string, 1, nchar(prefix)) == prefix
+    }
+    f2 <- function(x) {
+      if (length(x) <= 1) return(NULL)
+      x[-length(x)]
+    }
+    f3 <- function(x, y) {
+      rep(y, length.out = length(x))
+    }
+    ```
+    
+    The first function `f1` checks if the substring of string
+    matches the prefix given.
+    
+    ```{r}
+    match_prefix <- function(string, prefix) {
+      substr(string, 1, nchar(prefix)) == prefix
+    }
+    match_prefix("===The quick brown fox", "===")
+    match_prefix("```The quick brown fox", "===")
+    match_prefix(c("the man in the bowler hat",
+                   "that quick brown fox",
+                   "the one and only",
+                   "that crafy ol' fox"),
+                 "the")
+    ```
+    
+    The function removes the last item of vector x.
+    
+    ```{r}
+    remove_last <- function(x) {
+      if (length(x) <= 1) return(NULL)
+      x[-length(x)]
+    }
+    remove_last(c(1:5, 2, 30, 45, NA))
+    remove_last(c(NA, 2, 30, 45, 1:5))
+    ```
+    
+    The function repeats the y vector as many times as the length
+    of vector x.
+    
+    ```{r}
+    rep_len <- function(x, y) {
+      rep(y, length.out = length(x))
+    }
+    rep_len(c(1:10), 1)
+    rep_len(c("a", "b", "abc", "abcd", "efghi"),
+            c("a", "b", "abc"))
+    ```
+    
+1.  Take a function that you've written recently and spend 5 minutes 
+    brainstorming a better name for it and its arguments.
+
+1.  Compare and contrast `rnorm()` and `MASS::mvrnorm()`. How could you make
+    them more consistent? 
+    
+    |rnorm()            |    MASS::mvrnorm() |
+    |:------------------|:-------------------|
+    |univariate normal distribution  |multivariate normal distribution   |
+    |n, mean, sd | n, mu, Sigma |
+    
+    You could make mean / mu and sd / Sigma consistent by choosing one of these
+    names. I would also make all names lower case so I would change Sigma to
+    sigma.
+    
+
+1.  Make a case for why `norm_r()`, `norm_d()` etc would be better than
+    `rnorm()`, `dnorm()`. Make a case for the opposite.
+    
+    - For `norm_r()`, `norm_d()` the fact that you can type `norm` and the
+    autocomplete will give you a list of all `norm_` functions is
+    a win.
+    
+    - For `rnorm()`, `dnorm()` I would say it is more natural to say
+    *random normal distribution* / *density normal distribution* than 
+    "normal random distribution" / "normal density distribution".
+    
+### Conditional execution
+
+An `if` statement allows conditional execution of code.
+
+```{r, eval = FALSE}
+if (condition) {
+  # code executed when condition is TRUE
+} else {
+  # code executed when condition is FALSE
+}
+```
+
+- To get help on `if` you need to surround it in backticks: `` ?`if` ``. 
+- The `condition` must evaluate to either `TRUE` or `FALSE`. You will get a warning / error if it is a vector OR if it's an `NA`.
+- Use `||` (**or**) and `&&` (__and__) to combine multiple logical expressions. These operators are "short-circuiting"
+- __NEVER__ use `|` or `&` in an `if` statement, since these are vectorised
+operations.
+- `==` is also vectorised, which means you may get more than one output!
+  
+  * Check length is 1 already.
+  * Collapse with `any()` or `all()`.
+  * Use the non-vectorised `identical()`, __BUT__ this is really strict and
+  can result in unexpected output given how computers store numbers etc.
+  Use `dplyr::near()` for comparisons.
+  * Use `is.na()` for NA checks.
+
+```{r, error = TRUE}
+if (c(TRUE, FALSE)) {}
+if (NA) {}
+```
+
+```{r}
+identical(0L, 0)
+```
+
+```{r}
+x <- sqrt(2) ^ 2
+x
+x == 2
+x - 2
+```
+
+Multiple if statements are also allowed.
+
+```{r, eval = FALSE}
+if (this) {
+  # do that
+} else if (that) {
+  # do something else
+} else {
+  # 
+}
+```
+
+Another useful technique is the `switch()` function for many `if ... else` constructs.
+
+```{r, warning = TRUE, error = TRUE}
+perform_calc <- function(x, y, op) {
+  switch(op,
+    plus = x + y,
+    minus = x - y,
+    times = x * y,
+    divide = x / y,
+    stop("Unknown op!")
+  )
+}
+perform_calc(c(1,2,3), c(4,5,6), "plus")
+perform_calc(c(1,2,3), c(4,5), "minus")
+perform_calc(c(1,2,3), c(4,5,6), "power")
+```
+
+### Conditions - Exercises
+
+1.  What's the difference between `if` and `ifelse()`? Carefully read the help
+    and construct three examples that illustrate the key differences.
+    
+    `if` tests just one item, so it has to be used in a loop or
+    with `any()` / `all()` if you want to ensure all in a vector
+    meet a condition or any meet a condition.
+    
+    `ifelse` checks each item in the vector.
+    
+    If you read the help [?`ifelse`] it says use `if`/`else` construct for 
+    simple yes/no answers, and use `ifelse` for over a set of values.
+    
+    ```{r ifelse1, warning=TRUE, include=FALSE}
+    x <- c(1:5, 20, 25, 30)
+    
+    if(length(x) > 10){
+      print(length(x))
+      TRUE
+    } else {
+      print(length(x))
+      FALSE
+    }
+    
+    # You can use ifelse but kinda silly to use in this case
+    ifelse(length(x)>10, length(x), "smaller than 10 items in vector")
+    
+    # here is a better use
+    ifelse(x > 5, TRUE, FALSE)
+    
+    # DOES NOT work for if --- notice the warning that only
+    # 1st is used
+    if (x > 5) TRUE else FALSE
+    ```
+    
+    ```{r, echo=FALSE}
+    decorate("ifelse1") %>% 
+      flair('DOES NOT work',
+            background = "#cfdad4", 
+            color = "#6d6875")
+    ```
+    
+1.  Write a greeting function that says "good morning", "good afternoon",
+    or "good evening", depending on the time of day. (Hint: use a time
+    argument that defaults to `lubridate::now()`. That will make it 
+    easier to test your function.)
+    
+    ```{r}
+    greeting <- function(){
+      time <- lubridate::now()
+      hr <- lubridate::hour(time)
+      if(hr >= 0 && hr < 12){
+        "good morning"
+      } else if (hr >= 12 && hr < 18){
+        "good afternoon"
+      } else {
+        "good evening"
+      }
+    }
+    greeting()
+    ```
+    
+1.  Implement a `fizzbuzz` function. It takes a single number as input. If
+    the number is divisible by three, it returns "fizz". If it's divisible by
+    five it returns "buzz". If it's divisible by three and five, it returns
+    "fizzbuzz". Otherwise, it returns the number. Make sure you first write 
+    working code before you create the function.
+    
+    ```{r}
+    fizzbuzz <- function(x){
+      if((x %% 3 == 0) && (x %% 5 == 0)){
+        "fizzbuzz"
+      } else if (x %% 3 == 0) {
+        "fizz"
+      } else if (x %% 5 == 0){
+        "buzz"
+      } else {
+        x
+      }
+    }
+    fizzbuzz(5)
+    fizzbuzz(9)
+    fizzbuzz(30)
+    fizzbuzz(10)
+    ```
+    
+1.  How could you use `cut()` to simplify this set of nested if-else statements?
+
+    ```{r, warning = TRUE}
+    temp <- 31
+    if (temp <= 0) {
+      "freezing"
+    } else if (temp <= 10) {
+      "cold"
+    } else if (temp <= 20) {
+      "cool"
+    } else if (temp <= 30) {
+      "warm"
+    } else {
+      "hot"
+    }
+    
+    cut(temp, breaks = 10*(-3:10), 
+        labels = c(rep("freezing", 3),
+                   "cold",
+                   "cool",
+                   "warm",
+                   rep("hot", 7)))
+    
+    table(cut(temp, breaks = 10*(-3:10), 
+        labels = c(rep("freezing", 3),
+                   "cold",
+                   "cool",
+                   "warm",
+                   rep("hot", 7))))
+    ```
+    
+    How would you change the call to `cut()` if I'd used `<` instead of `<=`?
+    What is the other chief advantage of `cut()` for this problem? (Hint:
+    what happens if you have many values in `temp`?)
+    
+    You would use `right = FALSE`. `cut` allows vectors of values whereas
+    `if else` constructs do not.
+    
+    __NOTE__: If you look at [jrnold's solutions](https://jrnold.github.io/r4ds-exercise-solutions/functions.html) 
+    you note that he uses `-Inf` and `Inf` for the breaks. This is much better
+    than my hacky solution above that contains boundaries at the bottom and
+    top.
+
+1.  What happens if you use `switch()` with numeric values?
+
+    Read more [here](https://www.datamentor.io/r-programming/switch-function/).
+    
+    `switch` evaluates the `EXPR` against the list item number. Below we have 3
+    and this evaluates to list item == 3, hence 6.
+    
+    ```{r}
+    x <-  3
+    switch(x, 
+      "2",
+      "4",
+      "6",
+      "8"
+    )
+    ```
+
+
+1.  What does this `switch()` call do? What happens if `x` is "e"?
+
+    If x is a or b, it returns "ab"; if x is c or d it returns cd. If x
+    is e, no match is found and nothing is returned.
+    
+    The docs say to have an unnamed value as default after the named
+    values for no match ones. This can be done as per the last way - note the
+    <span style="color: #6d6875;background-color:#cfdad4">test</span>.
+
+    ```{r, eval = FALSE}
+    x <-  "c"
+    switch(x, 
+      a = ,
+      b = "ab",
+      c = ,
+      d = "cd"
+    )
+    
+    x <- "e"
+    switch(x, 
+      a = ,
+      b = "ab",
+      c = ,
+      d = "cd"
+    )
+    
+    x <- "e"
+    switch(x, 
+      a = ,
+      b = "ab",
+      c = ,
+      d = "cd"
+      "test"
+    )
+    ```
+    
+    Experiment, then carefully read the documentation. 
+
+#### Default Arguments
+
+The `data` to apply a function to should come first, followed by the 
+arguments. Arguments should have default values as far as possible.
+
+```{r def1}
+# Compute confidence interval around mean using normal approximation
+mean_ci <- function(x, conf = 0.95) {
+  se <- sd(x) / sqrt(length(x))
+  alpha <- 1 - conf
+  mean(x) + se * qnorm(c(alpha / 2, 1 - alpha / 2))
+}
+x <- runif(100)
+mean_ci(x)
+mean_ci(x, conf = 0.99)
+```
+
+```{r, echo=FALSE}
+decorate("def1") %>% 
+  flair("conf = 0.95", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+ It's good practice to check important preconditions, and throw an error (with `stop()`), if they are not met.
+
+```{r, error = TRUE}
+wt_mean <- function(x, w) {
+  if (length(x) != length(w)) {
+    stop("`x` and `w` must be the same length", call. = FALSE)
+  }
+  sum(w * x) / sum(w)
+}
+wt_mean(1:6, 1:3)
+```
+
+A useful function is the built-in `stopifnot()` which checks that each 
+argument is `TRUE`, and produces a generic error message if not.
+
+```{r, error = TRUE}
+wt_mean <- function(x, w, na.rm = FALSE) {
+  # I want na.rm to be logical: is.logical(na.rm)
+  # I want length na.rm to be 1: length(na.rm) == 1
+  # If it is NOT that STOP!
+  stopifnot(is.logical(na.rm), length(na.rm) == 1)
+  stopifnot(length(x) == length(w))
+  
+  if (na.rm) {
+    miss <- is.na(x) | is.na(w)
+    x <- x[!miss]
+    w <- w[!miss]
+  }
+  sum(w * x) / sum(w)
+}
+wt_mean(1:6, 6:1, na.rm = "foo")
+```
+
+__NOTE__: When using `stopifnot()` you assert what should be true rather than checking for what might be wrong.
+
+#### Dot-dot-dot (...)
+
+Many functions in R take an arbitrary number of inputs by using a special argument: `...` (pronounced dot-dot-dot). You can forward `...` to other functions.
+
+```{r}
+sum(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+stringr::str_c("a", "b", "c", "d", "e", "f")
+```
+
+```{r}
+commas <- function(...) stringr::str_c(..., collapse = ", ")
+commas(letters[1:10])
+rule <- function(..., pad = "-") {
+  title <- paste0(...)
+  # getOption("width") tells you how many chars can be printed
+  # nchar(title) tells you how long title is
+  width <- getOption("width") - nchar(title) - 5
+  cat(title, " ", stringr::str_dup(pad, width), "\n", sep = "")
+}
+rule("Important output")
+```
+
+```{r wrong, include = FALSE}
+x <- c(1, 2)
+sum(x, na.mr = TRUE)
+```
+
+```{r, echo=FALSE}
+decorate("wrong") %>% 
+  flair("na.mr", background = "#ffa578", 
+        color = "#FFE4E1")  
+```
+
+Notice the result above is incorrect as well, since it sums `1 + 2 + TRUE` = 4,
+but it should be 3!
+
+
+### Func Arguments - Exercises
+
+1.  What does `commas(letters, collapse = "-")` do? Why?
+
+    It throws an error. The reason is that both `letters` and `collapse` are
+    passed into commas in the `...` argument. 
+    
+    ```{r, error = TRUE}
+    commas(letters, collapse = "-")
+    ```
+
+1.  It'd be nice if you could supply multiple characters to the `pad` argument, 
+    e.g. `rule("Title", pad = "-+")`. Why doesn't this currently work? How 
+    could you fix it?
+
+    ```{r}
+    rule <- function(..., pad = "-") {
+      title <- paste0(...)
+      # getOption("width") tells you how many chars can be printed
+      # nchar(title) tells you how long title is
+      width <- getOption("width") - nchar(title) - 5
+      cat(title, " ", stringr::str_dup(pad, width), "\n", sep = "")
+    }
+    rule("Important output", pad = "-+")
+    ```    
+
+    The width of the resulting string is too long this way. 
+    
+    ```{r rule, include = FALSE}
+    rule <- function(..., pad = "-") {
+      title <- paste0(...)
+      # getOption("width") tells you how many chars can be printed
+      # nchar(title) tells you how long title is
+      width <- getOption("width") - nchar(title) - 5
+      cat(title, " ", stringr::str_dup(pad, width/nchar(pad)), "\n", sep = "")
+    }
+    rule("Important output", pad = "-+")
+    ``` 
+    
+    ```{r, echo=FALSE}
+    decorate("rule") %>% 
+      flair("nchar(pad)", background = "#9FDDBA", 
+            color = "#008080")
+    ```
+    
+1.  What does the `trim` argument to `mean()` do? When might you use it?
+
+    The `trim` argument removes / trims a certain percentage of the observations
+    from each side. In the help page if we consider the examples, notice that
+    the 0 and 50 are trimmed. So the values are sorted, and then the trimming
+    occurs - this makes sense because we don't want to just arbitrarily chop
+    data, we want to remove *outliers*.
+    
+    In the second example we sort 5, 10, 11, ..., 19, 20. Then 5 and 20 trimmed.
+    
+    ```{r}
+    x <- c(0:10, 50)
+    (xm <- mean(x))
+    c(xm, mean(x, trim = 0.10))
+    mean(c(1:10))
+    mean(c(1:10)) == mean(x, trim = 0.10)
+    
+    x <- c(10:20, 5)
+    (xm <- mean(x))
+    c(xm, mean(x, trim = 0.10))
+    mean(c(10:19))
+    mean(c(10:19)) == mean(x, trim = 0.10)
+    ```
+
+1.  The default value for the `method` argument to `cor()` is 
+    `c("pearson", "kendall", "spearman")`. What does that mean? What 
+    value is used by default?
+    
+    The `cor()` function can use any one of those values, by default the first 
+    is used which is pearson.
+    
+
+
+
+
+
+
+
+
