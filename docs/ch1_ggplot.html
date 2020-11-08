@@ -414,7 +414,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-11-07
+<strong>Last updated:</strong> 2020-11-08
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -505,16 +505,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree9440e66d5344a6f84768caf6333a1bb8e3a83232targetblank9440e66a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/9440e66d5344a6f84768caf6333a1bb8e3a83232" target="_blank">9440e66</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreeb67f0a772355dbf4d20909761be4300904e84662targetblankb67f0a7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/b67f0a772355dbf4d20909761be4300904e84662" target="_blank">b67f0a7</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree9440e66d5344a6f84768caf6333a1bb8e3a83232targetblank9440e66a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreeb67f0a772355dbf4d20909761be4300904e84662targetblankb67f0a7a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/9440e66d5344a6f84768caf6333a1bb8e3a83232" target="_blank">9440e66</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/b67f0a772355dbf4d20909761be4300904e84662" target="_blank">b67f0a7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -564,6 +564,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/b67f0a772355dbf4d20909761be4300904e84662/analysis/ch1_ggplot.Rmd" target="_blank">b67f0a7</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-08
+</td>
+<td>
+added ch13
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/ecd1d8ed8bb055d0acaf502bb58ca1845a946c31/docs/ch1_ggplot.html" target="_blank">ecd1d8e</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1441,13 +1475,13 @@ geom_point()    </code></pre>
 <h2>Aesthetics</h2>
 <p>You can give extra information about your dataset by mapping data to aesthetics like <code>size</code>, <code>colour</code>, <code>shape</code>.</p>
 <pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ, y = hwy, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>colour = class</span>))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-74-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-76-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>When you put a feature against an aesthetic <code>ggplot</code> will assign a unique <code>level</code> (here <span style="color: #008080;background-color:#9FDDBA">colour</span> to each <span style="color: #008080;background-color:#9FDDBA">class</span> of the feature) -&gt; this process is called <code>scaling</code>.</p>
 <pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(aes(x = displ, y = hwy,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#800000;color:#FFE4E1'>size = class</span>))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-75-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-77-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Mapping a unordered variable like <code>class</code> to an <span style="color: #FFE4E1;background-color:#800000">ordered aesthetic</span> like <code>size</code> is not a good idea, and we get a <span style="color: #FFE4E1;background-color:#800000">warning</span> here.</p>
 <pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(aes(x = displ, y = hwy,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>alpha = class</span>))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-76-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-78-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><span style="color: #008080;background-color:#9FDDBA"><code>alpha</code></span> is another aesthetic that we can use.</p>
 <pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(aes(x = displ, y = hwy,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#800000;color:#FFE4E1'>shape = class</span>))</code></code></pre>
 <pre><code>
@@ -1458,7 +1492,7 @@ specifying shapes manually if you must have them.
 <pre><code>
 Warning: Removed 62 rows containing missing values (geom_point).
 </code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-77-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-79-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><code>ggplot</code> only uses <strong>6</strong> <span style="color: #FFE4E1;background-color:#800000"><code>shape</code></span>s at a time, so we’re missing <code>suv</code>! When mapping to aesthetics think carefully about which aesthetic makes sense.</p>
 <p>If you look at the <code>colour = class</code> plot vs the <code>shape = class</code> plot you may well think - it looks like previously labelled <code>suv</code> is now being considered to be <code>pickup</code>!? There are many points and the points get plotted on top of each other - if you look near <code>displ = 5 and hwy = 12</code> notice that there is an <code>pickup</code> point there … previously there was an <code>suv</code> point there. Let’s jitter the data so that the points lie a little away from each other to show that there’s not any issue with <code>ggplot</code>, instead the data lying on top of each other shows the last <code>class</code>.</p>
 <pre class="r"><code>ggplot(data = mpg) +
@@ -1479,18 +1513,18 @@ Warning: Removed 62 rows containing missing values (geom_point).
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-9-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Occassionally you may want to change all the points sizes uniformly (irrespective of any other data feature) - in this case you may put the aesthetic on the outside of the <code>aes()</code>.</p>
 <pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(aes(x = displ, y = hwy),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#e5989b;color:#6d6875'>colour = "blue"</span>)</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-78-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-80-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(aes(x = displ, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = hwy),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#e5989b;color:#6d6875'>size = 4</span>)</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-79-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-81-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="exercises-1" class="section level3">
 <h3>Exercises</h3>
 <div id="exercise-1" class="section level4">
 <h4>Exercise 1</h4>
 <p>What’s gone wrong with this code? Why are the points not blue?</p>
 <pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ, y = hwy, <span style='background-color:#800000;color:#FFE4E1'>color = "blue"</span>))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-80-1.png" width="672" style="display: block; margin: auto;" /> The <span style="color:#FFE4E1;background-color:#800000"><code>color</code> </span> attribute maps to a static colour <code>blue</code> and yet appears within <code>aes()</code>. To correct, put <code>colour = 'blue'</code> outside the <code>aes()</code></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-82-1.png" width="672" style="display: block; margin: auto;" /> The <span style="color:#FFE4E1;background-color:#800000"><code>color</code> </span> attribute maps to a static colour <code>blue</code> and yet appears within <code>aes()</code>. To correct, put <code>colour = 'blue'</code> outside the <code>aes()</code></p>
 <pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = hwy), <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#e5989b;color:#6d6875'>color = "blue"</span>)</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-81-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-83-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><br><br></p>
 </div>
 <div id="exercise-2" class="section level4">
@@ -1530,7 +1564,7 @@ $ class        &lt;chr&gt; &quot;compact&quot;, &quot;compact&quot;, &quot;compa
 <h4>Exercise 4</h4>
 <p>What happens if you map the same variable to multiple aesthetics?</p>
 <pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(aes(x = displ, y = hwy,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>colour = class</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>size = class</span>))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-82-1.png" width="672" style="display: block; margin: auto;" /> Here we have both <span style="color:#008080;background-color:#9FDDBA"><code>colour</code> and <code>size</code></span> mapped to <code>class</code>. The plot offers no new information with the second aesthetic so I’d consider it a poor plot. You should use aesthetics mapped to different features in your data to meet with the <strong>Axiom</strong> that <em>‘The greatest value of a picture is when it forces us to notice what we never expected to see. –John Tukey’</em> as mentioned in the beginning of the <strong>Aesthetic Mappings</strong> section! <br><br></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-84-1.png" width="672" style="display: block; margin: auto;" /> Here we have both <span style="color:#008080;background-color:#9FDDBA"><code>colour</code> and <code>size</code></span> mapped to <code>class</code>. The plot offers no new information with the second aesthetic so I’d consider it a poor plot. You should use aesthetics mapped to different features in your data to meet with the <strong>Axiom</strong> that <em>‘The greatest value of a picture is when it forces us to notice what we never expected to see. –John Tukey’</em> as mentioned in the beginning of the <strong>Aesthetic Mappings</strong> section! <br><br></p>
 </div>
 <div id="exercise-5" class="section level4">
 <h4>Exercise 5</h4>
@@ -1554,7 +1588,7 @@ ggplot(mtcars, aes(wt, mpg)) +
 <h4>Exercise 6</h4>
 <p>What happens if you map an aesthetic to something other than a variable name, like <code>aes(colour = displ &lt; 5)</code>? Note, you’ll also need to specify x and y.</p>
 <pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;geom_point(mapping = <br>&nbsp;&nbsp;&nbsp;&nbsp;aes(x = displ, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = hwy, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>colour =</span> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>(displ</span></code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-83-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-85-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Points are split according to the criteria <span style="color: #008080;background-color:#9FDDBA"><code>displ &lt; 5</code></span> and are coloured differently depending on what value they have for displacement. <br><br></p>
 </div>
 </div>
@@ -1574,16 +1608,16 @@ ggplot(mtcars, aes(wt, mpg)) +
 </ul></li>
 </ul>
 <pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = hwy)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>facet_wrap(~ class, nrow = 2)</span></code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-84-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-86-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = hwy)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>facet_grid(drv ~ class)</span></code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-85-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-87-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="exercises-2" class="section level3">
 <h3>Exercises</h3>
 <div id="facets-exercise-1" class="section level4">
 <h4>Facets: Exercise 1</h4>
 <p>What happens if you facet on a continuous variable?</p>
 <pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_point(aes(x = displ,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = hwy)) +<br>&nbsp;&nbsp;<span style='background-color:#800000;color:#FFE4E1'>facet_wrap(~ cty)</span></code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-86-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-88-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The plot is created but it doesn’t make sense to split our data by a continuous variable. <br><br></p>
 </div>
 <div id="facets-exercise-2" class="section level4">
@@ -1599,10 +1633,10 @@ ggplot(mtcars, aes(wt, mpg)) +
 <h4>Facets: Exercise 3</h4>
 <p>What plots does the following code make? What does . do?</p>
 <pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ, y = hwy)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>facet_grid(drv ~ .)</span></code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-87-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-89-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The <span style="color: #008080;background-color:#9FDDBA"><code>facet_grid (drv ~ .)</code></span> facets the <code>drv</code> categories into rows. It says facet this plot by <code>drv</code> as row panels but I don’t want anything as column panels (hence the <code>.</code>).</p>
 <pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;geom_point(mapping = aes(x = displ, y = hwy)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>facet_grid(. ~ cyl)</span></code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-88-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-90-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The <span style="color: #008080;background-color:#9FDDBA"><code>facet_grid(. ~ cyl)</code></span> facets the <code>cyl</code> categories into columns. It says facet this plot by <code>cyl</code> as column panels but I don’t want anything as row panels (hence the <code>.</code>).</p>
 </div>
 <div id="facets-exercise-4" class="section level4">
@@ -1643,22 +1677,22 @@ ggplot(mtcars, aes(wt, mpg)) +
 <h2>Geometric Objects</h2>
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-25-1.png" width="50%" /><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-25-2.png" width="50%" /></p>
 <pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_point</span>(mapping = aes(x = displ, y = hwy))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-89-1.png" width="50%" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-91-1.png" width="50%" /></p>
 <pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_smooth</span>(mapping = aes(x = displ, y = hwy))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-89-2.png" width="50%" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-91-2.png" width="50%" /></p>
 <p>The above plots are made using the same data, but the <span style="color: #008080;background-color:#9FDDBA"><code>geoms</code></span> are different. To change the plot type i.e. <code>bar</code>, <code>boxplot</code>, <code>line</code> etc. you just <span style="color: #008080;background-color:#9FDDBA">change the <code>geom</code> you add to <code>ggplot</code>.</span> The <code>aesthetics</code> that work with each <code>geom</code> is different however. E.g. you may set the <span style="color: #008080;background-color:#9FDDBA"><code>linetype</code></span> of a line, but you <strong>can’t</strong> change the <span style="color: #FFE4E1;background-color:#800000"><code>shape</code> of a line.</span></p>
 <pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_line(aes(x = displ, y = hwy, <span style='background-color:#9FDDBA;color:#008080'>linetype = drv</span>))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-90-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_smooth(aes(x = displ, y = hwy, <span style='background-color:#9FDDBA;color:#008080'>linetype = drv</span>))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-91-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_point(mapping = aes(x = displ, y = hwy, colour = drv))</span> +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv, colour = drv))</span></code></code></pre>
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-92-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;geom_smooth(aes(x = displ, y = hwy, <span style='background-color:#9FDDBA;color:#008080'>linetype = drv</span>))</code></code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-93-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(data = mpg) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_point(mapping = aes(x = displ, y = hwy, colour = drv))</span> +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv, colour = drv))</span></code></code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-94-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We are also able to add more than <span style="color: #008080;background-color:#9FDDBA">one geom</span> on a plot. In the above we show both the <span style="color: #008080;background-color:#9FDDBA">raw data points</span> coloured by the drive type - e.g. 4 wheel, rear drive or front wheel, as well as each drive types <span style="color: #008080;background-color:#9FDDBA">smoothing line</span>. But the downside to the above is that I had to specify the <code>mapping</code> twice with many repeated elements. To avoid this <code>ggplot</code> provides a handy alternate - you may set the <code>mapping</code> in the <code>ggplot()</code> call itself - the <code>mapping</code> is treated as <strong>global</strong> to all subsequent <code>geoms</code> unless you specifically override these.</p>
 <pre><code class='language-r'><code>ggplot(data = mpg, <span style='background-color:#9FDDBA;color:#008080'>mapping = aes(x = displ, y = hwy, colour = drv)</span>) +<br>&nbsp;&nbsp;geom_point() +<br>&nbsp;&nbsp;geom_smooth(mapping = aes(linetype = drv))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-93-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-95-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Also in the above you may have noticed that <span style="color: #008080;background-color:#9FDDBA"><code>geom_smooth()</code></span> included it’s own mapping. This basically says <em>‘Hey, take all the attributes as per the ggplot mapping BUT replace these components (if it exists) as described in this geom’.</em></p>
 <pre><code class='language-r'><code>ggplot(data = mpg, <span style='background-color:#9FDDBA;color:#008080'>mapping = aes(x = displ, y = hwy)</span>) +<br>&nbsp;&nbsp;geom_point(<span style='background-color:#9FDDBA;color:#008080'>mapping = aes(colour = class)</span>) +<br>&nbsp;&nbsp;geom_smooth()</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-94-1.png" width="672" style="display: block; margin: auto;" /> For example here when it gets to the <span style="color: #008080;background-color:#9FDDBA"><strong>geom_point(mapping = aes(colour = class))</strong></span> line it asks:</p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-96-1.png" width="672" style="display: block; margin: auto;" /> For example here when it gets to the <span style="color: #008080;background-color:#9FDDBA"><strong>geom_point(mapping = aes(colour = class))</strong></span> line it asks:</p>
 <ol style="list-style-type: decimal">
 <li>Does this mapping specify a new <code>x</code>? It doesn’t, so <code>x = displ</code> is set, as per the <code>ggplot()</code> <code>mapping()</code>.</li>
 <li>Does this mapping specify a new <code>y</code>? It doesn’t, so <code>y = hwy</code> is set, as per the <code>ggplot()</code> <code>mapping()</code>.</li>
@@ -1666,7 +1700,7 @@ ggplot(mtcars, aes(wt, mpg)) +
 </ol>
 <p>You may also <strong>even</strong> change the <strong>data</strong> for each layer! Here the <code>smoothing</code> function is included but for a subset of the data.</p>
 <pre><code class='language-r'><code>ggplot(data = mpg, aes(x = displ, y = hwy)) +<br>&nbsp;&nbsp;geom_point(mapping = aes(colour = class)) +<br>&nbsp;&nbsp;geom_smooth(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>data = filter(mpg, class == "subcompact")</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;se = FALSE # remove the error bands that display around the line<br>&nbsp;&nbsp;)</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-95-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-97-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="exercises-3" class="section level3">
 <h3>Exercises</h3>
 <ol style="list-style-type: decimal">
@@ -1830,18 +1864,18 @@ plt1_int$data[[1]]</code></pre>
 plt2_int &lt;- ggplot_build(plt2)
 as_tibble(plt2_int$data[[1]])</code></pre>
 <pre><code># A tibble: 35 x 16
-   fill      y count  prop     x flipped_aes PANEL group  ymin  ymax  xmin  xmax
-   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;lgl&gt;       &lt;fct&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 #440~     7   163     1     1 FALSE       1         1     6     7  0.55  1.45
- 2 #443~     6   224     1     1 FALSE       1         2     5     6  0.55  1.45
- 3 #316~     5   312     1     1 FALSE       1         3     4     5  0.55  1.45
- 4 #219~     4   314     1     1 FALSE       1         4     3     4  0.55  1.45
- 5 #35B~     3   303     1     1 FALSE       1         5     2     3  0.55  1.45
- 6 #8FD~     2   175     1     1 FALSE       1         6     1     2  0.55  1.45
- 7 #FDE~     1   119     1     1 FALSE       1         7     0     1  0.55  1.45
- 8 #440~     7   662     1     2 FALSE       1         8     6     7  1.55  2.45
- 9 #443~     6   933     1     2 FALSE       1         9     5     6  1.55  2.45
-10 #316~     5   909     1     2 FALSE       1        10     4     5  1.55  2.45
+   fill      y count  prop x     flipped_aes PANEL group  ymin  ymax xmin  xmax 
+   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;mpp&gt; &lt;lgl&gt;       &lt;fct&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;mpp&gt; &lt;mpp&gt;
+ 1 #440~     7   163     1 1     FALSE       1         1     6     7 0.55  1.45 
+ 2 #443~     6   224     1 1     FALSE       1         2     5     6 0.55  1.45 
+ 3 #316~     5   312     1 1     FALSE       1         3     4     5 0.55  1.45 
+ 4 #219~     4   314     1 1     FALSE       1         4     3     4 0.55  1.45 
+ 5 #35B~     3   303     1 1     FALSE       1         5     2     3 0.55  1.45 
+ 6 #8FD~     2   175     1 1     FALSE       1         6     1     2 0.55  1.45 
+ 7 #FDE~     1   119     1 1     FALSE       1         7     0     1 0.55  1.45 
+ 8 #440~     7   662     1 2     FALSE       1         8     6     7 1.55  2.45 
+ 9 #443~     6   933     1 2     FALSE       1         9     5     6 1.55  2.45 
+10 #316~     5   909     1 2     FALSE       1        10     4     5 1.55  2.45 
 # ... with 25 more rows, and 4 more variables: colour &lt;lgl&gt;, size &lt;dbl&gt;,
 #   linetype &lt;dbl&gt;, alpha &lt;lgl&gt;</code></pre>
 <pre class="r"><code>plt2</code></pre>
@@ -1881,7 +1915,7 @@ ggplot(data = diamonds) +
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-53-1.png" width="50%" /><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-53-2.png" width="50%" /></p>
 <p>That’s not really useful. The power of using the <span style="color: #008080;background-color:#9FDDBA"><code>fill</code></span> aesthetic is when we fill the bar with <span style="color: #008080;background-color:#9FDDBA">another variable!</span></p>
 <pre><code class='language-r'><code>ggplot(data = diamonds) + <br>&nbsp;&nbsp;geom_bar(mapping = aes(x = cut, <span style='background-color:#9FDDBA;color:#008080'>fill = clarity</span>))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-96-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-98-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The <code>position</code> argument does the stacking (the default). You can change this by using:</p>
 <ul>
 <li>identity</li>
@@ -1893,21 +1927,21 @@ ggplot(data = diamonds) +
 <p>Places the object exactly where it falls on the graph. Bars overlap in this case which is not too useful. We can see the overlap by setting <span style="color: #008080;background-color:#9FDDBA"><code>alpha = some_small_value</code></span> or <span style="color: #008080;background-color:#9FDDBA"><code>fill = NA</code></span>.</p>
 <p><em>Useful for 2d geoms like points where it’s the default.</em></p>
 <pre><code class='language-r'><code>ggplot(data = diamonds) + <br>&nbsp;&nbsp;geom_bar(mapping = aes(x = cut, fill = clarity),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>alpha = 1/5, position = 'identity'</span>)</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-97-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-99-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code class='language-r'><code>ggplot(data = diamonds) + <br>&nbsp;&nbsp;geom_bar(mapping = aes(x = cut, colour = clarity),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>fill = NA, position = 'identity'</span>)</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-98-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-100-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="position-fill" class="section level4">
 <h4>position = ‘fill’</h4>
 <p>Similar to stacking but it makes all bars the same height, and is thus good for comparisons.</p>
 <pre><code class='language-r'><code>ggplot(data = diamonds) + <br>&nbsp;&nbsp;geom_bar(mapping = aes(x = cut, fill = clarity),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>position = 'fill'</span>)</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-99-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-101-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="position-dodge" class="section level4">
 <h4>position = ‘dodge’</h4>
 <p>Instead of stacked bars each individual fill variable is plotted in its own bar - i.e. objects are placed alongside each other.</p>
 <pre><code class='language-r'><code>ggplot(data = diamonds) + <br>&nbsp;&nbsp;geom_bar(mapping = aes(x = cut, fill = clarity),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>position = 'dodge'</span>)</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-100-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-102-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="position-arguments---scatterplot" class="section level2">
@@ -1915,11 +1949,11 @@ ggplot(data = diamonds) +
 <p>Remember that points have a default position of identity - i.e. plot it where it falls. When there are many points though this gets hidden as points are plotted on top of each other and we see this as a single point when in fact there may be multiple points that fall in that exact x, y spot.</p>
 <p>Enter <span style="color: #008080;background-color:#9FDDBA"><code>position = 'jitter'</code></span> which provides a slight displacement of a point so that the viewer can see the individual points. You can also get this sometimes with setting <code>alpha</code> if the points are concentrated in some pockets.</p>
 <pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_point</span>(mapping = aes(x = displ, y = hwy))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-101-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_point</span>(mapping = aes(x = displ, y = hwy),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>position = 'jitter'</span>)</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-102-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_point</span>(mapping = aes(x = displ, y = hwy),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>alpha = 0.2</span>)</code></code></pre>
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-103-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_point</span>(mapping = aes(x = displ, y = hwy),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>position = 'jitter'</span>)</code></code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-104-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(data = mpg) + <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_point</span>(mapping = aes(x = displ, y = hwy),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>alpha = 0.2</span>)</code></code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-105-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="exercises-5" class="section level3">
 <h3>Exercises</h3>
 <ol>
@@ -1929,7 +1963,7 @@ ggplot(data = diamonds) +
   geom_point()</code></pre>
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-62-1.png" width="672" style="display: block; margin: auto;" /> It is overplotting: where points fall in the same x, y spot, or close enough. We can try jittering the points.</p>
 <pre><code class='language-r'><code>ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_jitter()</span></code></code></pre>
-<img src="figure/ch1_ggplot.Rmd/unnamed-chunk-104-1.png" width="672" style="display: block; margin: auto;" />
+<img src="figure/ch1_ggplot.Rmd/unnamed-chunk-106-1.png" width="672" style="display: block; margin: auto;" />
 </li>
 <li>
 What parameters to <code>geom_jitter()</code> control the amount of jittering? <br> <code>width</code> and <code>height</code> tell ggplot how much of jitter in the horizontal and vertical position should be added.
@@ -1937,20 +1971,20 @@ What parameters to <code>geom_jitter()</code> control the amount of jittering? <
 <li>
 <p>Compare and contrast <code>geom_jitter()</code> with <code>geom_count()</code>.<br> <code>geom_count()</code> counts the number of observations at each location and adds the count at the position.<br> <code>geom_jitter()</code> adds some random noise to each point so that we can see the individual points better but the points don’t actually fall at that location.</p>
 <pre><code class='language-r'><code>ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_jitter()</span></code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-105-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-107-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code class='language-r'><code>ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + <br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_count()</span></code></code></pre>
-<img src="figure/ch1_ggplot.Rmd/unnamed-chunk-106-1.png" width="672" style="display: block; margin: auto;" />
+<img src="figure/ch1_ggplot.Rmd/unnamed-chunk-108-1.png" width="672" style="display: block; margin: auto;" />
 </li>
 <li>
 <p>What’s the default position adjustment for <code>geom_boxplot()</code>? Create a visualisation of the <code>mpg</code> dataset that demonstrates it. <br></p>
 <p><code>position = "dodge2"</code><br />
 Dodging usually introduces adjustments along the horizontal axis. This position allows vertical adjustments too for boxplots.</p>
 <pre><code class='language-r'><code># examples from geom_boxplot help page<br>ggplot(mpg, aes(hwy, manufacturer)) + <span style='background-color:#9FDDBA;color:#008080'>geom_boxplot()</span></code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-107-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-109-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code class='language-r'><code>p <- ggplot(mpg, aes(hwy, class))<br>p + <span style='background-color:#9FDDBA;color:#008080'>geom_boxplot()</span></code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-107-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-109-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code class='language-r'><code># Boxplots are automatically dodged when any aesthetic is a factor<br>p + geom_boxplot(aes(colour = drv))</code></code></pre>
-<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-107-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-109-3.png" width="672" style="display: block; margin: auto;" /></p>
 </li>
 </ol>
 </div>
@@ -2020,6 +2054,20 @@ bar + coord_flip()</code></pre>
   coord_fixed()</code></pre>
 <p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-73-1.png" width="50%" style="display: block; margin: auto;" /> The <code>geom_abline()</code> adds a 45 degree line to the plot. The <code>coord_fixed()</code> with no arguments sets the ratio between y and x to 1. This means that the y:x representation is 1:1.</p></li>
 </ol>
+</div>
+<div id="setting-vs.-mapping-from-primers" class="section level3">
+<h3>Setting vs. Mapping (from Primers)</h3>
+<p>Setting works for every aesthetic in ggplot2. If you want to manually set the aesthetic to a value in the visual space, set the aesthetic outside of aes().</p>
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy), 
+             color = &quot;blue&quot;, shape = 3, alpha = 0.5)</code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-74-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>If you want to map the aesthetic to a variable in the data space, map the aesthetic inside aes().</p>
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, 
+                           color = class, shape = fl, alpha = displ))</code></pre>
+<p><img src="figure/ch1_ggplot.Rmd/unnamed-chunk-75-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Putting an aesthetic in the wrong location is one of the most common graphing errors. Sometimes it helps to think of legends. If you will need a legend to understand what the color/shape/etc. means, then you should probably put the aesthetic inside <code>aes()</code> — ggplot2 will build a legend for every aesthetic mapped here. If the aesthetic has no meaning and is just… well, aesthetic, then set it outside of <code>aes()</code>."</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -2050,27 +2098,28 @@ other attached packages:
  [9] forcats_0.5.0              stringr_1.4.0             
 [11] dplyr_1.0.0                purrr_0.3.4               
 [13] readr_1.3.1                tidyr_1.1.0               
-[15] tibble_3.0.3               ggplot2_3.3.0             
+[15] tibble_3.0.3               ggplot2_3.3.2             
 [17] tidyverse_1.3.0            workflowr_1.6.2           
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.2        maps_3.3.0        jsonlite_1.7.0    viridisLite_0.3.0
+ [1] httr_1.4.2        maps_3.3.0        viridisLite_0.3.0 jsonlite_1.7.0   
  [5] splines_3.6.3     modelr_0.1.6      assertthat_0.2.1  cellranger_1.1.0 
  [9] yaml_2.2.1        pillar_1.4.6      backports_1.1.6   lattice_0.20-38  
-[13] glue_1.4.1        quadprog_1.5-8    digest_0.6.25     promises_1.1.0   
+[13] glue_1.4.2        quadprog_1.5-8    digest_0.6.27     promises_1.1.0   
 [17] rvest_0.3.5       colorspace_1.4-1  htmltools_0.5.0   httpuv_1.5.2     
 [21] Matrix_1.2-18     pkgconfig_2.0.3   broom_0.5.6       haven_2.2.0      
 [25] scales_1.1.0      whisker_0.4       later_1.0.0       git2r_0.26.1     
 [29] mgcv_1.8-31       generics_0.0.2    farver_2.0.3      ellipsis_0.3.1   
-[33] withr_2.2.0       cli_2.0.2         magrittr_1.5      crayon_1.3.4     
-[37] readxl_1.3.1      evaluate_0.14     fs_1.4.1          fansi_0.4.1      
-[41] nlme_3.1-144      xml2_1.3.2        tools_3.6.3       hms_0.5.3        
-[45] lifecycle_0.2.0   munsell_0.5.0     reprex_0.3.0      compiler_3.6.3   
-[49] rlang_0.4.7       grid_3.6.3        rstudioapi_0.11   labeling_0.3     
-[53] rmarkdown_2.4     gtable_0.3.0      DBI_1.1.0         curl_4.3         
-[57] R6_2.4.1          knitr_1.28        utf8_1.1.4        rprojroot_1.3-2  
-[61] Quandl_2.10.0     stringi_1.4.6     Rcpp_1.0.4.6      vctrs_0.3.2      
-[65] mapproj_1.2.7     dbplyr_1.4.3      tidyselect_1.1.0  xfun_0.13        </code></pre>
+[33] withr_2.2.0       cli_2.1.0         magrittr_1.5      crayon_1.3.4     
+[37] readxl_1.3.1      evaluate_0.14     ps_1.3.2          fs_1.5.0         
+[41] fansi_0.4.1       nlme_3.1-144      xml2_1.3.2        tools_3.6.3      
+[45] hms_0.5.3         lifecycle_0.2.0   munsell_0.5.0     reprex_0.3.0     
+[49] compiler_3.6.3    rlang_0.4.8       grid_3.6.3        rstudioapi_0.11  
+[53] labeling_0.3      rmarkdown_2.4     gtable_0.3.0      DBI_1.1.0        
+[57] curl_4.3          R6_2.4.1          knitr_1.28        utf8_1.1.4       
+[61] rprojroot_1.3-2   Quandl_2.10.0     stringi_1.5.3     Rcpp_1.0.4.6     
+[65] mapproj_1.2.7     vctrs_0.3.2       dbplyr_1.4.3      tidyselect_1.1.0 
+[69] xfun_0.13        </code></pre>
 </div>
 </div>
 </div>

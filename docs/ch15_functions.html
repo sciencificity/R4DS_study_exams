@@ -414,7 +414,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-11-07
+<strong>Last updated:</strong> 2020-11-08
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -505,16 +505,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree9440e66d5344a6f84768caf6333a1bb8e3a83232targetblank9440e66a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/9440e66d5344a6f84768caf6333a1bb8e3a83232" target="_blank">9440e66</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreeb67f0a772355dbf4d20909761be4300904e84662targetblankb67f0a7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/b67f0a772355dbf4d20909761be4300904e84662" target="_blank">b67f0a7</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree9440e66d5344a6f84768caf6333a1bb8e3a83232targetblank9440e66a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreeb67f0a772355dbf4d20909761be4300904e84662targetblankb67f0a7a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/9440e66d5344a6f84768caf6333a1bb8e3a83232" target="_blank">9440e66</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/b67f0a772355dbf4d20909761be4300904e84662" target="_blank">b67f0a7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -564,6 +564,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/b67f0a772355dbf4d20909761be4300904e84662/analysis/ch15_functions.Rmd" target="_blank">b67f0a7</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-08
+</td>
+<td>
+added ch13
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/ecd1d8ed8bb055d0acaf502bb58ca1845a946c31/docs/ch15_functions.html" target="_blank">ecd1d8e</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1097,7 +1131,7 @@ perform_calc(c(1,2,3), c(4,5,6), &quot;power&quot;)
   }
 }
 greeting()
-#&gt; [1] &quot;good afternoon&quot;</code></pre></li>
+#&gt; [1] &quot;good evening&quot;</code></pre></li>
 <li><p>Implement a <code>fizzbuzz</code> function. It takes a single number as input. If the number is divisible by three, it returns “fizz”. If it’s divisible by five it returns “buzz”. If it’s divisible by three and five, it returns “fizzbuzz”. Otherwise, it returns the number. Make sure you first write working code before you create the function.</p>
 <pre class="r"><code>fizzbuzz &lt;- function(x){
   if((x %% 3 == 0) &amp;&amp; (x %% 5 == 0)){
@@ -1304,6 +1338,137 @@ mean(c(10:19)) == mean(x, trim = 0.10)
 <li><p>The default value for the <code>method</code> argument to <code>cor()</code> is <code>c("pearson", "kendall", "spearman")</code>. What does that mean? What value is used by default?</p>
 <p>The <code>cor()</code> function can use any one of those values, by default the first is used which is pearson.</p></li>
 </ol>
+<div id="writing-pipeable-functions" class="section level4">
+<h4>Writing pipeable functions</h4>
+<p>If you want to write your own pipeable functions, think about the return value. E.g. for dplyr and tidyr the object type is the data frame.</p>
+<p>There are two basic types of pipeable functions: <strong>transformations</strong> and <strong>side-effects</strong>.</p>
+<ul>
+<li>With <strong>transformations</strong>, an object is passed to the function’s first argument and a modified object is returned.</li>
+<li>With <strong>side-effects</strong>, the passed object is not transformed. Instead, the function performs an action on the object, like printing or plotting. These functions “invisibly” return the first argument, so that they can still be used in a pipeline.</li>
+</ul>
+<pre class="r"><code>show_missings &lt;- function(df) {
+  n &lt;- sum(is.na(df))
+  cat(&quot;Missing values: &quot;, n, &quot;\n&quot;, sep = &quot;&quot;)
+  
+  invisible(df) # return df invisibly
+}</code></pre>
+<pre class="r"><code># df does not get printed but it is there
+show_missings(mtcars)
+#&gt; Missing values: 0</code></pre>
+<p>It’s still there, it’s just not printed by default.</p>
+<pre class="r"><code>x &lt;- show_missings(mtcars) 
+#&gt; Missing values: 0
+class(x)
+#&gt; [1] &quot;data.frame&quot;
+dim(x)
+#&gt; [1] 32 11
+head(x)
+#&gt;                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+#&gt; Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+#&gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+#&gt; Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+#&gt; Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+#&gt; Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+#&gt; Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<p>We can use it in a pipe:</p>
+<pre class="r"><code>library(dplyr)
+mtcars %&gt;% 
+  show_missings() %&gt;% 
+  mutate(mpg = ifelse(mpg &lt; 20, NA, mpg)) %&gt;% 
+  show_missings() 
+#&gt; Missing values: 0
+#&gt; Missing values: 18</code></pre>
+</div>
+</div>
+<div id="whats-in-a-function" class="section level3">
+<h3>What’s in a function?</h3>
+<p>Want to see what the code for a function is?</p>
+<p>Type the function name with no parantheses.</p>
+<p>E.g. <code>lm</code>, <code>factorial</code></p>
+<pre class="r"><code>lm
+#&gt; function (formula, data, subset, weights, na.action, method = &quot;qr&quot;, 
+#&gt;     model = TRUE, x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, 
+#&gt;     contrasts = NULL, offset, ...) 
+#&gt; {
+#&gt;     ret.x &lt;- x
+#&gt;     ret.y &lt;- y
+#&gt;     cl &lt;- match.call()
+#&gt;     mf &lt;- match.call(expand.dots = FALSE)
+#&gt;     m &lt;- match(c(&quot;formula&quot;, &quot;data&quot;, &quot;subset&quot;, &quot;weights&quot;, &quot;na.action&quot;, 
+#&gt;         &quot;offset&quot;), names(mf), 0L)
+#&gt;     mf &lt;- mf[c(1L, m)]
+#&gt;     mf$drop.unused.levels &lt;- TRUE
+#&gt;     mf[[1L]] &lt;- quote(stats::model.frame)
+#&gt;     mf &lt;- eval(mf, parent.frame())
+#&gt;     if (method == &quot;model.frame&quot;) 
+#&gt;         return(mf)
+#&gt;     else if (method != &quot;qr&quot;) 
+#&gt;         warning(gettextf(&quot;method = &#39;%s&#39; is not supported. Using &#39;qr&#39;&quot;, 
+#&gt;             method), domain = NA)
+#&gt;     mt &lt;- attr(mf, &quot;terms&quot;)
+#&gt;     y &lt;- model.response(mf, &quot;numeric&quot;)
+#&gt;     w &lt;- as.vector(model.weights(mf))
+#&gt;     if (!is.null(w) &amp;&amp; !is.numeric(w)) 
+#&gt;         stop(&quot;&#39;weights&#39; must be a numeric vector&quot;)
+#&gt;     offset &lt;- model.offset(mf)
+#&gt;     mlm &lt;- is.matrix(y)
+#&gt;     ny &lt;- if (mlm) 
+#&gt;         nrow(y)
+#&gt;     else length(y)
+#&gt;     if (!is.null(offset)) {
+#&gt;         if (!mlm) 
+#&gt;             offset &lt;- as.vector(offset)
+#&gt;         if (NROW(offset) != ny) 
+#&gt;             stop(gettextf(&quot;number of offsets is %d, should equal %d (number of observations)&quot;, 
+#&gt;                 NROW(offset), ny), domain = NA)
+#&gt;     }
+#&gt;     if (is.empty.model(mt)) {
+#&gt;         x &lt;- NULL
+#&gt;         z &lt;- list(coefficients = if (mlm) matrix(NA_real_, 0, 
+#&gt;             ncol(y)) else numeric(), residuals = y, fitted.values = 0 * 
+#&gt;             y, weights = w, rank = 0L, df.residual = if (!is.null(w)) sum(w != 
+#&gt;             0) else ny)
+#&gt;         if (!is.null(offset)) {
+#&gt;             z$fitted.values &lt;- offset
+#&gt;             z$residuals &lt;- y - offset
+#&gt;         }
+#&gt;     }
+#&gt;     else {
+#&gt;         x &lt;- model.matrix(mt, mf, contrasts)
+#&gt;         z &lt;- if (is.null(w)) 
+#&gt;             lm.fit(x, y, offset = offset, singular.ok = singular.ok, 
+#&gt;                 ...)
+#&gt;         else lm.wfit(x, y, w, offset = offset, singular.ok = singular.ok, 
+#&gt;             ...)
+#&gt;     }
+#&gt;     class(z) &lt;- c(if (mlm) &quot;mlm&quot;, &quot;lm&quot;)
+#&gt;     z$na.action &lt;- attr(mf, &quot;na.action&quot;)
+#&gt;     z$offset &lt;- offset
+#&gt;     z$contrasts &lt;- attr(x, &quot;contrasts&quot;)
+#&gt;     z$xlevels &lt;- .getXlevels(mt, mf)
+#&gt;     z$call &lt;- cl
+#&gt;     z$terms &lt;- mt
+#&gt;     if (model) 
+#&gt;         z$model &lt;- mf
+#&gt;     if (ret.x) 
+#&gt;         z$x &lt;- x
+#&gt;     if (ret.y) 
+#&gt;         z$y &lt;- y
+#&gt;     if (!qr) 
+#&gt;         z$qr &lt;- NULL
+#&gt;     z
+#&gt; }
+#&gt; &lt;bytecode: 0x0000000025c28b90&gt;
+#&gt; &lt;environment: namespace:stats&gt;</code></pre>
+<p>To figure out what arguments a function takes use <code>args(func_name)</code>.</p>
+<pre class="r"><code>args(lm)
+#&gt; function (formula, data, subset, weights, na.action, method = &quot;qr&quot;, 
+#&gt;     model = TRUE, x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, 
+#&gt;     contrasts = NULL, offset, ...) 
+#&gt; NULL
+args(dplyr::across)
+#&gt; function (.cols = everything(), .fns = NULL, ..., .names = NULL) 
+#&gt; NULL</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1329,23 +1494,24 @@ mean(c(10:19)) == mean(x, trim = 0.10)
 #&gt; other attached packages:
 #&gt;  [1] magrittr_1.5    flair_0.0.2     forcats_0.5.0   stringr_1.4.0  
 #&gt;  [5] dplyr_1.0.0     purrr_0.3.4     readr_1.3.1     tidyr_1.1.0    
-#&gt;  [9] tibble_3.0.3    ggplot2_3.3.0   tidyverse_1.3.0 workflowr_1.6.2
+#&gt;  [9] tibble_3.0.3    ggplot2_3.3.2   tidyverse_1.3.0 workflowr_1.6.2
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
 #&gt;  [1] tidyselect_1.1.0 xfun_0.13        haven_2.2.0      lattice_0.20-38 
 #&gt;  [5] colorspace_1.4-1 vctrs_0.3.2      generics_0.0.2   htmltools_0.5.0 
-#&gt;  [9] yaml_2.2.1       rlang_0.4.7      later_1.0.0      pillar_1.4.6    
-#&gt; [13] withr_2.2.0      glue_1.4.1       DBI_1.1.0        dbplyr_1.4.3    
-#&gt; [17] modelr_0.1.6     readxl_1.3.1     lifecycle_0.2.0  munsell_0.5.0   
-#&gt; [21] gtable_0.3.0     cellranger_1.1.0 rvest_0.3.5      evaluate_0.14   
-#&gt; [25] knitr_1.28       httpuv_1.5.2     fansi_0.4.1      broom_0.5.6     
-#&gt; [29] Rcpp_1.0.4.6     promises_1.1.0   backports_1.1.6  scales_1.1.0    
-#&gt; [33] jsonlite_1.7.0   fs_1.4.1         hms_0.5.3        digest_0.6.25   
-#&gt; [37] stringi_1.4.6    grid_3.6.3       rprojroot_1.3-2  cli_2.0.2       
-#&gt; [41] tools_3.6.3      crayon_1.3.4     whisker_0.4      pkgconfig_2.0.3 
-#&gt; [45] ellipsis_0.3.1   xml2_1.3.2       reprex_0.3.0     lubridate_1.7.8 
-#&gt; [49] rstudioapi_0.11  assertthat_0.2.1 rmarkdown_2.4    httr_1.4.2      
-#&gt; [53] R6_2.4.1         nlme_3.1-144     git2r_0.26.1     compiler_3.6.3</code></pre>
+#&gt;  [9] yaml_2.2.1       rlang_0.4.8      later_1.0.0      pillar_1.4.6    
+#&gt; [13] withr_2.2.0      glue_1.4.2       DBI_1.1.0        dbplyr_1.4.3    
+#&gt; [17] modelr_0.1.6     readxl_1.3.1     lifecycle_0.2.0  cellranger_1.1.0
+#&gt; [21] munsell_0.5.0    gtable_0.3.0     rvest_0.3.5      evaluate_0.14   
+#&gt; [25] knitr_1.28       ps_1.3.2         httpuv_1.5.2     fansi_0.4.1     
+#&gt; [29] broom_0.5.6      Rcpp_1.0.4.6     promises_1.1.0   backports_1.1.6 
+#&gt; [33] scales_1.1.0     jsonlite_1.7.0   fs_1.5.0         hms_0.5.3       
+#&gt; [37] digest_0.6.27    stringi_1.5.3    rprojroot_1.3-2  grid_3.6.3      
+#&gt; [41] cli_2.1.0        tools_3.6.3      crayon_1.3.4     whisker_0.4     
+#&gt; [45] pkgconfig_2.0.3  ellipsis_0.3.1   xml2_1.3.2       reprex_0.3.0    
+#&gt; [49] lubridate_1.7.8  assertthat_0.2.1 rmarkdown_2.4    httr_1.4.2      
+#&gt; [53] rstudioapi_0.11  R6_2.4.1         nlme_3.1-144     git2r_0.26.1    
+#&gt; [57] compiler_3.6.3</code></pre>
 </div>
 </div>
 </div>
