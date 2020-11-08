@@ -505,16 +505,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreeb67f0a772355dbf4d20909761be4300904e84662targetblankb67f0a7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/b67f0a772355dbf4d20909761be4300904e84662" target="_blank">b67f0a7</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreee93cfefef031fee1dfbcff30bf43ee028e4a7f30targetblanke93cfefa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/e93cfefef031fee1dfbcff30bf43ee028e4a7f30" target="_blank">e93cfef</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreeb67f0a772355dbf4d20909761be4300904e84662targetblankb67f0a7a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreee93cfefef031fee1dfbcff30bf43ee028e4a7f30targetblanke93cfefa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/b67f0a772355dbf4d20909761be4300904e84662" target="_blank">b67f0a7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/e93cfefef031fee1dfbcff30bf43ee028e4a7f30" target="_blank">e93cfef</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -569,6 +569,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/e93cfefef031fee1dfbcff30bf43ee028e4a7f30/analysis/ch13_datetimes.Rmd" target="_blank">e93cfef</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-08
+</td>
+<td>
+finished ch13
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/0d223fb536f932b6f5957f0eb33982ea0a73d3db/docs/ch13_datetimes.html" target="_blank">0d223fb</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-08
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/sciencificity/R4DS_study_exams/blob/b67f0a772355dbf4d20909761be4300904e84662/analysis/ch13_datetimes.Rmd" target="_blank">b67f0a7</a>
 </td>
 <td>
@@ -602,7 +636,7 @@ Create Date and Times
 <pre class="r"><code>today()
 #&gt; [1] &quot;2020-11-08&quot;
 now()
-#&gt; [1] &quot;2020-11-08 18:03:47 SAST&quot;</code></pre>
+#&gt; [1] &quot;2020-11-08 20:42:34 SAST&quot;</code></pre>
 <div id="from-strings" class="section level3">
 <h3>From Strings</h3>
 <div id="dates" class="section level4">
@@ -635,9 +669,9 @@ dmy(31012017, tz = &quot;Africa/Johannesburg&quot;)
 <p>You can use <span style="color: #008080;background-color:#9FDDBA"><code>make_date()</code></span> and <span style="color: #008080;background-color:#9FDDBA"><code>make_datetime()</code></span> to create a date or dttm field.</p>
 <pre><code class='language-r'><code>flights %>% <br>&nbsp;&nbsp;select(year:day, hour, minute)<br>#> # A tibble: 336,776 x 5<br>#> &nbsp;&nbsp;&nbsp;&nbsp;year month &nbsp;&nbsp;day &nbsp;hour minute<br>#> &nbsp;&nbsp;&nbsp;<int> <int> <int> <dbl> &nbsp;<dbl><br>#> &nbsp;1 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;5 &nbsp;&nbsp;&nbsp;&nbsp;15<br>#> &nbsp;2 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;5 &nbsp;&nbsp;&nbsp;&nbsp;29<br>#> &nbsp;3 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;5 &nbsp;&nbsp;&nbsp;&nbsp;40<br>#> &nbsp;4 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;5 &nbsp;&nbsp;&nbsp;&nbsp;45<br>#> &nbsp;5 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<br>#> &nbsp;6 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;5 &nbsp;&nbsp;&nbsp;&nbsp;58<br>#> &nbsp;7 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<br>#> &nbsp;8 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<br>#> &nbsp;9 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<br>#> 10 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<br>#> # ... with 336,766 more rows<br><br>flights %>% <br>&nbsp;&nbsp;select(year:day, hour, minute) %>% <br>&nbsp;&nbsp;mutate(<br>&nbsp;&nbsp;&nbsp;&nbsp;departure = <span style='background-color:#9FDDBA;color:#008080'>make_datetime</span>(year = year, month = month, day = day, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hour = hour, min = minute)<br>&nbsp;&nbsp;)<br>#> # A tibble: 336,776 x 6<br>#> &nbsp;&nbsp;&nbsp;&nbsp;year month &nbsp;&nbsp;day &nbsp;hour minute departure &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>#> &nbsp;&nbsp;&nbsp;<int> <int> <int> <dbl> &nbsp;<dbl> <dttm> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>#> &nbsp;1 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;5 &nbsp;&nbsp;&nbsp;&nbsp;15 2013-01-01 05:15:00<br>#> &nbsp;2 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;5 &nbsp;&nbsp;&nbsp;&nbsp;29 2013-01-01 05:29:00<br>#> &nbsp;3 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;5 &nbsp;&nbsp;&nbsp;&nbsp;40 2013-01-01 05:40:00<br>#> &nbsp;4 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;5 &nbsp;&nbsp;&nbsp;&nbsp;45 2013-01-01 05:45:00<br>#> &nbsp;5 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 2013-01-01 06:00:00<br>#> &nbsp;6 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;5 &nbsp;&nbsp;&nbsp;&nbsp;58 2013-01-01 05:58:00<br>#> &nbsp;7 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 2013-01-01 06:00:00<br>#> &nbsp;8 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 2013-01-01 06:00:00<br>#> &nbsp;9 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 2013-01-01 06:00:00<br>#> 10 &nbsp;2013 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;&nbsp;6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 2013-01-01 06:00:00<br>#> # ... with 336,766 more rows</code></code></pre>
 <pre><code class='language-r'><code>make_dttm <- function(year, month, day, time){<br>&nbsp;&nbsp;# this func will make a proper dttm for the dep_time,<br>&nbsp;&nbsp;# sched_dep_time etc.<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>make_datetime</span>(year, month, day,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# divide by 100 and get the integer part - hour part<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time %/% 100,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# divide by 100 and get the remainder - minutes part<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time %% 100<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>}<br><br>(flights_dt <- flights %>% <br>&nbsp;&nbsp;filter(!is.na(dep_time), !is.na(arr_time)) %>% <br>&nbsp;&nbsp;mutate(<br>&nbsp;&nbsp;&nbsp;&nbsp;dep_time = make_dttm(year, month, day, dep_time),<br>&nbsp;&nbsp;&nbsp;&nbsp;sched_dep_time = make_dttm(year, month, day, sched_dep_time),<br>&nbsp;&nbsp;&nbsp;&nbsp;arr_time = make_dttm(year, month, day, arr_time),<br>&nbsp;&nbsp;&nbsp;&nbsp;sched_arr_time = make_dttm(year, month, day, sched_arr_time)<br>&nbsp;&nbsp;) %>% <br>&nbsp;&nbsp;select(origin, dest, ends_with("delay"), ends_with("time")))<br>#> # A tibble: 328,063 x 9<br>#> &nbsp;&nbsp;&nbsp;origin dest &nbsp;dep_delay arr_delay dep_time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sched_dep_time &nbsp;&nbsp;&nbsp;&nbsp;<br>#> &nbsp;&nbsp;&nbsp;<chr> &nbsp;<chr> &nbsp;&nbsp;&nbsp;&nbsp;<dbl> &nbsp;&nbsp;&nbsp;&nbsp;<dbl> <dttm> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<dttm> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>#> &nbsp;1 EWR &nbsp;&nbsp;&nbsp;IAH &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;11 2013-01-01 05:17:00 2013-01-01 05:15:00<br>#> &nbsp;2 LGA &nbsp;&nbsp;&nbsp;IAH &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;20 2013-01-01 05:33:00 2013-01-01 05:29:00<br>#> &nbsp;3 JFK &nbsp;&nbsp;&nbsp;MIA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;33 2013-01-01 05:42:00 2013-01-01 05:40:00<br>#> &nbsp;4 JFK &nbsp;&nbsp;&nbsp;BQN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-18 2013-01-01 05:44:00 2013-01-01 05:45:00<br>#> &nbsp;5 LGA &nbsp;&nbsp;&nbsp;ATL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-25 2013-01-01 05:54:00 2013-01-01 06:00:00<br>#> &nbsp;6 EWR &nbsp;&nbsp;&nbsp;ORD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12 2013-01-01 05:54:00 2013-01-01 05:58:00<br>#> &nbsp;7 EWR &nbsp;&nbsp;&nbsp;FLL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;19 2013-01-01 05:55:00 2013-01-01 06:00:00<br>#> &nbsp;8 LGA &nbsp;&nbsp;&nbsp;IAD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-3 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-14 2013-01-01 05:57:00 2013-01-01 06:00:00<br>#> &nbsp;9 JFK &nbsp;&nbsp;&nbsp;MCO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-3 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-8 2013-01-01 05:57:00 2013-01-01 06:00:00<br>#> 10 LGA &nbsp;&nbsp;&nbsp;ORD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8 2013-01-01 05:58:00 2013-01-01 06:00:00<br>#> # ... with 328,053 more rows, and 3 more variables: arr_time <dttm>,<br>#> # &nbsp;&nbsp;sched_arr_time <dttm>, air_time <dbl><br><br>flights_dt %>% <br>&nbsp;&nbsp;ggplot(aes(dep_time)) +<br>&nbsp;&nbsp;# how's the distribution across the year looking?<br>&nbsp;&nbsp;geom_freqpoly(binwidth = 24*60*60) # binwidth = 1 day</code></code></pre>
-<p><img src="figure/ch13_datetimes.Rmd/unnamed-chunk-32-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch13_datetimes.Rmd/unnamed-chunk-54-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code class='language-r'><code>flights_dt %>% <br>&nbsp;&nbsp;filter(dep_time < ymd(20130102)) %>% <br>&nbsp;&nbsp;ggplot(aes(dep_time)) +<br>&nbsp;&nbsp;# how's the distribution of dep times across a day looking<br>&nbsp;&nbsp;geom_freqpoly(binwidth = 15 * 60) # how's it looking every 15 min</code></code></pre>
-<p><img src="figure/ch13_datetimes.Rmd/unnamed-chunk-32-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ch13_datetimes.Rmd/unnamed-chunk-54-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Note that when you use date-times in a numeric context (like in a histogram), <span style="color: #008080;background-color:#9FDDBA">1 means 1 second</span>, so <span style="color: #008080;background-color:#9FDDBA">a binwidth of 86400 means one day</span>. <strong>For dates, 1 means 1 day</strong>.</p>
 </div>
 <div id="from-other-types" class="section level3">
@@ -668,9 +702,9 @@ utc_today == today()
 utc_today == today(tzone = &quot;GMT&quot;)
 #&gt; [1] TRUE
 now()
-#&gt; [1] &quot;2020-11-08 18:03:52 SAST&quot;
+#&gt; [1] &quot;2020-11-08 20:42:39 SAST&quot;
 now(&quot;UTC&quot;)
-#&gt; [1] &quot;2020-11-08 16:03:52 UTC&quot;</code></pre></li>
+#&gt; [1] &quot;2020-11-08 18:42:39 UTC&quot;</code></pre></li>
 <li><p>Use the appropriate lubridate function to parse each of the following dates:</p>
 <pre class="r"><code>d1 &lt;- &quot;January 1, 2010&quot;
 mdy(d1)
@@ -708,7 +742,7 @@ Date-time components
 </ul>
 <pre><code class='language-r'><code>(datetime <- ymd_hms("2016-07-08 12:34:56"))<br>#> [1] "2016-07-08 12:34:56 UTC"<br><span style='background-color:#9FDDBA;color:#008080'>year</span>(datetime)<br>#> [1] 2016<br><br><span style='background-color:#9FDDBA;color:#008080'>month</span>(datetime)<br>#> [1] 7<br><br><span style='background-color:#9FDDBA;color:#008080'>mday</span>(datetime)<br>#> [1] 8<br><br><span style='background-color:#9FDDBA;color:#008080'>yday</span>(datetime)<br>#> [1] 190<br><br><span style='background-color:#9FDDBA;color:#008080'>wday</span>(datetime)<br>#> [1] 6<br><br><span style='background-color:#9FDDBA;color:#008080'>wday</span>(datetime, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#cfdad4;color:#6d6875'>label = TRUE</span>) # abbreviated weekday day instead of number<br>#> [1] Fri<br>#> Levels: Sun < Sat<br><br>wday(datetime, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label = TRUE, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abbr = FALSE) # full weekday name <br>#> [1] Friday<br>#> 7 Levels: Sunday < Saturday<br><br>hour(datetime)<br>#> [1] 12<br><br><span style='background-color:#9FDDBA;color:#008080'>minute</span>(datetime)<br>#> [1] 34<br><br><span style='background-color:#9FDDBA;color:#008080'>second</span>(datetime)<br>#> [1] 56<br><br><span style='background-color:#9FDDBA;color:#008080'>month</span>(datetime, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#cfdad4;color:#6d6875'>label = TRUE</span>) # abbreviated <span style='background-color:#9FDDBA;color:#008080'>month</span> name instead of number<br>#> [1] Jul<br>#> 12 Levels: Jan < Dec<br><br>month(datetime, label = TRUE, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abbr = FALSE) # full month name instead of number<br>#> [1] July<br>#> 12 Levels: January</code></code></pre>
 <pre class="r"><code>(current_dt &lt;- now())
-#&gt; [1] &quot;2020-11-08 18:03:52 SAST&quot;
+#&gt; [1] &quot;2020-11-08 20:42:40 SAST&quot;
 year(current_dt)
 #&gt; [1] 2020
 month(current_dt)
@@ -729,11 +763,11 @@ wday(current_dt,
 #&gt; [1] Sunday
 #&gt; 7 Levels: Sunday &lt; Monday &lt; Tuesday &lt; Wednesday &lt; Thursday &lt; ... &lt; Saturday
 hour(current_dt)
-#&gt; [1] 18
+#&gt; [1] 20
 minute(current_dt)
-#&gt; [1] 3
+#&gt; [1] 42
 second(current_dt)
-#&gt; [1] 52.68122
+#&gt; [1] 40.1827
 month(current_dt, 
       label = TRUE) # abbreviated month name instead of number
 #&gt; [1] Nov
@@ -1009,6 +1043,319 @@ flights_dt %&gt;%
 <p><img src="figure/ch13_datetimes.Rmd/unnamed-chunk-30-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The flights that leave in minutes <code>22 - 29</code> and <code>49 - 59</code> do leave earlier than scheduled.</p></li>
 </ol>
+<h2>
+Time spans
+</h2>
+</div>
+</div>
+<div id="time-spans" class="section level2">
+<h2>Time spans</h2>
+<p>Now we’re gonna see how arithmetic with dates works and learn about three important classes that represent time spans:</p>
+<ul>
+<li><strong>durations</strong>, which represent an exact number of seconds.</li>
+<li><strong>periods</strong>, which represent human units like weeks and months.</li>
+<li><strong>intervals</strong>, which represent a starting and ending point.</li>
+</ul>
+<div id="durations" class="section level3">
+<h3>Durations</h3>
+<p>When we subtract two dates, we get a <code>difftime</code> object.</p>
+<pre class="r"><code># How old is Hadley?
+(h_age &lt;- today() - ymd(19791014))
+#&gt; Time difference of 15001 days</code></pre>
+<p>A <code>difftime</code> class object records a time span of</p>
+<ul>
+<li>seconds,</li>
+<li>minutes,</li>
+<li>hours,</li>
+<li>days, or</li>
+<li>weeks.</li>
+</ul>
+<p>The ambiguity can make <code>difftimes</code> painful to work with, so {lubridate} provides an alternative which always uses seconds: the <strong>duration</strong>.</p>
+<pre class="r"><code>as.duration(h_age)
+#&gt; [1] &quot;1296086400s (~41.07 years)&quot;</code></pre>
+<div id="duration-constructors" class="section level4">
+<h4>Duration constructors</h4>
+<pre><code class='language-r'><code><span style='background-color:#9FDDBA;color:#008080'>ds</span>econ<span style='background-color:#9FDDBA;color:#008080'>ds</span>(15)<br>#> [1] "15s"<br><br><span style='background-color:#9FDDBA;color:#008080'>dm</span>inutes(10)<br>#> [1] "600s (~10 minutes)"<br><br><span style='background-color:#9FDDBA;color:#008080'>dh</span>ours(c(12,24))<br>#> [1] "43200s (~12 hours)" "86400s (~1 days)"<br><br><span style='background-color:#9FDDBA;color:#008080'>dd</span>ays(0:5)<br>#> [1] "0s" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"86400s (~1 days)" &nbsp;"172800s (~2 days)"<br>#> [4] "259200s (~3 days)" "345600s (~4 days)" "432000s (~5 days)"<br><br><span style='background-color:#9FDDBA;color:#008080'>dw</span>eeks(3)<br>#> [1] "1814400s (~3 weeks)"<br><br><span style='background-color:#9FDDBA;color:#008080'>dw</span>eeks(3) == 24 * 60 * 60 * 7 * 3 # 24 hrs, 60 min, 60 s in each min, 7 days, 3 weeks<br>#> [1] TRUE<br><br><span style='background-color:#9FDDBA;color:#008080'>dy</span>ears(1)<br>#> [1] "31557600s (~1 years)"</code></code></pre>
+<p>Durations always record the time span in seconds. Larger units are converted using standard rules e.g. 60 seconds in a minute, 60 minutes in an hour, 24 hours in day, 7 days in a week, and 365 days in a year. Notice all duration constructors start with <strong>d</strong> and end with <strong>s</strong> (i.e. the plural of each time span - <strong>d</strong>day<strong>s</strong>)</p>
+</div>
+<div id="duration-arithmetic" class="section level4">
+<h4>Duration Arithmetic</h4>
+<p>You can add and multiply durations.</p>
+<pre class="r"><code>2 * dyears(1)
+#&gt; [1] &quot;63115200s (~2 years)&quot;
+dyears(2)
+#&gt; [1] &quot;63115200s (~2 years)&quot;
+
+dyears(1)  + dweeks(12) + dhours(15)
+#&gt; [1] &quot;38869200s (~1.23 years)&quot;</code></pre>
+<p>We can also add and subtract durations to and from dates.</p>
+<pre class="r"><code>(tomorrow &lt;- today() + ddays(1))
+#&gt; [1] &quot;2020-11-09&quot;
+(last_yr &lt;- year(today() - dyears(1)))
+#&gt; [1] 2019</code></pre>
+<p>But durations represent an exact number of seconds, and hence sometimes you might get unexpected results, especially with daylight savings etc. that complicate date time arithmetic.</p>
+<pre class="r"><code>(one_pm &lt;- ymd_hms(&quot;2016-03-12 13:00:00&quot;,
+                  tz = &quot;America/New_York&quot;))
+#&gt; [1] &quot;2016-03-12 13:00:00 EST&quot;
+one_pm + ddays(1)
+#&gt; [1] &quot;2016-03-13 14:00:00 EDT&quot;</code></pre>
+<p>One day after 1pm on March 12, is 2pm on March 13?! 😕 The tz has changed from EST to EDT due to daylight savings time.</p>
+</div>
+</div>
+<div id="periods" class="section level3">
+<h3>Periods</h3>
+<p>To solve this problem, {lubridate} provides <strong>periods</strong>. Periods are time spans that work with “human” times, like days and months.</p>
+<pre class="r"><code>one_pm
+#&gt; [1] &quot;2016-03-12 13:00:00 EST&quot;
+one_pm + days(1)
+#&gt; [1] &quot;2016-03-13 13:00:00 EDT&quot;</code></pre>
+<div id="period-constructors" class="section level4">
+<h4>Period constructors</h4>
+<pre class="r"><code>seconds(15)
+#&gt; [1] &quot;15S&quot;
+
+minutes(10)
+#&gt; [1] &quot;10M 0S&quot;
+
+hours(c(12, 24))
+#&gt; [1] &quot;12H 0M 0S&quot; &quot;24H 0M 0S&quot;
+
+days(0:5)
+#&gt; [1] &quot;0S&quot;          &quot;1d 0H 0M 0S&quot; &quot;2d 0H 0M 0S&quot; &quot;3d 0H 0M 0S&quot; &quot;4d 0H 0M 0S&quot;
+#&gt; [6] &quot;5d 0H 0M 0S&quot;
+
+weeks(3)
+#&gt; [1] &quot;21d 0H 0M 0S&quot;
+
+years(1)
+#&gt; [1] &quot;1y 0m 0d 0H 0M 0S&quot;
+
+months(1:6)
+#&gt; [1] &quot;1m 0d 0H 0M 0S&quot; &quot;2m 0d 0H 0M 0S&quot; &quot;3m 0d 0H 0M 0S&quot; &quot;4m 0d 0H 0M 0S&quot;
+#&gt; [5] &quot;5m 0d 0H 0M 0S&quot; &quot;6m 0d 0H 0M 0S&quot;</code></pre>
+</div>
+<div id="period-arithmetic" class="section level4">
+<h4>Period Arithmetic</h4>
+<pre class="r"><code>2 * years(1)
+#&gt; [1] &quot;2y 0m 0d 0H 0M 0S&quot;
+years(2)
+#&gt; [1] &quot;2y 0m 0d 0H 0M 0S&quot;
+
+years(1) + weeks(12) + hours(15)
+#&gt; [1] &quot;1y 0m 84d 15H 0M 0S&quot;
+
+10 * (months(6) + days(1))
+#&gt; [1] &quot;60m 10d 0H 0M 0S&quot;
+
+days(50) + hours(25) + minutes(2)
+#&gt; [1] &quot;50d 25H 2M 0S&quot;</code></pre>
+<p>Compared to durations, periods are more likely to do what you expect.</p>
+<pre class="r"><code># A leap year
+ymd(20200101) + dyears(1)
+#&gt; [1] &quot;2020-12-31 06:00:00 UTC&quot;
+ymd(20200101) + years(1)
+#&gt; [1] &quot;2021-01-01&quot;
+
+one_pm
+#&gt; [1] &quot;2016-03-12 13:00:00 EST&quot;
+one_pm + ddays(1)
+#&gt; [1] &quot;2016-03-13 14:00:00 EDT&quot;
+one_pm + days(1)
+#&gt; [1] &quot;2016-03-13 13:00:00 EDT&quot;</code></pre>
+<p>Some planes appear to have arrived at their destination <em>before</em> they departed from NYC.</p>
+<pre class="r"><code>flights_dt %&gt;% 
+  filter(arr_time &lt; dep_time)
+#&gt; # A tibble: 10,633 x 9
+#&gt;    origin dest  dep_delay arr_delay dep_time            sched_dep_time     
+#&gt;    &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dttm&gt;              &lt;dttm&gt;             
+#&gt;  1 EWR    BQN           9        -4 2013-01-01 19:29:00 2013-01-01 19:20:00
+#&gt;  2 JFK    DFW          59        NA 2013-01-01 19:39:00 2013-01-01 18:40:00
+#&gt;  3 EWR    TPA          -2         9 2013-01-01 20:58:00 2013-01-01 21:00:00
+#&gt;  4 EWR    SJU          -6       -12 2013-01-01 21:02:00 2013-01-01 21:08:00
+#&gt;  5 EWR    SFO          11       -14 2013-01-01 21:08:00 2013-01-01 20:57:00
+#&gt;  6 LGA    FLL         -10        -2 2013-01-01 21:20:00 2013-01-01 21:30:00
+#&gt;  7 EWR    MCO          41        43 2013-01-01 21:21:00 2013-01-01 20:40:00
+#&gt;  8 JFK    LAX          -7       -24 2013-01-01 21:28:00 2013-01-01 21:35:00
+#&gt;  9 EWR    FLL          49        28 2013-01-01 21:34:00 2013-01-01 20:45:00
+#&gt; 10 EWR    FLL          -9       -14 2013-01-01 21:36:00 2013-01-01 21:45:00
+#&gt; # ... with 10,623 more rows, and 3 more variables: arr_time &lt;dttm&gt;,
+#&gt; #   sched_arr_time &lt;dttm&gt;, air_time &lt;dbl&gt;</code></pre>
+<p>They are overnight flights and incorrectly have the same date information for both the departure and the arrival times.</p>
+<pre class="r"><code>(flights_dt &lt;- flights_dt %&gt;% 
+  mutate(overnight = arr_time &lt; dep_time,
+         arr_time = arr_time + days(overnight * 1),
+         sched_arr_time = sched_arr_time + days(overnight + 1))) %&gt;% 
+  filter(overnight == TRUE) %&gt;% 
+  print(width = Inf)
+#&gt; # A tibble: 10,633 x 10
+#&gt;    origin dest  dep_delay arr_delay dep_time            sched_dep_time     
+#&gt;    &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dttm&gt;              &lt;dttm&gt;             
+#&gt;  1 EWR    BQN           9        -4 2013-01-01 19:29:00 2013-01-01 19:20:00
+#&gt;  2 JFK    DFW          59        NA 2013-01-01 19:39:00 2013-01-01 18:40:00
+#&gt;  3 EWR    TPA          -2         9 2013-01-01 20:58:00 2013-01-01 21:00:00
+#&gt;  4 EWR    SJU          -6       -12 2013-01-01 21:02:00 2013-01-01 21:08:00
+#&gt;  5 EWR    SFO          11       -14 2013-01-01 21:08:00 2013-01-01 20:57:00
+#&gt;  6 LGA    FLL         -10        -2 2013-01-01 21:20:00 2013-01-01 21:30:00
+#&gt;  7 EWR    MCO          41        43 2013-01-01 21:21:00 2013-01-01 20:40:00
+#&gt;  8 JFK    LAX          -7       -24 2013-01-01 21:28:00 2013-01-01 21:35:00
+#&gt;  9 EWR    FLL          49        28 2013-01-01 21:34:00 2013-01-01 20:45:00
+#&gt; 10 EWR    FLL          -9       -14 2013-01-01 21:36:00 2013-01-01 21:45:00
+#&gt;    arr_time            sched_arr_time      air_time overnight
+#&gt;    &lt;dttm&gt;              &lt;dttm&gt;                 &lt;dbl&gt; &lt;lgl&gt;    
+#&gt;  1 2013-01-02 00:03:00 2013-01-03 00:07:00      192 TRUE     
+#&gt;  2 2013-01-02 00:29:00 2013-01-03 21:51:00       NA TRUE     
+#&gt;  3 2013-01-02 00:08:00 2013-01-03 23:59:00      159 TRUE     
+#&gt;  4 2013-01-02 01:46:00 2013-01-03 01:58:00      199 TRUE     
+#&gt;  5 2013-01-02 00:25:00 2013-01-03 00:39:00      354 TRUE     
+#&gt;  6 2013-01-02 00:16:00 2013-01-03 00:18:00      160 TRUE     
+#&gt;  7 2013-01-02 00:06:00 2013-01-03 23:23:00      143 TRUE     
+#&gt;  8 2013-01-02 00:26:00 2013-01-03 00:50:00      338 TRUE     
+#&gt;  9 2013-01-02 00:20:00 2013-01-03 23:52:00      152 TRUE     
+#&gt; 10 2013-01-02 00:25:00 2013-01-03 00:39:00      154 TRUE     
+#&gt; # ... with 10,623 more rows
+
+flights_dt %&gt;% 
+  filter(overnight, arr_time &lt; dep_time)
+#&gt; # A tibble: 0 x 10
+#&gt; # ... with 10 variables: origin &lt;chr&gt;, dest &lt;chr&gt;, dep_delay &lt;dbl&gt;,
+#&gt; #   arr_delay &lt;dbl&gt;, dep_time &lt;dttm&gt;, sched_dep_time &lt;dttm&gt;, arr_time &lt;dttm&gt;,
+#&gt; #   sched_arr_time &lt;dttm&gt;, air_time &lt;dbl&gt;, overnight &lt;lgl&gt;</code></pre>
+</div>
+</div>
+<div id="intervals" class="section level3">
+<h3>Intervals</h3>
+<p><code>dyears(1) / ddays(365)</code> returns one, because durations are always represented by a number of seconds, and a duration of a year is defined as 365 days worth of seconds.</p>
+<p>For <code>years(1) / days(1)</code> it gives an estimate, and a warning.</p>
+<pre class="r"><code>dyears(1) / ddays(365)
+#&gt; [1] 1.000685
+
+years(1) / days(1)
+#&gt; [1] 365.25</code></pre>
+<p>For more accurate measurements, use an <strong>interval</strong>. An interval is a duration with a starting point and hence you can determine how long it is.</p>
+<pre class="r"><code>(next_yr &lt;- today() + years(1))
+#&gt; [1] &quot;2021-11-08&quot;
+ 
+(today() %--% next_yr)
+#&gt; [1] 2020-11-08 UTC--2021-11-08 UTC
+
+# to find how many periods in an _interval_ use integer division
+(today() %--% next_yr) %/% days(1)
+#&gt; [1] 365
+
+# for duration you can use / or integer division 
+# for consistency probably %/% is better
+(today() %--% next_yr) %/% ddays(1)
+#&gt; [1] 365</code></pre>
+<br>
+<figure>
+<img src="assets/datetimes-arithmetic.PNG" width="700" height="450" alt="The allowed arithmetic operations between pairs of date/time classes.">
+<figcaption>
+The allowed arithmetic operations between pairs of date/time classes.
+</figcaption>
+</figure>
+</div>
+<div id="exercises-2" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Why is there <code>months()</code> but no <code>dmonths()</code>?</p>
+<p>A month is not easily converted to a number of seconds, because a month could be 4 weeks, 5 weeks, 28 days, 30 days, or 31 days.</p>
+<p>For a day we use standard convention of 24 hours in a day, and convert that to seconds, same for a week (7 days of 24 each day). But with months there is no standard number.</p></li>
+<li><p>Explain <code>days(overnight * 1)</code> to someone who has just started learning R. How does it work?</p>
+<pre class="r"><code>(flights_dt &lt;- flights_dt %&gt;% 
+  mutate(overnight = arr_time &lt; dep_time,
+         arr_time = arr_time + days(overnight * 1),
+         sched_arr_time = sched_arr_time + days(overnight + 1))) %&gt;% 
+  filter(overnight == TRUE) %&gt;% 
+  print(width = Inf)</code></pre>
+<p><code>overnight</code> is a logical value - in the df each arr_time is checked against dep_time if it is before the departure time?</p>
+<ul>
+<li>it is: marked as TRUE (anomalies we are looking for).</li>
+<li>it is not: marked as FALSE.</li>
+</ul>
+<p>We need to progress our anomaly arr_times on by <code>1 day</code>.</p>
+<ul>
+<li>For our anomalies overnight == TRUE which behind the scenes is the integer 1 (for yes, this criterion is met). <span class="math inline">\(overnight * 1 = 1 * 1 = 1\)</span>. The arrival time is progressed one day forward and is now accurate.</li>
+<li>For normal flights (the arrival time is after the departure time) overnight == FALSE which behind the scenes is the integer 0 (for nope, this criterion is <strong>not</strong> met). <span class="math inline">\(overnight * 1 = 0 * 1 = 0\)</span>. The arrival time is unchanged since it is already correct.</li>
+</ul></li>
+<li><p>Create a vector of dates giving the first day of every month in 2015. Create a vector of dates giving the first day of every month in the <em>current</em> year.</p>
+<pre class="r"><code>ymd(20150101) + months(0:11)
+#&gt;  [1] &quot;2015-01-01&quot; &quot;2015-02-01&quot; &quot;2015-03-01&quot; &quot;2015-04-01&quot; &quot;2015-05-01&quot;
+#&gt;  [6] &quot;2015-06-01&quot; &quot;2015-07-01&quot; &quot;2015-08-01&quot; &quot;2015-09-01&quot; &quot;2015-10-01&quot;
+#&gt; [11] &quot;2015-11-01&quot; &quot;2015-12-01&quot;
+floor_date(today(), &quot;year&quot;) + months(0:11)
+#&gt;  [1] &quot;2020-01-01&quot; &quot;2020-02-01&quot; &quot;2020-03-01&quot; &quot;2020-04-01&quot; &quot;2020-05-01&quot;
+#&gt;  [6] &quot;2020-06-01&quot; &quot;2020-07-01&quot; &quot;2020-08-01&quot; &quot;2020-09-01&quot; &quot;2020-10-01&quot;
+#&gt; [11] &quot;2020-11-01&quot; &quot;2020-12-01&quot;</code></pre></li>
+<li><p>Write a function that given your birthday (as a date), returns how old you are in years.</p>
+<pre class="r"><code>age &lt;- function(dob){
+  secs &lt;- as.duration(today() - dob)
+  secs / (60 * 60 * 24 * 365)
+}
+
+age(ymd(20140612))
+#&gt; [1] &quot;6.41369863013699s&quot;</code></pre></li>
+<li><p>Why can’t <code>(today() %--% (today() + years(1))) / months(1)</code> work?</p>
+<p>It works but I suspect that the <code>/</code> should be replaced by <code>%/%</code> integer division.</p>
+<pre class="r"><code># how many months in the timespan today - next_yr_this_time
+(today() %--% (today() + years(1))) %/% months(1)
+#&gt; [1] 12</code></pre></li>
+</ol>
+<h2>
+Timezones
+</h2>
+</div>
+</div>
+<div id="timezones" class="section level2">
+<h2>Timezones</h2>
+<pre class="r"><code># what is my timezone?
+Sys.timezone()
+#&gt; [1] &quot;Africa/Johannesburg&quot;</code></pre>
+<p>Get a list of tz’s.</p>
+<pre class="r"><code>length(OlsonNames())
+#&gt; [1] 593
+head(OlsonNames())
+#&gt; [1] &quot;Africa/Abidjan&quot;     &quot;Africa/Accra&quot;       &quot;Africa/Addis_Ababa&quot;
+#&gt; [4] &quot;Africa/Algiers&quot;     &quot;Africa/Asmara&quot;      &quot;Africa/Asmera&quot;
+tail(OlsonNames())
+#&gt; [1] &quot;US/Pacific-New&quot; &quot;US/Samoa&quot;       &quot;UTC&quot;            &quot;W-SU&quot;          
+#&gt; [5] &quot;WET&quot;            &quot;Zulu&quot;</code></pre>
+<p>In Base R: the time zone is an attribute of the date-time that only controls printing.</p>
+<pre class="r"><code>(x1 &lt;- ymd_hms(&quot;2015-06-01 12:00:00&quot;, tz = &quot;America/New_York&quot;))
+#&gt; [1] &quot;2015-06-01 12:00:00 EDT&quot;
+(x2 &lt;- ymd_hms(&quot;2015-06-01 18:00:00&quot;, tz = &quot;Europe/Copenhagen&quot;))
+#&gt; [1] &quot;2015-06-01 18:00:00 CEST&quot;
+(x3 &lt;- ymd_hms(&quot;2015-06-02 04:00:00&quot;, tz = &quot;Pacific/Auckland&quot;))
+#&gt; [1] &quot;2015-06-02 04:00:00 NZST&quot;
+
+# verify same time
+x1 - x2
+#&gt; Time difference of 0 secs
+x1 - x3
+#&gt; Time difference of 0 secs</code></pre>
+<p>{lubridate} always uses UTC.</p>
+<pre class="r"><code># tz dropped
+x4 &lt;- c(x1, x2, x3)
+x4
+#&gt; [1] &quot;2015-06-01 12:00:00 EDT&quot; &quot;2015-06-01 12:00:00 EDT&quot;
+#&gt; [3] &quot;2015-06-01 12:00:00 EDT&quot;
+
+# change tz for display
+x4a &lt;- with_tz(x4, tzone = &quot;Australia/Lord_Howe&quot;)
+x4a
+#&gt; [1] &quot;2015-06-02 02:30:00 +1030&quot; &quot;2015-06-02 02:30:00 +1030&quot;
+#&gt; [3] &quot;2015-06-02 02:30:00 +1030&quot;
+x4a - x4
+#&gt; Time differences in secs
+#&gt; [1] 0 0 0
+
+# change tz to fix an incorrect tz
+x4b &lt;- force_tz(x4, tzone = &quot;Australia/Lord_Howe&quot;)
+x4b
+#&gt; [1] &quot;2015-06-01 12:00:00 +1030&quot; &quot;2015-06-01 12:00:00 +1030&quot;
+#&gt; [3] &quot;2015-06-01 12:00:00 +1030&quot;
+x4b - x4
+#&gt; Time differences in hours
+#&gt; [1] -14.5 -14.5 -14.5</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1061,7 +1408,6 @@ flights_dt %&gt;%
 #&gt; [53] R6_2.4.1         knitr_1.28       utf8_1.1.4       rprojroot_1.3-2 
 #&gt; [57] Quandl_2.10.0    stringi_1.5.3    Rcpp_1.0.4.6     vctrs_0.3.2     
 #&gt; [61] dbplyr_1.4.3     tidyselect_1.1.0 xfun_0.13</code></pre>
-</div>
 </div>
 </div>
 </div>
