@@ -1245,8 +1245,24 @@ bar + coord_polar()
     between y and x to 1. This means that the y:x representation is 1:1.
     
 
+### Setting vs. Mapping (from Primers)
+Setting works for every aesthetic in ggplot2. If you want to manually set the aesthetic to a value in the visual space, set the aesthetic outside of aes().
 
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy), 
+             color = "blue", shape = 3, alpha = 0.5)
+```
 
+If you want to map the aesthetic to a variable in the data space, map the aesthetic inside aes().
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, 
+                           color = class, shape = fl, alpha = displ))
+```
+
+Putting an aesthetic in the wrong location is one of the most common graphing errors. Sometimes it helps to think of legends. If you will need a legend to understand what the color/shape/etc. means, then you should probably put the aesthetic inside `aes()` --- ggplot2 will build a legend for every aesthetic mapped here. If the aesthetic has no meaning and is just... well, aesthetic, then set it outside of `aes()`."
 
 
 

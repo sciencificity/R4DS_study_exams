@@ -951,9 +951,65 @@ but it should be 3!
     
 
 
+#### Writing pipeable functions
 
+If you want to write your own pipeable functions, think about the return value. E.g. for dplyr and tidyr the object type is the data frame. 
 
+There are two basic types of pipeable functions: __transformations__ and __side-effects__. 
 
+- With __transformations__, an object is passed to the function's first argument and a modified object is returned. 
+- With __side-effects__, the passed object is not transformed. Instead, the function performs an action on the object, like printing or plotting. These functions "invisibly" return the first argument, so that they can still be used in a pipeline.
 
+```{r}
+show_missings <- function(df) {
+  n <- sum(is.na(df))
+  cat("Missing values: ", n, "\n", sep = "")
+  
+  invisible(df) # return df invisibly
+}
+```
+
+```{r}
+# df does not get printed but it is there
+show_missings(mtcars)
+```
+
+It's still there, it's just not printed by default.
+
+```{r}
+x <- show_missings(mtcars) 
+class(x)
+dim(x)
+head(x)
+```
+
+We can use it in a pipe:
+
+```{r}
+library(dplyr)
+mtcars %>% 
+  show_missings() %>% 
+  mutate(mpg = ifelse(mpg < 20, NA, mpg)) %>% 
+  show_missings() 
+```
+
+### What's in a function?
+
+Want to see what the code for a function is?
+
+Type the function name with no parantheses.
+
+E.g. `lm`, `factorial`
+
+```{r}
+lm
+```
+
+To figure out what arguments a function takes use `args(func_name)`.
+
+```{r}
+args(lm)
+args(dplyr::across)
+```
 
 

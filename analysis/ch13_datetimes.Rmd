@@ -1,0 +1,694 @@
+---
+title: "Chapter 13 - Dates and Time with {lubridate}"
+author: "Vebash Naidoo"
+date: "08/11/2020"
+output: html_document
+---
+```{css, echo = FALSE}
+.tabset h2 {display: none;}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning=FALSE, message=FALSE,
+                      comment = "#>", 
+                      collapse = TRUE)
+
+options(scipen=10000)
+library(tidyverse)
+library(flair)
+library(magrittr)
+library(lubridate)
+library(tidyquant)
+library(nycflights13)
+theme_set(theme_tq())
+```
+# Date and Times {#buttons .tabset .tabset-fade .tabset-pills}
+
+__Click on the tab buttons below for each section__
+
+<h2>Create Date and Times</h2>
+## Create Date and Times
+
+```{r}
+today()
+now()
+```
+
+### From Strings
+
+#### Dates
+
+```{r}
+ymd("2017-01-31")
+mdy("january 31st, 2017")
+dmy("31-Jan-2017")
+ymd(20170131)
+```
+
+#### Date Times
+
+```{r}
+ymd_hms("2017-01-31 20:11:59")
+mdy_hm("01/31/2017 08:01")
+# force a dttm creation by supplying a tz
+ymd(20170131, tz = "UTC")
+dmy(31012017, tz = "Africa/Johannesburg")
+```
+
+### From Individual Components
+
+Sometimes date and time components are scattered over multiple columns in 
+your data. This is the case in the `flights` data.
+
+You can use <span style="color: #008080;background-color:#9FDDBA">`make_date()`</span> 
+and <span style="color: #008080;background-color:#9FDDBA">`make_datetime()`</span>
+to create a date or dttm field.
+
+```{r md, include=FALSE}
+flights %>% 
+  select(year:day, hour, minute)
+
+flights %>% 
+  select(year:day, hour, minute) %>% 
+  mutate(
+    departure = make_datetime(year = year, month = month, day = day, 
+                              hour = hour, min = minute)
+  )
+```
+
+```{r, echo=FALSE}
+decorate("md") %>% 
+  flair("make_datetime", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+```{r mdttm, include=FALSE}
+make_dttm <- function(year, month, day, time){
+  # this func will make a proper dttm for the dep_time,
+  # sched_dep_time etc.
+  make_datetime(year, month, day,
+                # divide by 100 and get the integer part - hour part
+                time %/% 100,
+                # divide by 100 and get the remainder - minutes part
+                time %% 100
+                )
+}
+
+(flights_dt <- flights %>% 
+  filter(!is.na(dep_time), !is.na(arr_time)) %>% 
+  mutate(
+    dep_time = make_dttm(year, month, day, dep_time),
+    sched_dep_time = make_dttm(year, month, day, sched_dep_time),
+    arr_time = make_dttm(year, month, day, arr_time),
+    sched_arr_time = make_dttm(year, month, day, sched_arr_time)
+  ) %>% 
+  select(origin, dest, ends_with("delay"), ends_with("time")))
+
+flights_dt %>% 
+  ggplot(aes(dep_time)) +
+  # how's the distribution across the year looking?
+  geom_freqpoly(binwidth = 24*60*60) # binwidth = 1 day
+
+flights_dt %>% 
+  filter(dep_time < ymd(20130102)) %>% 
+  ggplot(aes(dep_time)) +
+  # how's the distribution of dep times across a day looking
+  geom_freqpoly(binwidth = 15 * 60) # how's it looking every 15 min
+```
+
+```{r, echo=FALSE}
+decorate("mdttm") %>% 
+  flair("make_datetime", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+Note that when you use date-times in a numeric context (like in a histogram), <span style="color: #008080;background-color:#9FDDBA">1 means 1 second</span>, so <span style="color: #008080;background-color:#9FDDBA">a binwidth of 86400 means one day</span>. __For dates, 1 means 1 day__.
+
+### From other types
+
+You may want to switch between a __date-time__ and a __date__. That's the job of <span style="color: #008080;background-color:#9FDDBA">`as_datetime()`</span> and <span style="color: #008080;background-color:#9FDDBA">`as_date()`</span>.
+
+```{r md2, include=FALSE}
+as_datetime(today()) # today() returns a date, convert to dttm
+as_date(now()) # now() returns a dttm, convert to date
+```
+
+```{r, echo=FALSE}
+decorate("md2") %>% 
+  flair("as_datetime", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("as_date", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+Sometimes you'll get date/times as numeric offsets from the "Unix Epoch", 1970-01-01. If the offset is in seconds, use `as_datetime()`; if it's in days, use `as_date()`.
+
+```{r defaultdt, include = FALSE}
+as_datetime(60 * 60 * 10) # add 10 hours to default dttm 1970-01-01 UTC
+as_datetime(0) # default dttm
+as_date(365 * 10 + 2) # add 10 years (365 * 10) + 2 days to get to 1980-01-01
+as_date(365 * 10) # add 10 years - 365 days per year * 10
+as_date(0) # default date (add 0 days)
+as_date(10) # add 10 days to default
+make_date() # default == Unix Epoch Date
+make_datetime() # default == Unix Epoch Date
+```
+
+```{r, echo=FALSE}
+decorate("defaultdt") %>% 
+  flair("1970-01-01", background = "#cfdad4", 
+        color = "#6d6875") %>% 
+  flair("1970-01-01 UTC", background = "#cfdad4", 
+        color = "#6d6875")
+```
+
+
+
+### Exercises
+
+1.  What happens if you parse a string that contains invalid dates?
+
+    ```{r, eval = FALSE}
+    ymd(c("2010-10-10", "bananas"))
+    ```
+    ```{r, warning = TRUE}
+    ymd(c("2010-10-10", "bananas"))
+    ```
+    
+    You get a warning that some failed to parse.
+    
+1.  What does the `tzone` argument to `today()` do? Why is it important?
+
+    The `today()` and `now()` uses your computer's time and date. This is
+    usually accurate for your timezone. For example I am in South Africa
+    so you would see _SAST_ when I call `now()`.
+    
+    But you may want to do analyses that involve other timezones, or UTC 
+    itself. You can use this argument to adjust to the timezone you're
+    interested in.
+    
+    ```{r}
+    today()
+    (utc_today <- today(tzone = "UTC"))
+    utc_today == today()
+    utc_today == today(tzone = "GMT")
+    now()
+    now("UTC")
+    ```
+
+
+1.  Use the appropriate lubridate function to parse each of the following dates:
+
+    ```{r}
+    d1 <- "January 1, 2010"
+    mdy(d1)
+    d2 <- "2015-Mar-07"
+    ymd(d2)
+    d3 <- "06-Jun-2017"
+    dmy(d3)
+    d4 <- c("August 19 (2015)", "July 1 (2015)")
+    mdy(d4)
+    d5 <- "12/30/14" # Dec 30, 2014
+    mdy(d5)
+    ```
+
+<h2>Date-time components</h2>
+## Date-time components
+
+We will focus on the accessor functions that let you get and set individual components.
+
+### Getting components
+
+- `year()`
+- `month()`
+- `mday()` (day of the month)
+- `yday()` (day of the year)
+- `wday()` (day of the week)
+- `hour()`, `minute()`, and `second()`
+
+```{r comp1, include=FALSE}
+(datetime <- ymd_hms("2016-07-08 12:34:56"))
+year(datetime)
+
+month(datetime)
+
+mday(datetime)
+
+yday(datetime)
+
+wday(datetime)
+
+wday(datetime, 
+     label = TRUE) # abbreviated weekday day instead of number
+
+wday(datetime, 
+     label = TRUE, 
+     abbr = FALSE) # full weekday name 
+
+hour(datetime)
+
+minute(datetime)
+
+second(datetime)
+
+month(datetime, 
+      label = TRUE) # abbreviated month name instead of number
+
+month(datetime, label = TRUE, 
+      abbr = FALSE) # full month name instead of number
+```
+
+```{r, echo=FALSE}
+decorate("comp1") %>% 
+  flair("year", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("month", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("mday", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("yday", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("wday", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("hour", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("minute", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("second", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("label = TRUE", background = "#cfdad4", 
+        color = "#6d6875") %>% 
+  flair("abbr = FALSE", background = "#cfdad4", 
+        color = "#6d6875")
+  
+```
+
+```{r}
+(current_dt <- now())
+year(current_dt)
+month(current_dt)
+mday(current_dt)
+yday(current_dt)
+wday(current_dt) # sunday
+wday(current_dt, 
+     label = TRUE) # abbreviated weekday day instead of number
+wday(current_dt, 
+     label = TRUE, 
+     abbr = FALSE) # full weekday name 
+hour(current_dt)
+minute(current_dt)
+second(current_dt)
+month(current_dt, 
+      label = TRUE) # abbreviated month name instead of number
+month(current_dt, label = TRUE, 
+      abbr = FALSE) # full month name instead of number
+```
+
+```{r}
+# wday() shows that more flights depart in the week
+flights_dt %>% 
+  mutate(wday = wday(dep_time, label = TRUE)) %>% 
+  ggplot(aes(x = wday)) +
+  geom_bar()
+```
+
+```{r}
+# interesting that flights at certain minutes in
+# an hour experience lower delays
+flights_dt %>% 
+  mutate(minute = minute(dep_time)) %>% 
+  group_by(minute) %>% 
+  summarise(avg_delay = mean(dep_delay, na.rm = TRUE),
+            n = n()) %>% 
+  ggplot(aes(minute, avg_delay)) +
+  geom_line() +
+  geom_point(aes(size = n))
+```
+
+```{r}
+# the scheduled departure time, does not show such
+(sched_dep <- flights_dt %>% 
+  mutate(minute = minute(sched_dep_time)) %>% 
+  group_by(minute) %>% 
+  summarise(avg_delay = mean(dep_delay, na.rm = TRUE),
+            n = n())) 
+
+sched_dep %>% 
+  ggplot(aes(minute, avg_delay)) +
+  geom_line() +
+  geom_point(aes(size = n))
+
+sched_dep %>% 
+  ggplot(aes(minute, n)) +
+  geom_line()
+```
+
+You may also round a date to a nearby unit of time, with `floor_date()`, `round_date()`, and `ceiling_date()`. 
+
+Each function takes a vector of dates to change, and then the name of the unit to round down (floor), round up (ceiling), or round to. 
+
+```{r round, include=FALSE}
+(x <- ymd_hms("2020-08-08 12:01:59.93")) # Saturday 8th Aug
+
+round_date(x, ".5s")
+
+round_date(x, "sec")
+
+round_date(x, "second")
+
+round_date(x, "minute")
+
+round_date(x, "5 mins")
+
+round_date(x, "hour")
+
+round_date(x, "2 hours")
+
+round_date(x, "day") # it's past afternoon so closer to tomorrow
+
+round_date(x, "week")
+
+round_date(x, "month")
+
+round_date(x, "bimonth") # 1,3,5,7,9,11 are the bimonths
+
+round_date(x, "quarter")
+
+round_date(x, "quarter") == round_date(x, "3 months")
+
+round_date(x, "halfyear")
+
+round_date(x, "year")
+
+round_date(x, "season")
+```
+
+```{r, echo=FALSE}
+decorate("round") %>% 
+  flair('round_date(x, "hour")', background = "#9FDDBA", 
+        color = "#008080")
+```
+
+```{r floor, include=FALSE}
+(x <- ymd_hms("2020-08-08 12:01:59.93")) # Saturday 8th Aug
+
+floor_date(x, ".5s")
+
+floor_date(x, "sec")
+
+floor_date(x, "second")
+
+floor_date(x, "minute")
+
+floor_date(x, "5 mins")
+
+floor_date(x, "hour")
+
+floor_date(x, "2 hours")
+
+floor_date(x, "day") # floor of date hence still today even though closer to tomorrow
+
+floor_date(x, "week") # floor so last sunday NOT tomorrow
+
+floor_date(x, "month")
+
+floor_date(x, "bimonth") # 1,3,5,7,9,11 are the bimonths
+
+floor_date(x, "quarter")
+
+floor_date(x, "quarter") == floor_date(x, "3 months")
+
+floor_date(x, "halfyear")
+
+floor_date(x, "year")
+
+floor_date(x, "season")
+```
+
+```{r, echo=FALSE}
+decorate("floor") %>% 
+  flair('floor_date(x, "hour")', background = "#9FDDBA", 
+        color = "#008080")
+```
+
+```{r ceil, include=FALSE}
+(x <- ymd_hms("2020-08-08 12:01:59.93")) # Saturday 8th Aug
+
+ceiling_date(x, ".5s")
+
+ceiling_date(x, "sec")
+
+ceiling_date(x, "second")
+
+ceiling_date(x, "minute")
+
+ceiling_date(x, "5 mins")
+
+ceiling_date(x, "hour")
+
+ceiling_date(x, "2 hours")
+
+ceiling_date(x, "day") # ceiling of date hence tomorrow
+
+# ceiling so tomorrow which is start of new week
+# Sunday 9th August 2020
+ceiling_date(x, "week") 
+
+ceiling_date(x, "month")
+
+ceiling_date(x, "bimonth") # 1,3,5,7,9,11 are the bimonths
+
+ceiling_date(x, "quarter")
+
+ceiling_date(x, "quarter") == ceiling_date(x, "3 months")
+
+ceiling_date(x, "halfyear")
+
+ceiling_date(x, "year")
+
+ceiling_date(x, "season")
+```
+
+```{r, echo=FALSE}
+decorate("ceil") %>% 
+  flair('ceiling_date(x, "hour")', background = "#9FDDBA", 
+        color = "#008080")
+```
+
+### Setting components
+
+You can also use each accessor function to set the components of a date/time.
+Note that the accessor functions now appear on the left hand side of `<-`.
+
+```{r set1, include=FALSE}
+(datetime <- ymd_hms("2016-07-08 12:34:56"))
+
+# change year
+year(datetime) <- 2020
+datetime
+
+# change month
+month(datetime) <- 01
+datetime
+
+# progress time by 1 hr
+hour(datetime) <- hour(datetime) + 1
+datetime
+```
+
+```{r, echo=FALSE}
+decorate("set1") %>% 
+  flair("year(datetime) <-", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("month(datetime) <-", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+Alternatively, rather than modifying in place, you can create a new date-time with `update()`. This also allows you to set multiple values at once.
+
+```{r set2, include=FALSE}
+update(datetime,
+       year = 2020,
+       month = 02,
+       mday = 02,
+       hour = 15)
+
+datetime
+
+# entered a too big date / hour / min? 
+# these roll over
+ymd("2020-02-27") %>% 
+  update(mday = 29)
+
+ymd("2020-02-27") %>% 
+  update(mday = 30, hour = 22,
+         min = 65)
+```
+
+```{r, echo=FALSE}
+decorate("set2") %>% 
+  flair("update", background = "#9FDDBA", 
+        color = "#008080") 
+```
+
+```{r}
+flights_dt %>% 
+  # ignore the date, let's make a new date that pulls all observations
+  # back to the 1st of Jan
+  mutate(dep_hour = update(dep_time, yday = 1)) %>% 
+  arrange(desc(sched_dep_time)) %>% 
+  head(10) %>% 
+  print(width = Inf)
+
+# let's visualise how many flights leave at different hours in 
+# the day by pretending all flights occurred on the same day
+# the 1st Jan
+flights_dt %>% 
+  mutate(dep_hour = update(dep_time, yday = 1)) %>% 
+  ggplot(aes(dep_hour)) +
+  geom_freqpoly(binwidth = 60 * 5) # every 5 min
+```
+
+
+### Exercises
+
+1.  How does the distribution of flight times within a day change over the 
+    course of the year?
+    
+    ```{r}
+    # devtools::install_github("sciencificity/werpals")
+    library(werpals)
+    flights_dt %>% 
+      mutate(month = factor(month(dep_time)),
+             dep_hour = update(dep_time, yday = 1)) %>% 
+      ggplot(aes(dep_hour, colour = month)) +
+      geom_freqpoly(binwidth = 60 * 30) +
+      scale_colour_nature(palette = "bryce")
+    ```
+    
+    Feb is lower but it has less days as well.
+    
+1.  Compare `dep_time`, `sched_dep_time` and `dep_delay`. Are they consistent?
+    Explain your findings.
+    
+    The $sched\_dep\_time + dep\_delay = dep\_time$.
+    It does for most observations but there is a handful that does not meet this
+    relationship.
+    
+    ```{r}
+    flights %>% 
+      select(year, month, day, hour, minute, dep_time, sched_dep_time,
+             dep_delay)
+    flights_dt %>% 
+      select(dep_time, sched_dep_time,
+             dep_delay) %>% 
+      mutate(act_dep_time = sched_dep_time + 
+               hms(str_glue("0, {dep_delay}, 0"))) %>% 
+      filter(dep_time != act_dep_time)
+    ```
+    
+
+1.  Compare `air_time` with the duration between the departure and arrival.
+    Explain your findings. (Hint: consider the location of the airport.)
+    
+    ```{r}
+    flights_dt %>% 
+      select(origin, dest, dep_time, arr_time, air_time) %>% 
+      filter(!is.na(air_time), !is.na(dep_time), 
+             !is.na(arr_time)) %>% 
+      mutate(dest_same_tz = dep_time + 
+               hms(str_glue("0, {air_time}, 0"))) %>% 
+      filter(arr_time == dest_same_tz)
+    
+    ```
+    
+    There are only a few where the $dep\_time + air\_time = arr\_time$. If you look
+    at the dest vs the origin I would have suspected that the airports
+    in the same timezone align but LGA and ORD are different timezones and they
+    align, LGA and BNA also and others too. So truly I am unsure without
+    further digging.
+    
+1.  How does the average delay time change over the course of a day?
+    Should you use `dep_time` or `sched_dep_time`? Why?
+    
+    ```{r}
+    flights_dt %>% 
+      mutate(sched_dep_hr = update(sched_dep_time, yday = 1),
+             hr_day = hour(sched_dep_hr)) %>% 
+      group_by(hr_day) %>% 
+      summarise(avg_delay = mean(dep_delay, na.rm = TRUE),
+                n = n()) %>% 
+      ggplot(aes(hr_day, avg_delay)) +
+      geom_point(aes(size = n)) +
+      geom_line()
+    ```
+    
+    I used `sched_dep_time` since that is when the flight should
+    have left and is a more accurate reflection of how delay time
+    changes over the course of a day.
+    
+
+1.  On what day of the week should you leave if you want to minimise the
+    chance of a delay?
+    
+    ```{r}
+    flights_dt %>% 
+      mutate(day_of_week = wday(sched_dep_time, abbr = TRUE, label = TRUE)) %>% 
+      group_by(day_of_week) %>% 
+      summarise(avg_delay = mean(dep_delay, na.rm = TRUE),
+                n = n()) %>% 
+      ggplot(aes(day_of_week, avg_delay)) +
+      geom_col()
+    ```
+    
+    You best leave on Saturday.
+    
+
+1.  What makes the distribution of `diamonds$carat` and 
+    `flights$sched_dep_time` similar?
+    
+    ```{r}
+    diamonds %>% 
+      count(carat, sort = TRUE)
+    
+    flights_dt %>% 
+      mutate(sched_min = minute(sched_dep_time)) %>% 
+      count(sched_min, sort = TRUE)
+    
+    # out of curiosity how does actual dep_time look?
+    flights_dt %>% 
+      mutate(min = minute(dep_time)) %>% 
+      count(min, sort = TRUE)
+    ```
+    
+    More flights are scheduled at round numbers that we talk about often;
+    quarter past, half past, 6 'o clock, etc. The actual departure
+    time is much less aligned with how we talk. We don't usually talk about
+    out flight being 54 minutes past 5! Except when we were kids learning
+    to tell time, then we're very precise (ask my 6yo who keeps reminding me
+    when I say it's nearly half past 8 and time for bed, that actually
+    it is only 8:26 so he has 4 more minutes `r emo::ji("haha")`).
+    
+    For carats it is similar 0.3, 0.7, 0.4 but there are some 
+    anomalies for example 0.32 or 0.31 or even 1.01.
+    
+
+1.  Confirm my hypothesis that the early departures of flights in minutes
+    20-30 and 50-60 are caused by scheduled flights that leave early. 
+    Hint: create a binary variable that tells you whether or not a flight 
+    was delayed.
+    
+    ```{r}
+    flights_dt %>% 
+      filter(!is.na(dep_delay)) %>% 
+      mutate(early = dep_delay < 0,
+             dep_min = minute(update(dep_time, yday = 1))) %>% 
+      ggplot(aes(dep_min, fill = early)) +
+      geom_bar() +
+      scale_fill_disney(palette = "pan")
+    ```
+    
+    The flights that leave in minutes `22 - 29` and `49 - 59` do leave earlier 
+    than scheduled. 
+
