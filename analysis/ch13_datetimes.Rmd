@@ -692,3 +692,341 @@ flights_dt %>%
     The flights that leave in minutes `22 - 29` and `49 - 59` do leave earlier 
     than scheduled. 
 
+<h2>Time spans</h2>
+## Time spans
+
+Now we're gonna see how arithmetic with dates works and learn about three 
+important classes that represent time spans:
+
+* __durations__, which represent an exact number of seconds.
+* __periods__, which represent human units like weeks and months.
+* __intervals__, which represent a starting and ending point.
+
+### Durations
+
+When we subtract two dates, we get a `difftime` object.
+
+```{r}
+# How old is Hadley?
+(h_age <- today() - ymd(19791014))
+```
+
+A `difftime` class object records a time span of 
+
+- seconds, 
+- minutes, 
+- hours, 
+- days, or 
+- weeks. 
+
+The ambiguity can make `difftimes` painful to work with, so {lubridate} provides 
+an alternative which always uses seconds: the __duration__.
+
+```{r}
+as.duration(h_age)
+```
+
+#### Duration constructors
+
+```{r durations, include=FALSE}
+dseconds(15)
+
+dminutes(10)
+
+dhours(c(12,24))
+
+ddays(0:5)
+
+dweeks(3)
+
+dweeks(3) == 24 * 60 * 60 * 7 * 3 # 24 hrs, 60 min, 60 s in each min, 7 days, 3 weeks
+
+dyears(1)
+```
+
+```{r, echo=FALSE}
+decorate("durations") %>% 
+  flair("ds", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("dm", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("dh", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("dd", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("dw", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("dy", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+Durations always record the time span in seconds. Larger units are converted
+using standard rules e.g. 60 seconds in a minute, 60 minutes in an hour, 
+24 hours in day, 7 days in a week, and 365 days in a year. Notice all
+duration constructors start with __d__ and end with __s__ (i.e. the plural
+of each time span - **d**day**s**)
+
+#### Duration Arithmetic
+
+You can add and multiply durations.
+
+```{r}
+2 * dyears(1)
+dyears(2)
+
+dyears(1)  + dweeks(12) + dhours(15)
+```
+
+We can also add and subtract durations to and from dates.
+
+```{r}
+(tomorrow <- today() + ddays(1))
+(last_yr <- year(today() - dyears(1)))
+```
+
+But durations represent an exact number of seconds, and hence sometimes 
+you might get unexpected results, especially with daylight savings etc.
+that complicate date time arithmetic.
+
+```{r}
+(one_pm <- ymd_hms("2016-03-12 13:00:00",
+                  tz = "America/New_York"))
+one_pm + ddays(1)
+```
+
+One day after 1pm on March 12, is 2pm on March 13?! `r emo::ji("confused")` 
+The tz has changed from EST to EDT due to daylight savings time.
+
+### Periods
+
+To solve this problem, {lubridate} provides __periods__. Periods are time spans 
+that work with "human" times, like days and months. 
+
+```{r}
+one_pm
+one_pm + days(1)
+```
+
+#### Period constructors
+
+```{r}
+seconds(15)
+
+minutes(10)
+
+hours(c(12, 24))
+
+days(0:5)
+
+weeks(3)
+
+years(1)
+
+months(1:6)
+```
+
+#### Period Arithmetic
+
+```{r}
+2 * years(1)
+years(2)
+
+years(1) + weeks(12) + hours(15)
+
+10 * (months(6) + days(1))
+
+days(50) + hours(25) + minutes(2)
+```
+
+Compared to durations, periods are more likely to do what you expect.
+
+```{r}
+# A leap year
+ymd(20200101) + dyears(1)
+ymd(20200101) + years(1)
+
+one_pm
+one_pm + ddays(1)
+one_pm + days(1)
+```
+
+Some planes appear to have arrived at their destination _before_ they departed 
+from NYC.
+
+```{r}
+flights_dt %>% 
+  filter(arr_time < dep_time)
+```
+
+They are overnight flights and incorrectly have the same date information for 
+both the departure and the arrival times.
+
+```{r}
+(flights_dt <- flights_dt %>% 
+  mutate(overnight = arr_time < dep_time,
+         arr_time = arr_time + days(overnight * 1),
+         sched_arr_time = sched_arr_time + days(overnight + 1))) %>% 
+  filter(overnight == TRUE) %>% 
+  print(width = Inf)
+
+flights_dt %>% 
+  filter(overnight, arr_time < dep_time)
+```
+
+
+### Intervals
+
+`dyears(1) / ddays(365)` returns one, because durations are always represented 
+by a number of seconds, and a duration of a year is defined as 365 days 
+worth of seconds.
+
+For `years(1) / days(1)` it gives an estimate, and a warning.
+
+```{r}
+dyears(1) / ddays(365)
+
+years(1) / days(1)
+```
+
+For more accurate measurements, use an __interval__. An interval is a 
+duration with a starting point and hence you can determine how long it is.
+
+```{r}
+(next_yr <- today() + years(1))
+ 
+(today() %--% next_yr)
+
+# to find how many periods in an _interval_ use integer division
+(today() %--% next_yr) %/% days(1)
+
+# for duration you can use / or integer division 
+# for consistency probably %/% is better
+(today() %--% next_yr) %/% ddays(1)
+```
+
+<br>
+<figure>
+  <img src="assets/datetimes-arithmetic.PNG" width="700" height="450" alt="The allowed arithmetic operations between pairs of date/time classes.">
+  <figcaption>The allowed arithmetic operations between pairs of date/time classes.</figcaption>
+</figure>
+
+### Exercises
+
+1.  Why is there `months()` but no `dmonths()`?
+    
+    A month is not easily converted to a number of seconds, because
+    a month could be 4 weeks, 5 weeks, 28 days, 30 days, or 31 days.
+    
+    For a day we use standard convention of 24 hours in a day, and convert that
+    to seconds, same for a week (7 days of 24 each day). But with months
+    there is no standard number.
+
+
+1.  Explain `days(overnight * 1)` to someone who has just started 
+    learning R. How does it work?
+    
+    ```{r, eval = FALSE}
+    (flights_dt <- flights_dt %>% 
+      mutate(overnight = arr_time < dep_time,
+             arr_time = arr_time + days(overnight * 1),
+             sched_arr_time = sched_arr_time + days(overnight + 1))) %>% 
+      filter(overnight == TRUE) %>% 
+      print(width = Inf)
+    ```
+    
+    
+    `overnight` is a logical value - in the df each arr_time is checked against
+    dep_time if it is before the departure time? 
+    
+    - it is: marked as TRUE (anomalies we are looking for).
+    - it is not: marked as FALSE.
+    
+    We need to progress our anomaly arr_times on by `1 day`.
+    
+    - For our anomalies overnight == TRUE which behind the scenes is the integer
+    1 (for yes, this criterion is met). $overnight * 1 = 1 * 1 = 1$. The 
+    arrival time is progressed one day forward and is now accurate.
+    - For normal flights (the arrival time is after the departure time) 
+    overnight == FALSE which behind the scenes is the integer 0 (for nope, 
+    this criterion is __not__ met). $overnight * 1 = 0 * 1 = 0$. The 
+    arrival time is unchanged since it is already correct.
+
+1.  Create a vector of dates giving the first day of every month in 2015.
+    Create a vector of dates giving the first day of every month
+    in the _current_ year.
+
+    ```{r}
+    ymd(20150101) + months(0:11)
+    floor_date(today(), "year") + months(0:11)
+    ```
+
+1.  Write a function that given your birthday (as a date), returns 
+    how old you are in years.
+    
+    ```{r}
+    age <- function(dob){
+      secs <- as.duration(today() - dob)
+      secs / (60 * 60 * 24 * 365)
+    }
+    
+    age(ymd(20140612))
+    ```
+    
+
+1.  Why can't `(today() %--% (today() + years(1))) / months(1)` work?
+    
+    It works but I suspect that the `/` should be replaced by `%/%` integer
+    division.
+
+    ```{r}
+    # how many months in the timespan today - next_yr_this_time
+    (today() %--% (today() + years(1))) %/% months(1)
+    ```
+
+<h2>Timezones</h2>
+## Timezones
+
+```{r}
+# what is my timezone?
+Sys.timezone()
+```
+
+Get a list of tz's.
+
+```{r}
+length(OlsonNames())
+head(OlsonNames())
+tail(OlsonNames())
+```
+
+In Base R: the time zone is an attribute of the date-time that only controls 
+printing.
+
+```{r}
+(x1 <- ymd_hms("2015-06-01 12:00:00", tz = "America/New_York"))
+(x2 <- ymd_hms("2015-06-01 18:00:00", tz = "Europe/Copenhagen"))
+(x3 <- ymd_hms("2015-06-02 04:00:00", tz = "Pacific/Auckland"))
+
+# verify same time
+x1 - x2
+x1 - x3
+```
+
+{lubridate} always uses UTC.
+
+```{r}
+# tz dropped
+x4 <- c(x1, x2, x3)
+x4
+
+# change tz for display
+x4a <- with_tz(x4, tzone = "Australia/Lord_Howe")
+x4a
+x4a - x4
+
+# change tz to fix an incorrect tz
+x4b <- force_tz(x4, tzone = "Australia/Lord_Howe")
+x4b
+x4b - x4
+```
+
