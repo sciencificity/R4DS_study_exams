@@ -1,0 +1,874 @@
+---
+title: "Chapter 16 - Vectors"
+author: "Vebash Naidoo"
+date: "08/11/2020"
+output: html_document
+---
+
+```{css, echo = FALSE}
+.tabset h2 {display: none;}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning=FALSE, message=FALSE,
+                      comment = "#>", 
+                      collapse = TRUE)
+
+options(scipen=10000)
+library(tidyverse)
+library(flair)
+library(magrittr)
+library(lubridate)
+```
+# Vectors {#buttons .tabset .tabset-fade .tabset-pills}
+
+__Click on the tab buttons below for each section__
+
+<h2>Vector Basics</h2>
+## Vector Basics
+
+There are two types of vectors:
+
+1. __Atomic__ vectors, of which there are different types:
+  __logical__, __integer__, __double__,  __character__, __complex__, and 
+  __raw__. 
+1. __Lists__,  which are sometimes called recursive vectors because lists can 
+  contain other lists. 
+
+`NULL` is often used to represent the absence of a vector (a vector 
+of length 0) (as opposed to `NA` which is used to represent the absence of a 
+value in a vector). 
+
+
+Every vector has two key properties: 
+
+1.  Its __type__, which you can determine with `typeof()` / `class`.
+
+    ```{r}
+    typeof(letters)
+    class(letters)
+    typeof(1:10)
+    class(1:10)
+    ```
+
+1. Its __length__, which you can determine with `length()`.
+
+    ```{r}
+    (x <- list("a", "b", 1:10))
+    length(x)
+    typeof(x)
+    class(x)
+    ```
+
+#### Logical
+
+```{r}
+1:10 %% 3 == 0
+c(TRUE, FALSE, TRUE, NA)
+typeof(1:10 %% 3 == 0)
+length(1:10 %% 3 == 0)
+```
+
+#### Numeric
+
+```{r, warning = TRUE}
+typeof(1)
+# sees this as integer - maybe because of the list of values, it can infer
+# type better?
+typeof(1:10) 
+typeof(1L) # the L specifically changes it to an integer
+typeof(1.5L)
+typeof(1L:10L)
+1L:10L
+```
+
+Doubles are <span style="color: #FFE4E1;background-color:#FD5800">approximations!</span>
+
+```{r}
+(x <- sqrt(2) ^ 2)
+x - 2
+```
+
+Integers have one special value: `NA`, while <span style="color: #FFE4E1;background-color:#FD5800">doubles have four</span>:
+<span style="color: #008080;background-color:#9FDDBA">`NA`, 
+`NaN`, `Inf` and `-Inf`</span>.
+
+```{r}
+c(-1, 0, 1) / 0
+```
+
+Avoid using `==` to check for these other special values. Instead use the 
+helper functions `is.finite()`, `is.infinite()`, and `is.nan()`:
+  
+  |                  |  0  | Inf | NA  | NaN |
+  |------------------|-----|-----|-----|-----|
+  | `is.finite()`    |  x  |     |     |     |
+  | `is.infinite()`  |     |  x  |     |     |
+  | `is.na()`        |     |     |  x  |  x  |
+  | `is.nan()`       |     |     |     |  x  |
+
+#### Character
+
+R uses a global string pool. This means that each unique string is only stored 
+in memory once.
+
+```{r}
+x <- "This is a reasonably long string"
+pryr::object_size(x)
+y <- rep(x, 1000)
+pryr::object_size(y)
+# 8 byte pointers x 1000 to a 152B string
+# I am not exactly getting to the same amt but it's close
+# the bytes that make a kB is either 1000 or 1024
+# I get close if I use the calc below BUT that is completely
+# NOT consistent so I am probably incorrect here!!
+(8*1000)/1000 + 152/1024
+```
+
+#### Missing values
+
+Each type of _atomic vector_ has its own missing value.
+
+```{r}
+NA            # logical
+NA_integer_   # integer
+NA_real_      # double
+NA_character_ # character
+```
+
+### Exercises
+
+1.  Describe the difference between `is.finite(x)` and  `!is.infinite(x)`.
+
+    - `is.finite(x)` tests if each element in the vector is finite.
+    - `is.infinite(x)` tests if each element in the vector is `Inf` / `-Inf`.
+    The `!` in front of `is.infinite(x)` asks each element of the vector -
+    "Are you NOT Inf / -Inf?".
+    
+        * Hey -1/0 are you NOT Inf/-Inf? To which -1/0 replies FALSE,
+        I am indeed -Inf!
+        * Hey 0/0 are you NOT Inf/-Inf? To which 0/0 replies TRUE,
+        I am not Inf/-Inf I am NaN!
+        * Hey 1/0 are you NOT Inf/-Inf? To which 1/0 replies FALSE,
+        I am indeed Inf!
+        
+    Help Page: <br>
+    
+    is.finite returns a vector of the same length as x the jth element of 
+    which is TRUE if x[j] is finite (i.e., it is not one of the values 
+    NA, NaN, Inf or -Inf) and FALSE otherwise. Complex numbers are finite 
+    if both the real and imaginary parts are.
+
+    is.infinite returns a vector of the same length as x the jth element of 
+    which is TRUE if x[j] is infinite (i.e., equal to one of Inf or -Inf) 
+    and FALSE otherwise.
+    
+
+    ```{r}
+    is.finite(c(-1, 0, 1) / 0)
+    !is.infinite(c(-1, 0, 1) / 0)
+    ```
+
+
+1.  Read the source code for `dplyr::near()` (Hint: to see the source code,
+    drop the `()`). How does it work? 
+    
+    ```{r}
+    dplyr::near
+    ```
+
+    It checks if two numbers are close to each other within some 
+    tolerance `tol`.
+    
+    ```{r}
+    dplyr::near(1, 1.1)
+    dplyr::near(1, 1.1, tol = 0.11)
+    dplyr::near(sqrt(2)^2, 2)
+    dplyr::near(4, 4 + 4.567342e-10)
+    ```
+    
+    
+
+1.  A logical vector can take 3 possible values. How many possible
+    values can an integer vector take? How many possible values can
+    a double take? Use google to do some research.
+    
+    From the help page ?`integer`: The range of representable integers is 
+    restricted to about +/-2*10^9.
+    
+    For doubles it is a bit more complicated to explain. [Here](https://en.wikipedia.org/wiki/Double-precision_floating-point_format)
+    is more information.
+    
+
+1.  Brainstorm at least four functions that allow you to convert a double to an
+    integer. How do they differ? Be precise.
+    
+    Depending on the function used some of these drop the decimal part and
+    just keep the integer part, other functions convert the double
+    to the nearest integer.
+    
+    ```{r}
+    as.integer(2.678)
+    2.678 %/% 1
+    round(2.678, 0)
+    floor(2.678)
+    ceiling(2.678)
+    trunc(2.678)
+    ```
+    
+    
+1.  What functions from the readr package allow you to turn a string
+    into logical, integer, and double vector?
+    
+    The different `parse_` variants.
+
+    ```{r, warning = TRUE}
+    readr::parse_integer(c("1", "2"))
+    readr::parse_double(c("2.45", "6.79"))
+    readr::parse_logical(c("TRUE", "FALSE", "NA", "1", "0", "3"))
+    ```
+
+<h2>Using atomic vectors</h2>
+## Using atomic vectors
+
+### Coercion
+
+You can coerce in two ways.
+
+1. Explicitly using `as.logical()`, `as.integer()`, `as.double()`, 
+or `as.character()`. But before explicitly coercing see if you can make 
+the fix upstream, e.g. in your readr `col_types` specification.
+
+1. Implicitly when you use a vector in a specific context, e.g. when you use 
+a logical vector with in sum for example the TRUE and FALSE are converted
+to 1 / 0 and added up.
+    
+    ```{r}
+    x <- sample(20, # sample from 1:20
+                100, # get me a 100 of those
+                replace = TRUE # repeats are welcome
+                )
+    y <-  x > 10
+    sum(y) # how many greater than 10?
+    mean(y) # what proportion are greater than 10?
+    ```
+
+When you try and create a vector containing multiple types with `c()`, the most 
+complex type always wins.
+
+```{r}
+typeof(c(TRUE, 1L)) # most complex type = integer
+typeof(c(1L, 1.5)) # most complex type = double
+typeof(c(1.5, "a")) # I can't convert "a" to a double, so 1.5 converted to char
+```
+
+An atomic vector can not have a mix of different types because the type is a 
+<span style="color: #008080;background-color:#9FDDBA">property of the complete vector</span>,
+__NOT__ <span style="color: #FFE4E1;background-color:#FD5800">the individual elements</span>.
+
+### Test functions
+
+Sometimes you want to do different things based on the type of vector and you may use
+Base R's, `typeof()`,`is.vector()` etc. BUT these often return surprising 
+results. <br>
+{purr}'s `is_*` functions provide a good alternative.
+
+|                  | lgl | int | dbl | chr | list |
+|------------------|-----|-----|-----|-----|------|
+| `is_logical()`   |  x  |     |     |     |      |
+| `is_integer()`   |     |  x  |     |     |      |
+| `is_double()`    |     |     |  x  |     |      |
+| `is_numeric()`   |     |  x  |  x  |     |      |
+| `is_character()` |     |     |     |  x  |      |
+| `is_atomic()`    |  x  |  x  |  x  |  x  |      |
+| `is_list()`      |     |     |     |     |  x   |
+| `is_vector()`    |  x  |  x  |  x  |  x  |  x   |
+
+### Scalars and recycling rules
+
+R will also implicitly coerce the length of vectors by __recycling__, 
+i.e. the shorter vector is repeated to the same length as the longer vector. 
+
+Generally this is useful when you are mixing vectors and "scalars" (a single 
+number is a vector of length 1).
+
+```{r}
+sample(10) + 100
+runif(10) > 0.5
+```
+
+```{r}
+# this is essentially as follows
+# 1  2  3  4  5  6  7  8  9  10  +
+# 1  2  1  2  1  2  1  2  1  2 
+# -------------------------------
+# 2  4  4  6  6  8  8  10  10 12
+# the shorter vector (1,2) is recycled as many times as needed
+1:10 + 1:2 
+```
+
+The `recycling` is silent except when the length of the longer is not an 
+integer multiple of the length of the shorter vector.
+
+```{r, warning = TRUE}
+1:10 + 1:3
+```
+
+In tidyverse you will get errors when you recycle anything other than a "scalar"
+(length 1 vector). To recycle, you need to do it yourself with `rep()`.
+
+```{r, error = TRUE}
+tibble(x = 1:4, y = 1:2)
+tibble(x = 1:4, y = rep(1:2, 2))
+tibble(x = 1:4, y = rep(1:2, each = 2))
+```
+
+### Naming vectors
+
+You may name your vector items during creation with `c()`.
+
+```{r}
+c(x = 1, y = 2, z = 4)
+```
+
+Or use `purrr::set_names()`:
+
+```{r}
+set_names(1:3, c("a", "b", "c"))
+```
+
+
+### Subsetting
+
+To subset a vector use `[`. `[` is the subsetting function.
+
+- Subsetting with positive integers keeps the elements at those positions:
+
+    ```{r}
+    x <- c("one", "two", "three", "four", "five")
+    x[c(3, 2, 5)]
+    ```
+    
+    Can also get longer output by repeating.
+  
+    ```{r}
+    x[c(1, 1, 5, 5, 5, 2)]
+    ```
+    
+- Negative values drop the elements at the specified positions.
+    
+    ```{r}
+    x[c(-1, -3, -5)]
+    ```
+    
+    It's an error to mix positive and negative values.
+    
+    ```{r, error = TRUE}
+    x[c(1, -1)]
+    ```
+
+- The error message mentions subsetting with zero, which returns no values.
+    
+    ```{r}
+    x[0]
+    ```
+
+- Subsetting with a logical vector keeps all values corresponding to a
+    `TRUE` value. We use this often.
+    
+    ```{r}
+    x <- c(10, 3, NA, 5, 8, 1, NA)
+    
+    # All non-missing values of x
+    x[!is.na(x)]
+    
+    # All even (or missing!) values of x
+    x[x %% 2 == 0]
+    ```
+
+- If you have a named vector, you can subset it with a character vector:
+    
+    ```{r}
+    x <- c(abc = 1, def = 2, xyz = 5)
+    x[c("xyz", "def")]
+    x[c("xyz", "xyz", "abc", "abc")]
+    ```
+    
+
+- The simplest type of subsetting is nothing, `x[]`, which returns the 
+    complete `x`. Not useful for subsetting vectors, but useful
+    when subsetting matrices E.g if `x` is 2d, `x[1, ]` selects the first row and 
+    all the columns, and `x[, -1]` selects all rows and all columns except
+    the first.
+    
+- There is an important variation of `[` called `[[`. `[[` only ever extracts 
+a single element, and always drops names.
+
+
+### Exercises
+
+1.  What does `mean(is.na(x))` tell you about a vector `x`? What about
+    `sum(!is.finite(x))`?
+    
+    - `mean(is.na(x))` tells you the proportion that is NA
+    - `sum(!is.finite(x))` tells you how many non-finite entries
+    are in your data
+    
+    ```{r}
+    mean(is.na(c(NA, 2, TRUE, 4, NA, NaN, Inf, -Inf))) # 3/8
+    sum(!is.finite(c(NA, Inf, 56, -Inf, 98.6, NaN)))
+    ```
+    
+1.  Carefully read the documentation of `is.vector()`. What does it actually
+    test for? Why does `is.atomic()` not agree with the definition of 
+    atomic vectors above?
+    
+    - `is.atomic(x)` returns TRUE if the vector is any of the types ("logical", 
+    "integer", "numeric", "complex", "character" and "raw") and NULL.
+    - `is.vector(x)` returns TRUE if x is a vector with no attributes other 
+    than `names`.
+
+    ```{r}
+    # borrowed from help page of ?is.atomic
+    is_a_type <- function(x) c(vect = is.vector(x), atomic = is.atomic(x))
+    is_a_type(c(a = 1, b = 3))
+    is_a_type(list(2)) # why? class not one of those listed - i.e. it is a list
+    is_a_type(list(2, 4, "test"))
+    typeof(list(2))
+    x <- list(2, 4, "test")
+    attributes(x)
+    ```
+    
+1.  Compare and contrast `setNames()` with `purrr::set_names()`.
+
+    |     setNames()          | purrr::set_names      |
+    |:-------------------------:|:-----------------------:|
+    | two args, vector + vector of names            | three args, vector + vector of names + ...|
+    | vector of names must be in c()                | vector of names can be in c() or individually specified|
+    | NA                                            | Can be a function e.g. toupper |
+    | If `nm` is NULL names removed                 | If `nm` is NULL names removed  |
+    | If `nm` only specified, names match elements  | Error! Not allowed! x is mandatory |
+    | If 1st arg only specified, error              | vector + names created out of 1st arg|
+  
+      ```{r, error = TRUE, eval = TRUE}
+      purrr::set_names(1:4, c("a", "b", "c", "d"))
+      purrr::set_names(1:4, letters[1:4])
+      purrr::set_names(1:4, "a", "b", "c", "d")
+      # If the second argument is omitted a vector is named with itself
+      purrr::set_names(letters[1:5])
+      # Alternatively you can supply a function
+      purrr::set_names(1:10, ~ letters[seq_along(.)])
+      purrr::set_names(head(mtcars), toupper)
+      # If the input vector is unnamed, it is first named after itself
+      # before the function is applied:
+      purrr::set_names(letters, toupper)
+      (mtcars_sub <- head(mtcars))
+      purrr::set_names(mtcars_sub, nm = NULL)
+      
+      (tmp <- 1:3)
+      (tmp <- setNames(tmp, c("foo", "bar", "baz")))
+      (tmp <- setNames(tmp, NULL))
+      (tmp <- setNames(nm=tmp))
+      tmp <- setNames(tmp)
+      ```
+  
+
+1.  Create functions that take a vector as input and returns:
+    
+    a. The last value.  Should you use `[` or `[[`?
+    
+      ```{r}
+      last_val <- function(x){
+        if(length(x) > 0) {
+          x[[length(x)]]
+        } else {
+          x
+        }
+      }
+      
+      x <- 1:10
+      last_val(x)
+      x <- c()
+      last_val(x)
+      ```
+    
+    a. The elements at even numbered positions.
+    
+      ```{r}
+      even_vals <- function(x){
+        x[c(seq_along(x) %% 2 == 0)]
+      }
+      x <- c("a", "b", "c", "d", "e")
+      even_vals(x)
+      x <- 1:10
+      even_vals(x)
+      ```
+    
+    
+    a. Every element except the last value.
+    
+      ```{r}
+      all_but_last_val <- function(x){
+        if(length(x) > 0) {
+          x[-length(x)]
+        } else {
+          "empty vector"
+        }
+      }
+      
+      x <- 1:10
+      all_but_last_val(x)
+      x <- c()
+      all_but_last_val(x)
+      all_but_last_val(c(10))
+      ```
+    
+    a. Only even numbers (and no missing values).
+    
+      ```{r}
+            even_nums <- function(x){
+              if ((typeof(x) == "integer" || 
+                   typeof(x) == "numeric" || 
+                   typeof(x) == "double") 
+                  && (length(x) > 0)) {
+                x[(x %% 2 == 0) & (!is.na(x))]
+              } else {
+                "Not an integer vector!"
+              }
+            }
+      x <- 1:10
+      x[(x %% 2 == 0) & (!is.na(x))]
+      even_nums(x)
+      x <- c(NA, 1:5, NaN)
+      even_nums(x)
+      x <- letters[1:10]
+      even_nums(x)
+      ```
+ 
+1.  Why is `x[-which(x > 0)]` not the same as `x[x <= 0]`? 
+
+    - `which(x)`: "more generally, including when x has NA's, which(x) 
+    is seq_along(x)[!is.na(x) & x]". This keeps track of the indicies 
+    where the condition we're testing is TRUE. FALSE and NA are 
+    ignored.
+    - x <= 0 tests each to see which item meets criterion, and then marks
+    those that do as TRUE, but NA / NaN values are NA for these.
+    - Help page for ?`[`: "NAs in indexing: When extracting, a numerical, 
+    logical or character NA index picks an unknown element and so returns 
+    NA in the corresponding element of a logical, integer, numeric, complex 
+    or character result, and NULL for a list."
+    - So the NaN is the exception here, in that it is treated differently
+    in each. In which(x) it was NA after the condition was checked, 
+    so it is not what which(x) is looking for (recall which(x) only cares
+    about TRUE), as a result it is ignored, but for `[]` it returns as NA.
+
+    ```{r}
+    x <- c(-9, NA, -Inf, 0:2, NaN, -12, 10, Inf)
+    x[-which(x > 0)]
+    which(x > 0)
+    
+    x[x <= 0]
+    x<=0
+    x[!(x <= 0)]
+    ```
+
+1.  What happens when you subset with a positive integer that's bigger
+    than the length of the vector? What happens when you subset with a 
+    name that doesn't exist?
+    
+    You get `NA`.
+    
+    ```{r}
+    x <- 1:10
+    v <- c(a = 1, b = 2, c = 3)
+    x[11]
+    v["d"]
+    ```
+    
+
+<h2>Lists (Recursive vectors)</h2>  
+## Lists (Recursive vectors)
+
+Lists are more complex than `vectors` as `lists` can contain other lists. 
+You create a list with `list()`.
+
+```{r}
+x <- list(1, 2, 3)
+x
+x[1]
+```
+
+Super useful tool for working with lists is `str()` because it focusses on 
+the **str**ucture, not the contents.
+
+```{r}
+str(x)
+x_named <- list(a = 1, b = 2, c = 3)
+str(x_named)
+```
+
+`list()` may have items of mixed types and other lists (not allowed in vectors).
+```{r}
+y <- list("a", 1L, 1.5, TRUE)
+str(y)
+```
+
+```{r}
+z <- list(list(1, 2), list(3, 4))
+str(z)
+```
+
+```{r}
+x1 <- list(c(1, 2), c(3, 4))
+str(x1)
+x2 <- list(list(1, 2), list(3, 4))
+str(x2)
+x3 <- list(1, list(2, list(3)))
+str(x3)
+```
+
+### Subsetting
+
+There are three ways to subset a list:
+
+```{r}
+a <- list(a = 1:3, b = "a string", c = pi, d = list(-1, -5))
+str(a)
+```
+
+*   `[` extracts a sub-list. The result will always be a list.
+
+    ```{r}
+    str(a[1:2])
+    str(a[4])
+    a["a"]
+    ```
+    
+*   `[[` extracts a single component from a list. It removes a level of 
+    hierarchy from the list.
+
+    ```{r}
+    str(a[[1]])
+    str(a[[4]])
+    ```
+
+*   `$` is a shorthand for extracting named elements of a list. It works
+    similarly to `[[` except that you don't need to use quotes.
+    
+    ```{r}
+    a$a
+    a[["a"]]
+    ```
+
+`[[` drills down into the list while `[` returns a new, smaller list. 
+
+
+### Exercises
+
+1.  Draw the following lists as nested sets:
+
+    a.  `list(a, b, list(c, d), list(e, f))`
+    
+    <img src="assets/list1.PNG" width="500" height="450" alt="answer exercise 1">
+    
+    a.  `list(list(list(list(list(list(a))))))`
+    
+    <img src="assets/list2.PNG" width="500" height="450" alt="answer exercise 1">
+
+    ```{r}
+    super_nested <- list(list(list(list(list(list(a = "a"))))))
+    str(super_nested)
+    ```
+
+1.  What happens if you subset a tibble as if you're subsetting a list?
+    What are the key differences between a list and a tibble?
+    
+    The subsetting is much the same - some cases the orientation of the returned
+    structure is changed - e.g. column return for tibble `[` but row return
+    for list `[`.
+    
+    The difference between a tibble and a list is that all the elements 
+    of a tibble must be vectors with the same length (deals with
+    `rectangular data`). A list works with rectangular and non-rectangular
+    data.
+    
+    
+    ```{r}
+    x <- list(a = 1:10, b = letters[1:10])
+    str(x)
+    (x_tib <- tibble(a = 1:10, b = letters[1:10]))
+    
+    x[["a"]]
+    x_tib[["a"]]
+    x[2]
+    x_tib[2]
+    typeof(x[["a"]])
+    typeof(x_tib[["a"]])
+    typeof(x[2])
+    typeof(x_tib[2])
+    x$a
+    x_tib$a
+    ```
+
+<h2>Attributes</h2>
+## Attributes
+
+Any vector can contain arbitrary additional metadata through its __attributes__. 
+Attributes are a kind of named list of vectors that can be attached to an object. 
+You can get and set individual attribute values with `attr()` or see them all at once with `attributes()`.
+
+```{r}
+x <- 1:10
+attr(x, "greeting")
+attr(x, "greeting") <- "Hi!"
+attr(x, "farewell") <- "Bye!"
+attributes(x)
+```
+
+```{r}
+as.Date
+```
+
+You can list all the methods for a generic with `methods()`:
+
+```{r}
+methods("as.Date")
+```
+
+You can see the specific implementation of a method with `getS3method()`:
+
+```{r}
+getS3method("as.Date", "default")
+getS3method("as.Date", "numeric")
+```
+
+One important S3 generic is `print()` as well as the subsetting functions
+`[`, `[[`, and `$`. 
+
+<h2>Augmented vectors</h2>
+## Augmented vectors
+
+There are some __augmented vectors__, which are vectors with additional
+__attributes__:
+
+* Factors
+* Dates 
+* Date-times
+* Tibbles
+
+### Factors
+
+Factors are designed to represent categorical data that can take a fixed 
+set of possible values. Factors are built on top of integers, 
+and have a levels attribute:
+
+```{r}
+x <- factor(c("ab", "cd", "ab"), levels = c("ab", "cd", "ef"))
+typeof(x)
+attributes(x)
+```
+
+### Dates and date-times
+
+Dates in R are numeric vectors that represent the number of days since 
+1 January 1970.
+
+```{r}
+x <- as.Date("1971-01-01")
+unclass(x)
+typeof(x)
+attributes(x)
+```
+
+Date-times are numeric vectors with class `POSIXct` that represent the number 
+of seconds since 1 January 1970.
+
+```{r}
+x <- lubridate::ymd_hm("1970-01-01 01:00")
+unclass(x)
+typeof(x)
+attributes(x)
+```
+
+The `tzone` attribute is optional. It controls how the time is printed.
+
+```{r}
+attr(x, "tzone") <- "US/Pacific"
+x
+attr(x, "tzone") <- "US/Eastern"
+x
+attr(x, "tzone") <- "Africa/Johannesburg"
+x
+```
+
+You can always convert datetimes to a regular date time 
+`lubridate::as_date_time()`.
+
+### Tibbles
+
+Tibbles are augmented lists: they have class "tbl_df" + "tbl" + "data.frame", 
+and `names` (column) and `row.names` attributes:
+
+```{r}
+tb <- tibble::tibble(x = 1:5, y = 5:1)
+typeof(tb)
+attributes(tb)
+```
+
+```{r}
+df <- data.frame(x = 1:5, y = 5:1)
+typeof(df)
+attributes(df)
+```
+
+The main difference is the class. 
+
+### Exercises
+
+1.  What does `hms::hms(3600)` return? How does it print? What primitive
+    type is the augmented vector built on top of? What attributes does it 
+    use?
+    
+    Time is stored in it. This is converting 3600 seconds to a time in the
+    format hh:mm:ss hence `01:00:00` returned. Built on top of `difftime`. 
+    It does not need any attibutes as all have defaults.
+    
+    ```{r}
+    hms::hms(3600) # 1 hr - equivalent to hms(seconds = 3600)
+    hms::hms(0) 
+    hms::hms(60) # 1 min
+    
+    attributes(hms::hms(1))
+    ```
+    
+    
+1.  Try and make a tibble that has columns with different lengths. What
+    happens?
+    
+    You get an error unless it is a scalar (vector of length = 1) and
+    a column with length > 1. I.e. you can't combine a column of length = 2,
+    and another of length = 4 as with base R.
+    
+    ```{r, error = TRUE}
+    x <- c(2)
+    y <- letters[1:5]
+    tibble(x = x, y = y)
+    
+    x <- c(1:5)
+    y <- letters[1:10]
+    tibble(x = x, y = y)
+    ```
+    
+
+1.  Based on the definition above, is it ok to have a list as a
+    column of a tibble?
+    
+    Yes it is ok, but you will need a list for every observation.
+    
+    ```{r}
+    x <- list(list(1,2), list(3,4))
+    y <- letters[1:2]
+    tibble(x = x, y = y)
+    ```
+    
