@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Vebash Naidoo" />
+
+<meta name="date" content="2020-09-11" />
+
+<title>Chapter 22 - Graphics for communication</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+      </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R4DS Book - Prep for exam</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Chapter 22 - Graphics for communication</h1>
+<h4 class="author">Vebash Naidoo</h4>
+<h4 class="date">09/11/2020</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-11-10
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>r4ds_book/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200814code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200814)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200814code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200814)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreecf689c820a2c3a9dd1bd8f2df6ed0f03bf8dd1a9targetblankcf689c8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/cf689c820a2c3a9dd1bd8f2df6ed0f03bf8dd1a9" target="_blank">cf689c8</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreecf689c820a2c3a9dd1bd8f2df6ed0f03bf8dd1a9targetblankcf689c8a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/cf689c820a2c3a9dd1bd8f2df6ed0f03bf8dd1a9" target="_blank">cf689c8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  analysis/images/
+    Untracked:  code_snipp.txt
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/ch22_graphics_for_comms.Rmd</code>) and HTML (<code>docs/ch22_graphics_for_comms.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/cf689c820a2c3a9dd1bd8f2df6ed0f03bf8dd1a9/analysis/ch22_graphics_for_comms.Rmd" target="_blank">cf689c8</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-10
+</td>
+<td>
+finished ch22
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<style type="text/css">
+.tabset h2 {display: none;}
+</style>
+<div id="buttons" class="section level1 tabset tabset-fade tabset-pills">
+<h1>ggplot</h1>
+<p><strong>Click on the tab buttons below for each section</strong></p>
+<h2>
+Introduction
+</h2>
+<div id="label" class="section level2">
+<h2>Label</h2>
+<ul>
+<li><p>You add labels with the <span style="color: #008080;background-color:#9FDDBA"> <code>labs()</code></span> function.</p>
+<ul>
+<li><code>title</code>: The purpose of a plot title is to summarise the main finding.</li>
+<li><code>subtitle</code>: adds additional detail in a smaller font beneath the title.</li>
+<li><code>caption</code>: adds text at the bottom right of the plot, often used to describe the source of the data.</li>
+<li><code>x</code>: replaces x-axis name (sometimes you want more descriptive names, or units).</li>
+<li><code>y</code>: replaces y-axis name (sometimes you want more descriptive names, or units).</li>
+<li>The legend titles are replaced using the aesthetic that made it - e.g. <code>colour</code> or <code>fill</code>.</li>
+</ul></li>
+</ul>
+<pre><code class='language-r'><code>ggplot(mpg, aes(displ, hwy)) +<br>&nbsp;&nbsp;geom_point(aes(color = class)) +<br>&nbsp;&nbsp;geom_smooth(se = FALSE) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>labs</span>(<span style='background-color:#cfdad4;color:#6d6875'>title</span> = "Fuel efficiency generally decreases with engine size")</code></code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-44-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(mpg, aes(displ, hwy)) +<br>&nbsp;&nbsp;geom_point(aes(colour = class)) +<br>&nbsp;&nbsp;geom_smooth(se = FALSE) +<br>&nbsp;&nbsp;labs(title = str_glue("Fuel efficiency generally decreases ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"with engine size"),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#cfdad4;color:#6d6875'>subtitle</span> = str_glue("Two seaters (sports cars) are the ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"exception because of their light weight"),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#cfdad4;color:#6d6875'>caption</span> = "Data from fueleconomy.gov")</code></code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-45-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(mpg, aes(displ, hwy)) +<br>&nbsp;&nbsp;geom_point(aes(<span style='background-color:#cfdad4;color:#6d6875'>colour</span> = class)) +<br>&nbsp;&nbsp;geom_smooth(se = FALSE) +<br>&nbsp;&nbsp;labs(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#cfdad4;color:#6d6875'>x</span> = "Engine displacement (L)",<br>&nbsp;&nbsp;&nbsp;&nbsp;y = "Highway fuel economy (mpg)",<br>&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#cfdad4;color:#6d6875'>colour</span> = "Car type"<br>&nbsp;&nbsp;)</code></code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-46-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>It’s possible to use mathematical equations instead of text strings. Just switch <code>""</code> out for <span style="color: #008080;background-color:#9FDDBA"><code>quote()</code></span> and read about the available options in <code>?plotmath</code>.</p>
+<pre><code class='language-r'><code>df <- tibble(<br>&nbsp;&nbsp;x = runif(10),<br>&nbsp;&nbsp;y = runif(10)<br>)<br>ggplot(df, aes(x, y)) +<br>&nbsp;&nbsp;geom_point() +<br>&nbsp;&nbsp;labs(<br>&nbsp;&nbsp;&nbsp;&nbsp;x = <span style='background-color:#9FDDBA;color:#008080'>quote</span>(sum(x[i]^2, i == 1, n)),<br>&nbsp;&nbsp;&nbsp;&nbsp;y = <span style='background-color:#9FDDBA;color:#008080'>quote</span>(alpha + beta + frac(delta, theta))<br>&nbsp;&nbsp;)</code></code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-47-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<div id="exercises" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Create one plot on the fuel economy data with customised <code>title</code>, <code>subtitle</code>, <code>caption</code>, <code>x</code>, <code>y</code>, and <code>colour</code> labels.</p>
+<pre class="r"><code>ggplot(mpg, aes(class, hwy)) +
+  geom_boxplot() +
+  geom_jitter(aes(colour = displ), width = 0.1, height = 0) +
+  labs(title = &quot;Fuel efficiency is worst for pickups and suv&quot;,
+       subtitle = &quot;These vehicle types have the bigger engine size&quot;,
+       x = &quot;Car Type&quot;,
+       y = &quot;Highway fuel economy (mpg)&quot;,
+       colour = &quot;Engine size&quot;
+  )</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p></li>
+<li><p>The <code>geom_smooth()</code> is somewhat misleading because the <code>hwy</code> for large engines is skewed upwards due to the inclusion of lightweight sports cars with big engines. Use your modelling tools to fit and display a better model.</p>
+<pre class="r"><code>ggplot(mpg, aes(displ, hwy, colour = class)) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+  scale_colour_disney(&quot;pan&quot;) +
+  labs(title = str_glue(&quot;Fuel efficiency generally decreases &quot;,
+                        &quot;with engine size&quot;),
+       subtitle = str_glue(&quot;Two seaters (sports cars) are the &quot;,
+                           &quot;exception because of their light weight&quot;),
+       caption = &quot;Data from fueleconomy.gov&quot;,
+       x = &quot;Engine displacement (L)&quot;,
+       y = &quot;Highway fuel economy (mpg)&quot;,
+       colour = &quot;Car type&quot;)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p></li>
+<li><p>Take an exploratory graphic that you’ve created in the last month, and add informative titles to make it easier for others to understand.</p></li>
+</ol>
+<h2>
+Annotations
+</h2>
+</div>
+</div>
+<div id="annotations" class="section level2">
+<h2>Annotations</h2>
+<p>It’s also often useful to label individual observations or groups of observations. The first tool you have at your disposal is <span style="color: #008080;background-color:#9FDDBA"><code>geom_text()</code></span>. <code>geom_text()</code> is similar to <code>geom_point()</code>, but it has an additional aesthetic - <code>label</code>. This makes it possible to add textual labels to your plots.</p>
+<ul>
+<li>a tibble that provides labels</li>
+<li>?? find out in exercises</li>
+</ul>
+<pre><code class='language-r'><code>mpg %>% <br>&nbsp;&nbsp;select(class, displ, hwy, <span style='background-color:#cfdad4;color:#6d6875'>model</span>) %>% <br>&nbsp;&nbsp;group_by(class) %>% <br>&nbsp;&nbsp;mutate(rn = row_number(desc(hwy))) %>% <br>&nbsp;&nbsp;filter(rn %in% c(1,2))<br>#> # A tibble: 14 x 5<br>#> # Groups: &nbsp;&nbsp;class [7]<br>#> &nbsp;&nbsp;&nbsp;class &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;displ &nbsp;&nbsp;hwy <span style='background-color:#cfdad4;color:#6d6875'>model</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rn<br>#> &nbsp;&nbsp;&nbsp;<chr> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<dbl> <int> <chr> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<int><br>#> &nbsp;1 2seater &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.7 &nbsp;&nbsp;&nbsp;26 corvette &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>#> &nbsp;2 2seater &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.2 &nbsp;&nbsp;&nbsp;26 corvette &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>#> &nbsp;3 minivan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.4 &nbsp;&nbsp;&nbsp;24 caravan 2wd &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>#> &nbsp;4 minivan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;24 caravan 2wd &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>#> &nbsp;5 midsize &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.4 &nbsp;&nbsp;&nbsp;31 sonata &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>#> &nbsp;6 midsize &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.5 &nbsp;&nbsp;&nbsp;32 altima &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>#> &nbsp;7 suv &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.5 &nbsp;&nbsp;&nbsp;27 forester awd &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>#> &nbsp;8 suv &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.5 &nbsp;&nbsp;&nbsp;26 forester awd &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>#> &nbsp;9 compact &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.8 &nbsp;&nbsp;&nbsp;37 corolla &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>#> 10 pickup &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.7 &nbsp;&nbsp;&nbsp;20 toyota tacoma 4wd &nbsp;&nbsp;&nbsp;&nbsp;2<br>#> 11 pickup &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.7 &nbsp;&nbsp;&nbsp;22 toyota tacoma 4wd &nbsp;&nbsp;&nbsp;&nbsp;1<br>#> 12 compact &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.9 &nbsp;&nbsp;&nbsp;44 jetta &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>#> 13 subcompact &nbsp;&nbsp;1.9 &nbsp;&nbsp;&nbsp;44 new beetle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>#> 14 subcompact &nbsp;&nbsp;1.9 &nbsp;&nbsp;&nbsp;41 new beetle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br># create a tibble for your <span style='background-color:#9FDDBA;color:#008080'>label</span> data<br>best_in_class <- mpg %>% <br>&nbsp;&nbsp;group_by(class) %>% <br>&nbsp;&nbsp;filter(row_number(desc(hwy)) == 1)<br><br>ggplot(mpg, aes(displ, hwy)) +<br>&nbsp;&nbsp;geom_point(aes(colour = class)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_text</span>(aes(<span style='background-color:#9FDDBA;color:#008080'>label</span> = <span style='background-color:#cfdad4;color:#6d6875'>model</span>), # the <span style='background-color:#9FDDBA;color:#008080'>label</span> should be the <span style='background-color:#cfdad4;color:#6d6875'>model</span> in your tbl <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# use your <span style='background-color:#9FDDBA;color:#008080'>label</span> data<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#cfdad4;color:#6d6875'>data = best_in_class</span>)</code></code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-48-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>It is sometimes hard to read, like here, where labels overlap with each other, and with the points. We can make things a little better by switching to <span style="color: #008080;background-color:#9FDDBA"><code>geom_label()</code></span> which draws a rectangle behind the text. We also use the <span style="color: #008080;background-color:#9FDDBA"><code>nudge_y</code></span> parameter to move the labels slightly above the corresponding points.</p>
+<pre><code class='language-r'><code>ggplot(data = mpg, aes(displ, hwy)) +<br>&nbsp;&nbsp;geom_point(aes(colour = class)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>geom_label</span>(aes(label = model), <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data = best_in_class,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>nudge_y</span> = 2,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alpha = 0.5)</code></code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-49-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>There is still a problem in that there are two labels on top of each other in the left corner. We can use the <span style="color: #008080;background-color:#9FDDBA"><strong>ggrepel</strong></span> package by Kamil Slowikowski which automatically adjusts labels so that they don’t overlap ❗ ❤️</p>
+<pre><code class='language-r'><code>ggplot(mpg, aes(displ, hwy)) +<br>&nbsp;&nbsp;geom_point(aes(colour = class)) +<br>&nbsp;&nbsp;# add a second layer of large, hollow points to <br>&nbsp;&nbsp;# highlight the points labelled<br>&nbsp;&nbsp;geom_point(<span style='background-color:#9FDDBA;color:#008080'>size = 3, shape = 1</span>, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data = best_in_class)</code></code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-50-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(mpg, aes(displ, hwy)) +<br>&nbsp;&nbsp;geom_point(aes(colour = class)) +<br>&nbsp;&nbsp;geom_point(<span style='background-color:#9FDDBA;color:#008080'>size = 3, shape = 1</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data = best_in_class) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>ggrepel::geom_label_repel</span>(aes(label = model), <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data = best_in_class)</code></code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-50-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><code>theme(legend.position = "none"</code>) turns the legend off.</p>
+<pre class="r"><code># find the median displ, hwy for each class
+class_avg &lt;- mpg %&gt;% 
+  group_by(class) %&gt;% 
+  summarise(
+    displ = median(displ),
+    hwy = median(hwy)
+  )
+
+ggplot(mpg, aes(displ, hwy, 
+                # move up here since used by both 
+                # geom_label_repel - to colour label text
+                # and geom_point to colour points
+                colour = class)) +
+  ggrepel::geom_label_repel(aes(label = class), # stick label in median place
+                             data = class_avg,
+                             size = 6,
+                             label.size = 0,
+                             segment.colour = NA) +
+  geom_point() +
+  # we&#39;ve replaced our legend by labels on the plot
+  # in the median position!
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>You may want to add a single label to the plot, but you’ll still need to create a data frame. <br> Often, you want the label in the corner of the plot, so it’s convenient to create a new data frame using <code>summarise()</code> to compute the <strong>maximum values of x and y</strong>.</p>
+<pre><code class='language-r'><code>label <- mpg %>% <br>&nbsp;&nbsp;summarise(<br>&nbsp;&nbsp;&nbsp;&nbsp;displ = max(displ),<br>&nbsp;&nbsp;&nbsp;&nbsp;hwy = max(hwy),<br>&nbsp;&nbsp;&nbsp;&nbsp;label = "Increasing engine size is \nrelated to decreasing fuel economy."<br>&nbsp;&nbsp;)<br><br>ggplot(mpg, aes(displ, hwy)) +<br>&nbsp;&nbsp;geom_point() +<br>&nbsp;&nbsp;geom_text(aes(label = label),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data = label, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>vjust</span> = "<span style='background-color:#cfdad4;color:#6d6875'>top</span>", <span style='background-color:#9FDDBA;color:#008080'>hjust</span> = "<span style='background-color:#cfdad4;color:#6d6875'>right</span>")</code></code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-51-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>If you want to place the text exactly on the borders of the plot, you can use <code>+Inf</code> and <code>-Inf</code>. Note we use tibble here since we have more “static” data.</p>
+<pre><code class='language-r'><code>label <- tibble(<br>&nbsp;&nbsp;displ = <span style='background-color:#cfdad4;color:#6d6875'>Inf</span>,<br>&nbsp;&nbsp;hwy = <span style='background-color:#cfdad4;color:#6d6875'>Inf</span>,<br>&nbsp;&nbsp;label = "Increasing engine size is \nrelated to decreasing fuel economy."<br>)<br><br>ggplot(mpg, aes(displ, hwy)) +<br>&nbsp;&nbsp;geom_point() +<br>&nbsp;&nbsp;geom_text(aes(label = label), data = label, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vjust = "top", hjust = "right")</code></code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-52-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We manually broke the label up into lines using <code>"\n"</code> but we may have used <code>stringr::str_wrap()</code> to automatically add line breaks.</p>
+<pre class="r"><code>&quot;Increasing engine size is related to decreasing fuel economy.&quot; %&gt;%
+  # break the above text up automatically
+  # I want 40 characters per line
+  stringr::str_wrap(width = 40) %&gt;%
+  writeLines()
+#&gt; Increasing engine size is related to
+#&gt; decreasing fuel economy.</code></pre>
+<pre><code class='language-r'><code>label <- tibble(<br>&nbsp;&nbsp;displ = Inf,<br>&nbsp;&nbsp;hwy = Inf,<br>&nbsp;&nbsp;label = <span style='background-color:#9FDDBA;color:#008080'>stringr::str_wrap</span>("Increasing engine size is <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;related to decreasing fuel economy.", <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width = 35)<br>)<br><br>ggplot(mpg, aes(displ, hwy)) +<br>&nbsp;&nbsp;geom_point() +<br>&nbsp;&nbsp;geom_text(aes(label = label), data = label, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vjust = "top", hjust = "right")</code></code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-53-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center">
+<img src="figure/ch22_graphics_for_comms.Rmd/just-1.png" alt="All nine combinations of `hjust` and `vjust`." width="60%" />
+<p class="caption">
+All nine combinations of <code>hjust</code> and <code>vjust</code>.
+</p>
+</div>
+<div id="exercises-1" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Use <code>geom_text()</code> with infinite positions to place text at the four corners of the plot.</p>
+<p>I am not sure if it is just me but I am unable to do it with Inf and -Inf.</p>
+<p>So I used 0, 1 as the authors did for the <code>hjust</code>, <code>vjust</code> plot, and tweaked it for my case here.</p>
+<pre class="r"><code>vjust &lt;- c(&quot;top&quot;, &quot;top&quot;, &quot;bottom&quot;, &quot;bottom&quot;)
+hjust &lt;- c(&quot;left&quot;, &quot;right&quot;, &quot;left&quot;, &quot;right&quot;)
+label &lt;- c(&quot;Top left&quot;, &quot;Top right&quot;, &quot;Bottom left&quot;, &quot;Bottom right&quot;)
+x &lt;- c(0, 1, 0, 1)
+y &lt;- c(1, 1, 0, 0)
+df &lt;- tibble(x = x,
+             y = y,
+             label = label,
+             vjust = vjust,
+             hjust = hjust)
+
+ggplot(df, aes(x, y)) +
+  geom_text(aes(label = label),
+            vjust = vjust,
+            hjust = hjust) +
+  scale_x_continuous(labels = NULL) +
+  scale_y_continuous(labels = NULL) +
+  labs(x = &quot;&quot;,
+       y = &quot;&quot;)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p></li>
+<li><p>Read the documentation for <code>annotate()</code>. How can you use it to add a text label to a plot without having to create a tibble?</p>
+<p>Some examples from the help page below. Used when you want to add some static text. I like the use of it for things like <span class="math inline">\(italic(R) ^ 2 == 0.75\)</span>, and also seems useful for marking anomalies on a plot.</p>
+<pre class="r"><code>p &lt;- ggplot(mtcars, aes(x = wt, y = mpg)) + geom_point()
+p + annotate(&quot;text&quot;, x = 2:5, y = 25, label = &quot;Some text&quot;)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>p + annotate(&quot;rect&quot;, xmin = 3, xmax = 4.2, ymin = 12, ymax = 21,
+  alpha = .2)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-17-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>p + annotate(&quot;text&quot;, x = 2:3, y = 20:21, label = c(&quot;my label&quot;, &quot;label 2&quot;))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-17-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>p + annotate(&quot;text&quot;, x = 4, y = 25, label = &quot;italic(R) ^ 2 == 0.75&quot;,
+  parse = TRUE)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-17-4.png" width="672" style="display: block; margin: auto;" /></p></li>
+<li><p>How do labels with <code>geom_text()</code> interact with faceting? How can you add a label to a single facet? How can you put a different label in each facet? (Hint: think about the underlying data.)</p>
+<pre class="r"><code># Got this example from this SO post
+# https://stackoverflow.com/questions/15867263/ggplot2-geom-text-with-facet-grid
+x &lt;-runif(9, 0, 125) 
+data &lt;- as.data.frame(x) 
+data$y &lt;- runif(9, 0, 125) 
+data$yy &lt;- factor(c(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;)) 
+
+ggplot(data, aes(x, y)) + 
+    geom_point(shape = 2) + 
+    facet_grid(~yy) + 
+    geom_text(aes(x, y, label=lab),
+        data=data.frame(x=60, y=Inf, lab=c(&quot;this&quot;,&quot;is&quot;,&quot;the way&quot;),
+             yy=letters[1:3]), vjust=1)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>
+ggplot(data, aes(x, y)) + 
+    geom_point(shape = 2) + 
+    facet_grid(~yy) + 
+    geom_text(aes(x, y, label=lab),
+        # text on one facet
+        data=data.frame(x=60, y=Inf, lab=c(&quot;this is the only way&quot;),
+             yy=letters[1]), # one facet only
+        vjust=1)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-18-2.png" width="672" style="display: block; margin: auto;" /></p></li>
+<li><p>What arguments to <code>geom_label()</code> control the appearance of the background box?</p>
+<ul>
+<li>label.padding: Amount of padding around label. Defaults to 0.25 lines.</li>
+<li>label.r: Radius of rounded corners. Defaults to 0.15 lines.</li>
+<li>label.size: Size of label border, in mm.</li>
+</ul></li>
+<li><p>What are the four arguments to <code>arrow()</code>? How do they work? Create a series of plots that demonstrate the most important options.</p>
+<p>Tweaked from this <a href="https://stackoverflow.com/questions/38008863/how-to-draw-a-nice-arrow-in-ggplot2">Stack Overflow post</a>.</p>
+<pre class="r"><code>ggplot(mtcars, aes(wt, mpg)) + 
+  geom_point() +
+  geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
+                  arrow = arrow(length = unit(0.5, &quot;cm&quot;)))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>
+ggplot(mtcars, aes(wt, mpg)) + 
+  geom_point() +
+  geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
+                  arrow = arrow(length = unit(0.5, &quot;cm&quot;),
+                                type = &quot;closed&quot;))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-19-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>
+ggplot(mtcars, aes(wt, mpg)) + 
+  geom_point() +
+  geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
+                  arrow = arrow(length = unit(0.5, &quot;cm&quot;),
+                                type = &quot;closed&quot;,
+                                ends = &quot;both&quot;))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-19-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>
+ggplot(mtcars, aes(wt, mpg)) + 
+  geom_point() +
+  geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
+                  arrow = arrow(angle = 60, # how narrow or wide the arrow head
+                                length = unit(0.5, &quot;cm&quot;),
+                                type = &quot;closed&quot;,
+                                ends = &quot;both&quot;))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-19-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>
+
+ggplot(mtcars, aes(wt, mpg)) + 
+  geom_point() +
+  geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
+                  arrow = arrow(angle = 15, # how narrow or wide the arrow head
+                                length = unit(0.5, &quot;cm&quot;),
+                                type = &quot;closed&quot;,
+                                ends = &quot;both&quot;))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-19-5.png" width="672" style="display: block; margin: auto;" /></p></li>
+</ol>
+<h2>
+Scales
+</h2>
+</div>
+</div>
+<div id="scales" class="section level2">
+<h2>Scales</h2>
+<p>You can also make your plot better for communication by adjusting the scales. ggplot2 automatically adds sensible default scales behind the scenes for you.</p>
+<pre class="r"><code>ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Note this is the same as above.</p>
+<pre class="r"><code>ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  scale_x_continuous() +
+  scale_y_continuous() +
+  scale_colour_discrete()</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="axis-ticks-and-legend-keys" class="section level3">
+<h3>Axis ticks and legend keys</h3>
+<p>Collectively axes and legends are called <span style="color: #008080;background-color:#9FDDBA"><strong>guides</strong></span>. Axes are used for x and y aesthetics; legends are used for everything else.</p>
+<ul>
+<li><p><span style="color: #008080;background-color:#9FDDBA"><code>breaks</code></span> controls the position of the axis ticks, or the values associated with the legend keys.</p></li>
+<li><p><span style="color: #008080;background-color:#9FDDBA"><code>labels</code></span> controls the text label associated with each tick/key. Supply a character vector the same length as <code>breaks</code> OR suppress labels by using <span style="color: #008080;background-color:#9FDDBA"><code>NULL</code></span> .</p></li>
+<li><p>When is <code>NULL</code> appropriate? Useful for maps, or when you can’t share absolute numbers in a published plot.</p></li>
+<li><p>Breaks and labels for datetimes is a bit different:</p>
+<ul>
+<li><p><code>date_labels</code> takes a format specification, in the same form as <code>parse_datetime()</code>.</p></li>
+<li><p><code>date_breaks</code>, takes a string like “2 days” or “1 month”.</p></li>
+</ul></li>
+</ul>
+<pre><code class='language-r'><code>ggplot(mpg, aes(displ, hwy)) +<br>&nbsp;&nbsp;geom_point(aes(colour = class)) +<br>&nbsp;&nbsp;<span style='background-color:#9FDDBA;color:#008080'>scale_y_continuous</span>(<span style='background-color:#cfdad4;color:#6d6875'>breaks</span> = seq(15, 40, by = 5))</code></code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-54-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code class='language-r'><code>ggplot(mpg, aes(displ, hwy)) +<br>&nbsp;&nbsp;geom_point() +<br>&nbsp;&nbsp;scale_x_continuous(<span style='background-color:#cfdad4;color:#6d6875'>labels = NULL</span>) +<br>&nbsp;&nbsp;scale_y_continuous(<span style='background-color:#cfdad4;color:#6d6875'>labels = NULL</span>)</code></code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-55-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>presidential %&gt;% 
+  # add the number of the president, 
+  # e.g. Obama was the 44th president of USA
+  mutate(id = 33 + row_number())
+#&gt; # A tibble: 11 x 5
+#&gt;    name       start      end        party         id
+#&gt;    &lt;chr&gt;      &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;      &lt;dbl&gt;
+#&gt;  1 Eisenhower 1953-01-20 1961-01-20 Republican    34
+#&gt;  2 Kennedy    1961-01-20 1963-11-22 Democratic    35
+#&gt;  3 Johnson    1963-11-22 1969-01-20 Democratic    36
+#&gt;  4 Nixon      1969-01-20 1974-08-09 Republican    37
+#&gt;  5 Ford       1974-08-09 1977-01-20 Republican    38
+#&gt;  6 Carter     1977-01-20 1981-01-20 Democratic    39
+#&gt;  7 Reagan     1981-01-20 1989-01-20 Republican    40
+#&gt;  8 Bush       1989-01-20 1993-01-20 Republican    41
+#&gt;  9 Clinton    1993-01-20 2001-01-20 Democratic    42
+#&gt; 10 Bush       2001-01-20 2009-01-20 Republican    43
+#&gt; 11 Obama      2009-01-20 2017-01-20 Democratic    44
+
+presidential %&gt;% 
+  # add the number of the president, 
+  # e.g. Obama was the 44th president of USA
+  mutate(id = 33 + row_number()) %&gt;%  
+  ggplot(aes(start, id)) +
+  geom_point() +
+  geom_segment(aes(xend = end, yend = id)) +
+  scale_x_date(NULL,
+               breaks = presidential$start,
+               date_labels = &quot;&#39;%y&quot;) +
+  ggrepel::geom_label_repel(aes(label = name),
+                                nudge_x = 0.5,
+                                nudge_y = 0.4)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="legend-layout" class="section level3">
+<h3>Legend layout</h3>
+<p>To control the overall position of the legend, you need to use a <span style="color: #008080;background-color:#9FDDBA"><code>theme()</code></span><br />
+setting. The theme setting <code>legend.position</code> controls where the legend is drawn. You can also use <code>legend.position = "none"</code> to hide the display of the legend.</p>
+<pre class="r"><code>base &lt;- ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class))
+base + theme(legend.position = &quot;left&quot;)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-25-1.png" width="75%" /></p>
+<pre class="r"><code>base + theme(legend.position = &quot;top&quot;)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-25-2.png" width="75%" /></p>
+<pre class="r"><code>base + theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-25-3.png" width="75%" /></p>
+<pre class="r"><code>base + theme(legend.position = &quot;right&quot;) # the default</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-25-4.png" width="75%" /></p>
+<ul>
+<li>To control the display of individual legends, use <code>guides()</code> along with <code>guide_legend()</code> or <code>guide_colourbar()</code>.</li>
+<li>Control the number of rows the legend uses with <code>nrow</code></li>
+<li>Override one of the aesthetics to make the points bigger. Useful if you have used a low <code>alpha</code> to display many points on a plot.</li>
+</ul>
+<pre class="r"><code>ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_smooth(se = FALSE) +
+  theme(legend.position = &quot;bottom&quot;) +
+  guides(colour = guide_legend(nrow = 1,
+                               override.aes = list(size = 4)))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_smooth(se = FALSE) +
+  theme(legend.position = &quot;bottom&quot;) +
+  guides(colour = guide_legend(nrow = 4, 
+                               override.aes = list(size = 5)))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-26-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="replacing-a-scale" class="section level3">
+<h3>Replacing a scale</h3>
+<p>Sometimes you will want to replace a scale completely - we have done this before when we log transformed graphs.</p>
+<p><strong>Aesthetic mapping Transform</strong></p>
+<pre class="r"><code>ggplot(diamonds, aes(carat, price)) +
+  geom_bin2d()</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-27-1.png" width="672" /></p>
+<pre class="r"><code># disadvantage of this transformation is that the axes are 
+# now labelled with the transformed values, making it hard to interpret the plot
+ggplot(diamonds, aes(log10(carat), log10(price))) +
+  geom_bin2d()</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-27-2.png" width="672" /></p>
+<p><strong>Scale Transform</strong></p>
+<p>Visually identical to above, except the axes are labelled using the original data scale.</p>
+<pre class="r"><code>ggplot(diamonds, aes(carat, price)) +
+  geom_bin2d() + 
+  scale_x_log10() + 
+  scale_y_log10()</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Useful colour scale alternatives are the ColorBrewer scales for certain colour blindness - e.g. red-green colour blindness.</p>
+<pre class="r"><code>ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color = drv))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-29-1.png" width="672" /></p>
+<pre class="r"><code>
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color = drv)) +
+  scale_colour_brewer(palette = &quot;Set1&quot;)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-29-2.png" width="672" /></p>
+<p>Adding a redundant shape mapping is also completely acceptable. It also ensures the plot is interpretable in black and white.</p>
+<pre class="r"><code>ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color = drv, shape = drv)) +
+  scale_colour_brewer(palette = &quot;Set1&quot;)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-30-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>In ColorBrewer the sequential (top) and diverging (bottom) are useful if your categorical values are <strong>ordered</strong>, or have a “middle”. Often the case if you’ve used <code>cut()</code> to make a continuous variable into a categorical variable.</p>
+<div class="figure" style="text-align: center">
+<img src="figure/ch22_graphics_for_comms.Rmd/brewer-1.png" alt="All ColourBrewer scales." width="672" />
+<p class="caption">
+All ColourBrewer scales.
+</p>
+</div>
+<p>Use <code>scale_colour_manual()</code> when you have a predefined mapping between values and colours.</p>
+<pre class="r"><code>presidential %&gt;%
+  mutate(id = 33 + row_number()) %&gt;%
+  ggplot(aes(start, id, colour = party)) +
+    geom_point() +
+    geom_segment(aes(xend = end, yend = id)) +
+    scale_colour_manual(values = c(Republican = &quot;red&quot;, Democratic = &quot;blue&quot;))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>For continuous colour, use <code>scale_colour_gradient()</code> or <code>scale_fill_gradient()</code>.</li>
+<li>For a diverging scale, use <code>scale_colour_gradient2()</code>. Here positive and negative values may have different colours. Also useful if you want to distinguish points above or below the mean.</li>
+<li><code>scale_colour_viridis()</code> is also a good alternative.</li>
+</ul>
+<pre class="r"><code>df &lt;- tibble(
+  x = rnorm(10000),
+  y = rnorm(10000)
+)
+ggplot(df, aes(x, y)) +
+  geom_hex() +
+  coord_fixed()</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-32-1.png" width="384" /></p>
+<pre class="r"><code>
+ggplot(df, aes(x, y)) +
+  geom_hex() +
+  viridis::scale_fill_viridis() +
+  coord_fixed()</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-32-2.png" width="384" /></p>
+<p>All colour scales have <code>scale_colour_x()</code> and <code>scale_fill_x()</code> for the <code>colour</code> and <code>fill</code> aesthetics.</p>
+</div>
+<div id="exercises-2" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Why doesn’t the following code override the default scale?</p>
+<p>The hex should use <strong>fill</strong> not <strong>colour</strong></p>
+<pre class="r"><code>ggplot(df, aes(x, y)) +
+  geom_hex() +
+  scale_colour_gradient(low = &quot;white&quot;, high = &quot;red&quot;) +
+  coord_fixed()</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(df, aes(x, y)) +
+  geom_hex() +
+  scale_fill_gradient(low = &quot;white&quot;, high = &quot;red&quot;) +
+  coord_fixed()</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p></li>
+<li><p>What is the first argument to every scale? How does it compare to <code>labs()</code>?</p>
+<p>The <code>...</code> argument which passes on to the particular scale function in the arguments. The first arg is aesthetics that this scale works with e.g. <code>x</code>, <code>y</code>, <code>colour</code> etc.</p>
+<p><code>labs</code> is similar but talks to the labels not the scale.</p></li>
+<li><p>Change the display of the presidential terms by:</p>
+<ol style="list-style-type: lower-alpha">
+<li>Combining the two variants shown above.</li>
+</ol>
+<pre class="r"><code>presidential %&gt;%
+  mutate(id = 33 + row_number()) %&gt;%
+  ggplot(aes(start, id, colour = party)) +
+    geom_point() +
+    geom_segment(aes(xend = end, yend = id)) +
+    scale_colour_manual(values = c(Republican = &quot;red&quot;, 
+                                   Democratic = &quot;blue&quot;)) +
+    scale_x_date(NULL,
+               breaks = presidential$start,
+               date_labels = &quot;&#39;%y&quot;)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-35-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Improving the display of the y axis.</p>
+<pre class="r"><code>presidential_amend &lt;- presidential %&gt;%
+  mutate(id = 33 + row_number(),
+         id_label = str_c(id, c(rep(&quot;th &quot;, 7), 
+                          &quot;st &quot;, &quot;nd &quot;, &quot;rd &quot;, &quot;th &quot;), 
+                          c(rep(&quot;President&quot;, 11))),
+         id_label = fct_reorder(id_label, id)) 
+
+presidential_amend %&gt;%
+  ggplot(aes(start, id, colour = party)) +
+    geom_point() +
+    geom_segment(aes(xend = end, yend = id)) +
+    scale_colour_manual(values = c(Republican = &quot;red&quot;, 
+                                   Democratic = &quot;blue&quot;)) +
+    scale_x_date(NULL,
+               breaks = presidential_amend$start,
+               date_labels = &quot;&#39;%y&quot;) +
+    scale_y_continuous(breaks = presidential_amend$id,
+                       labels = presidential_amend$id_label) +
+    ggrepel::geom_label_repel(aes(label = name),
+                            nudge_x = 0.5,
+                            nudge_y = 0.4) +
+    labs(y = &quot;&quot;,
+         x = &quot;Presidential term&quot;,
+         title = str_wrap(&quot;Republicans
+         seem to be winning the race in terms of time in office?&quot;, 
+         width = 70))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-36-1.png" width="672" style="display: block; margin: auto;" /></p></li>
+<li><p>Labelling each term with the name of the president.</p>
+<p>Done above.</p></li>
+<li><p>Adding informative plot labels.</p>
+<p>Done above.</p></li>
+<li><p>Placing breaks every 4 years (this is trickier than it seems!).</p>
+<pre class="r"><code>    presidential_amend &lt;- presidential %&gt;%
+      mutate(id = 33 + row_number(),
+             id_label = str_c(id, c(rep(&quot;th &quot;, 7), 
+                              &quot;st &quot;, &quot;nd &quot;, &quot;rd &quot;, &quot;th &quot;), 
+                              c(rep(&quot;President&quot;, 11))),
+             id_label = fct_reorder(id_label, id)) 
+
+    breaks &lt;- function(df){
+      df %&gt;% 
+        mutate(yr_start = year(start),
+               yr_end = year(end)) %&gt;% 
+        summarise(min_start = min(yr_start),
+               max_end = max(yr_end))
+    }
+
+    break_df &lt;- presidential_amend %&gt;% 
+     breaks() 
+
+    presidential_amend %&gt;%
+      ggplot(aes(start, id, colour = party)) +
+        geom_point() +
+        geom_segment(aes(xend = end, yend = id)) +
+        scale_colour_manual(values = c(Republican = &quot;red&quot;, 
+                                       Democratic = &quot;blue&quot;)) +
+        scale_x_date(NULL,
+                     breaks = seq.Date(ymd(str_glue(&quot;{break_df$min_start}0101&quot;)), 
+                                  ymd(str_glue(&quot;{break_df$max_end}0101&quot;)), 
+                                  &quot;4 years&quot;),
+                     date_labels = &quot;&#39;%y&quot;) +
+        scale_y_continuous(breaks = presidential_amend$id,
+                           labels = presidential_amend$id_label) +
+        ggrepel::geom_label_repel(aes(label = name),
+                                nudge_x = 0.5,
+                                nudge_y = 0.4) +
+        labs(y = &quot;&quot;,
+             x = &quot;Presidential term&quot;,
+             title = str_wrap(&quot;Republicans
+             seem to be winning the race in terms of time in office?&quot;, 
+             width = 70))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-37-1.png" width="672" style="display: block; margin: auto;" /></p></li>
+</ol></li>
+<li><p>Use <code>override.aes</code> to make the legend on the following plot easier to see.</p>
+<pre class="r"><code>ggplot(diamonds, aes(carat, price)) +
+  geom_point(aes(colour = cut), alpha = 1/20)</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-38-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(diamonds, aes(carat, price)) +
+  geom_point(aes(colour = cut), alpha = 1/20) +
+  guides(colour = guide_legend(override.aes = list(alpha = 1)))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-39-1.png" width="80%" style="display: block; margin: auto;" /></p></li>
+</ol>
+</div>
+</div>
+<div id="zooming" class="section level2">
+<h2>Zooming</h2>
+<p>You can control plot limits by:</p>
+<ol style="list-style-type: decimal">
+<li>Adjusting what data are plotted</li>
+<li>Setting the limits in each scale</li>
+<li>Setting <code>xlim</code> and <code>ylim</code> in <code>coord_cartesian()</code></li>
+</ol>
+<p>To zoom in on a region of the plot, use <code>coord_cartesian()</code>.</p>
+<pre class="r"><code>ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_smooth() +
+  # zoom in to a specific set of coords
+  coord_cartesian(xlim = c(5,7), ylim = c(10,30))</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-40-1.png" width="672" /></p>
+<pre class="r"><code>
+mpg %&gt;% 
+  filter(displ &gt;= 5 &amp; displ &lt;= 7,
+         hwy &gt;= 10 &amp; hwy &lt;= 30) %&gt;% 
+  ggplot(aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  # we draw a smoothing fn for the data
+  # but we filtered obs to just the ones we want to see
+  geom_smooth()</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-40-2.png" width="672" /></p>
+<p>Notice above that <code>coord_cartesian()</code> is the true zoom in, the smoothing function considers all data. In the filtered graph the smoothing function considers only the filtered observations so it is a very different view of the data. Consider your use case for zooming then choose a method.</p>
+<pre class="r"><code>suv &lt;- mpg %&gt;% filter(class == &quot;suv&quot;)
+compact &lt;- mpg %&gt;% filter(class == &quot;compact&quot;)
+ggplot(suv, aes(displ, hwy, colour = drv)) +
+  geom_point()</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-41-1.png" width="384" /></p>
+<pre class="r"><code>ggplot(compact, aes(displ, hwy, colour = drv)) +
+  geom_point()</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-41-2.png" width="384" /></p>
+<p>The scales above are however different so comparisons are not easy. You may share scales across multiple plots.</p>
+<pre class="r"><code>x_scale &lt;- scale_x_continuous(limits = range(mpg$displ))
+y_scale &lt;- scale_y_continuous(limits = range(mpg$hwy))
+col_scale &lt;- scale_colour_discrete(limits = unique(mpg$drv))
+ggplot(suv, aes(displ, hwy, colour = drv)) +
+  geom_point() +
+  x_scale +
+  y_scale +
+  col_scale</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-42-1.png" width="50%" /></p>
+<pre class="r"><code>ggplot(compact, aes(displ, hwy, colour = drv)) +
+  geom_point() +
+  x_scale +
+  y_scale +
+  col_scale</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-42-2.png" width="50%" /></p>
+<p>We could have used faceting but this technique is useful if for instance, you want spread plots over multiple pages of a report.</p>
+<h2>
+Themes
+</h2>
+</div>
+<div id="themes" class="section level2">
+<h2>Themes</h2>
+<p>Non-data elements of your plot can be amended with a theme.</p>
+<pre class="r"><code>ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth(se = FALSE) +
+  theme_bw()</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-43-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_smooth(se = FALSE) +
+  theme_light()</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-43-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_smooth(se = FALSE) +
+  theme_dark()</code></pre>
+<p><img src="figure/ch22_graphics_for_comms.Rmd/unnamed-chunk-43-3.png" width="672" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()
+#&gt; R version 3.6.3 (2020-02-29)
+#&gt; Platform: x86_64-w64-mingw32/x64 (64-bit)
+#&gt; Running under: Windows 10 x64 (build 18363)
+#&gt; 
+#&gt; Matrix products: default
+#&gt; 
+#&gt; locale:
+#&gt; [1] LC_COLLATE=English_South Africa.1252  LC_CTYPE=English_South Africa.1252   
+#&gt; [3] LC_MONETARY=English_South Africa.1252 LC_NUMERIC=C                         
+#&gt; [5] LC_TIME=English_South Africa.1252    
+#&gt; 
+#&gt; attached base packages:
+#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
+#&gt; 
+#&gt; other attached packages:
+#&gt;  [1] werpals_0.1.0   lubridate_1.7.9 magrittr_1.5    flair_0.0.2    
+#&gt;  [5] forcats_0.5.0   stringr_1.4.0   dplyr_1.0.2     purrr_0.3.4    
+#&gt;  [9] readr_1.4.0     tidyr_1.1.2     tibble_3.0.3    ggplot2_3.3.2  
+#&gt; [13] tidyverse_1.3.0 workflowr_1.6.2
+#&gt; 
+#&gt; loaded via a namespace (and not attached):
+#&gt;  [1] viridis_0.5.1      httr_1.4.2         viridisLite_0.3.0  jsonlite_1.7.1    
+#&gt;  [5] splines_3.6.3      modelr_0.1.8       assertthat_0.2.1   highr_0.8         
+#&gt;  [9] emo_0.0.0.9000     cellranger_1.1.0   yaml_2.2.1         ggrepel_0.8.2     
+#&gt; [13] pillar_1.4.6       backports_1.1.6    lattice_0.20-38    glue_1.4.2        
+#&gt; [17] digest_0.6.27      RColorBrewer_1.1-2 promises_1.1.0     rvest_0.3.6       
+#&gt; [21] colorspace_1.4-1   htmltools_0.5.0    httpuv_1.5.2       Matrix_1.2-18     
+#&gt; [25] pkgconfig_2.0.3    broom_0.7.2        haven_2.3.1        scales_1.1.0      
+#&gt; [29] whisker_0.4        later_1.0.0        git2r_0.26.1       mgcv_1.8-31       
+#&gt; [33] generics_0.0.2     farver_2.0.3       ellipsis_0.3.1     withr_2.2.0       
+#&gt; [37] hexbin_1.28.1      cli_2.1.0          crayon_1.3.4       readxl_1.3.1      
+#&gt; [41] evaluate_0.14      ps_1.3.2           fs_1.5.0           fansi_0.4.1       
+#&gt; [45] nlme_3.1-144       xml2_1.3.2         tools_3.6.3        hms_0.5.3         
+#&gt; [49] lifecycle_0.2.0    munsell_0.5.0      reprex_0.3.0       compiler_3.6.3    
+#&gt; [53] rlang_0.4.8        grid_3.6.3         rstudioapi_0.11    labeling_0.3      
+#&gt; [57] rmarkdown_2.4      gtable_0.3.0       DBI_1.1.0          R6_2.4.1          
+#&gt; [61] gridExtra_2.3      knitr_1.28         utf8_1.1.4         rprojroot_1.3-2   
+#&gt; [65] stringi_1.5.3      Rcpp_1.0.4.6       vctrs_0.3.2        dbplyr_2.0.0      
+#&gt; [69] tidyselect_1.1.0   xfun_0.13</code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

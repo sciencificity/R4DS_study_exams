@@ -413,7 +413,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-11-09
+<strong>Last updated:</strong> 2020-11-10
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreef3d860fb81892331724f74f4d4aa0575a9f7b6dftargetblankf3d860fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/f3d860fb81892331724f74f4d4aa0575a9f7b6df" target="_blank">f3d860f</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreecf689c820a2c3a9dd1bd8f2df6ed0f03bf8dd1a9targetblankcf689c8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/cf689c820a2c3a9dd1bd8f2df6ed0f03bf8dd1a9" target="_blank">cf689c8</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreef3d860fb81892331724f74f4d4aa0575a9f7b6dftargetblankf3d860fa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreecf689c820a2c3a9dd1bd8f2df6ed0f03bf8dd1a9targetblankcf689c8a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/f3d860fb81892331724f74f4d4aa0575a9f7b6df" target="_blank">f3d860f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/cf689c820a2c3a9dd1bd8f2df6ed0f03bf8dd1a9" target="_blank">cf689c8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -523,7 +523,6 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Untracked files:
-    Untracked:  analysis/ch22_graphics_for_comms.Rmd
     Untracked:  analysis/images/
     Untracked:  code_snipp.txt
 
@@ -564,6 +563,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/4879249efdfb1b6acb1c0ed5d85a58fac5eeb0c2/docs/ch8_import_data.html" target="_blank">4879249</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-09
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1086,15 +1102,15 @@ row col                     expected    actual         file
 <pre class="r"><code>(x &lt;- parse_integer(c(&quot;123&quot;, &quot;345&quot;, &quot;abc&quot;, &quot;123.45&quot;)))</code></pre>
 <pre><code>Warning: 2 parsing failures.
 row col               expected actual
-  3  -- an integer                abc
-  4  -- no trailing characters    .45</code></pre>
+  3  -- an integer             abc   
+  4  -- no trailing characters 123.45</code></pre>
 <pre><code>[1] 123 345  NA  NA
 attr(,&quot;problems&quot;)
 # A tibble: 2 x 4
     row   col expected               actual
   &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt; 
 1     3    NA an integer             abc   
-2     4    NA no trailing characters .45   </code></pre>
+2     4    NA no trailing characters 123.45</code></pre>
 <p>To detect problems use <code>problems()</code>.</p>
 <pre><code class='language-r'><code><span style='background-color:#9FDDBA;color:#008080'>problems</span>(x)</code></code></pre>
 <pre><code>
@@ -1102,7 +1118,7 @@ attr(,&quot;problems&quot;)
     row   col expected               actual
   &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt; 
 1     3    NA an integer             abc   
-2     4    NA no trailing characters .45   
+2     4    NA no trailing characters 123.45
 </code></pre>
 <p>Sometimes depending on where in the world you are, you will have different conventions when it comes to numbers.</p>
 <p>For example you may separate the integer part from the decimal part by using a <code>.</code> or a <code>,</code>. To tell the parsing function what kind of data you’re expecting to be in a vector use <span style="color: #008080;background-color:#9FDDBA"><code>locale = locale(...)</code></span> in your parsing function.</p>
@@ -1265,27 +1281,27 @@ to be <code>,</code>, and don’t specify any grouping mark it is defaulted to b
 <pre><code>[1] NA
 attr(,&quot;problems&quot;)
 # A tibble: 1 x 4
-    row   col expected               actual 
-  &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;  
-1     1    NA no trailing characters .456,78</code></pre>
+    row   col expected               actual    
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;     
+1     1    NA no trailing characters 123.456,78</code></pre>
 <pre class="r"><code>parse_double(&quot;123.456,78&quot;, 
              locale = locale(decimal_mark = &quot;,&quot;,
                              grouping_mark = &quot;.&quot;))</code></pre>
 <pre><code>[1] NA
 attr(,&quot;problems&quot;)
 # A tibble: 1 x 4
-    row   col expected               actual 
-  &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;  
-1     1    NA no trailing characters .456,78</code></pre>
+    row   col expected               actual    
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;     
+1     1    NA no trailing characters 123.456,78</code></pre>
 <pre class="r"><code>parse_double(&quot;123 456,78&quot;, 
              locale = locale(decimal_mark = &quot;,&quot;,
                              grouping_mark = &quot; &quot;))</code></pre>
 <pre><code>[1] NA
 attr(,&quot;problems&quot;)
 # A tibble: 1 x 4
-    row   col expected               actual   
-  &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;    
-1     1    NA no trailing characters &quot; 456,78&quot;</code></pre>
+    row   col expected               actual    
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;     
+1     1    NA no trailing characters 123 456,78</code></pre>
 <p>Hhmm okay, so it seems like <code>parse_double()</code> is a bit more strict, and does not seem to like it even if we override the <code>locale()</code>. This <a href="https://stackoverflow.com/questions/47487424/parsing-double-grouped-number-with-readrparse-double">Stack Overflow post</a> confirms what we see here, so too does <a href="https://github.com/tidyverse/readr/issues/827">this post</a> and <a href="https://github.com/tidyverse/readr/issues/556">this one</a>. The only perplexing thing is that when I do set the <strong>grouping_mark</strong> in locale() why is this not considered? Because <code>parse_double()</code> also has a default locale which may be overriden by locale()? 😕</p>
 <p>What happens to the default value of <code>decimal_mark</code> when you set the <code>grouping_mark</code> to “.”?</p>
 <pre class="r"><code># As above shows the decimal character 
@@ -1302,9 +1318,9 @@ parse_number(&quot;5.123.456,78&quot;,
                         decimal_mark = &quot;,&quot;,
                         grouping_mark = &quot;.&quot;)))</code></pre>
 <pre><code># A tibble: 1 x 4
-    row   col expected               actual     
-  &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;      
-1     1    NA no trailing characters .123.456,78</code></pre></li>
+    row   col expected               actual      
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;       
+1     1    NA no trailing characters 5.123.456,78</code></pre></li>
 </ul></li>
 <li><p>I didn’t discuss the <code>date_format</code> and <code>time_format</code> options to <code>locale()</code>. What do they do? Construct an example that shows when they might be useful.</p>
 <p>Dates and times may be specified in <a href="https://en.wikipedia.org/wiki/Calendar_date#:~:text=RFC%203339%20Date%20and%20Time,and%20year%20is%20four%20digits.">numerous ways</a>. Dates for example can be <code>YYYY-MM-DD</code> or <code>MM-DD-YY</code>.</p>
@@ -1617,26 +1633,26 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] hms_0.5.3       magrittr_1.5    lubridate_1.7.8 emo_0.0.0.9000 
- [5] flair_0.0.2     forcats_0.5.0   stringr_1.4.0   dplyr_1.0.0    
- [9] purrr_0.3.4     readr_1.3.1     tidyr_1.1.0     tibble_3.0.3   
+ [1] hms_0.5.3       magrittr_1.5    lubridate_1.7.9 emo_0.0.0.9000 
+ [5] flair_0.0.2     forcats_0.5.0   stringr_1.4.0   dplyr_1.0.2    
+ [9] purrr_0.3.4     readr_1.4.0     tidyr_1.1.2     tibble_3.0.3   
 [13] ggplot2_3.3.2   tidyverse_1.3.0 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.1.0 xfun_0.13        haven_2.2.0      lattice_0.20-38 
- [5] colorspace_1.4-1 vctrs_0.3.2      generics_0.0.2   htmltools_0.5.0 
- [9] yaml_2.2.1       utf8_1.1.4       rlang_0.4.8      later_1.0.0     
-[13] pillar_1.4.6     withr_2.2.0      glue_1.4.2       DBI_1.1.0       
-[17] dbplyr_1.4.3     modelr_0.1.6     readxl_1.3.1     lifecycle_0.2.0 
-[21] cellranger_1.1.0 munsell_0.5.0    gtable_0.3.0     rvest_0.3.5     
-[25] evaluate_0.14    knitr_1.28       ps_1.3.2         httpuv_1.5.2    
-[29] fansi_0.4.1      broom_0.5.6      Rcpp_1.0.4.6     promises_1.1.0  
-[33] backports_1.1.6  scales_1.1.0     jsonlite_1.7.0   fs_1.5.0        
-[37] digest_0.6.27    stringi_1.5.3    rprojroot_1.3-2  grid_3.6.3      
-[41] cli_2.1.0        tools_3.6.3      crayon_1.3.4     whisker_0.4     
-[45] pkgconfig_2.0.3  ellipsis_0.3.1   xml2_1.3.2       reprex_0.3.0    
-[49] assertthat_0.2.1 rmarkdown_2.4    httr_1.4.2       rstudioapi_0.11 
-[53] R6_2.4.1         nlme_3.1-144     git2r_0.26.1     compiler_3.6.3  </code></pre>
+ [1] tidyselect_1.1.0 xfun_0.13        haven_2.3.1      colorspace_1.4-1
+ [5] vctrs_0.3.2      generics_0.0.2   htmltools_0.5.0  yaml_2.2.1      
+ [9] utf8_1.1.4       rlang_0.4.8      later_1.0.0      pillar_1.4.6    
+[13] withr_2.2.0      glue_1.4.2       DBI_1.1.0        dbplyr_2.0.0    
+[17] modelr_0.1.8     readxl_1.3.1     lifecycle_0.2.0  munsell_0.5.0   
+[21] gtable_0.3.0     cellranger_1.1.0 rvest_0.3.6      evaluate_0.14   
+[25] knitr_1.28       ps_1.3.2         httpuv_1.5.2     fansi_0.4.1     
+[29] broom_0.7.2      Rcpp_1.0.4.6     promises_1.1.0   backports_1.1.6 
+[33] scales_1.1.0     jsonlite_1.7.1   fs_1.5.0         digest_0.6.27   
+[37] stringi_1.5.3    rprojroot_1.3-2  grid_3.6.3       cli_2.1.0       
+[41] tools_3.6.3      crayon_1.3.4     whisker_0.4      pkgconfig_2.0.3 
+[45] ellipsis_0.3.1   xml2_1.3.2       reprex_0.3.0     assertthat_0.2.1
+[49] rmarkdown_2.4    httr_1.4.2       rstudioapi_0.11  R6_2.4.1        
+[53] git2r_0.26.1     compiler_3.6.3  </code></pre>
 </div>
 </div>
 
