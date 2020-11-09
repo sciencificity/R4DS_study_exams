@@ -1,0 +1,964 @@
+---
+title: "Chapter 22 - Graphics for communication"
+author: "Vebash Naidoo"
+date: "09/11/2020"
+output: html_document
+---
+
+```{css, echo = FALSE}
+.tabset h2 {display: none;}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning=FALSE, message=FALSE,
+                      comment = "#>", 
+                      collapse = TRUE)
+
+options(scipen=10000)
+library(tidyverse)
+library(flair)
+library(magrittr)
+library(lubridate)
+library(werpals) # my own package - sciencificity github
+```
+# ggplot {#buttons .tabset .tabset-fade .tabset-pills}
+
+__Click on the tab buttons below for each section__
+
+<h2>Introduction</h2>
+
+## Label
+
+- You add labels with the <span style="color: #008080;background-color:#9FDDBA">
+`labs()`</span>  function.
+
+  * `title`: The purpose of a plot title is to summarise the main finding.
+  * `subtitle`: adds additional detail in a smaller font beneath the title.
+  * `caption`: adds text at the bottom right of the plot, often used to describe
+    the source of the data.
+  * `x`: replaces x-axis name (sometimes you want more descriptive names, or
+  units).
+  * `y`: replaces y-axis name (sometimes you want more descriptive names, or
+  units).
+  * The legend titles are replaced using the aesthetic that made it - e.g.
+  `colour` or `fill`.
+  
+```{r plot1, include = FALSE}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth(se = FALSE) +
+  labs(title = "Fuel efficiency generally decreases with engine size")
+```
+
+```{r, echo=FALSE}
+decorate("plot1") %>% 
+  flair("labs", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("title", background = "#cfdad4", 
+        color = "#6d6875")
+```
+
+```{r plot2, include = FALSE}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_smooth(se = FALSE) +
+  labs(title = str_glue("Fuel efficiency generally decreases ",
+                        "with engine size"),
+       subtitle = str_glue("Two seaters (sports cars) are the ",
+                           "exception because of their light weight"),
+       caption = "Data from fueleconomy.gov")
+```
+
+```{r, echo=FALSE}
+decorate("plot2") %>% 
+  flair("subtitle", background = "#cfdad4", 
+        color = "#6d6875") %>% 
+  flair("caption", background = "#cfdad4", 
+        color = "#6d6875")
+```
+
+```{r plot3, include = FALSE}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_smooth(se = FALSE) +
+  labs(
+    x = "Engine displacement (L)",
+    y = "Highway fuel economy (mpg)",
+    colour = "Car type"
+  )
+```
+
+```{r, echo=FALSE}
+decorate("plot3") %>% 
+  flair("x", background = "#cfdad4", 
+        color = "#6d6875") %>% 
+  flair("colour", background = "#cfdad4", 
+        color = "#6d6875")
+```
+
+
+It's possible to use mathematical equations instead of text strings. 
+Just switch `""` out for <span style="color: #008080;background-color:#9FDDBA">`quote()`</span>
+and read about the available options in `?plotmath`.
+
+```{r plot4, fig.asp = 1, out.width = "50%", fig.width = 3, include = FALSE}
+df <- tibble(
+  x = runif(10),
+  y = runif(10)
+)
+ggplot(df, aes(x, y)) +
+  geom_point() +
+  labs(
+    x = quote(sum(x[i]^2, i == 1, n)),
+    y = quote(alpha + beta + frac(delta, theta))
+  )
+```
+
+```{r, echo=FALSE}
+decorate("plot4") %>% 
+  flair("quote", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+
+### Exercises
+
+1.  Create one plot on the fuel economy data with customised `title`,
+    `subtitle`, `caption`, `x`, `y`, and `colour` labels.
+    
+    ```{r}
+    ggplot(mpg, aes(class, hwy)) +
+      geom_boxplot() +
+      geom_jitter(aes(colour = displ), width = 0.1, height = 0) +
+      labs(title = "Fuel efficiency is worst for pickups and suv",
+           subtitle = "These vehicle types have the bigger engine size",
+           x = "Car Type",
+           y = "Highway fuel economy (mpg)",
+           colour = "Engine size"
+      )
+    ```
+    
+1.  The `geom_smooth()` is somewhat misleading because the `hwy` for
+    large engines is skewed upwards due to the inclusion of lightweight
+    sports cars with big engines. Use your modelling tools to fit and display
+    a better model.
+    
+    ```{r}
+    ggplot(mpg, aes(displ, hwy, colour = class)) +
+      geom_point() +
+      geom_smooth(method = "lm", se = FALSE) +
+      scale_colour_disney("pan") +
+      labs(title = str_glue("Fuel efficiency generally decreases ",
+                            "with engine size"),
+           subtitle = str_glue("Two seaters (sports cars) are the ",
+                               "exception because of their light weight"),
+           caption = "Data from fueleconomy.gov",
+           x = "Engine displacement (L)",
+           y = "Highway fuel economy (mpg)",
+           colour = "Car type")
+    ```
+    
+1.  Take an exploratory graphic that you've created in the last month, and add
+    informative titles to make it easier for others to understand.
+    
+<h2>Annotations</h2>
+## Annotations
+
+It's also often useful to label individual observations or groups of 
+observations. The first tool you have at your disposal is 
+<span style="color: #008080;background-color:#9FDDBA">`geom_text()`</span>. 
+`geom_text()` is similar to `geom_point()`, but it has an additional aesthetic
+- `label`. This makes it possible to add textual labels to your plots.
+
+- a tibble that provides labels
+- ?? find out in exercises
+
+```{r annot1, include=FALSE}
+mpg %>% 
+  select(class, displ, hwy, model) %>% 
+  group_by(class) %>% 
+  mutate(rn = row_number(desc(hwy))) %>% 
+  filter(rn %in% c(1,2))
+         
+# create a tibble for your label data
+best_in_class <- mpg %>% 
+  group_by(class) %>% 
+  filter(row_number(desc(hwy)) == 1)
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_text(aes(label = model), # the label should be the model in your tbl 
+            # use your label data
+            data = best_in_class)
+```
+
+```{r, echo=FALSE}
+decorate("annot1") %>% 
+  flair("geom_text", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("label", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("model", background = "#cfdad4", 
+        color = "#6d6875") %>% 
+  flair("data = best_in_class", background = "#cfdad4", 
+        color = "#6d6875")
+```
+
+It is sometimes hard to read, like here, where labels overlap with each other, 
+and with the points. We can make things a little better by switching to 
+<span style="color: #008080;background-color:#9FDDBA">`geom_label()`</span> 
+which draws a rectangle behind the text. 
+We also use the <span style="color: #008080;background-color:#9FDDBA">`nudge_y`</span>
+parameter to move the labels slightly above the corresponding points.
+
+```{r annot2, include=FALSE}
+ggplot(data = mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_label(aes(label = model), 
+            data = best_in_class,
+            nudge_y = 2,
+            alpha = 0.5)
+```
+
+```{r, echo=FALSE}
+decorate("annot2") %>% 
+  flair("geom_label", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("nudge_y", background = "#9FDDBA", 
+        color = "#008080")  
+```
+
+There is still a problem in that there are two labels on top of each other in the
+left corner. We can use the <span style="color: #008080;background-color:#9FDDBA">__ggrepel__</span> package by Kamil Slowikowski which automatically adjusts labels so that 
+they don't overlap `r emo::ji("exclamation")` `r emo::ji("heart")`
+
+```{r annot3, include=FALSE}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  # add a second layer of large, hollow points to 
+  # highlight the points labelled
+  geom_point(size = 3, shape = 1, 
+             data = best_in_class)
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_point(size = 3, shape = 1,
+             data = best_in_class) +
+  ggrepel::geom_label_repel(aes(label = model), 
+                           data = best_in_class)
+```
+
+```{r, echo=FALSE}
+decorate("annot3") %>% 
+  flair("ggrepel::geom_label_repel", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("size = 3, shape = 1", background = "#9FDDBA", 
+        color = "#008080")  
+```
+
+`theme(legend.position = "none"`) turns the legend off.
+
+```{r}
+# find the median displ, hwy for each class
+class_avg <- mpg %>% 
+  group_by(class) %>% 
+  summarise(
+    displ = median(displ),
+    hwy = median(hwy)
+  )
+
+ggplot(mpg, aes(displ, hwy, 
+                # move up here since used by both 
+                # geom_label_repel - to colour label text
+                # and geom_point to colour points
+                colour = class)) +
+  ggrepel::geom_label_repel(aes(label = class), # stick label in median place
+                             data = class_avg,
+                             size = 6,
+                             label.size = 0,
+                             segment.colour = NA) +
+  geom_point() +
+  # we've replaced our legend by labels on the plot
+  # in the median position!
+  theme(legend.position = "none")
+```
+
+You may want to add a single label to the plot, but you'll still need to 
+create a data frame. <br>
+Often, you want the label in the corner of the plot, so it's convenient to 
+create a new data frame using `summarise()` to compute the __maximum values of x and y__.
+
+```{r annot4, include=FALSE}
+label <- mpg %>% 
+  summarise(
+    displ = max(displ),
+    hwy = max(hwy),
+    label = "Increasing engine size is \nrelated to decreasing fuel economy."
+  )
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  geom_text(aes(label = label),
+            data = label, 
+            vjust = "top", hjust = "right")
+```
+
+```{r, echo=FALSE}
+decorate("annot4") %>% 
+  flair("vjust", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("top", background = "#cfdad4", 
+        color = "#6d6875") %>% 
+  flair("hjust", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("right", background = "#cfdad4", 
+        color = "#6d6875")
+```
+
+If you want to place the text exactly on the borders of the plot, you can 
+use `+Inf` and `-Inf`. Note we use tibble here since we have more "static"
+data.
+
+```{r annot5, include = FALSE}
+label <- tibble(
+  displ = Inf,
+  hwy = Inf,
+  label = "Increasing engine size is \nrelated to decreasing fuel economy."
+)
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  geom_text(aes(label = label), data = label, 
+            vjust = "top", hjust = "right")
+```
+
+```{r, echo=FALSE}
+decorate("annot5") %>% 
+  flair("Inf", background = "#cfdad4", 
+        color = "#6d6875")
+```
+
+We manually broke the label up into lines using `"\n"` but we may have
+used `stringr::str_wrap()` to automatically add line breaks.
+
+```{r}
+"Increasing engine size is related to decreasing fuel economy." %>%
+  # break the above text up automatically
+  # I want 40 characters per line
+  stringr::str_wrap(width = 40) %>%
+  writeLines()
+```
+
+```{r annot6, include = FALSE}
+label <- tibble(
+  displ = Inf,
+  hwy = Inf,
+  label = stringr::str_wrap("Increasing engine size is 
+                            related to decreasing fuel economy.", 
+                            width = 35)
+)
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  geom_text(aes(label = label), data = label, 
+            vjust = "top", hjust = "right")
+```
+
+```{r, echo=FALSE}
+decorate("annot6") %>% 
+  flair("stringr::str_wrap", background = "#9FDDBA", 
+        color = "#008080")
+```
+
+```{r just, echo = FALSE, fig.cap = "All nine combinations of `hjust` and `vjust`.", fig.asp = 0.5, fig.width = 4.5, out.width = "60%"}
+vjust <- c(bottom = 0, center = 0.5, top = 1)
+hjust <- c(left = 0, center = 0.5, right = 1)
+df <- tidyr::crossing(hj = names(hjust), vj = names(vjust)) %>%
+  mutate(
+    y = vjust[vj],
+    x = hjust[hj],
+    label = paste0("hjust = '", hj, "'\n", "vjust = '", vj, "'")
+  )
+ggplot(df, aes(x, y)) +
+  geom_point(colour = "grey70", size = 5) +
+  geom_point(size = 0.5, colour = "red") +
+  geom_text(aes(label = label, hjust = hj, vjust = vj), size = 4) +
+  labs(x = NULL, y = NULL) 
+```
+
+### Exercises
+
+1.  Use `geom_text()` with infinite positions to place text at the
+    four corners of the plot.
+    
+    I am not sure if it is just me but I am unable to do it with
+    Inf and -Inf. 
+    
+    So I used 0, 1 as the authors did for the `hjust`, `vjust` plot,
+    and tweaked it for my case here.
+
+    ```{r}
+    vjust <- c("top", "top", "bottom", "bottom")
+    hjust <- c("left", "right", "left", "right")
+    label <- c("Top left", "Top right", "Bottom left", "Bottom right")
+    x <- c(0, 1, 0, 1)
+    y <- c(1, 1, 0, 0)
+    df <- tibble(x = x,
+                 y = y,
+                 label = label,
+                 vjust = vjust,
+                 hjust = hjust)
+    
+    ggplot(df, aes(x, y)) +
+      geom_text(aes(label = label),
+                vjust = vjust,
+                hjust = hjust) +
+      scale_x_continuous(labels = NULL) +
+      scale_y_continuous(labels = NULL) +
+      labs(x = "",
+           y = "")
+    ```
+    
+
+1.  Read the documentation for `annotate()`. How can you use it to add a text
+    label to a plot without having to create a tibble?
+    
+    Some examples from the help page below. Used when you want to add some
+    static text. I like the use of it for things like $italic(R) ^ 2 == 0.75$,
+    and also seems useful for marking anomalies on a plot.
+    
+    ```{r}
+    p <- ggplot(mtcars, aes(x = wt, y = mpg)) + geom_point()
+    p + annotate("text", x = 2:5, y = 25, label = "Some text")
+    p + annotate("rect", xmin = 3, xmax = 4.2, ymin = 12, ymax = 21,
+      alpha = .2)
+    p + annotate("text", x = 2:3, y = 20:21, label = c("my label", "label 2"))
+    p + annotate("text", x = 4, y = 25, label = "italic(R) ^ 2 == 0.75",
+      parse = TRUE)
+    ```
+    
+
+1.  How do labels with `geom_text()` interact with faceting? How can you
+    add a label to a single facet? How can you put a different label in
+    each facet? (Hint: think about the underlying data.)
+    
+    ```{r}
+    # Got this example from this SO post
+    # https://stackoverflow.com/questions/15867263/ggplot2-geom-text-with-facet-grid
+    x <-runif(9, 0, 125) 
+    data <- as.data.frame(x) 
+    data$y <- runif(9, 0, 125) 
+    data$yy <- factor(c("a","b","c")) 
+    
+    ggplot(data, aes(x, y)) + 
+        geom_point(shape = 2) + 
+        facet_grid(~yy) + 
+        geom_text(aes(x, y, label=lab),
+            data=data.frame(x=60, y=Inf, lab=c("this","is","the way"),
+                 yy=letters[1:3]), vjust=1)
+    
+    ggplot(data, aes(x, y)) + 
+        geom_point(shape = 2) + 
+        facet_grid(~yy) + 
+        geom_text(aes(x, y, label=lab),
+            # text on one facet
+            data=data.frame(x=60, y=Inf, lab=c("this is the only way"),
+                 yy=letters[1]), # one facet only
+            vjust=1)
+    ```
+
+1.  What arguments to `geom_label()` control the appearance of the background
+    box?
+    
+    - label.padding: Amount of padding around label. Defaults to 0.25 lines.
+    - label.r: Radius of rounded corners. Defaults to 0.15 lines.
+    - label.size: Size of label border, in mm.
+
+1.  What are the four arguments to `arrow()`? How do they work? Create a series
+    of plots that demonstrate the most important options.
+    
+    Tweaked from this [Stack Overflow post](https://stackoverflow.com/questions/38008863/how-to-draw-a-nice-arrow-in-ggplot2).
+    
+    ```{r}
+    ggplot(mtcars, aes(wt, mpg)) + 
+      geom_point() +
+      geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
+                      arrow = arrow(length = unit(0.5, "cm")))
+    
+    ggplot(mtcars, aes(wt, mpg)) + 
+      geom_point() +
+      geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
+                      arrow = arrow(length = unit(0.5, "cm"),
+                                    type = "closed"))
+    
+    ggplot(mtcars, aes(wt, mpg)) + 
+      geom_point() +
+      geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
+                      arrow = arrow(length = unit(0.5, "cm"),
+                                    type = "closed",
+                                    ends = "both"))
+    
+    ggplot(mtcars, aes(wt, mpg)) + 
+      geom_point() +
+      geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
+                      arrow = arrow(angle = 60, # how narrow or wide the arrow head
+                                    length = unit(0.5, "cm"),
+                                    type = "closed",
+                                    ends = "both"))
+    
+    
+    ggplot(mtcars, aes(wt, mpg)) + 
+      geom_point() +
+      geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
+                      arrow = arrow(angle = 15, # how narrow or wide the arrow head
+                                    length = unit(0.5, "cm"),
+                                    type = "closed",
+                                    ends = "both"))
+    ```
+
+<h2>Scales</h2> 
+## Scales
+
+You can also make your plot better for communication by adjusting the scales. 
+ggplot2 automatically adds sensible default scales behind the scenes for you.
+
+```{r}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class))
+```
+
+Note this is the same as above.
+
+```{r}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  scale_x_continuous() +
+  scale_y_continuous() +
+  scale_colour_discrete()
+```
+
+### Axis ticks and legend keys
+
+Collectively axes and legends are called <span style="color: #008080;background-color:#9FDDBA">__guides__</span>. 
+Axes are used for x and y aesthetics; legends are used for everything else.
+
+- <span style="color: #008080;background-color:#9FDDBA">`breaks`</span> 
+controls the position of the axis ticks, or the values associated 
+with the legend keys. 
+- <span style="color: #008080;background-color:#9FDDBA">`labels`</span> controls 
+the text label associated with each tick/key. Supply 
+a character vector the same length as `breaks` OR suppress labels by using
+<span style="color: #008080;background-color:#9FDDBA">`NULL`</span> .
+- When is `NULL` appropriate? Useful for maps, or when you can't share
+absolute numbers in a published plot.
+- Breaks and labels for datetimes is a bit different: 
+
+  * `date_labels` takes a format specification, in the same form as
+    `parse_datetime()`.
+  
+  * `date_breaks`, takes a string like "2 days" or "1 month".
+
+```{r br1, include = FALSE}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  scale_y_continuous(breaks = seq(15, 40, by = 5))
+```
+
+```{r, echo=FALSE}
+decorate("br1") %>% 
+  flair("scale_y_continuous", background = "#9FDDBA", 
+        color = "#008080") %>% 
+  flair("breaks", background = "#cfdad4", 
+        color = "#6d6875")
+```
+
+```{r br2, include = FALSE}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  scale_x_continuous(labels = NULL) +
+  scale_y_continuous(labels = NULL)
+```
+
+```{r, echo=FALSE}
+decorate("br2") %>% 
+  flair("labels = NULL", background = "#cfdad4", 
+        color = "#6d6875")
+```
+
+```{r}
+presidential %>% 
+  # add the number of the president, 
+  # e.g. Obama was the 44th president of USA
+  mutate(id = 33 + row_number())
+
+presidential %>% 
+  # add the number of the president, 
+  # e.g. Obama was the 44th president of USA
+  mutate(id = 33 + row_number()) %>%  
+  ggplot(aes(start, id)) +
+  geom_point() +
+  geom_segment(aes(xend = end, yend = id)) +
+  scale_x_date(NULL,
+               breaks = presidential$start,
+               date_labels = "'%y") +
+  ggrepel::geom_label_repel(aes(label = name),
+                                nudge_x = 0.5,
+                                nudge_y = 0.4)
+```
+
+
+### Legend layout
+
+To control the overall position of the legend, you need to use a <span style="color: #008080;background-color:#9FDDBA">`theme()`</span>  
+setting. The theme setting `legend.position` controls where the legend is drawn.
+You can also use `legend.position = "none"` to hide the display of the legend.
+
+```{r fig.asp = 1, fig.align = "default", out.width = "75%", fig.width = 4}
+base <- ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class))
+base + theme(legend.position = "left")
+base + theme(legend.position = "top")
+base + theme(legend.position = "bottom")
+base + theme(legend.position = "right") # the default
+```
+
+- To control the display of individual legends, use `guides()` along with `guide_legend()` or `guide_colourbar()`. 
+- Control the number of rows the legend uses with `nrow`
+- Override one of the aesthetics to make the points bigger. Useful if you have 
+used a low `alpha` to display many points on a plot.
+
+```{r}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_smooth(se = FALSE) +
+  theme(legend.position = "bottom") +
+  guides(colour = guide_legend(nrow = 1,
+                               override.aes = list(size = 4)))
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_smooth(se = FALSE) +
+  theme(legend.position = "bottom") +
+  guides(colour = guide_legend(nrow = 4, 
+                               override.aes = list(size = 5)))
+```
+
+### Replacing a scale
+
+Sometimes you will want to replace a scale completely - we have done
+this before when we log transformed graphs.
+
+__Aesthetic mapping Transform__
+
+```{r, fig.align = "default"}
+ggplot(diamonds, aes(carat, price)) +
+  geom_bin2d()
+# disadvantage of this transformation is that the axes are 
+# now labelled with the transformed values, making it hard to interpret the plot
+ggplot(diamonds, aes(log10(carat), log10(price))) +
+  geom_bin2d()
+```
+
+__Scale Transform__
+
+Visually identical to above, except the axes are labelled using the original 
+data scale.
+
+```{r}
+ggplot(diamonds, aes(carat, price)) +
+  geom_bin2d() + 
+  scale_x_log10() + 
+  scale_y_log10()
+```
+
+Useful colour scale alternatives are the ColorBrewer scales for certain colour 
+blindness - e.g. red-green colour blindness.
+
+```{r, fig.align = "default"}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color = drv))
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color = drv)) +
+  scale_colour_brewer(palette = "Set1")
+```
+
+Adding a redundant shape mapping is also completely acceptable. It also
+ensures the plot is interpretable in black and white.
+
+```{r}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color = drv, shape = drv)) +
+  scale_colour_brewer(palette = "Set1")
+```
+
+In ColorBrewer the sequential (top) and diverging (bottom) are useful if your 
+categorical values are __ordered__, or have a "middle". Often the case if you've 
+used `cut()` to make a continuous variable into a categorical variable.
+
+```{r brewer, fig.asp = 2.5, echo = FALSE, fig.cap = "All ColourBrewer scales."}
+par(mar = c(0, 3, 0, 0))
+RColorBrewer::display.brewer.all()
+```
+
+Use `scale_colour_manual()` when you have a predefined mapping between values and colours. 
+
+```{r}
+presidential %>%
+  mutate(id = 33 + row_number()) %>%
+  ggplot(aes(start, id, colour = party)) +
+    geom_point() +
+    geom_segment(aes(xend = end, yend = id)) +
+    scale_colour_manual(values = c(Republican = "red", Democratic = "blue"))
+```
+
+- For continuous colour, use `scale_colour_gradient()` or `scale_fill_gradient()`. 
+- For a diverging scale, use `scale_colour_gradient2()`.  Here positive and 
+negative values may have different colours. Also useful if you want to 
+distinguish points above or below the mean.
+- `scale_colour_viridis()` is also a good alternative.
+
+```{r, fig.align = "default", fig.asp = 1, fig.width = 4}
+df <- tibble(
+  x = rnorm(10000),
+  y = rnorm(10000)
+)
+ggplot(df, aes(x, y)) +
+  geom_hex() +
+  coord_fixed()
+
+ggplot(df, aes(x, y)) +
+  geom_hex() +
+  viridis::scale_fill_viridis() +
+  coord_fixed()
+```
+
+All colour scales have `scale_colour_x()` and `scale_fill_x()` for the `colour` 
+and `fill` aesthetics.
+
+### Exercises
+
+1.  Why doesn't the following code override the default scale?
+
+    The hex should use __fill__ not __colour__
+
+    ```{r}
+    ggplot(df, aes(x, y)) +
+      geom_hex() +
+      scale_colour_gradient(low = "white", high = "red") +
+      coord_fixed()
+    ```
+    
+    ```{r}
+    ggplot(df, aes(x, y)) +
+      geom_hex() +
+      scale_fill_gradient(low = "white", high = "red") +
+      coord_fixed()
+    ```
+
+1.  What is the first argument to every scale? How does it compare to `labs()`?
+    
+    The `...` argument which 	passes on to the particular
+    scale function in the arguments. The first arg is aesthetics that this 
+    scale works with e.g. `x`, `y`, `colour` etc.
+    
+    `labs` is similar but talks to the labels not the scale.
+    
+
+1.  Change the display of the presidential terms by:
+
+    a. Combining the two variants shown above.
+    
+      ```{r}
+      presidential %>%
+        mutate(id = 33 + row_number()) %>%
+        ggplot(aes(start, id, colour = party)) +
+          geom_point() +
+          geom_segment(aes(xend = end, yend = id)) +
+          scale_colour_manual(values = c(Republican = "red", 
+                                         Democratic = "blue")) +
+          scale_x_date(NULL,
+                     breaks = presidential$start,
+                     date_labels = "'%y")
+      ```
+    
+    a. Improving the display of the y axis.
+    
+        ```{r}
+        presidential_amend <- presidential %>%
+          mutate(id = 33 + row_number(),
+                 id_label = str_c(id, c(rep("th ", 7), 
+                                  "st ", "nd ", "rd ", "th "), 
+                                  c(rep("President", 11))),
+                 id_label = fct_reorder(id_label, id)) 
+        
+        presidential_amend %>%
+          ggplot(aes(start, id, colour = party)) +
+            geom_point() +
+            geom_segment(aes(xend = end, yend = id)) +
+            scale_colour_manual(values = c(Republican = "red", 
+                                           Democratic = "blue")) +
+            scale_x_date(NULL,
+                       breaks = presidential_amend$start,
+                       date_labels = "'%y") +
+            scale_y_continuous(breaks = presidential_amend$id,
+                               labels = presidential_amend$id_label) +
+            ggrepel::geom_label_repel(aes(label = name),
+                                    nudge_x = 0.5,
+                                    nudge_y = 0.4) +
+            labs(y = "",
+                 x = "Presidential term",
+                 title = str_wrap("Republicans
+                 seem to be winning the race in terms of time in office?", 
+                 width = 70))
+        ```    
+    a. Labelling each term with the name of the president.
+    
+        Done above.
+        
+    a. Adding informative plot labels.
+    
+        Done above.
+        
+    a. Placing breaks every 4 years (this is trickier than it seems!).
+    
+        ```{r}
+            presidential_amend <- presidential %>%
+              mutate(id = 33 + row_number(),
+                     id_label = str_c(id, c(rep("th ", 7), 
+                                      "st ", "nd ", "rd ", "th "), 
+                                      c(rep("President", 11))),
+                     id_label = fct_reorder(id_label, id)) 
+        
+            breaks <- function(df){
+              df %>% 
+                mutate(yr_start = year(start),
+                       yr_end = year(end)) %>% 
+                summarise(min_start = min(yr_start),
+                       max_end = max(yr_end))
+            }
+            
+            break_df <- presidential_amend %>% 
+             breaks() 
+            
+            presidential_amend %>%
+              ggplot(aes(start, id, colour = party)) +
+                geom_point() +
+                geom_segment(aes(xend = end, yend = id)) +
+                scale_colour_manual(values = c(Republican = "red", 
+                                               Democratic = "blue")) +
+                scale_x_date(NULL,
+                             breaks = seq.Date(ymd(str_glue("{break_df$min_start}0101")), 
+                                          ymd(str_glue("{break_df$max_end}0101")), 
+                                          "4 years"),
+                             date_labels = "'%y") +
+                scale_y_continuous(breaks = presidential_amend$id,
+                                   labels = presidential_amend$id_label) +
+                ggrepel::geom_label_repel(aes(label = name),
+                                        nudge_x = 0.5,
+                                        nudge_y = 0.4) +
+                labs(y = "",
+                     x = "Presidential term",
+                     title = str_wrap("Republicans
+                     seem to be winning the race in terms of time in office?", 
+                     width = 70))
+            ``` 
+1.  Use `override.aes` to make the legend on the following plot easier to see.
+
+    ```{r, dev = "png", out.width = "80%"}
+    ggplot(diamonds, aes(carat, price)) +
+      geom_point(aes(colour = cut), alpha = 1/20)
+    ```
+    
+    ```{r, dev = "png", out.width = "80%"}
+    ggplot(diamonds, aes(carat, price)) +
+      geom_point(aes(colour = cut), alpha = 1/20) +
+      guides(colour = guide_legend(override.aes = list(alpha = 1)))
+    ```
+
+## Zooming
+
+You can control plot limits by:
+
+1. Adjusting what data are plotted
+1. Setting the limits in each scale
+1. Setting `xlim` and `ylim` in `coord_cartesian()`
+
+To zoom in on a region of the plot, use `coord_cartesian()`. 
+
+```{r fig.align = "default", message = FALSE}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_smooth() +
+  # zoom in to a specific set of coords
+  coord_cartesian(xlim = c(5,7), ylim = c(10,30))
+
+mpg %>% 
+  filter(displ >= 5 & displ <= 7,
+         hwy >= 10 & hwy <= 30) %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  # we draw a smoothing fn for the data
+  # but we filtered obs to just the ones we want to see
+  geom_smooth()
+```
+
+Notice above that `coord_cartesian()` is the true zoom in, the smoothing function
+considers all data. In the filtered graph the smoothing function considers
+only the filtered observations so it is a very different view of the data.
+Consider your use case for zooming then choose a method.
+
+```{r fig.align = "default", fig.width = 4}
+suv <- mpg %>% filter(class == "suv")
+compact <- mpg %>% filter(class == "compact")
+ggplot(suv, aes(displ, hwy, colour = drv)) +
+  geom_point()
+ggplot(compact, aes(displ, hwy, colour = drv)) +
+  geom_point()
+```
+
+The scales above are however different so comparisons are not easy. 
+You may share scales across multiple plots.
+
+```{r out.width = "50%", fig.align = "default", fig.width = 4}
+x_scale <- scale_x_continuous(limits = range(mpg$displ))
+y_scale <- scale_y_continuous(limits = range(mpg$hwy))
+col_scale <- scale_colour_discrete(limits = unique(mpg$drv))
+ggplot(suv, aes(displ, hwy, colour = drv)) +
+  geom_point() +
+  x_scale +
+  y_scale +
+  col_scale
+ggplot(compact, aes(displ, hwy, colour = drv)) +
+  geom_point() +
+  x_scale +
+  y_scale +
+  col_scale
+```
+
+We could have used faceting but this technique is useful if for instance, 
+you want spread plots over multiple pages of a report.
+
+<h2>Themes</h2>
+## Themes
+
+Non-data elements of your plot can be amended with a theme.
+
+```{r, message = FALSE}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth(se = FALSE) +
+  theme_bw()
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_smooth(se = FALSE) +
+  theme_light()
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class)) +
+  geom_smooth(se = FALSE) +
+  theme_dark()
+```
+
