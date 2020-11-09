@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Vebash Naidoo" />
+
+<meta name="date" content="2020-08-11" />
+
+<title>Chapter 16 - Vectors</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+      </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R4DS Book - Prep for exam</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Chapter 16 - Vectors</h1>
+<h4 class="author">Vebash Naidoo</h4>
+<h4 class="date">08/11/2020</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-11-09
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>r4ds_book/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200814code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200814)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200814code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200814)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreef3d860fb81892331724f74f4d4aa0575a9f7b6dftargetblankf3d860fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/f3d860fb81892331724f74f4d4aa0575a9f7b6df" target="_blank">f3d860f</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreef3d860fb81892331724f74f4d4aa0575a9f7b6dftargetblankf3d860fa" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/f3d860fb81892331724f74f4d4aa0575a9f7b6df" target="_blank">f3d860f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  analysis/images/
+    Untracked:  code_snipp.txt
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/ch16_vectors.Rmd</code>) and HTML (<code>docs/ch16_vectors.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/f3d860fb81892331724f74f4d4aa0575a9f7b6df/analysis/ch16_vectors.Rmd" target="_blank">f3d860f</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-09
+</td>
+<td>
+finished ch16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<style type="text/css">
+.tabset h2 {display: none;}
+</style>
+<div id="buttons" class="section level1 tabset tabset-fade tabset-pills">
+<h1>Vectors</h1>
+<p><strong>Click on the tab buttons below for each section</strong></p>
+<h2>
+Vector Basics
+</h2>
+<div id="vector-basics" class="section level2">
+<h2>Vector Basics</h2>
+<p>There are two types of vectors:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Atomic</strong> vectors, of which there are different types: <strong>logical</strong>, <strong>integer</strong>, <strong>double</strong>, <strong>character</strong>, <strong>complex</strong>, and <strong>raw</strong>.</li>
+<li><strong>Lists</strong>, which are sometimes called recursive vectors because lists can contain other lists.</li>
+</ol>
+<p><code>NULL</code> is often used to represent the absence of a vector (a vector of length 0) (as opposed to <code>NA</code> which is used to represent the absence of a value in a vector).</p>
+<p>Every vector has two key properties:</p>
+<ol style="list-style-type: decimal">
+<li><p>Its <strong>type</strong>, which you can determine with <code>typeof()</code> / <code>class</code>.</p>
+<pre class="r"><code>typeof(letters)
+#&gt; [1] &quot;character&quot;
+class(letters)
+#&gt; [1] &quot;character&quot;
+typeof(1:10)
+#&gt; [1] &quot;integer&quot;
+class(1:10)
+#&gt; [1] &quot;integer&quot;</code></pre></li>
+<li><p>Its <strong>length</strong>, which you can determine with <code>length()</code>.</p>
+<pre class="r"><code>(x &lt;- list(&quot;a&quot;, &quot;b&quot;, 1:10))
+#&gt; [[1]]
+#&gt; [1] &quot;a&quot;
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] &quot;b&quot;
+#&gt; 
+#&gt; [[3]]
+#&gt;  [1]  1  2  3  4  5  6  7  8  9 10
+length(x)
+#&gt; [1] 3
+typeof(x)
+#&gt; [1] &quot;list&quot;
+class(x)
+#&gt; [1] &quot;list&quot;</code></pre></li>
+</ol>
+<div id="logical" class="section level4">
+<h4>Logical</h4>
+<pre class="r"><code>1:10 %% 3 == 0
+#&gt;  [1] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE
+c(TRUE, FALSE, TRUE, NA)
+#&gt; [1]  TRUE FALSE  TRUE    NA
+typeof(1:10 %% 3 == 0)
+#&gt; [1] &quot;logical&quot;
+length(1:10 %% 3 == 0)
+#&gt; [1] 10</code></pre>
+</div>
+<div id="numeric" class="section level4">
+<h4>Numeric</h4>
+<pre class="r"><code>typeof(1)
+#&gt; [1] &quot;double&quot;
+# sees this as integer - maybe because of the list of values, it can infer
+# type better?
+typeof(1:10) 
+#&gt; [1] &quot;integer&quot;
+typeof(1L) # the L specifically changes it to an integer
+#&gt; [1] &quot;integer&quot;
+typeof(1.5L)
+#&gt; [1] &quot;double&quot;
+typeof(1L:10L)
+#&gt; [1] &quot;integer&quot;
+1L:10L
+#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<p>Doubles are <span style="color: #FFE4E1;background-color:#FD5800">approximations!</span></p>
+<pre class="r"><code>(x &lt;- sqrt(2) ^ 2)
+#&gt; [1] 2
+x - 2
+#&gt; [1] 0.0000000000000004440892</code></pre>
+<p>Integers have one special value: <code>NA</code>, while <span style="color: #FFE4E1;background-color:#FD5800">doubles have four</span>: <span style="color: #008080;background-color:#9FDDBA"><code>NA</code>, <code>NaN</code>, <code>Inf</code> and <code>-Inf</code></span>.</p>
+<pre class="r"><code>c(-1, 0, 1) / 0
+#&gt; [1] -Inf  NaN  Inf</code></pre>
+<p>Avoid using <code>==</code> to check for these other special values. Instead use the helper functions <code>is.finite()</code>, <code>is.infinite()</code>, and <code>is.nan()</code>:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>0</th>
+<th>Inf</th>
+<th>NA</th>
+<th>NaN</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>is.finite()</code></td>
+<td>x</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>is.infinite()</code></td>
+<td></td>
+<td>x</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>is.na()</code></td>
+<td></td>
+<td></td>
+<td>x</td>
+<td>x</td>
+</tr>
+<tr class="even">
+<td><code>is.nan()</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>x</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="character" class="section level4">
+<h4>Character</h4>
+<p>R uses a global string pool. This means that each unique string is only stored in memory once.</p>
+<pre class="r"><code>x &lt;- &quot;This is a reasonably long string&quot;
+pryr::object_size(x)
+#&gt; 152 B
+y &lt;- rep(x, 1000)
+pryr::object_size(y)
+#&gt; 8.14 kB
+# 8 byte pointers x 1000 to a 152B string
+# I am not exactly getting to the same amt but it&#39;s close
+# the bytes that make a kB is either 1000 or 1024
+# I get close if I use the calc below BUT that is completely
+# NOT consistent so I am probably incorrect here!!
+(8*1000)/1000 + 152/1024
+#&gt; [1] 8.148438</code></pre>
+</div>
+<div id="missing-values" class="section level4">
+<h4>Missing values</h4>
+<p>Each type of <em>atomic vector</em> has its own missing value.</p>
+<pre class="r"><code>NA            # logical
+#&gt; [1] NA
+NA_integer_   # integer
+#&gt; [1] NA
+NA_real_      # double
+#&gt; [1] NA
+NA_character_ # character
+#&gt; [1] NA</code></pre>
+</div>
+<div id="exercises" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Describe the difference between <code>is.finite(x)</code> and <code>!is.infinite(x)</code>.</p>
+<ul>
+<li><p><code>is.finite(x)</code> tests if each element in the vector is finite.</p></li>
+<li><p><code>is.infinite(x)</code> tests if each element in the vector is <code>Inf</code> / <code>-Inf</code>. The <code>!</code> in front of <code>is.infinite(x)</code> asks each element of the vector - “Are you NOT Inf / -Inf?”.</p>
+<ul>
+<li>Hey -1/0 are you NOT Inf/-Inf? To which -1/0 replies FALSE, I am indeed -Inf!</li>
+<li>Hey 0/0 are you NOT Inf/-Inf? To which 0/0 replies TRUE, I am not Inf/-Inf I am NaN!</li>
+<li>Hey 1/0 are you NOT Inf/-Inf? To which 1/0 replies FALSE, I am indeed Inf!</li>
+</ul></li>
+</ul>
+<p>Help Page: <br></p>
+<p>is.finite returns a vector of the same length as x the jth element of which is TRUE if x[j] is finite (i.e., it is not one of the values NA, NaN, Inf or -Inf) and FALSE otherwise. Complex numbers are finite if both the real and imaginary parts are.</p>
+<p>is.infinite returns a vector of the same length as x the jth element of which is TRUE if x[j] is infinite (i.e., equal to one of Inf or -Inf) and FALSE otherwise.</p>
+<pre class="r"><code>is.finite(c(-1, 0, 1) / 0)
+#&gt; [1] FALSE FALSE FALSE
+!is.infinite(c(-1, 0, 1) / 0)
+#&gt; [1] FALSE  TRUE FALSE</code></pre></li>
+<li><p>Read the source code for <code>dplyr::near()</code> (Hint: to see the source code, drop the <code>()</code>). How does it work?</p>
+<pre class="r"><code>dplyr::near
+#&gt; function (x, y, tol = .Machine$double.eps^0.5) 
+#&gt; {
+#&gt;     abs(x - y) &lt; tol
+#&gt; }
+#&gt; &lt;bytecode: 0x000000002cab63c0&gt;
+#&gt; &lt;environment: namespace:dplyr&gt;</code></pre>
+<p>It checks if two numbers are close to each other within some tolerance <code>tol</code>.</p>
+<pre class="r"><code>dplyr::near(1, 1.1)
+#&gt; [1] FALSE
+dplyr::near(1, 1.1, tol = 0.11)
+#&gt; [1] TRUE
+dplyr::near(sqrt(2)^2, 2)
+#&gt; [1] TRUE
+dplyr::near(4, 4 + 4.567342e-10)
+#&gt; [1] TRUE</code></pre></li>
+<li><p>A logical vector can take 3 possible values. How many possible values can an integer vector take? How many possible values can a double take? Use google to do some research.</p>
+<p>From the help page ?<code>integer</code>: The range of representable integers is restricted to about +/-2*10^9.</p>
+<p>For doubles it is a bit more complicated to explain. <a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format">Here</a> is more information.</p></li>
+<li><p>Brainstorm at least four functions that allow you to convert a double to an integer. How do they differ? Be precise.</p>
+<p>Depending on the function used some of these drop the decimal part and just keep the integer part, other functions convert the double to the nearest integer.</p>
+<pre class="r"><code>as.integer(2.678)
+#&gt; [1] 2
+2.678 %/% 1
+#&gt; [1] 2
+round(2.678, 0)
+#&gt; [1] 3
+floor(2.678)
+#&gt; [1] 2
+ceiling(2.678)
+#&gt; [1] 3
+trunc(2.678)
+#&gt; [1] 2</code></pre></li>
+<li><p>What functions from the readr package allow you to turn a string into logical, integer, and double vector?</p>
+<p>The different <code>parse_</code> variants.</p>
+<pre class="r"><code>readr::parse_integer(c(&quot;1&quot;, &quot;2&quot;))
+#&gt; [1] 1 2
+readr::parse_double(c(&quot;2.45&quot;, &quot;6.79&quot;))
+#&gt; [1] 2.45 6.79
+readr::parse_logical(c(&quot;TRUE&quot;, &quot;FALSE&quot;, &quot;NA&quot;, &quot;1&quot;, &quot;0&quot;, &quot;3&quot;))
+#&gt; Warning: 1 parsing failure.
+#&gt; row col           expected actual
+#&gt;   6  -- 1/0/T/F/TRUE/FALSE      3
+#&gt; [1]  TRUE FALSE    NA  TRUE FALSE    NA
+#&gt; attr(,&quot;problems&quot;)
+#&gt; # A tibble: 1 x 4
+#&gt;     row   col expected           actual
+#&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;              &lt;chr&gt; 
+#&gt; 1     6    NA 1/0/T/F/TRUE/FALSE 3</code></pre></li>
+</ol>
+<h2>
+Using atomic vectors
+</h2>
+</div>
+</div>
+<div id="using-atomic-vectors" class="section level2">
+<h2>Using atomic vectors</h2>
+<div id="coercion" class="section level3">
+<h3>Coercion</h3>
+<p>You can coerce in two ways.</p>
+<ol style="list-style-type: decimal">
+<li><p>Explicitly using <code>as.logical()</code>, <code>as.integer()</code>, <code>as.double()</code>, or <code>as.character()</code>. But before explicitly coercing see if you can make the fix upstream, e.g. in your readr <code>col_types</code> specification.</p></li>
+<li><p>Implicitly when you use a vector in a specific context, e.g. when you use a logical vector with in sum for example the TRUE and FALSE are converted to 1 / 0 and added up.</p>
+<pre class="r"><code>x &lt;- sample(20, # sample from 1:20
+            100, # get me a 100 of those
+            replace = TRUE # repeats are welcome
+            )
+y &lt;-  x &gt; 10
+sum(y) # how many greater than 10?
+#&gt; [1] 50
+mean(y) # what proportion are greater than 10?
+#&gt; [1] 0.5</code></pre></li>
+</ol>
+<p>When you try and create a vector containing multiple types with <code>c()</code>, the most complex type always wins.</p>
+<pre class="r"><code>typeof(c(TRUE, 1L)) # most complex type = integer
+#&gt; [1] &quot;integer&quot;
+typeof(c(1L, 1.5)) # most complex type = double
+#&gt; [1] &quot;double&quot;
+typeof(c(1.5, &quot;a&quot;)) # I can&#39;t convert &quot;a&quot; to a double, so 1.5 converted to char
+#&gt; [1] &quot;character&quot;</code></pre>
+<p>An atomic vector can not have a mix of different types because the type is a <span style="color: #008080;background-color:#9FDDBA">property of the complete vector</span>, <strong>NOT</strong> <span style="color: #FFE4E1;background-color:#FD5800">the individual elements</span>.</p>
+</div>
+<div id="test-functions" class="section level3">
+<h3>Test functions</h3>
+<p>Sometimes you want to do different things based on the type of vector and you may use Base R’s, <code>typeof()</code>,<code>is.vector()</code> etc. BUT these often return surprising results. <br> {purr}’s <code>is_*</code> functions provide a good alternative.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>lgl</th>
+<th>int</th>
+<th>dbl</th>
+<th>chr</th>
+<th>list</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>is_logical()</code></td>
+<td>x</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>is_integer()</code></td>
+<td></td>
+<td>x</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>is_double()</code></td>
+<td></td>
+<td></td>
+<td>x</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>is_numeric()</code></td>
+<td></td>
+<td>x</td>
+<td>x</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>is_character()</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>x</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>is_atomic()</code></td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>is_list()</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>x</td>
+</tr>
+<tr class="even">
+<td><code>is_vector()</code></td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="scalars-and-recycling-rules" class="section level3">
+<h3>Scalars and recycling rules</h3>
+<p>R will also implicitly coerce the length of vectors by <strong>recycling</strong>, i.e. the shorter vector is repeated to the same length as the longer vector.</p>
+<p>Generally this is useful when you are mixing vectors and “scalars” (a single number is a vector of length 1).</p>
+<pre class="r"><code>sample(10) + 100
+#&gt;  [1] 110 105 106 103 102 104 107 108 109 101
+runif(10) &gt; 0.5
+#&gt;  [1] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE</code></pre>
+<pre class="r"><code># this is essentially as follows
+# 1  2  3  4  5  6  7  8  9  10  +
+# 1  2  1  2  1  2  1  2  1  2 
+# -------------------------------
+# 2  4  4  6  6  8  8  10  10 12
+# the shorter vector (1,2) is recycled as many times as needed
+1:10 + 1:2 
+#&gt;  [1]  2  4  4  6  6  8  8 10 10 12</code></pre>
+<p>The <code>recycling</code> is silent except when the length of the longer is not an integer multiple of the length of the shorter vector.</p>
+<pre class="r"><code>1:10 + 1:3
+#&gt; Warning in 1:10 + 1:3: longer object length is not a multiple of shorter object
+#&gt; length
+#&gt;  [1]  2  4  6  5  7  9  8 10 12 11</code></pre>
+<p>In tidyverse you will get errors when you recycle anything other than a “scalar” (length 1 vector). To recycle, you need to do it yourself with <code>rep()</code>.</p>
+<pre class="r"><code>tibble(x = 1:4, y = 1:2)
+#&gt; Error: Tibble columns must have compatible sizes.
+#&gt; * Size 4: Existing data.
+#&gt; * Size 2: Column `y`.
+#&gt; i Only values of size one are recycled.
+tibble(x = 1:4, y = rep(1:2, 2))
+#&gt; # A tibble: 4 x 2
+#&gt;       x     y
+#&gt;   &lt;int&gt; &lt;int&gt;
+#&gt; 1     1     1
+#&gt; 2     2     2
+#&gt; 3     3     1
+#&gt; 4     4     2
+tibble(x = 1:4, y = rep(1:2, each = 2))
+#&gt; # A tibble: 4 x 2
+#&gt;       x     y
+#&gt;   &lt;int&gt; &lt;int&gt;
+#&gt; 1     1     1
+#&gt; 2     2     1
+#&gt; 3     3     2
+#&gt; 4     4     2</code></pre>
+</div>
+<div id="naming-vectors" class="section level3">
+<h3>Naming vectors</h3>
+<p>You may name your vector items during creation with <code>c()</code>.</p>
+<pre class="r"><code>c(x = 1, y = 2, z = 4)
+#&gt; x y z 
+#&gt; 1 2 4</code></pre>
+<p>Or use <code>purrr::set_names()</code>:</p>
+<pre class="r"><code>set_names(1:3, c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;))
+#&gt; a b c 
+#&gt; 1 2 3</code></pre>
+</div>
+<div id="subsetting" class="section level3">
+<h3>Subsetting</h3>
+<p>To subset a vector use <code>[</code>. <code>[</code> is the subsetting function.</p>
+<ul>
+<li><p>Subsetting with positive integers keeps the elements at those positions:</p>
+<pre class="r"><code>x &lt;- c(&quot;one&quot;, &quot;two&quot;, &quot;three&quot;, &quot;four&quot;, &quot;five&quot;)
+x[c(3, 2, 5)]
+#&gt; [1] &quot;three&quot; &quot;two&quot;   &quot;five&quot;</code></pre>
+<p>Can also get longer output by repeating.</p>
+<pre class="r"><code>x[c(1, 1, 5, 5, 5, 2)]
+#&gt; [1] &quot;one&quot;  &quot;one&quot;  &quot;five&quot; &quot;five&quot; &quot;five&quot; &quot;two&quot;</code></pre></li>
+<li><p>Negative values drop the elements at the specified positions.</p>
+<pre class="r"><code>x[c(-1, -3, -5)]
+#&gt; [1] &quot;two&quot;  &quot;four&quot;</code></pre>
+<p>It’s an error to mix positive and negative values.</p>
+<pre class="r"><code>x[c(1, -1)]
+#&gt; Error in x[c(1, -1)]: only 0&#39;s may be mixed with negative subscripts</code></pre></li>
+<li><p>The error message mentions subsetting with zero, which returns no values.</p>
+<pre class="r"><code>x[0]
+#&gt; character(0)</code></pre></li>
+<li><p>Subsetting with a logical vector keeps all values corresponding to a <code>TRUE</code> value. We use this often.</p>
+<pre class="r"><code>x &lt;- c(10, 3, NA, 5, 8, 1, NA)
+
+# All non-missing values of x
+x[!is.na(x)]
+#&gt; [1] 10  3  5  8  1
+
+# All even (or missing!) values of x
+x[x %% 2 == 0]
+#&gt; [1] 10 NA  8 NA</code></pre></li>
+<li><p>If you have a named vector, you can subset it with a character vector:</p>
+<pre class="r"><code>x &lt;- c(abc = 1, def = 2, xyz = 5)
+x[c(&quot;xyz&quot;, &quot;def&quot;)]
+#&gt; xyz def 
+#&gt;   5   2
+x[c(&quot;xyz&quot;, &quot;xyz&quot;, &quot;abc&quot;, &quot;abc&quot;)]
+#&gt; xyz xyz abc abc 
+#&gt;   5   5   1   1</code></pre></li>
+<li><p>The simplest type of subsetting is nothing, <code>x[]</code>, which returns the complete <code>x</code>. Not useful for subsetting vectors, but useful when subsetting matrices E.g if <code>x</code> is 2d, <code>x[1, ]</code> selects the first row and all the columns, and <code>x[, -1]</code> selects all rows and all columns except the first.</p></li>
+<li><p>There is an important variation of <code>[</code> called <code>[[</code>. <code>[[</code> only ever extracts a single element, and always drops names.</p></li>
+</ul>
+</div>
+<div id="exercises-1" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>What does <code>mean(is.na(x))</code> tell you about a vector <code>x</code>? What about <code>sum(!is.finite(x))</code>?</p>
+<ul>
+<li><code>mean(is.na(x))</code> tells you the proportion that is NA</li>
+<li><code>sum(!is.finite(x))</code> tells you how many non-finite entries are in your data</li>
+</ul>
+<pre class="r"><code>mean(is.na(c(NA, 2, TRUE, 4, NA, NaN, Inf, -Inf))) # 3/8
+#&gt; [1] 0.375
+sum(!is.finite(c(NA, Inf, 56, -Inf, 98.6, NaN)))
+#&gt; [1] 4</code></pre></li>
+<li><p>Carefully read the documentation of <code>is.vector()</code>. What does it actually test for? Why does <code>is.atomic()</code> not agree with the definition of atomic vectors above?</p>
+<ul>
+<li><code>is.atomic(x)</code> returns TRUE if the vector is any of the types (“logical”, “integer”, “numeric”, “complex”, “character” and “raw”) and NULL.</li>
+<li><code>is.vector(x)</code> returns TRUE if x is a vector with no attributes other than <code>names</code>.</li>
+</ul>
+<pre class="r"><code># borrowed from help page of ?is.atomic
+is_a_type &lt;- function(x) c(vect = is.vector(x), atomic = is.atomic(x))
+is_a_type(c(a = 1, b = 3))
+#&gt;   vect atomic 
+#&gt;   TRUE   TRUE
+is_a_type(list(2)) # why? class not one of those listed - i.e. it is a list
+#&gt;   vect atomic 
+#&gt;   TRUE  FALSE
+is_a_type(list(2, 4, &quot;test&quot;))
+#&gt;   vect atomic 
+#&gt;   TRUE  FALSE
+typeof(list(2))
+#&gt; [1] &quot;list&quot;
+x &lt;- list(2, 4, &quot;test&quot;)
+attributes(x)
+#&gt; NULL</code></pre></li>
+<li><p>Compare and contrast <code>setNames()</code> with <code>purrr::set_names()</code>.</p>
+<table>
+<colgroup>
+<col width="51%" />
+<col width="48%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">setNames()</th>
+<th align="center">purrr::set_names</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">two args, vector + vector of names</td>
+<td align="center">three args, vector + vector of names + …</td>
+</tr>
+<tr class="even">
+<td align="center">vector of names must be in c()</td>
+<td align="center">vector of names can be in c() or individually specified</td>
+</tr>
+<tr class="odd">
+<td align="center">NA</td>
+<td align="center">Can be a function e.g. toupper</td>
+</tr>
+<tr class="even">
+<td align="center">If <code>nm</code> is NULL names removed</td>
+<td align="center">If <code>nm</code> is NULL names removed</td>
+</tr>
+<tr class="odd">
+<td align="center">If <code>nm</code> only specified, names match elements</td>
+<td align="center">Error! Not allowed! x is mandatory</td>
+</tr>
+<tr class="even">
+<td align="center">If 1st arg only specified, error</td>
+<td align="center">vector + names created out of 1st arg</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>purrr::set_names(1:4, c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;))
+#&gt; a b c d 
+#&gt; 1 2 3 4
+purrr::set_names(1:4, letters[1:4])
+#&gt; a b c d 
+#&gt; 1 2 3 4
+purrr::set_names(1:4, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;)
+#&gt; a b c d 
+#&gt; 1 2 3 4
+# If the second argument is omitted a vector is named with itself
+purrr::set_names(letters[1:5])
+#&gt;   a   b   c   d   e 
+#&gt; &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;
+# Alternatively you can supply a function
+purrr::set_names(1:10, ~ letters[seq_along(.)])
+#&gt;  a  b  c  d  e  f  g  h  i  j 
+#&gt;  1  2  3  4  5  6  7  8  9 10
+purrr::set_names(head(mtcars), toupper)
+#&gt;                    MPG CYL DISP  HP DRAT    WT  QSEC VS AM GEAR CARB
+#&gt; Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+#&gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+#&gt; Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+#&gt; Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+#&gt; Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+#&gt; Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+# If the input vector is unnamed, it is first named after itself
+# before the function is applied:
+purrr::set_names(letters, toupper)
+#&gt;   A   B   C   D   E   F   G   H   I   J   K   L   M   N   O   P   Q   R   S   T 
+#&gt; &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot; &quot;t&quot; 
+#&gt;   U   V   W   X   Y   Z 
+#&gt; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;
+(mtcars_sub &lt;- head(mtcars))
+#&gt;                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+#&gt; Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+#&gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+#&gt; Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+#&gt; Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+#&gt; Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+#&gt; Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+purrr::set_names(mtcars_sub, nm = NULL)
+#&gt;                                                          
+#&gt; Mazda RX4         21.0 6 160 110 3.90 2.620 16.46 0 1 4 4
+#&gt; Mazda RX4 Wag     21.0 6 160 110 3.90 2.875 17.02 0 1 4 4
+#&gt; Datsun 710        22.8 4 108  93 3.85 2.320 18.61 1 1 4 1
+#&gt; Hornet 4 Drive    21.4 6 258 110 3.08 3.215 19.44 1 0 3 1
+#&gt; Hornet Sportabout 18.7 8 360 175 3.15 3.440 17.02 0 0 3 2
+#&gt; Valiant           18.1 6 225 105 2.76 3.460 20.22 1 0 3 1
+
+(tmp &lt;- 1:3)
+#&gt; [1] 1 2 3
+(tmp &lt;- setNames(tmp, c(&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;)))
+#&gt; foo bar baz 
+#&gt;   1   2   3
+(tmp &lt;- setNames(tmp, NULL))
+#&gt; [1] 1 2 3
+(tmp &lt;- setNames(nm=tmp))
+#&gt; 1 2 3 
+#&gt; 1 2 3
+tmp &lt;- setNames(tmp)
+#&gt; Error in setNames(tmp): argument &quot;nm&quot; is missing, with no default</code></pre></li>
+<li><p>Create functions that take a vector as input and returns:</p>
+<ol style="list-style-type: lower-alpha">
+<li>The last value. Should you use <code>[</code> or <code>[[</code>?</li>
+</ol>
+<pre class="r"><code>last_val &lt;- function(x){
+  if(length(x) &gt; 0) {
+    x[[length(x)]]
+  } else {
+    x
+  }
+}
+
+x &lt;- 1:10
+last_val(x)
+#&gt; [1] 10
+x &lt;- c()
+last_val(x)
+#&gt; NULL</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li>The elements at even numbered positions.</li>
+</ol>
+<pre class="r"><code>even_vals &lt;- function(x){
+  x[c(seq_along(x) %% 2 == 0)]
+}
+x &lt;- c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;)
+even_vals(x)
+#&gt; [1] &quot;b&quot; &quot;d&quot;
+x &lt;- 1:10
+even_vals(x)
+#&gt; [1]  2  4  6  8 10</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li>Every element except the last value.</li>
+</ol>
+<pre class="r"><code>all_but_last_val &lt;- function(x){
+  if(length(x) &gt; 0) {
+    x[-length(x)]
+  } else {
+    &quot;empty vector&quot;
+  }
+}
+
+x &lt;- 1:10
+all_but_last_val(x)
+#&gt; [1] 1 2 3 4 5 6 7 8 9
+x &lt;- c()
+all_but_last_val(x)
+#&gt; [1] &quot;empty vector&quot;
+all_but_last_val(c(10))
+#&gt; numeric(0)</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li>Only even numbers (and no missing values).</li>
+</ol>
+<pre class="r"><code>      even_nums &lt;- function(x){
+        if ((typeof(x) == &quot;integer&quot; || 
+             typeof(x) == &quot;numeric&quot; || 
+             typeof(x) == &quot;double&quot;) 
+            &amp;&amp; (length(x) &gt; 0)) {
+          x[(x %% 2 == 0) &amp; (!is.na(x))]
+        } else {
+          &quot;Not an integer vector!&quot;
+        }
+      }
+x &lt;- 1:10
+x[(x %% 2 == 0) &amp; (!is.na(x))]
+#&gt; [1]  2  4  6  8 10
+even_nums(x)
+#&gt; [1]  2  4  6  8 10
+x &lt;- c(NA, 1:5, NaN)
+even_nums(x)
+#&gt; [1] 2 4
+x &lt;- letters[1:10]
+even_nums(x)
+#&gt; [1] &quot;Not an integer vector!&quot;</code></pre></li>
+<li><p>Why is <code>x[-which(x &gt; 0)]</code> not the same as <code>x[x &lt;= 0]</code>?</p>
+<ul>
+<li><code>which(x)</code>: “more generally, including when x has NA’s, which(x) is seq_along(x)[!is.na(x) &amp; x]”. This keeps track of the indicies where the condition we’re testing is TRUE. FALSE and NA are ignored.</li>
+<li>x &lt;= 0 tests each to see which item meets criterion, and then marks those that do as TRUE, but NA / NaN values are NA for these.</li>
+<li>Help page for ?<code>[</code>: “NAs in indexing: When extracting, a numerical, logical or character NA index picks an unknown element and so returns NA in the corresponding element of a logical, integer, numeric, complex or character result, and NULL for a list.”</li>
+<li>So the NaN is the exception here, in that it is treated differently in each. In which(x) it was NA after the condition was checked, so it is not what which(x) is looking for (recall which(x) only cares about TRUE), as a result it is ignored, but for <code>[]</code> it returns as NA.</li>
+</ul>
+<pre class="r"><code>x &lt;- c(-9, NA, -Inf, 0:2, NaN, -12, 10, Inf)
+x[-which(x &gt; 0)]
+#&gt; [1]   -9   NA -Inf    0  NaN  -12
+which(x &gt; 0)
+#&gt; [1]  5  6  9 10
+
+x[x &lt;= 0]
+#&gt; [1]   -9   NA -Inf    0   NA  -12
+x&lt;=0
+#&gt;  [1]  TRUE    NA  TRUE  TRUE FALSE FALSE    NA  TRUE FALSE FALSE
+x[!(x &lt;= 0)]
+#&gt; [1]  NA   1   2  NA  10 Inf</code></pre></li>
+<li><p>What happens when you subset with a positive integer that’s bigger than the length of the vector? What happens when you subset with a name that doesn’t exist?</p>
+<p>You get <code>NA</code>.</p>
+<pre class="r"><code>x &lt;- 1:10
+v &lt;- c(a = 1, b = 2, c = 3)
+x[11]
+#&gt; [1] NA
+v[&quot;d&quot;]
+#&gt; &lt;NA&gt; 
+#&gt;   NA</code></pre></li>
+</ol>
+<h2>
+Lists (Recursive vectors)
+</h2>
+</div>
+</div>
+<div id="lists-recursive-vectors" class="section level2">
+<h2>Lists (Recursive vectors)</h2>
+<p>Lists are more complex than <code>vectors</code> as <code>lists</code> can contain other lists. You create a list with <code>list()</code>.</p>
+<pre class="r"><code>x &lt;- list(1, 2, 3)
+x
+#&gt; [[1]]
+#&gt; [1] 1
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] 2
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] 3
+x[1]
+#&gt; [[1]]
+#&gt; [1] 1</code></pre>
+<p>Super useful tool for working with lists is <code>str()</code> because it focusses on the <strong>str</strong>ucture, not the contents.</p>
+<pre class="r"><code>str(x)
+#&gt; List of 3
+#&gt;  $ : num 1
+#&gt;  $ : num 2
+#&gt;  $ : num 3
+x_named &lt;- list(a = 1, b = 2, c = 3)
+str(x_named)
+#&gt; List of 3
+#&gt;  $ a: num 1
+#&gt;  $ b: num 2
+#&gt;  $ c: num 3</code></pre>
+<p><code>list()</code> may have items of mixed types and other lists (not allowed in vectors).</p>
+<pre class="r"><code>y &lt;- list(&quot;a&quot;, 1L, 1.5, TRUE)
+str(y)
+#&gt; List of 4
+#&gt;  $ : chr &quot;a&quot;
+#&gt;  $ : int 1
+#&gt;  $ : num 1.5
+#&gt;  $ : logi TRUE</code></pre>
+<pre class="r"><code>z &lt;- list(list(1, 2), list(3, 4))
+str(z)
+#&gt; List of 2
+#&gt;  $ :List of 2
+#&gt;   ..$ : num 1
+#&gt;   ..$ : num 2
+#&gt;  $ :List of 2
+#&gt;   ..$ : num 3
+#&gt;   ..$ : num 4</code></pre>
+<pre class="r"><code>x1 &lt;- list(c(1, 2), c(3, 4))
+str(x1)
+#&gt; List of 2
+#&gt;  $ : num [1:2] 1 2
+#&gt;  $ : num [1:2] 3 4
+x2 &lt;- list(list(1, 2), list(3, 4))
+str(x2)
+#&gt; List of 2
+#&gt;  $ :List of 2
+#&gt;   ..$ : num 1
+#&gt;   ..$ : num 2
+#&gt;  $ :List of 2
+#&gt;   ..$ : num 3
+#&gt;   ..$ : num 4
+x3 &lt;- list(1, list(2, list(3)))
+str(x3)
+#&gt; List of 2
+#&gt;  $ : num 1
+#&gt;  $ :List of 2
+#&gt;   ..$ : num 2
+#&gt;   ..$ :List of 1
+#&gt;   .. ..$ : num 3</code></pre>
+<div id="subsetting-1" class="section level3">
+<h3>Subsetting</h3>
+<p>There are three ways to subset a list:</p>
+<pre class="r"><code>a &lt;- list(a = 1:3, b = &quot;a string&quot;, c = pi, d = list(-1, -5))
+str(a)
+#&gt; List of 4
+#&gt;  $ a: int [1:3] 1 2 3
+#&gt;  $ b: chr &quot;a string&quot;
+#&gt;  $ c: num 3.14
+#&gt;  $ d:List of 2
+#&gt;   ..$ : num -1
+#&gt;   ..$ : num -5</code></pre>
+<ul>
+<li><p><code>[</code> extracts a sub-list. The result will always be a list.</p>
+<pre class="r"><code>str(a[1:2])
+#&gt; List of 2
+#&gt;  $ a: int [1:3] 1 2 3
+#&gt;  $ b: chr &quot;a string&quot;
+str(a[4])
+#&gt; List of 1
+#&gt;  $ d:List of 2
+#&gt;   ..$ : num -1
+#&gt;   ..$ : num -5
+a[&quot;a&quot;]
+#&gt; $a
+#&gt; [1] 1 2 3</code></pre></li>
+<li><p><code>[[</code> extracts a single component from a list. It removes a level of hierarchy from the list.</p>
+<pre class="r"><code>str(a[[1]])
+#&gt;  int [1:3] 1 2 3
+str(a[[4]])
+#&gt; List of 2
+#&gt;  $ : num -1
+#&gt;  $ : num -5</code></pre></li>
+<li><p><code>$</code> is a shorthand for extracting named elements of a list. It works similarly to <code>[[</code> except that you don’t need to use quotes.</p>
+<pre class="r"><code>a$a
+#&gt; [1] 1 2 3
+a[[&quot;a&quot;]]
+#&gt; [1] 1 2 3</code></pre></li>
+</ul>
+<p><code>[[</code> drills down into the list while <code>[</code> returns a new, smaller list.</p>
+</div>
+<div id="exercises-2" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Draw the following lists as nested sets:</p>
+<ol style="list-style-type: lower-alpha">
+<li><code>list(a, b, list(c, d), list(e, f))</code></li>
+</ol>
+<p><img src="assets/list1.PNG" width="500" height="450" alt="answer exercise 1"></p>
+<ol style="list-style-type: lower-alpha">
+<li><code>list(list(list(list(list(list(a))))))</code></li>
+</ol>
+<p><img src="assets/list2.PNG" width="500" height="450" alt="answer exercise 1"></p>
+<pre class="r"><code>super_nested &lt;- list(list(list(list(list(list(a = &quot;a&quot;))))))
+str(super_nested)
+#&gt; List of 1
+#&gt;  $ :List of 1
+#&gt;   ..$ :List of 1
+#&gt;   .. ..$ :List of 1
+#&gt;   .. .. ..$ :List of 1
+#&gt;   .. .. .. ..$ :List of 1
+#&gt;   .. .. .. .. ..$ a: chr &quot;a&quot;</code></pre></li>
+<li><p>What happens if you subset a tibble as if you’re subsetting a list? What are the key differences between a list and a tibble?</p>
+<p>The subsetting is much the same - some cases the orientation of the returned structure is changed - e.g. column return for tibble <code>[</code> but row return for list <code>[</code>.</p>
+<p>The difference between a tibble and a list is that all the elements of a tibble must be vectors with the same length (deals with <code>rectangular data</code>). A list works with rectangular and non-rectangular data.</p>
+<pre class="r"><code>x &lt;- list(a = 1:10, b = letters[1:10])
+str(x)
+#&gt; List of 2
+#&gt;  $ a: int [1:10] 1 2 3 4 5 6 7 8 9 10
+#&gt;  $ b: chr [1:10] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; ...
+(x_tib &lt;- tibble(a = 1:10, b = letters[1:10]))
+#&gt; # A tibble: 10 x 2
+#&gt;        a b    
+#&gt;    &lt;int&gt; &lt;chr&gt;
+#&gt;  1     1 a    
+#&gt;  2     2 b    
+#&gt;  3     3 c    
+#&gt;  4     4 d    
+#&gt;  5     5 e    
+#&gt;  6     6 f    
+#&gt;  7     7 g    
+#&gt;  8     8 h    
+#&gt;  9     9 i    
+#&gt; 10    10 j
+
+x[[&quot;a&quot;]]
+#&gt;  [1]  1  2  3  4  5  6  7  8  9 10
+x_tib[[&quot;a&quot;]]
+#&gt;  [1]  1  2  3  4  5  6  7  8  9 10
+x[2]
+#&gt; $b
+#&gt;  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot;
+x_tib[2]
+#&gt; # A tibble: 10 x 1
+#&gt;    b    
+#&gt;    &lt;chr&gt;
+#&gt;  1 a    
+#&gt;  2 b    
+#&gt;  3 c    
+#&gt;  4 d    
+#&gt;  5 e    
+#&gt;  6 f    
+#&gt;  7 g    
+#&gt;  8 h    
+#&gt;  9 i    
+#&gt; 10 j
+typeof(x[[&quot;a&quot;]])
+#&gt; [1] &quot;integer&quot;
+typeof(x_tib[[&quot;a&quot;]])
+#&gt; [1] &quot;integer&quot;
+typeof(x[2])
+#&gt; [1] &quot;list&quot;
+typeof(x_tib[2])
+#&gt; [1] &quot;list&quot;
+x$a
+#&gt;  [1]  1  2  3  4  5  6  7  8  9 10
+x_tib$a
+#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</code></pre></li>
+</ol>
+<h2>
+Attributes
+</h2>
+</div>
+</div>
+<div id="attributes" class="section level2">
+<h2>Attributes</h2>
+<p>Any vector can contain arbitrary additional metadata through its <strong>attributes</strong>. Attributes are a kind of named list of vectors that can be attached to an object. You can get and set individual attribute values with <code>attr()</code> or see them all at once with <code>attributes()</code>.</p>
+<pre class="r"><code>x &lt;- 1:10
+attr(x, &quot;greeting&quot;)
+#&gt; NULL
+attr(x, &quot;greeting&quot;) &lt;- &quot;Hi!&quot;
+attr(x, &quot;farewell&quot;) &lt;- &quot;Bye!&quot;
+attributes(x)
+#&gt; $greeting
+#&gt; [1] &quot;Hi!&quot;
+#&gt; 
+#&gt; $farewell
+#&gt; [1] &quot;Bye!&quot;</code></pre>
+<pre class="r"><code>as.Date
+#&gt; function (x, ...) 
+#&gt; UseMethod(&quot;as.Date&quot;)
+#&gt; &lt;bytecode: 0x000000001691aaa8&gt;
+#&gt; &lt;environment: namespace:base&gt;</code></pre>
+<p>You can list all the methods for a generic with <code>methods()</code>:</p>
+<pre class="r"><code>methods(&quot;as.Date&quot;)
+#&gt; [1] as.Date.character   as.Date.default     as.Date.factor     
+#&gt; [4] as.Date.numeric     as.Date.POSIXct     as.Date.POSIXlt    
+#&gt; [7] as.Date.vctrs_sclr* as.Date.vctrs_vctr*
+#&gt; see &#39;?methods&#39; for accessing help and source code</code></pre>
+<p>You can see the specific implementation of a method with <code>getS3method()</code>:</p>
+<pre class="r"><code>getS3method(&quot;as.Date&quot;, &quot;default&quot;)
+#&gt; function (x, ...) 
+#&gt; {
+#&gt;     if (inherits(x, &quot;Date&quot;)) 
+#&gt;         x
+#&gt;     else if (is.logical(x) &amp;&amp; all(is.na(x))) 
+#&gt;         .Date(as.numeric(x))
+#&gt;     else stop(gettextf(&quot;do not know how to convert &#39;%s&#39; to class %s&quot;, 
+#&gt;         deparse(substitute(x)), dQuote(&quot;Date&quot;)), domain = NA)
+#&gt; }
+#&gt; &lt;bytecode: 0x0000000028f8e078&gt;
+#&gt; &lt;environment: namespace:base&gt;
+getS3method(&quot;as.Date&quot;, &quot;numeric&quot;)
+#&gt; function (x, origin, ...) 
+#&gt; {
+#&gt;     if (missing(origin)) 
+#&gt;         stop(&quot;&#39;origin&#39; must be supplied&quot;)
+#&gt;     as.Date(origin, ...) + x
+#&gt; }
+#&gt; &lt;bytecode: 0x000000002bc2f5f0&gt;
+#&gt; &lt;environment: namespace:base&gt;</code></pre>
+<p>One important S3 generic is <code>print()</code> as well as the subsetting functions <code>[</code>, <code>[[</code>, and <code>$</code>.</p>
+<h2>
+Augmented vectors
+</h2>
+</div>
+<div id="augmented-vectors" class="section level2">
+<h2>Augmented vectors</h2>
+<p>There are some <strong>augmented vectors</strong>, which are vectors with additional <strong>attributes</strong>:</p>
+<ul>
+<li>Factors</li>
+<li>Dates</li>
+<li>Date-times</li>
+<li>Tibbles</li>
+</ul>
+<div id="factors" class="section level3">
+<h3>Factors</h3>
+<p>Factors are designed to represent categorical data that can take a fixed set of possible values. Factors are built on top of integers, and have a levels attribute:</p>
+<pre class="r"><code>x &lt;- factor(c(&quot;ab&quot;, &quot;cd&quot;, &quot;ab&quot;), levels = c(&quot;ab&quot;, &quot;cd&quot;, &quot;ef&quot;))
+typeof(x)
+#&gt; [1] &quot;integer&quot;
+attributes(x)
+#&gt; $levels
+#&gt; [1] &quot;ab&quot; &quot;cd&quot; &quot;ef&quot;
+#&gt; 
+#&gt; $class
+#&gt; [1] &quot;factor&quot;</code></pre>
+</div>
+<div id="dates-and-date-times" class="section level3">
+<h3>Dates and date-times</h3>
+<p>Dates in R are numeric vectors that represent the number of days since 1 January 1970.</p>
+<pre class="r"><code>x &lt;- as.Date(&quot;1971-01-01&quot;)
+unclass(x)
+#&gt; [1] 365
+typeof(x)
+#&gt; [1] &quot;double&quot;
+attributes(x)
+#&gt; $class
+#&gt; [1] &quot;Date&quot;</code></pre>
+<p>Date-times are numeric vectors with class <code>POSIXct</code> that represent the number of seconds since 1 January 1970.</p>
+<pre class="r"><code>x &lt;- lubridate::ymd_hm(&quot;1970-01-01 01:00&quot;)
+unclass(x)
+#&gt; [1] 3600
+#&gt; attr(,&quot;tzone&quot;)
+#&gt; [1] &quot;UTC&quot;
+typeof(x)
+#&gt; [1] &quot;double&quot;
+attributes(x)
+#&gt; $class
+#&gt; [1] &quot;POSIXct&quot; &quot;POSIXt&quot; 
+#&gt; 
+#&gt; $tzone
+#&gt; [1] &quot;UTC&quot;</code></pre>
+<p>The <code>tzone</code> attribute is optional. It controls how the time is printed.</p>
+<pre class="r"><code>attr(x, &quot;tzone&quot;) &lt;- &quot;US/Pacific&quot;
+x
+#&gt; [1] &quot;1969-12-31 17:00:00 PST&quot;
+attr(x, &quot;tzone&quot;) &lt;- &quot;US/Eastern&quot;
+x
+#&gt; [1] &quot;1969-12-31 20:00:00 EST&quot;
+attr(x, &quot;tzone&quot;) &lt;- &quot;Africa/Johannesburg&quot;
+x
+#&gt; [1] &quot;1970-01-01 03:00:00 SAST&quot;</code></pre>
+<p>You can always convert datetimes to a regular date time <code>lubridate::as_date_time()</code>.</p>
+</div>
+<div id="tibbles" class="section level3">
+<h3>Tibbles</h3>
+<p>Tibbles are augmented lists: they have class “tbl_df” + “tbl” + “data.frame”, and <code>names</code> (column) and <code>row.names</code> attributes:</p>
+<pre class="r"><code>tb &lt;- tibble::tibble(x = 1:5, y = 5:1)
+typeof(tb)
+#&gt; [1] &quot;list&quot;
+attributes(tb)
+#&gt; $names
+#&gt; [1] &quot;x&quot; &quot;y&quot;
+#&gt; 
+#&gt; $row.names
+#&gt; [1] 1 2 3 4 5
+#&gt; 
+#&gt; $class
+#&gt; [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>df &lt;- data.frame(x = 1:5, y = 5:1)
+typeof(df)
+#&gt; [1] &quot;list&quot;
+attributes(df)
+#&gt; $names
+#&gt; [1] &quot;x&quot; &quot;y&quot;
+#&gt; 
+#&gt; $class
+#&gt; [1] &quot;data.frame&quot;
+#&gt; 
+#&gt; $row.names
+#&gt; [1] 1 2 3 4 5</code></pre>
+<p>The main difference is the class.</p>
+</div>
+<div id="exercises-3" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>What does <code>hms::hms(3600)</code> return? How does it print? What primitive type is the augmented vector built on top of? What attributes does it use?</p>
+<p>Time is stored in it. This is converting 3600 seconds to a time in the format hh:mm:ss hence <code>01:00:00</code> returned. Built on top of <code>difftime</code>. It does not need any attibutes as all have defaults.</p>
+<pre class="r"><code>hms::hms(3600) # 1 hr - equivalent to hms(seconds = 3600)
+#&gt; 01:00:00
+hms::hms(0) 
+#&gt; 00:00:00
+hms::hms(60) # 1 min
+#&gt; 00:01:00
+
+attributes(hms::hms(1))
+#&gt; $units
+#&gt; [1] &quot;secs&quot;
+#&gt; 
+#&gt; $class
+#&gt; [1] &quot;hms&quot;      &quot;difftime&quot;</code></pre></li>
+<li><p>Try and make a tibble that has columns with different lengths. What happens?</p>
+<p>You get an error unless it is a scalar (vector of length = 1) and a column with length &gt; 1. I.e. you can’t combine a column of length = 2, and another of length = 4 as with base R.</p>
+<pre class="r"><code>x &lt;- c(2)
+y &lt;- letters[1:5]
+tibble(x = x, y = y)
+#&gt; # A tibble: 5 x 2
+#&gt;       x y    
+#&gt;   &lt;dbl&gt; &lt;chr&gt;
+#&gt; 1     2 a    
+#&gt; 2     2 b    
+#&gt; 3     2 c    
+#&gt; 4     2 d    
+#&gt; 5     2 e
+
+x &lt;- c(1:5)
+y &lt;- letters[1:10]
+tibble(x = x, y = y)
+#&gt; Error: Tibble columns must have compatible sizes.
+#&gt; * Size 5: Existing data.
+#&gt; * Size 10: Column `y`.
+#&gt; i Only values of size one are recycled.</code></pre></li>
+<li><p>Based on the definition above, is it ok to have a list as a column of a tibble?</p>
+<p>Yes it is ok, but you will need a list for every observation.</p>
+<pre class="r"><code>x &lt;- list(list(1,2), list(3,4))
+y &lt;- letters[1:2]
+tibble(x = x, y = y)
+#&gt; # A tibble: 2 x 2
+#&gt;   x          y    
+#&gt;   &lt;list&gt;     &lt;chr&gt;
+#&gt; 1 &lt;list [2]&gt; a    
+#&gt; 2 &lt;list [2]&gt; b</code></pre></li>
+</ol>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()
+#&gt; R version 3.6.3 (2020-02-29)
+#&gt; Platform: x86_64-w64-mingw32/x64 (64-bit)
+#&gt; Running under: Windows 10 x64 (build 18363)
+#&gt; 
+#&gt; Matrix products: default
+#&gt; 
+#&gt; locale:
+#&gt; [1] LC_COLLATE=English_South Africa.1252  LC_CTYPE=English_South Africa.1252   
+#&gt; [3] LC_MONETARY=English_South Africa.1252 LC_NUMERIC=C                         
+#&gt; [5] LC_TIME=English_South Africa.1252    
+#&gt; 
+#&gt; attached base packages:
+#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
+#&gt; 
+#&gt; other attached packages:
+#&gt;  [1] lubridate_1.7.8 magrittr_1.5    flair_0.0.2     forcats_0.5.0  
+#&gt;  [5] stringr_1.4.0   dplyr_1.0.0     purrr_0.3.4     readr_1.3.1    
+#&gt;  [9] tidyr_1.1.0     tibble_3.0.3    ggplot2_3.3.2   tidyverse_1.3.0
+#&gt; [13] workflowr_1.6.2
+#&gt; 
+#&gt; loaded via a namespace (and not attached):
+#&gt;  [1] Rcpp_1.0.4.6     lattice_0.20-38  ps_1.3.2         assertthat_0.2.1
+#&gt;  [5] rprojroot_1.3-2  digest_0.6.27    utf8_1.1.4       R6_2.4.1        
+#&gt;  [9] cellranger_1.1.0 backports_1.1.6  reprex_0.3.0     evaluate_0.14   
+#&gt; [13] httr_1.4.2       pillar_1.4.6     rlang_0.4.8      readxl_1.3.1    
+#&gt; [17] rstudioapi_0.11  whisker_0.4      rmarkdown_2.4    munsell_0.5.0   
+#&gt; [21] broom_0.5.6      compiler_3.6.3   httpuv_1.5.2     modelr_0.1.6    
+#&gt; [25] xfun_0.13        pkgconfig_2.0.3  htmltools_0.5.0  tidyselect_1.1.0
+#&gt; [29] codetools_0.2-16 fansi_0.4.1      crayon_1.3.4     dbplyr_1.4.3    
+#&gt; [33] withr_2.2.0      later_1.0.0      grid_3.6.3       nlme_3.1-144    
+#&gt; [37] jsonlite_1.7.0   gtable_0.3.0     lifecycle_0.2.0  DBI_1.1.0       
+#&gt; [41] git2r_0.26.1     scales_1.1.0     cli_2.1.0        stringi_1.5.3   
+#&gt; [45] pryr_0.1.4       fs_1.5.0         promises_1.1.0   xml2_1.3.2      
+#&gt; [49] ellipsis_0.3.1   generics_0.0.2   vctrs_0.3.2      tools_3.6.3     
+#&gt; [53] glue_1.4.2       hms_0.5.3        yaml_2.2.1       colorspace_1.4-1
+#&gt; [57] rvest_0.3.5      knitr_1.28       haven_2.2.0</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
