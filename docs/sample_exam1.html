@@ -11,8 +11,9 @@
 
 <meta name="author" content="Vebash Naidoo" />
 
+<meta name="date" content="2020-10-11" />
 
-<title>Chapter 14 - Pipes</title>
+<title>Sample Exam 1</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -386,16 +387,16 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Chapter 14 - Pipes</h1>
+<h1 class="title toc-ignore">Sample Exam 1</h1>
 <h4 class="author">Vebash Naidoo</h4>
-<h4 class="date">18/10/2020</h4>
+<h4 class="date">10/11/2020</h4>
 
 </div>
 
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -404,7 +405,7 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -416,7 +417,7 @@ div.tocify {
 <strong>Last updated:</strong> 2020-11-10
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>r4ds_book/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -432,12 +433,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -545,7 +546,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/ch14_pipes.Rmd</code>) and HTML (<code>docs/ch14_pipes.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/sample_exam1.Rmd</code>) and HTML (<code>docs/sample_exam1.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -571,10 +572,10 @@ Message
 <tbody>
 <tr>
 <td>
-html
+Rmd
 </td>
 <td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/86457fa9c658cdc29f07e57c5b965859ac6c9814/docs/ch14_pipes.html" target="_blank">86457fa</a>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/8864bd0c4383ec6f797c857c22fea24b837fad65/analysis/sample_exam1.Rmd" target="_blank">8864bd0</a>
 </td>
 <td>
 sciencificity
@@ -583,313 +584,7 @@ sciencificity
 2020-11-10
 </td>
 <td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/4879249efdfb1b6acb1c0ed5d85a58fac5eeb0c2/docs/ch14_pipes.html" target="_blank">4879249</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-11-09
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/e4239674be77d3b6d016e78863ae5cf23c93a07b/docs/ch14_pipes.html" target="_blank">e423967</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-11-08
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/0d223fb536f932b6f5957f0eb33982ea0a73d3db/docs/ch14_pipes.html" target="_blank">0d223fb</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-11-08
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/ecd1d8ed8bb055d0acaf502bb58ca1845a946c31/docs/ch14_pipes.html" target="_blank">ecd1d8e</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-11-07
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/274005c12ed67cd6a85e644047ee088769411b8d/docs/ch14_pipes.html" target="_blank">274005c</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-11-06
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/60e7ce29b213bf0de9100b925369ab14e5b40973/docs/ch14_pipes.html" target="_blank">60e7ce2</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-11-02
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/db5a796c13f0cb36022a2fdc96cb9282a2304286/docs/ch14_pipes.html" target="_blank">db5a796</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-11-01
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/d8813e9e0385ceead4d53e252cce4c4334f3bdb2/docs/ch14_pipes.html" target="_blank">d8813e9</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-11-01
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/bf15f3bd2c94ef81cd7aa76aed6b70ab71335028/docs/ch14_pipes.html" target="_blank">bf15f3b</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-11-01
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/0aef1b0f9b5a050cc31609e13af14bc8129cc186/docs/ch14_pipes.html" target="_blank">0aef1b0</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-31
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/bdc0881be8f3e0c6658d28418f3fc37edf9cf85c/docs/ch14_pipes.html" target="_blank">bdc0881</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-26
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/822454427b20b7ef6d961df5a9dca161d63958d6/docs/ch14_pipes.html" target="_blank">8224544</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-26
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/2f8dcc02f6d491ddff7cdfe117b498782b3a549a/docs/ch14_pipes.html" target="_blank">2f8dcc0</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-25
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/61e232417041e9fdc7c3918948a7fe3d492720e5/docs/ch14_pipes.html" target="_blank">61e2324</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-25
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/570c0bba9460451db4e861d26d122e0f7f4c65cb/docs/ch14_pipes.html" target="_blank">570c0bb</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-22
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/cfbefe68681ad4c3490fe028029c92711bf9ae35/docs/ch14_pipes.html" target="_blank">cfbefe6</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-21
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/4497db4a779ca510b0a1e2bccce4f393a6c73012/docs/ch14_pipes.html" target="_blank">4497db4</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-18
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/sciencificity/R4DS_study_exams/blob/f81b11af2710b31c31be80bbe141d30c41f721c2/analysis/ch14_pipes.Rmd" target="_blank">f81b11a</a>
-</td>
-<td>
-sciencificity
-</td>
-<td>
-2020-10-18
-</td>
-<td>
-added Chapter 14 and some of Chapter 8
+added ch17
 </td>
 </tr>
 </tbody>
@@ -899,130 +594,376 @@ added Chapter 14 and some of Chapter 8
 </div>
 </div>
 </div>
-<pre class="r"><code>options(scipen=10000)
-library(palmerpenguins)
+<pre class="r"><code>library(tidyverse)
+library(flair)
+library(gt)
+library(skimr)
 library(emo)
+library(tidyquant)
+library(lubridate)
 library(magrittr)
-library(flair)</code></pre>
-<div id="pipes" class="section level2">
-<h2>Pipes %&gt;%</h2>
-<p>The ease of reading and writing code in R is a thing of beauty, and is made so due to the pipe! 💗 ❇️ 🆒.</p>
-<blockquote>
-<p>Little bunny Foo Foo<br />
-Went hopping through the forest<br />
-Scooping up the field mice<br />
-And bopping them on the head</p>
-</blockquote>
-<div id="intermediate-steps" class="section level3">
-<h3>Intermediate Steps</h3>
-<pre class="r"><code>foo_foo &lt;-  little_bunny()
-foo_foo1 &lt;- hop(foo_foo, through = forest)
-foo_foo2 &lt;- scoop(foo_foo1, up = field_mice)
-foo_foo3 &lt;- bop(foo_foo2, on = head)</code></pre>
+library(janitor)</code></pre>
+<div id="question-1" class="section level2">
+<h2>Question 1</h2>
+<p>The file at_health_facilities.csv contains a tidy dataset with four columns:</p>
 <ul>
-<li>Main downside is that we need to name each intermediate step and with long data wrangling pipelines this can get tedious.</li>
-<li>The thought is that these extra copies also take up space, but they don’t. R cleverly handles that for us behind the scenes.</li>
+<li>The ISO3 code of the country that reported data.</li>
+<li>The year for which data was reported.</li>
+<li>The percentage of HIV-positive children born to HIV-positive mothers age 15–17.</li>
+<li>The percentage of HIV-positive children born to HIV-positive mothers age 20–34.</li>
 </ul>
-<pre class="r"><code>diamonds &lt;- ggplot2::diamonds
-diamonds2 &lt;- diamonds %&gt;% 
-  dplyr::mutate(price_per_carat = price / carat)
-
-pryr::object_size(diamonds)  # gives memory occupied by all its args</code></pre>
-<pre><code>3.46 MB</code></pre>
-<pre class="r"><code>pryr::object_size(diamonds2)</code></pre>
-<pre><code>3.89 MB</code></pre>
-<pre class="r"><code>pryr::object_size(diamonds, diamonds2) # collective size of both</code></pre>
-<pre><code>3.89 MB</code></pre>
-<p><code>diamonds</code> and <code>diamonds2</code> have 10 columns in common. These are shared by both objects.</p>
-<p>If we modify any columns then the number of columns in common reduces. This is what happens below, and hence the shared size increases.</p>
-<pre class="r"><code>diamonds$carat[1] &lt;- NA
-pryr::object_size(diamonds)  # gives memory occupied by all its args</code></pre>
-<pre><code>3.46 MB</code></pre>
-<pre class="r"><code>pryr::object_size(diamonds2)</code></pre>
-<pre><code>3.89 MB</code></pre>
-<pre class="r"><code>pryr::object_size(diamonds, diamonds2) # collective size of both</code></pre>
-<pre><code>4.32 MB</code></pre>
-</div>
-<div id="overwrite-original" class="section level3">
-<h3>Overwrite Original</h3>
-<pre class="r"><code>foo_foo &lt;-  little_bunny()
-foo_foo &lt;- hop(foo_foo, through = forest)
-foo_foo &lt;- scoop(foo_foo, up = field_mice)
-foo_foo &lt;- bop(foo_foo, on = head)</code></pre>
+<p>Please answer the following questions:</p>
 <ul>
-<li>Debugging is hard. Need to re-run pipeline to figure out where the error lies.</li>
-<li>The common variable being overwritten hides whats happening at each step. E.g. Foo foo is a bunny who is hopping through the forest, and on her way she scoops up some field mice. A person reading your code will get confused as to what happened with Foo foo if they read long pipelines, or worse will think Foo foo can bop something on its head sometimes, can hop through a forest sometimes etc. I.e. it’s hard to keep track of what Foo foo is doing.</li>
+<li>How many countries reported data?</li>
+<li>What is the difference between the minimum and maximum year with valid data for each country?</li>
+<li>How many countries reported data in 3 or more years?</li>
+<li>Which countries reported 100% incidence for at least one year in either age group?</li>
 </ul>
+<pre class="r"><code>health_data &lt;- read_csv(&quot;./data/at_health_facilities.csv&quot;,
+                        na = c(&quot;&quot;, &quot;NA&quot;, &quot;-&quot;))
+health_data %&gt;% 
+  skim()</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Piped data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">225</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">iso3</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">100</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">year</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2007.83</td>
+<td align="right">3.90</td>
+<td align="right">2000</td>
+<td align="right">2005</td>
+<td align="right">2008</td>
+<td align="right">2011</td>
+<td align="right">2014</td>
+<td align="left">▃▇▇▇▇</td>
+</tr>
+<tr class="even">
+<td align="left">age 15-17</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">66.21</td>
+<td align="right">26.92</td>
+<td align="right">5</td>
+<td align="right">45</td>
+<td align="right">69</td>
+<td align="right">92</td>
+<td align="right">100</td>
+<td align="left">▂▃▅▆▇</td>
+</tr>
+<tr class="odd">
+<td align="left">age 20-34</td>
+<td align="right">4</td>
+<td align="right">0.98</td>
+<td align="right">67.21</td>
+<td align="right">26.56</td>
+<td align="right">5</td>
+<td align="right">45</td>
+<td align="right">70</td>
+<td align="right">90</td>
+<td align="right">100</td>
+<td align="left">▂▃▃▅▇</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># How many countries reported data
+health_data %&gt;% 
+  count(iso3, sort = TRUE)</code></pre>
+<pre><code># A tibble: 100 x 2
+   iso3      n
+   &lt;chr&gt; &lt;int&gt;
+ 1 BGD       6
+ 2 PER       6
+ 3 EGY       5
+ 4 GHA       5
+ 5 MWI       5
+ 6 NGA       5
+ 7 KHM       4
+ 8 NPL       4
+ 9 RWA       4
+10 SEN       4
+# ... with 90 more rows</code></pre>
+<pre class="r"><code>health_data %&gt;% 
+  distinct(iso3)</code></pre>
+<pre><code># A tibble: 100 x 1
+   iso3 
+   &lt;chr&gt;
+ 1 AFG  
+ 2 ALB  
+ 3 ARG  
+ 4 ARM  
+ 5 AZE  
+ 6 BGD  
+ 7 BRB  
+ 8 BLR  
+ 9 BLZ  
+10 BEN  
+# ... with 90 more rows</code></pre>
+<pre class="r"><code># What is the difference between the minimum and maximum year 
+# with valid data for each country?
+health_data %&gt;% 
+  arrange(iso3, year) %&gt;% 
+  group_by(iso3) %&gt;% 
+  summarise(n = n(),
+            min_yr = min(year),
+            max_yr = max(year),
+            diff = max_yr - min_yr)</code></pre>
+<pre><code># A tibble: 100 x 5
+   iso3      n min_yr max_yr  diff
+   &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+ 1 AFG       1   2010   2010     0
+ 2 ALB       2   2005   2008     3
+ 3 ARG       1   2012   2012     0
+ 4 ARM       3   2000   2010    10
+ 5 AZE       1   2006   2006     0
+ 6 BDI       2   2005   2010     5
+ 7 BEN       3   2001   2011    10
+ 8 BFA       3   2003   2010     7
+ 9 BGD       6   2004   2014    10
+10 BIH       2   2006   2011     5
+# ... with 90 more rows</code></pre>
+<pre class="r"><code># How many countries reported data in 3 or more years?
+health_data %&gt;% 
+  count(iso3, sort = TRUE) %&gt;% 
+  filter(n &gt;= 3)</code></pre>
+<pre><code># A tibble: 34 x 2
+   iso3      n
+   &lt;chr&gt; &lt;int&gt;
+ 1 BGD       6
+ 2 PER       6
+ 3 EGY       5
+ 4 GHA       5
+ 5 MWI       5
+ 6 NGA       5
+ 7 KHM       4
+ 8 NPL       4
+ 9 RWA       4
+10 SEN       4
+# ... with 24 more rows</code></pre>
+<pre class="r"><code># Which countries reported 100% incidence for at least one year in either age group?
+health_data %&gt;% 
+  filter(`age 15-17` &gt;= 100 |
+         `age 20-34` &gt;= 100) %&gt;% 
+  count(iso3, sort = TRUE)</code></pre>
+<pre><code># A tibble: 18 x 2
+   iso3      n
+   &lt;chr&gt; &lt;int&gt;
+ 1 ARM       2
+ 2 BIH       2
+ 3 BLR       2
+ 4 CUB       2
+ 5 KAZ       2
+ 6 MDA       2
+ 7 MNE       2
+ 8 UKR       2
+ 9 ARG       1
+10 BRB       1
+11 DOM       1
+12 JAM       1
+13 KGZ       1
+14 LCA       1
+15 MKD       1
+16 SRB       1
+17 THA       1
+18 URY       1</code></pre>
+<pre class="r"><code>health_data %&gt;% 
+  filter(iso3 %in% c(&quot;ARM&quot;, &quot;BLR&quot;, &quot;KAZ&quot;))</code></pre>
+<pre><code># A tibble: 7 x 4
+  iso3   year `age 15-17` `age 20-34`
+  &lt;chr&gt; &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+1 ARM    2000          93          87
+2 ARM    2005          99         100
+3 ARM    2010         100         100
+4 BLR    2005         100         100
+5 BLR    2012         100         100
+6 KAZ    2006         100         100
+7 KAZ    2010         100         100</code></pre>
 </div>
-<div id="function-composition" class="section level3">
-<h3>Function Composition</h3>
-<pre class="r"><code>bop(
-  scoop(
-    hop(
-      foo_foo, 
-      through = forest
-    ), 
-    up = field_mice
-  ),
-  on = head
-)</code></pre>
-<ul>
-<li>This way gets me the most, I struggle to keep track of what is happening when reading from the inside out, and I waste loads of paper drawing up pipelines like this to figure out what’s the end goal of the pipeline (sadly most other languages don’t have the <code>%&gt;%</code>)!</li>
-</ul>
+<div id="question-2" class="section level2">
+<h2>Question 2</h2>
+<p>A student has sent you the file rmd-country-profile.Rmd, which is an R Markdown document analyzing the data in at_health_facilities.csv for Bangladesh. They could not knit the file, and are providing you with the raw .Rmd file instead of a rendered file.</p>
+<p>Go through the file, fixing things that are preventing it from knitting cleanly. Change the two lines of bold text to H2-level headers to organize the document, and add a table of contents. Convert this R Markdown report for Bangladesh into a parameterized report with the country’s iso3 code as its parameter. Knit a new country profile for Egypt (ISO3 code “EGY”).</p>
+<!-- rmarkdown::render(here::here("analysis/rmd-country-profile.Rmd"), -->
+<!-- params = list(iso3 = "EGY")) -->
 </div>
-<div id="the-pipe" class="section level3">
-<h3>The pipe</h3>
-<pre class="r"><code>foo_foo &lt;- little_bunny()
-foo_foo %&gt;% 
-  hop(through = forest) %&gt;% 
-  scoop(up = field_mice) %&gt;% 
-  bop(on = head)</code></pre>
-<p>The authors remark that this is their favourite form, because it focusses on verbs, not nouns, and I am totally with them.</p>
-<p>Foo foo hops through the forest, then scoops up field mice, then bops ’em on the head.</p>
-<p>Behind the scenes magrittr creates a function with these steps and saves each in an intermediate object for us.</p>
-<pre class="r"><code>my_pipe &lt;- function(.) {
-  . &lt;- hop(., through = forest)
-  . &lt;- scoop(., up = field_mice)
-  bop(., on = head)
+<div id="question-3" class="section level2">
+<h2>Question 3</h2>
+<p>You have been given a CSV file infant_hiv.csv that is formatted as follows:</p>
+<p>ISO3 2009 est 2009 hi 2009 lo 2010 est 2010 hi 2010 lo ALB - - - - - - BLR &gt;95% &gt;95% &gt;95% &gt;95% &gt;95% &gt;95% BLZ 77% 89% 3% 75% 88% 3% BRA 25% 35% 19% 25% 35% 19% The first column is ISO3 country codes. There are three columns for each year from 2009 to 2017. Each set has estimated, low, and high values for the year (in that order). A dash - indicates that no data is available. Our analyst tells us that &gt;95% means “the data is unreliable”. Your task is to turn this into a tidy data table for further analysis:</p>
+<p>Describe what columns a tidy layout for this data would have and why. Write a function that takes the name of a file containing this table as input and returns a tidy version of the table. The function should replace all - and &gt;95% values with NA. The body of the function may contain one or more pipelines and may create temporary or intermediate variables, but may not contain any loops. iso3 year metric value afg 2009 hi NA</p>
+<pre class="r"><code>tidy_df &lt;- function(filepath){
+  infant_hiv &lt;- read_csv(filepath,
+                       na = c(&quot;&quot;, &quot;NA&quot;, &quot;-&quot;, &quot;&gt;95%&quot;))
+  infant_hiv %&gt;% 
+    pivot_longer(cols = -ISO3,
+                 names_to = &quot;key&quot;,
+                 values_to = &quot;value&quot;) %&gt;% 
+    separate(key, c(&quot;year&quot;, &quot;metric&quot;), sep = &quot; &quot;)
 }
-my_pipe(foo_foo)</code></pre>
-<p>The pipe does not work well for all functions though. Ones that use the current environment, functions using lazy evaluation like <code>tryCatch()</code>.</p>
+
+tidy_data &lt;- tidy_df(&quot;./data/infant_hiv.csv&quot;)
+glimpse(tidy_data)</code></pre>
+<pre><code>Rows: 5,184
+Columns: 4
+$ ISO3   &lt;chr&gt; &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG...
+$ year   &lt;chr&gt; &quot;2009&quot;, &quot;2009&quot;, &quot;2009&quot;, &quot;2010&quot;, &quot;2010&quot;, &quot;2010&quot;, &quot;2011&quot;, &quot;201...
+$ metric &lt;chr&gt; &quot;est&quot;, &quot;hi&quot;, &quot;lo&quot;, &quot;est&quot;, &quot;hi&quot;, &quot;lo&quot;, &quot;est&quot;, &quot;hi&quot;, &quot;lo&quot;, &quot;es...
+$ value  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...</code></pre>
 </div>
-<div id="other-useful-pipe-operators" class="section level3">
-<h3>Other useful pipe operators</h3>
-<p>Call a function for its side effects.</p>
-<pre class="r"><code>rnorm(100) %&gt;% 
-  matrix(ncol = 2) %&gt;% 
-  plot() %&gt;% 
-  str()</code></pre>
-<p><img src="figure/ch14_pipes.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code> NULL</code></pre>
-<p>Our <code>str()</code> did not produce anything! 😭</p>
-<p>Enter the <strong>tee operator</strong> given by (%T&gt;%). Things like <code>print()</code>, <code>plot()</code>, <code>View()</code> etc. do not return anything and when you use them in a pipeline it pipes nothing into the next step in the pipeline. A pipeline expects the result of the previous step to “replace” the first argument in the subsequent step though so this breaks the pipeline.</p>
-<p>The <strong>%T&gt;%</strong> does it’s job and sends the result of the previous pipe to the one after it’s side job function.</p>
-<pre class="r"><code>rnorm(100) %&gt;% 
-  matrix(ncol = 2) %T&gt;% # side job is to please plot
-  plot() %&gt;% 
-  str()</code></pre>
-<p><img src="figure/ch14_pipes.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code> num [1:50, 1:2] 1.443 1.012 0.606 0.761 -0.849 ...</code></pre>
-<p>The above takes <code>matrix(rnorm(100, ncol = 2)</code> and pipes it into <code>str()</code>.</p>
-<p><br></p>
-<figure>
-<img src="assets/tee_operator.png" alt="Tee operator of magrittr" 
-  width="750" height="450"/>
-<figcaption>
-Tee operator %T&gt;%
-</figcaption>
-</figure>
-<p><br><br></p>
-<figure>
-<img src="assets/exposition.png" alt="Exposition operator of magrittr"
-  width="750" height="450"/>
-<figcaption>
-Exposition operator %$%
-</figcaption>
-</figure>
+<div id="question-4" class="section level2">
+<h2>Question 4</h2>
+<p>The file ranking.csv contains two columns:</p>
+<ul>
+<li>The ID of an item being rated.</li>
+<li>A rating, which is one of “negative”, “positive”, “indifferent”, or “wtf” (meaning the respondent didn’t understand the question).</li>
+</ul>
+<p>There are multiple ratings for each item.</p>
+<p>The plot below shows this data:</p>
+<ul>
+<li>Each dot represents one item i.</li>
+<li>The size of the circles shows the total number of ratings for item i.</li>
+<li>The X coordinate for item i is the percentage of ratings for that item that are “negative”.</li>
+<li>The Y coordinate for item i is the percentage of ratings for that item that are “positive”.</li>
+<li>The regression line is created using the ‘lm’ method.</li>
+</ul>
+<pre class="r"><code>rankings &lt;- read_csv(&quot;./data/ranking.csv&quot;)
+glimpse(rankings)</code></pre>
+<pre><code>Rows: 6,460
+Columns: 2
+$ item &lt;dbl&gt; 192, 171, 191, 182, 41, 112, 60, 99, 168, 80, 322, 106, 104, 1...
+$ rank &lt;chr&gt; &quot;positive&quot;, &quot;negative&quot;, &quot;positive&quot;, &quot;positive&quot;, &quot;positive&quot;, &quot;p...</code></pre>
+<pre class="r"><code>rankings %&gt;% 
+  count(rank, sort = TRUE)</code></pre>
+<pre><code># A tibble: 4 x 2
+  rank            n
+  &lt;chr&gt;       &lt;int&gt;
+1 positive     3865
+2 indifferent  1431
+3 negative      985
+4 wtf           179</code></pre>
+<pre class="r"><code>rankings %&gt;% 
+  count(item, sort = TRUE)</code></pre>
+<pre><code># A tibble: 284 x 2
+    item     n
+   &lt;dbl&gt; &lt;int&gt;
+ 1    80    33
+ 2   217    33
+ 3    18    32
+ 4    81    31
+ 5   107    31
+ 6   136    31
+ 7   148    31
+ 8    12    30
+ 9    15    30
+10    19    30
+# ... with 274 more rows</code></pre>
+<pre class="r"><code>rankings %&gt;% 
+  group_by(item) %&gt;% 
+  summarise(n = n(),
+         prop_neg = sum(rank == &quot;negative&quot;)/n,
+         prop_pos = sum(rank == &quot;positive&quot;)/n,
+         prop_indiff = sum(rank == &quot;indifferent&quot;)/n,
+         prop_wtf = sum(rank == &quot;wtf&quot;)/n,
+         tot = prop_neg + prop_pos + prop_indiff + prop_wtf) %&gt;% 
+  ggplot(aes(prop_neg, prop_pos, size = n)) +
+  geom_point(aes(alpha = 0.25)) +
+  geom_smooth(method = &quot;lm&quot;) +
+  labs(x = &quot;negative&quot;,
+       y = &quot;positive&quot;)</code></pre>
+<p><img src="figure/sample_exam1.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="sample-exam-2" class="section level1">
+<h1>Sample exam 2</h1>
+<div id="basic-operations" class="section level2">
+<h2>Basic Operations</h2>
+<p>Read the file person.csv and store the result in a tibble called person.</p>
+<p>Create a tibble containing only family and personal names, in that order. You do not need to assign this tibble or any others to variables unless explicitly asked to do so. However, as noted in the introduction, you must use the pipe operator %&gt;% and code that follows the tidyverse style guide.</p>
+<p>Create a new tibble containing only the rows in which family names come before the letter M. Your solution should work for tables with more rows than the example, i.e., you cannot rely on row numbers or select specific names.</p>
+<p>Display all the rows in person sorted by family name length with the longest name first</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1046,22 +987,38 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] flair_0.0.2          magrittr_1.5         emo_0.0.0.9000      
-[4] palmerpenguins_0.1.0 workflowr_1.6.2     
+ [1] janitor_2.0.1              magrittr_1.5              
+ [3] tidyquant_1.0.0            quantmod_0.4.17           
+ [5] TTR_0.23-6                 PerformanceAnalytics_2.0.4
+ [7] xts_0.12-0                 zoo_1.8-7                 
+ [9] lubridate_1.7.9            emo_0.0.0.9000            
+[11] skimr_2.1.1                gt_0.2.2                  
+[13] flair_0.0.2                forcats_0.5.0             
+[15] stringr_1.4.0              dplyr_1.0.2               
+[17] purrr_0.3.4                readr_1.4.0               
+[19] tidyr_1.1.2                tibble_3.0.3              
+[21] ggplot2_3.3.2              tidyverse_1.3.0           
+[23] workflowr_1.6.2           
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.4.6     pryr_0.1.4       pillar_1.4.6     compiler_3.6.3  
- [5] later_1.0.0      git2r_0.26.1     tools_3.6.3      digest_0.6.27   
- [9] gtable_0.3.0     lubridate_1.7.9  evaluate_0.14    lifecycle_0.2.0 
-[13] tibble_3.0.3     pkgconfig_2.0.3  rlang_0.4.8      rstudioapi_0.11 
-[17] yaml_2.2.1       xfun_0.13        dplyr_1.0.2      stringr_1.4.0   
-[21] knitr_1.28       generics_0.0.2   fs_1.5.0         vctrs_0.3.2     
-[25] tidyselect_1.1.0 grid_3.6.3       rprojroot_1.3-2  glue_1.4.2      
-[29] R6_2.4.1         rmarkdown_2.4    purrr_0.3.4      ggplot2_3.3.2   
-[33] whisker_0.4      codetools_0.2-16 scales_1.1.0     backports_1.1.6 
-[37] promises_1.1.0   ellipsis_0.3.1   htmltools_0.5.0  assertthat_0.2.1
-[41] colorspace_1.4-1 httpuv_1.5.2     stringi_1.5.3    munsell_0.5.0   
-[45] crayon_1.3.4    </code></pre>
+ [1] httr_1.4.2       splines_3.6.3    jsonlite_1.7.1   modelr_0.1.8    
+ [5] assertthat_0.2.1 highr_0.8        cellranger_1.1.0 yaml_2.2.1      
+ [9] pillar_1.4.6     backports_1.1.6  lattice_0.20-38  glue_1.4.2      
+[13] quadprog_1.5-8   digest_0.6.27    promises_1.1.0   rvest_0.3.6     
+[17] snakecase_0.11.0 colorspace_1.4-1 Matrix_1.2-18    htmltools_0.5.0 
+[21] httpuv_1.5.2     pkgconfig_2.0.3  broom_0.7.2      haven_2.3.1     
+[25] scales_1.1.0     whisker_0.4      later_1.0.0      git2r_0.26.1    
+[29] mgcv_1.8-31      farver_2.0.3     generics_0.0.2   ellipsis_0.3.1  
+[33] withr_2.2.0      repr_1.1.0       cli_2.1.0        crayon_1.3.4    
+[37] readxl_1.3.1     evaluate_0.14    ps_1.3.2         fs_1.5.0        
+[41] fansi_0.4.1      nlme_3.1-144     xml2_1.3.2       tools_3.6.3     
+[45] hms_0.5.3        lifecycle_0.2.0  munsell_0.5.0    reprex_0.3.0    
+[49] compiler_3.6.3   rlang_0.4.8      grid_3.6.3       rstudioapi_0.11 
+[53] labeling_0.3     base64enc_0.1-3  rmarkdown_2.4    gtable_0.3.0    
+[57] DBI_1.1.0        curl_4.3         R6_2.4.1         knitr_1.28      
+[61] utf8_1.1.4       rprojroot_1.3-2  Quandl_2.10.0    stringi_1.5.3   
+[65] Rcpp_1.0.4.6     vctrs_0.3.2      dbplyr_2.0.0     tidyselect_1.1.0
+[69] xfun_0.13       </code></pre>
 </div>
 </div>
 </div>

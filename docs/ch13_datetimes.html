@@ -505,16 +505,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreecf689c820a2c3a9dd1bd8f2df6ed0f03bf8dd1a9targetblankcf689c8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/cf689c820a2c3a9dd1bd8f2df6ed0f03bf8dd1a9" target="_blank">cf689c8</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree8864bd0c4383ec6f797c857c22fea24b837fad65targetblank8864bd0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/8864bd0c4383ec6f797c857c22fea24b837fad65" target="_blank">8864bd0</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstreecf689c820a2c3a9dd1bd8f2df6ed0f03bf8dd1a9targetblankcf689c8a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree8864bd0c4383ec6f797c857c22fea24b837fad65targetblank8864bd0a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/cf689c820a2c3a9dd1bd8f2df6ed0f03bf8dd1a9" target="_blank">cf689c8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/8864bd0c4383ec6f797c857c22fea24b837fad65" target="_blank">8864bd0</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -526,6 +526,12 @@ Ignored files:
 Untracked files:
     Untracked:  analysis/images/
     Untracked:  code_snipp.txt
+    Untracked:  data/at_health_facilities.csv
+    Untracked:  data/infant_hiv.csv
+    Untracked:  data/ranking.csv
+
+Unstaged changes:
+    Modified:   analysis/sample_exam1.Rmd
 
 </code></pre>
 <p>
@@ -564,6 +570,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/86457fa9c658cdc29f07e57c5b965859ac6c9814/docs/ch13_datetimes.html" target="_blank">86457fa</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -670,7 +693,7 @@ Create Date and Times
 <pre class="r"><code>today()
 #&gt; [1] &quot;2020-11-10&quot;
 now()
-#&gt; [1] &quot;2020-11-10 00:27:59 SAST&quot;</code></pre>
+#&gt; [1] &quot;2020-11-10 14:58:27 SAST&quot;</code></pre>
 <div id="from-strings" class="section level3">
 <h3>From Strings</h3>
 <div id="dates" class="section level4">
@@ -730,15 +753,15 @@ dmy(31012017, tz = &quot;Africa/Johannesburg&quot;)
 <pre class="r"><code>today()
 #&gt; [1] &quot;2020-11-10&quot;
 (utc_today &lt;- today(tzone = &quot;UTC&quot;))
-#&gt; [1] &quot;2020-11-09&quot;
+#&gt; [1] &quot;2020-11-10&quot;
 utc_today == today()
-#&gt; [1] FALSE
+#&gt; [1] TRUE
 utc_today == today(tzone = &quot;GMT&quot;)
 #&gt; [1] TRUE
 now()
-#&gt; [1] &quot;2020-11-10 00:28:05 SAST&quot;
+#&gt; [1] &quot;2020-11-10 14:58:31 SAST&quot;
 now(&quot;UTC&quot;)
-#&gt; [1] &quot;2020-11-09 22:28:05 UTC&quot;</code></pre></li>
+#&gt; [1] &quot;2020-11-10 12:58:31 UTC&quot;</code></pre></li>
 <li><p>Use the appropriate lubridate function to parse each of the following dates:</p>
 <pre class="r"><code>d1 &lt;- &quot;January 1, 2010&quot;
 mdy(d1)
@@ -776,7 +799,7 @@ Date-time components
 </ul>
 <pre><code class='language-r'><code>(datetime <- ymd_hms("2016-07-08 12:34:56"))<br>#> [1] "2016-07-08 12:34:56 UTC"<br><span style='background-color:#9FDDBA;color:#008080'>year</span>(datetime)<br>#> [1] 2016<br><br><span style='background-color:#9FDDBA;color:#008080'>month</span>(datetime)<br>#> [1] 7<br><br><span style='background-color:#9FDDBA;color:#008080'>mday</span>(datetime)<br>#> [1] 8<br><br><span style='background-color:#9FDDBA;color:#008080'>yday</span>(datetime)<br>#> [1] 190<br><br><span style='background-color:#9FDDBA;color:#008080'>wday</span>(datetime)<br>#> [1] 6<br><br><span style='background-color:#9FDDBA;color:#008080'>wday</span>(datetime, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#cfdad4;color:#6d6875'>label = TRUE</span>) # abbreviated weekday day instead of number<br>#> [1] Fri<br>#> Levels: Sun < Sat<br><br>wday(datetime, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label = TRUE, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abbr = FALSE) # full weekday name <br>#> [1] Friday<br>#> 7 Levels: Sunday < Saturday<br><br>hour(datetime)<br>#> [1] 12<br><br><span style='background-color:#9FDDBA;color:#008080'>minute</span>(datetime)<br>#> [1] 34<br><br><span style='background-color:#9FDDBA;color:#008080'>second</span>(datetime)<br>#> [1] 56<br><br><span style='background-color:#9FDDBA;color:#008080'>month</span>(datetime, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#cfdad4;color:#6d6875'>label = TRUE</span>) # abbreviated <span style='background-color:#9FDDBA;color:#008080'>month</span> name instead of number<br>#> [1] Jul<br>#> 12 Levels: Jan < Dec<br><br>month(datetime, label = TRUE, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abbr = FALSE) # full month name instead of number<br>#> [1] July<br>#> 12 Levels: January</code></code></pre>
 <pre class="r"><code>(current_dt &lt;- now())
-#&gt; [1] &quot;2020-11-10 00:28:05 SAST&quot;
+#&gt; [1] &quot;2020-11-10 14:58:32 SAST&quot;
 year(current_dt)
 #&gt; [1] 2020
 month(current_dt)
@@ -797,11 +820,11 @@ wday(current_dt,
 #&gt; [1] Tuesday
 #&gt; 7 Levels: Sunday &lt; Monday &lt; Tuesday &lt; Wednesday &lt; Thursday &lt; ... &lt; Saturday
 hour(current_dt)
-#&gt; [1] 0
+#&gt; [1] 14
 minute(current_dt)
-#&gt; [1] 28
+#&gt; [1] 58
 second(current_dt)
-#&gt; [1] 5.663242
+#&gt; [1] 32.39264
 month(current_dt, 
       label = TRUE) # abbreviated month name instead of number
 #&gt; [1] Nov

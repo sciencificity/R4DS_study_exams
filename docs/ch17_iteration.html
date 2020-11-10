@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Vebash Naidoo" />
+
+<meta name="date" content="2020-10-11" />
+
+<title>Chapter 17 - Iteration with {purrr}</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+      </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R4DS Book - Prep for exam</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Chapter 17 - Iteration with {purrr}</h1>
+<h4 class="author">Vebash Naidoo</h4>
+<h4 class="date">10/11/2020</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-11-10
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>r4ds_book/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200814code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200814)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200814code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200814)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree8864bd0c4383ec6f797c857c22fea24b837fad65targetblank8864bd0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/8864bd0c4383ec6f797c857c22fea24b837fad65" target="_blank">8864bd0</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree8864bd0c4383ec6f797c857c22fea24b837fad65targetblank8864bd0a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/8864bd0c4383ec6f797c857c22fea24b837fad65" target="_blank">8864bd0</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  analysis/images/
+    Untracked:  code_snipp.txt
+    Untracked:  data/at_health_facilities.csv
+    Untracked:  data/infant_hiv.csv
+    Untracked:  data/ranking.csv
+
+Unstaged changes:
+    Modified:   analysis/sample_exam1.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/ch17_iteration.Rmd</code>) and HTML (<code>docs/ch17_iteration.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/8864bd0c4383ec6f797c857c22fea24b837fad65/analysis/ch17_iteration.Rmd" target="_blank">8864bd0</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-10
+</td>
+<td>
+added ch17
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<style type="text/css">
+.tabset h2 {display: none;}
+</style>
+<div id="buttons" class="section level1 tabset tabset-fade tabset-pills">
+<h1>Iteration</h1>
+<p><strong>Click on the tab buttons below for each section</strong></p>
+<h2>
+For loops
+</h2>
+<div id="for-loops" class="section level2">
+<h2>For loops</h2>
+<p>We have seen one tool to avoid repeating yourself <code>functions</code>. Another tool for reducing duplication is <strong>iteration</strong>, which helps you when you need to do the same thing to multiple inputs: repeating the same operation on different columns, or on different datasets.</p>
+<p>Let’s say we want to calculate the median for each column in a dataframe, and we don’t want to repeat ourselves.</p>
+<pre class="r"><code>df &lt;- tibble(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+
+# what we don&#39;t want
+median(df$a)
+#&gt; [1] -0.2988316
+# ...
+median(df$d)
+#&gt; [1] 0.7417024
+
+df %&gt;% 
+  summarise(across(.cols = dplyr::everything(),
+                median,
+                .names = &quot;median_{.col}&quot;))
+#&gt; # A tibble: 1 x 4
+#&gt;   median_a median_b median_c median_d
+#&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1   -0.299    0.334    0.246    0.742
+
+output &lt;- vector(&quot;double&quot;, ncol(df)) #1. output
+for (i in seq_along(df)){            #2. sequence 
+  output[[i]] &lt;- median(df[[i]])     #3. body
+}
+output
+#&gt; [1] -0.2988316  0.3338866  0.2461308  0.7417024</code></pre>
+<p>A <code>for loop</code> has three components:</p>
+<ol style="list-style-type: decimal">
+<li><p>The <strong>output</strong>: <code>output &lt;- vector("double", length(x))</code>. Before you start the loop, you must always allocate sufficient space for the output. This is very important for efficiency.</p>
+<p>A general way of creating an empty vector of given length is the <code>vector()</code> function. It has two arguments: the type of the vector (“logical”, “integer”, “double”, “character”, etc) and the length of the vector.</p></li>
+<li><p>The <strong>sequence</strong>: <code>i in seq_along(df)</code>. This determines what to loop over: each run of the for loop will assign <code>i</code> to a different value from <code>seq_along(df)</code>. It’s useful to think of <code>i</code> as a pronoun, like “it”.</p>
+<p>You might not have seen <code>seq_along()</code> before. It’s a safe version of the familiar <code>1:length(l)</code>.</p></li>
+<li><p>The <strong>body</strong>: <code>output[[i]] &lt;- median(df[[i]])</code>. This is the code that does the work. It’s run repeatedly, each time with a different value for <code>i</code>. The first iteration will run <code>output[[1]] &lt;- median(df[[1]])</code>, the second will run <code>output[[2]] &lt;- median(df[[2]])</code>, and so on.</p></li>
+</ol>
+<div id="exercises" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Write for loops to:</p>
+<p>Think about the output, sequence, and body <strong>before</strong> you start writing the loop.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Compute the mean of every column in <code>mtcars</code>.</p>
+<pre class="r"><code>output &lt;- vector(&quot;double&quot;, ncol(mtcars))
+for (i in seq_along(mtcars)) {
+  output[[i]] &lt;- mean(mtcars[[i]])
+}
+output
+#&gt;  [1]  20.090625   6.187500 230.721875 146.687500   3.596563   3.217250
+#&gt;  [7]  17.848750   0.437500   0.406250   3.687500   2.812500
+
+mtcars %&gt;% 
+  summarise(across(.cols = dplyr::everything(),
+                   mean,
+                   .names = &quot;mean_{.col}&quot;))
+#&gt;   mean_mpg mean_cyl mean_disp  mean_hp mean_drat mean_wt mean_qsec mean_vs
+#&gt; 1 20.09062   6.1875  230.7219 146.6875  3.596563 3.21725  17.84875  0.4375
+#&gt;   mean_am mean_gear mean_carb
+#&gt; 1 0.40625    3.6875    2.8125</code></pre></li>
+<li><p>Determine the type of each column in <code>nycflights13::flights</code>.</p>
+<pre class="r"><code>flights &lt;- nycflights13::flights
+output &lt;- vector(&quot;list&quot;, ncol(flights))
+for (i in seq_along(flights)) {
+  output[[i]] &lt;- class(flights[[i]])
+}
+str(output)
+#&gt; List of 19
+#&gt;  $ : chr &quot;integer&quot;
+#&gt;  $ : chr &quot;integer&quot;
+#&gt;  $ : chr &quot;integer&quot;
+#&gt;  $ : chr &quot;integer&quot;
+#&gt;  $ : chr &quot;integer&quot;
+#&gt;  $ : chr &quot;numeric&quot;
+#&gt;  $ : chr &quot;integer&quot;
+#&gt;  $ : chr &quot;integer&quot;
+#&gt;  $ : chr &quot;numeric&quot;
+#&gt;  $ : chr &quot;character&quot;
+#&gt;  $ : chr &quot;integer&quot;
+#&gt;  $ : chr &quot;character&quot;
+#&gt;  $ : chr &quot;character&quot;
+#&gt;  $ : chr &quot;character&quot;
+#&gt;  $ : chr &quot;numeric&quot;
+#&gt;  $ : chr &quot;numeric&quot;
+#&gt;  $ : chr &quot;numeric&quot;
+#&gt;  $ : chr &quot;numeric&quot;
+#&gt;  $ : chr [1:2] &quot;POSIXct&quot; &quot;POSIXt&quot;</code></pre></li>
+<li><p>Compute the number of unique values in each column of <code>iris</code>.</p>
+<pre class="r"><code>output &lt;- vector(&quot;integer&quot;, ncol(iris))
+for (i in seq_along(iris)) {
+  output[[i]] &lt;- n_distinct(iris[[i]])
+}
+output
+#&gt; [1] 35 23 43 22  3</code></pre></li>
+<li><p>Generate 10 random normals from distributions with means of -10, 0, 10, and 100.</p>
+<pre class="r"><code>mean_vec &lt;- c(-10, 0, 10, 100)
+output &lt;- vector(&quot;list&quot;, length(mean_vec))
+for (i in seq_along(mean_vec)){
+  output[[i]] &lt;- rnorm(10, mean = mean_vec[i])
+}
+str(output)
+#&gt; List of 4
+#&gt;  $ : num [1:10] -10.21 -12.18 -9.99 -10.16 -8.49 ...
+#&gt;  $ : num [1:10] -1.294 0.1356 0.4745 -0.7789 0.0538 ...
+#&gt;  $ : num [1:10] 11.58 10.67 10.13 10.93 9.97 ...
+#&gt;  $ : num [1:10] 101.9 98.3 100.3 101 100.5 ...</code></pre></li>
+</ol></li>
+<li><p>Eliminate the for loop in each of the following examples by taking advantage of an existing function that works with vectors:</p>
+<pre class="r"><code>out &lt;- &quot;&quot;
+for (x in letters) {
+  out &lt;- stringr::str_c(out, x)
+}
+out
+
+x &lt;- sample(100)
+sd &lt;- 0
+for (i in seq_along(x)) {
+  sd &lt;- sd + (x[i] - mean(x)) ^ 2
+}
+sd &lt;- sqrt(sd / (length(x) - 1))
+
+x &lt;- runif(100)
+out &lt;- vector(&quot;numeric&quot;, length(x))
+out[1] &lt;- x[1]
+for (i in 2:length(x)) {
+  out[i] &lt;- out[i - 1] + x[i]
+}</code></pre>
+<pre class="r"><code>out &lt;- &quot;&quot;
+for (x in letters) {
+  out &lt;- stringr::str_c(out, x)
+}
+out
+#&gt; [1] &quot;abcdefghijklmnopqrstuvwxyz&quot;
+
+stringr::str_c(letters, collapse = &quot;&quot;)
+#&gt; [1] &quot;abcdefghijklmnopqrstuvwxyz&quot;</code></pre>
+<pre class="r"><code>    x &lt;- sample(100)
+    sd &lt;- 0
+    for (i in seq_along(x)) {
+      sd &lt;- sd + (x[i] - mean(x)) ^ 2
+    }
+    sd &lt;- sqrt(sd / (length(x) - 1))
+    sd
+#&gt; [1] 29.01149
+
+    sd(x)
+#&gt; [1] 29.01149</code></pre>
+<pre class="r"><code>    x &lt;- runif(100)
+    out &lt;- vector(&quot;numeric&quot;, length(x))
+    out[1] &lt;- x[1]
+    for (i in 2:length(x)) {
+      out[i] &lt;- out[i - 1] + x[i]
+    }
+    out
+#&gt;   [1]  0.6351527  0.7174654  1.4689535  1.6411959  1.8778177  1.9641860
+#&gt;   [7]  2.0263957  2.8975083  3.3813111  4.1285753  4.4454395  4.6571805
+#&gt;  [13]  4.9415380  5.0334833  5.5301909  6.3107788  6.4833254  6.9499442
+#&gt;  [19]  7.6978861  8.1622564  8.4064616  8.5897091  9.1733486  9.3924883
+#&gt;  [25]  9.5146333 10.0474487 10.8114975 11.0506961 11.8088200 11.8298386
+#&gt;  [31] 12.4914362 13.1417364 13.8578049 13.9971990 14.4020404 15.2428350
+#&gt;  [37] 15.7026112 16.3960690 17.0198206 17.8616812 17.8928900 18.3448546
+#&gt;  [43] 18.7582465 18.8578642 19.6400662 19.8919098 20.7973655 21.3284186
+#&gt;  [49] 22.1071170 22.4692254 22.9612479 23.6905152 23.8950712 24.1598892
+#&gt;  [55] 24.8504630 25.4103966 25.9334435 26.2508637 26.9836438 27.7134747
+#&gt;  [61] 28.0923461 28.1181665 28.2125266 29.1600522 30.0720412 31.0685855
+#&gt;  [67] 31.2085178 31.9706640 32.3461839 33.2858005 33.8393848 34.6512925
+#&gt;  [73] 34.7389255 35.6962343 36.6018704 36.7594209 37.6794123 38.4072685
+#&gt;  [79] 39.0140218 39.8144649 40.6395816 41.5091561 42.2289230 43.1918513
+#&gt;  [85] 44.1113285 44.3325169 45.1351856 45.2971424 45.6439158 46.5736370
+#&gt;  [91] 47.5553769 48.0237049 48.1872471 48.5820102 48.6626798 49.1583621
+#&gt;  [97] 49.3742582 49.4005363 49.4005479 49.4909540
+    cumsum(x)
+#&gt;   [1]  0.6351527  0.7174654  1.4689535  1.6411959  1.8778177  1.9641860
+#&gt;   [7]  2.0263957  2.8975083  3.3813111  4.1285753  4.4454395  4.6571805
+#&gt;  [13]  4.9415380  5.0334833  5.5301909  6.3107788  6.4833254  6.9499442
+#&gt;  [19]  7.6978861  8.1622564  8.4064616  8.5897091  9.1733486  9.3924883
+#&gt;  [25]  9.5146333 10.0474487 10.8114975 11.0506961 11.8088200 11.8298386
+#&gt;  [31] 12.4914362 13.1417364 13.8578049 13.9971990 14.4020404 15.2428350
+#&gt;  [37] 15.7026112 16.3960690 17.0198206 17.8616812 17.8928900 18.3448546
+#&gt;  [43] 18.7582465 18.8578642 19.6400662 19.8919098 20.7973655 21.3284186
+#&gt;  [49] 22.1071170 22.4692254 22.9612479 23.6905152 23.8950712 24.1598892
+#&gt;  [55] 24.8504630 25.4103966 25.9334435 26.2508637 26.9836438 27.7134747
+#&gt;  [61] 28.0923461 28.1181665 28.2125266 29.1600522 30.0720412 31.0685855
+#&gt;  [67] 31.2085178 31.9706640 32.3461839 33.2858005 33.8393848 34.6512925
+#&gt;  [73] 34.7389255 35.6962343 36.6018704 36.7594209 37.6794123 38.4072685
+#&gt;  [79] 39.0140218 39.8144649 40.6395816 41.5091561 42.2289230 43.1918513
+#&gt;  [85] 44.1113285 44.3325169 45.1351856 45.2971424 45.6439158 46.5736370
+#&gt;  [91] 47.5553769 48.0237049 48.1872471 48.5820102 48.6626798 49.1583621
+#&gt;  [97] 49.3742582 49.4005363 49.4005479 49.4909540</code></pre></li>
+<li><p>Combine your function writing and for loop skills:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Write a for loop that <code>prints()</code> the lyrics to the children’s song “Alice the camel”.</p>
+<pre>
+“Alice The Camel” Lyrics
+ Alice the camel has five humps.
+ Alice the camel has five humps.
+ Alice the camel has five humps.
+ So go, Alice, go!
+ Boom, boom, boom, boom!
+
+ Alice the camel has four humps.
+ Alice the camel has four humps.
+ Alice the camel has four humps.
+ So go, Alice, go!
+ Boom, boom, boom, boom!
+
+ Alice the camel has three humps.
+ Alice the camel has three humps.
+ Alice the camel has three humps.
+ So go, Alice, go!
+ Boom, boom, boom, boom!
+
+ Alice the camel has two humps.
+ Alice the camel has two humps.
+ Alice the camel has two humps.
+ So go, Alice, go!
+ Boom, boom, boom, boom!
+
+ Alice the camel has one hump.
+ Alice the camel has one hump.
+ Alice the camel has one hump.
+ So go, Alice, go!
+ Boom, boom, boom, boom!
+
+ Alice the camel has no humps.
+ Alice the camel has no humps.
+ Alice the camel has no humps.
+ ‘Cause Alice is a horse, of course!
+ </pre>
+<pre class="r"><code>  alice_song &lt;- function(){
+      times &lt;- c(&quot;five&quot;, &quot;four&quot;, &quot;three&quot;, &quot;two&quot;, &quot;one&quot;, &quot;no&quot;)
+      song_lyrics &lt;- vector(&quot;character&quot;, length(times))
+  for (i in seq_along(times)) {
+    if (times[i] == &quot;no&quot;) {
+      song_lyrics[[i]] &lt;- str_glue(
+      &quot;\nAlice the camel has {times[i]} humps.
+      Alice the camel has {times[i]} humps.
+      Alice the camel has {times[i]} humps.
+      &#39;Cause Alice is a horse, of course!\n\n
+      &quot;)
+
+    } else if (times[i] == &quot;one&quot;) {
+      song_lyrics[[i]] &lt;- str_glue(
+      &quot;\nAlice the camel has {times[i]} hump.
+      Alice the camel has {times[i]} hump.
+      Alice the camel has {times[i]} hump.
+      So go, Alice, go!
+      Boom, boom, boom, boom!\n\n
+      &quot;)
+    } else {
+      song_lyrics[[i]] &lt;- str_glue(
+      &quot;\nAlice the camel has {times[i]} humps.
+      Alice the camel has {times[i]} humps.
+      Alice the camel has {times[i]} humps.
+      So go, Alice, go!
+      Boom, boom, boom, boom!\n\n
+      &quot;)
+    }
+  }
+  song_lyrics
+}
+
+song_lyrics &lt;- alice_song()
+writeLines(str_c(song_lyrics, collapse = &quot;&quot;))
+#&gt; Alice the camel has five humps.
+#&gt;       Alice the camel has five humps.
+#&gt;       Alice the camel has five humps.
+#&gt;       So go, Alice, go!
+#&gt;       Boom, boom, boom, boom!
+#&gt; 
+#&gt; Alice the camel has four humps.
+#&gt;       Alice the camel has four humps.
+#&gt;       Alice the camel has four humps.
+#&gt;       So go, Alice, go!
+#&gt;       Boom, boom, boom, boom!
+#&gt; 
+#&gt; Alice the camel has three humps.
+#&gt;       Alice the camel has three humps.
+#&gt;       Alice the camel has three humps.
+#&gt;       So go, Alice, go!
+#&gt;       Boom, boom, boom, boom!
+#&gt; 
+#&gt; Alice the camel has two humps.
+#&gt;       Alice the camel has two humps.
+#&gt;       Alice the camel has two humps.
+#&gt;       So go, Alice, go!
+#&gt;       Boom, boom, boom, boom!
+#&gt; 
+#&gt; Alice the camel has one hump.
+#&gt;       Alice the camel has one hump.
+#&gt;       Alice the camel has one hump.
+#&gt;       So go, Alice, go!
+#&gt;       Boom, boom, boom, boom!
+#&gt; 
+#&gt; Alice the camel has no humps.
+#&gt;       Alice the camel has no humps.
+#&gt;       Alice the camel has no humps.
+#&gt;       &#39;Cause Alice is a horse, of course!</code></pre></li>
+<li><p>Convert the nursery rhyme “ten in the bed” to a function. Generalise it to any number of people in any sleeping structure.</p>
+<pre class="r"><code>roll_over &lt;- function(num = &quot;ten&quot;) {
+  num_levels &lt;-  c(&quot;one&quot;, &quot;two&quot;, &quot;three&quot;, &quot;four&quot;, &quot;five&quot;,
+               &quot;six&quot;, &quot;seven&quot;, &quot;eight&quot;, &quot;nine&quot;, &quot;ten&quot;)
+  num_fact &lt;- factor(num, levels = num_levels)
+  output &lt;- vector(&quot;character&quot;, as.integer(num_fact))
+  for (i in seq_along(output)){
+    if(num_levels[[length(output)-(i-1)]] == &quot;one&quot;){
+      output[[i]] &lt;- str_glue(
+      &quot;There was {num_levels[[length(output)-(i-1)]]} in the bed&quot;,
+       &quot; and the little one said Ahhhhhh ...\n&quot;,
+       &quot;\n&quot;)
+    } else {
+      output[[i]] &lt;- str_glue(
+      &quot;There were {num_levels[[length(output)-(i-1)]]} in the bed&quot;,
+      &quot; and the little one said roll over, roll over ...\n&quot;,
+      &quot;\n&quot;)
+    }
+  }
+  output
+}
+writeLines(str_c(roll_over(&quot;three&quot;), collapse = &quot;&quot;))
+#&gt; There were three in the bed and the little one said roll over, roll over ...
+#&gt; There were two in the bed and the little one said roll over, roll over ...
+#&gt; There was one in the bed and the little one said Ahhhhhh ...
+writeLines(str_c(roll_over(&quot;five&quot;), collapse = &quot;&quot;))
+#&gt; There were five in the bed and the little one said roll over, roll over ...
+#&gt; There were four in the bed and the little one said roll over, roll over ...
+#&gt; There were three in the bed and the little one said roll over, roll over ...
+#&gt; There were two in the bed and the little one said roll over, roll over ...
+#&gt; There was one in the bed and the little one said Ahhhhhh ...</code></pre></li>
+<li><p>Convert the song “99 bottles of beer on the wall” to a function. Generalise to any number of any vessel containing any liquid on any surface.</p></li>
+</ol></li>
+<li><p>It’s common to see for loops that don’t preallocate the output and instead increase the length of a vector at each step:</p>
+<pre class="r"><code>output &lt;- vector(&quot;integer&quot;, 0)
+for (i in seq_along(x)) {
+  output &lt;- c(output, lengths(x[[i]]))
+}
+output</code></pre>
+<p>How does this affect performance? Design and execute an experiment.</p></li>
+</ol>
+<h2>
+For loop variations
+</h2>
+</div>
+</div>
+<div id="for-loop-variations" class="section level2">
+<h2>For loop variations</h2>
+<p>Here are some for loop variations.</p>
+<ol style="list-style-type: decimal">
+<li>Modifying an existing object, instead of creating a new object.</li>
+<li>Looping over names or values, instead of indices.</li>
+<li>Handling outputs of unknown length.</li>
+<li>Handling sequences of unknown length.</li>
+</ol>
+<div id="modifying-an-existing-object" class="section level3">
+<h3>Modifying an existing object</h3>
+<p>Sometimes you want to use a for loop to modify an existing object.</p>
+<p>For example let’s say we wanted to rescale an entire df.</p>
+<p>To solve this with a for loop we again think about the three components:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Output</strong>: we already have the output — it’s the same as the input!</p></li>
+<li><p><strong>Sequence</strong>: we can think about a data frame as a list of columns, so we can iterate over each column with <code>seq_along(df)</code>.</p></li>
+<li><p><strong>Body</strong>: apply <code>rescale01()</code>.</p></li>
+</ol>
+<pre class="r"><code>df &lt;- tibble(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+df
+#&gt; # A tibble: 10 x 4
+#&gt;         a      b      c       d
+#&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+#&gt;  1 -0.184 -0.781 -0.992  0.694 
+#&gt;  2  0.317  1.41  -0.287  1.16  
+#&gt;  3  0.536  0.626 -1.26   0.798 
+#&gt;  4 -1.79  -0.700  0.336 -1.30  
+#&gt;  5 -1.68   0.803 -0.681 -0.575 
+#&gt;  6 -0.732  0.221 -0.802 -1.03  
+#&gt;  7 -0.459 -0.808  2.49   0.778 
+#&gt;  8  0.592  0.614  0.735  0.764 
+#&gt;  9 -1.25   0.411  1.32   0.0356
+#&gt; 10  0.873 -0.139  0.196  0.403
+
+rescale01 &lt;- function(x){
+  rng &lt;- range(x, na.rm = TRUE)
+  (x - rng[1]) /(rng[2] - rng[1])
+}
+
+for(i in seq_along(df)){
+  df[[i]] &lt;- rescale01(df[[i]])
+}
+df
+#&gt; # A tibble: 10 x 4
+#&gt;         a      b      c     d
+#&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1 0.604  0.0122 0.0720 0.812
+#&gt;  2 0.792  1      0.260  1    
+#&gt;  3 0.874  0.647  0      0.854
+#&gt;  4 0      0.0490 0.426  0    
+#&gt;  5 0.0436 0.726  0.155  0.296
+#&gt;  6 0.398  0.464  0.123  0.112
+#&gt;  7 0.501  0      1      0.846
+#&gt;  8 0.895  0.641  0.532  0.840
+#&gt;  9 0.204  0.550  0.687  0.544
+#&gt; 10 1      0.302  0.389  0.693</code></pre>
+</div>
+<div id="looping-patterns" class="section level3">
+<h3>Looping patterns</h3>
+<p>To loop over a vector we have:</p>
+<ol style="list-style-type: decimal">
+<li><p><span style="color: #008080;background-color:#9FDDBA"><code>for (i in seq_along(xs))</code></span>, and extracting the value with <code>x[[i]]</code>.</p></li>
+<li><p><span style="color: #008080;background-color:#9FDDBA">Loop over the elements:</span> <code>for (x in xs)</code>. Useful if you only care about side-effects, like plotting or printing.</p></li>
+<li><p><span style="color: #008080;background-color:#9FDDBA">Loop over the names</span> <code>for (nm in names(xs))</code>. This gives you name, which you can use to access the value with <code>x[[nm]]</code>.</p></li>
+</ol>
+<pre class="r"><code>results &lt;- vector(&quot;list&quot;, length(x))
+names(results) &lt;- names(x)
+
+for (i in seq_along(x)) {
+  name &lt;- names(x)[[i]]
+  value &lt;- x[[i]]
+}</code></pre>
+</div>
+<div id="unknown-output-length" class="section level3">
+<h3>Unknown output length</h3>
+<p>Sometimes you might not know how long the output will be. <span style="color: #008080;background-color:#9FDDBA">Save results as a list</span> and then compile into a single vector when loop is done. used <span style="color: #008080;background-color:#9FDDBA"><code>unlist()</code></span> to flatten a list of vectors into a single vector. A stricter option is to use <code>purrr::flatten_dbl()</code>.</p>
+<pre class="r"><code>means &lt;- c(0,1,2)
+
+output &lt;- vector(&quot;list&quot;, length(means))
+for (i in seq_along(means)){
+  n &lt;- sample(100, 1)
+  output[[i]] &lt;- rnorm(n, means[[i]])
+}
+str(output)
+#&gt; List of 3
+#&gt;  $ : num [1:96] 1.085 1.192 -0.476 -0.342 0.208 ...
+#&gt;  $ : num [1:22] 2.548 0.3431 0.6396 1.8766 0.0867 ...
+#&gt;  $ : num [1:58] 2.01 3.17 2.01 2.36 2.05 ...
+str(unlist(output))
+#&gt;  num [1:176] 1.085 1.192 -0.476 -0.342 0.208 ...</code></pre>
+<p>This pattern occurs in other places too:</p>
+<ol style="list-style-type: decimal">
+<li><p>You might be generating a long string. Instead of <code>paste()</code>ing together each iteration with the previous, save the output in a character vector and then combine that vector into a single string with <code>paste(output, collapse = "")</code>.</p></li>
+<li><p>You might be generating a big data frame. Instead of sequentially <code>rbind()</code>ing in each iteration, save the output in a list, then use <code>dplyr::bind_rows(output)</code> to combine the output into a single data frame.</p></li>
+</ol>
+</div>
+<div id="unknown-sequence-length" class="section level3">
+<h3>Unknown sequence length</h3>
+<p>Sometimes you don’t even know how long the sequence should run for - you can use a while loop.</p>
+<pre class="r"><code>while (condition) {
+  # body
+}</code></pre>
+<pre class="r"><code>flip &lt;- function() sample(c(&quot;T&quot;, &quot;H&quot;), 1)
+flips &lt;- 0
+nheads &lt;- 0
+while (nheads &lt; 3) {
+  if (flip() == &quot;H&quot;) {
+    nheads &lt;- nheads + 1
+  } else {
+    nheads &lt;- 0
+  }
+  flips &lt;- flips + 1
+}
+flips
+#&gt; [1] 7</code></pre>
+</div>
+<div id="exercises-1" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Imagine you have a directory full of CSV files that you want to read in. You have their paths in a vector, <code>files &lt;- dir("data/", pattern = "\\.csv$", full.names = TRUE)</code>, and now want to read each one with <code>read_csv()</code>. Write the for loop that will load them into a single data frame.</p></li>
+<li><p>What happens if you use <code>for (nm in names(x))</code> and <code>x</code> has no names? What if only some of the elements are named? What if the names are not unique?</p></li>
+<li><p>Write a function that prints the mean of each numeric column in a data frame, along with its name. For example, <code>show_mean(iris)</code> would print:</p>
+<pre class="r"><code>show_mean(iris)
+#&gt; Sepal.Length: 5.84
+#&gt; Sepal.Width:  3.06
+#&gt; Petal.Length: 3.76
+#&gt; Petal.Width:  1.20</code></pre>
+<p>(Extra challenge: what function did I use to make sure that the numbers lined up nicely, even though the variable names had different lengths?)</p></li>
+<li><p>What does this code do? How does it work?</p>
+<pre class="r"><code>trans &lt;- list( 
+  disp = function(x) x * 0.0163871,
+  am = function(x) {
+    factor(x, labels = c(&quot;auto&quot;, &quot;manual&quot;))
+  }
+)
+for (var in names(trans)) {
+  mtcars[[var]] &lt;- trans[[var]](mtcars[[var]])
+}</code></pre></li>
+</ol>
+</div>
+<div id="exercises-2" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Read the documentation for <code>apply()</code>. In the 2d case, what two for loops does it generalise?</p></li>
+<li><p>Adapt <code>col_summary()</code> so that it only applies to numeric columns You might want to start with an <code>is_numeric()</code> function that returns a logical vector that has a TRUE corresponding to each numeric column.</p></li>
+</ol>
+</div>
+</div>
+<div id="the-map-functions" class="section level2">
+<h2>The map functions</h2>
+<p>The {purrr} package provides a family of functions for the common task of iteration. There is one function for each type of output:</p>
+<ul>
+<li><code>map()</code> makes a list.</li>
+<li><code>map_lgl()</code> makes a logical vector.</li>
+<li><code>map_int()</code> makes an integer vector.</li>
+<li><code>map_dbl()</code> makes a double vector.</li>
+<li><code>map_chr()</code> makes a character vector.</li>
+</ul>
+<p>Each function takes a vector as input, applies a function to each piece, and then returns a new vector that’s the same length (and has the same names) as the input. The type of the vector is determined by the suffix to the map function.</p>
+<pre class="r"><code>df &lt;- tibble(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+
+output &lt;- vector(&quot;double&quot;, length(df))
+for (i in seq_along(df)) {
+  output[[i]] &lt;- mean(df[[i]])
+}
+output
+#&gt; [1] -0.3470941 -0.3799759 -0.1439421  0.4843150
+
+# generlise it into a func
+col_mean &lt;- function(df) {
+  output &lt;- vector(&quot;double&quot;, length(df))
+  for (i in seq_along(df)) {
+    output[i] &lt;- mean(df[[i]])
+  }
+  output
+}
+
+# oh-oh two more functions of a slight variation needed!
+col_median &lt;- function(df) {
+  output &lt;- vector(&quot;double&quot;, length(df))
+  for (i in seq_along(df)) {
+    output[i] &lt;- median(df[[i]])
+  }
+  output
+}
+col_sd &lt;- function(df) {
+  output &lt;- vector(&quot;double&quot;, length(df))
+  for (i in seq_along(df)) {
+    output[i] &lt;- sd(df[[i]])
+  }
+  output
+}
+col_mean(df)
+#&gt; [1] -0.3470941 -0.3799759 -0.1439421  0.4843150
+col_sd(df)
+#&gt; [1] 1.0006300 0.9881514 0.9117865 0.6340628
+col_median(df)
+#&gt; [1] -0.31932179 -0.51488140 -0.02374104  0.49163958</code></pre>
+<p>We would then generalise the function after realising we can pass functions into functions as an argument!!💪</p>
+<pre class="r"><code>col_summary &lt;- function(df, fun) {
+  out &lt;- vector(&quot;double&quot;, length(df))
+  for (i in seq_along(df)) {
+    out[i] &lt;- fun(df[[i]])
+  }
+  out
+}
+col_summary(df, median)
+#&gt; [1] -0.31932179 -0.51488140 -0.02374104  0.49163958
+col_summary(df, mean)
+#&gt; [1] -0.3470941 -0.3799759 -0.1439421  0.4843150</code></pre>
+<p>With {purrr} functions we could do this in a synch! 🐱</p>
+<pre class="r"><code>map_dbl(df, mean)
+#&gt;          a          b          c          d 
+#&gt; -0.3470941 -0.3799759 -0.1439421  0.4843150
+map_dbl(df, median)
+#&gt;           a           b           c           d 
+#&gt; -0.31932179 -0.51488140 -0.02374104  0.49163958
+# or using pipes
+df %&gt;% map_dbl(mean)
+#&gt;          a          b          c          d 
+#&gt; -0.3470941 -0.3799759 -0.1439421  0.4843150
+df %&gt;% map_dbl(median)
+#&gt;           a           b           c           d 
+#&gt; -0.31932179 -0.51488140 -0.02374104  0.49163958</code></pre>
+<p>There are a few differences between <code>map_*()</code> and the <code>col_summary()</code> function we wrote:</p>
+<ul>
+<li><p>{purrr} functions are implemented in C - faster.</p></li>
+<li><p>The second argument, <code>.f</code>, the function to apply, can be:</p>
+<ul>
+<li>a formula,</li>
+<li>a character vector, or</li>
+<li>an integer vector.</li>
+</ul></li>
+<li><p><code>map_*()</code> uses … ([dot dot dot]) to pass along additional arguments to <code>.f</code> each time it’s called:</p>
+<pre class="r"><code>map_dbl(df, mean, trim = 0.5)
+#&gt;           a           b           c           d 
+#&gt; -0.31932179 -0.51488140 -0.02374104  0.49163958</code></pre></li>
+<li><p>The map functions also preserve names:</p>
+<pre class="r"><code>z &lt;- list(x = 1:3, y = 4:5)
+map_int(z, length)
+#&gt; x y 
+#&gt; 3 2</code></pre></li>
+</ul>
+<div id="shortcuts" class="section level3">
+<h3>Shortcuts</h3>
+<p>There are a few shortcuts that you can use with <code>.f</code>. Say we want to fit a linear model to each group in a dataset.</p>
+<pre class="r"><code>(models &lt;- mtcars %&gt;% 
+  split(.$cyl) %&gt;% 
+   # explicitly create a func, with an input which is each
+   # split
+  map(function(df) lm(mpg ~ wt, data = df)))
+#&gt; $`4`
+#&gt; 
+#&gt; Call:
+#&gt; lm(formula = mpg ~ wt, data = df)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)           wt  
+#&gt;      39.571       -5.647  
+#&gt; 
+#&gt; 
+#&gt; $`6`
+#&gt; 
+#&gt; Call:
+#&gt; lm(formula = mpg ~ wt, data = df)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)           wt  
+#&gt;       28.41        -2.78  
+#&gt; 
+#&gt; 
+#&gt; $`8`
+#&gt; 
+#&gt; Call:
+#&gt; lm(formula = mpg ~ wt, data = df)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)           wt  
+#&gt;      23.868       -2.192</code></pre>
+<p>purrr provides a convenient shortcut for an anonymous function: a one-sided formula.</p>
+<pre class="r"><code>(models &lt;- mtcars %&gt;% 
+  split(.$cyl) %&gt;% 
+  map(~lm(mpg ~ wt, data = .)))
+#&gt; $`4`
+#&gt; 
+#&gt; Call:
+#&gt; lm(formula = mpg ~ wt, data = .)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)           wt  
+#&gt;      39.571       -5.647  
+#&gt; 
+#&gt; 
+#&gt; $`6`
+#&gt; 
+#&gt; Call:
+#&gt; lm(formula = mpg ~ wt, data = .)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)           wt  
+#&gt;       28.41        -2.78  
+#&gt; 
+#&gt; 
+#&gt; $`8`
+#&gt; 
+#&gt; Call:
+#&gt; lm(formula = mpg ~ wt, data = .)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)           wt  
+#&gt;      23.868       -2.192</code></pre>
+<p>We us <code>.</code> to refer to the current list element.</p>
+<p>Let’s say we want to extract a summary statistic like the <span class="math inline">\(R^2\)</span>.</p>
+<ul>
+<li>First run <code>summary()</code> and</li>
+<li>Then extract the component called <code>r.squared</code>.</li>
+</ul>
+<pre class="r"><code>models %&gt;% 
+  map(summary) %&gt;% 
+  map_dbl(~.$r.squared) # alternate would be: map_dbl(function(df) df$r.squared)
+#&gt;         4         6         8 
+#&gt; 0.5086326 0.4645102 0.4229655</code></pre>
+<p><strong>But</strong> extracting named components is a common operation, so purrr provides an even shorter shortcut: you can use a string. 😁</p>
+<pre class="r"><code>models %&gt;% 
+  map(summary) %&gt;% 
+  map_dbl(&quot;r.squared&quot;)
+#&gt;         4         6         8 
+#&gt; 0.5086326 0.4645102 0.4229655</code></pre>
+<p>You can also use an integer to select elements by position:</p>
+<pre class="r"><code>x &lt;- list(list(1, 2, 3), list(4, 5, 6), list(7, 8, 9))
+x %&gt;% map_dbl(2)
+#&gt; [1] 2 5 8</code></pre>
+</div>
+<div id="exercises-3" class="section level3">
+<h3>Exercises</h3>
+<ol style="list-style-type: decimal">
+<li><p>Write code that uses one of the map functions to:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Compute the mean of every column in <code>mtcars</code>.</p>
+<pre class="r"><code>mtcars %&gt;% 
+  map_dbl(mean)
+#&gt;        mpg        cyl       disp         hp       drat         wt       qsec 
+#&gt;  20.090625   6.187500 230.721875 146.687500   3.596563   3.217250  17.848750 
+#&gt;         vs         am       gear       carb 
+#&gt;   0.437500   0.406250   3.687500   2.812500</code></pre></li>
+<li><p>Determine the type of each column in <code>nycflights13::flights</code>.</p>
+<pre class="r"><code>nycflights13::flights %&gt;% 
+  map(class) %&gt;% 
+  str()
+#&gt; List of 19
+#&gt;  $ year          : chr &quot;integer&quot;
+#&gt;  $ month         : chr &quot;integer&quot;
+#&gt;  $ day           : chr &quot;integer&quot;
+#&gt;  $ dep_time      : chr &quot;integer&quot;
+#&gt;  $ sched_dep_time: chr &quot;integer&quot;
+#&gt;  $ dep_delay     : chr &quot;numeric&quot;
+#&gt;  $ arr_time      : chr &quot;integer&quot;
+#&gt;  $ sched_arr_time: chr &quot;integer&quot;
+#&gt;  $ arr_delay     : chr &quot;numeric&quot;
+#&gt;  $ carrier       : chr &quot;character&quot;
+#&gt;  $ flight        : chr &quot;integer&quot;
+#&gt;  $ tailnum       : chr &quot;character&quot;
+#&gt;  $ origin        : chr &quot;character&quot;
+#&gt;  $ dest          : chr &quot;character&quot;
+#&gt;  $ air_time      : chr &quot;numeric&quot;
+#&gt;  $ distance      : chr &quot;numeric&quot;
+#&gt;  $ hour          : chr &quot;numeric&quot;
+#&gt;  $ minute        : chr &quot;numeric&quot;
+#&gt;  $ time_hour     : chr [1:2] &quot;POSIXct&quot; &quot;POSIXt&quot;</code></pre></li>
+<li><p>Compute the number of unique values in each column of <code>iris</code>.</p></li>
+</ol>
+<pre class="r"><code>iris %&gt;% 
+  map_int(n_distinct)
+#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species 
+#&gt;           35           23           43           22            3</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li>Generate 10 random normals from distributions with means of -10, 0, 10, and 100.</li>
+</ol>
+<pre class="r"><code>means &lt;- c(-10,0,10,100) 
+means %&gt;% 
+  map(.f = rnorm, n = 10) %&gt;% 
+  str()
+#&gt; List of 4
+#&gt;  $ : num [1:10] -8.72 -9.98 -8.7 -10.98 -8.89 ...
+#&gt;  $ : num [1:10] 0.4208 2.1663 -0.9836 0.9044 -0.0486 ...
+#&gt;  $ : num [1:10] 10.53 12.08 9.01 9.73 9.97 ...
+#&gt;  $ : num [1:10] 99 99.5 101.5 100.2 99.7 ...</code></pre></li>
+<li><p>How can you create a single vector that for each column in a data frame indicates whether or not it’s a factor?</p>
+<pre class="r"><code>library(palmerpenguins)
+penguins %&gt;% 
+  map_chr(is.factor)
+#&gt;           species            island    bill_length_mm     bill_depth_mm 
+#&gt;            &quot;TRUE&quot;            &quot;TRUE&quot;           &quot;FALSE&quot;           &quot;FALSE&quot; 
+#&gt; flipper_length_mm       body_mass_g               sex              year 
+#&gt;           &quot;FALSE&quot;           &quot;FALSE&quot;            &quot;TRUE&quot;           &quot;FALSE&quot;</code></pre></li>
+<li><p>What happens when you use the map functions on vectors that aren’t lists? What does <code>map(1:5, runif)</code> do? Why?</p>
+<p>It passes 1, then 2, then 3 etc, to the first argument of <code>runif</code> which is <code>n</code> - how many numbers you want the random uniform function to generate.</p>
+<pre class="r"><code>map(1:5, runif)
+#&gt; [[1]]
+#&gt; [1] 0.1289916
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] 0.3131800 0.2377395
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] 0.6506688 0.8067705 0.9219552
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] 0.18483083 0.08303098 0.04313698 0.21822547
+#&gt; 
+#&gt; [[5]]
+#&gt; [1] 0.8439198 0.6398833 0.1607786 0.5981102 0.7360123</code></pre></li>
+<li><p>What does <code>map(-2:2, rnorm, n = 5)</code> do? Why? What does <code>map_dbl(-2:2, rnorm, n = 5)</code> do? Why?</p>
+<p>What does <code>map(-2:2, rnorm, n = 5)</code> do? Why? It send -2, -1, 0, 1, to rnorm as the mean value and returns a list.</p>
+<p>What does <code>map_dbl(-2:2, rnorm, n = 5)</code> do? Why? It send -2, -1, 0, 1, 2 to rnorm as the mean value and returns a double vector the same size as the input. But uh oh we gave it the mean vector of size 5 but this is used to generate 5 vectors of n = 5 in length. This is unexpected and hence will error.</p>
+<pre class="r"><code>map(-2:2, rnorm, n = 5)
+#&gt; [[1]]
+#&gt; [1] -3.249627 -2.514916 -3.880303 -2.265142 -2.744386
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] -1.64073179 -0.82186021 -0.05958671 -0.49470928  0.22813335
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] -0.9775321  2.0979430  1.7334248 -1.1306294  0.9757886
+#&gt; 
+#&gt; [[4]]
+#&gt; [1]  2.0303995  0.8985192 -0.5593058  1.0157854  1.0507722
+#&gt; 
+#&gt; [[5]]
+#&gt; [1] 1.269560 3.608558 1.851002 2.412937 2.099466</code></pre></li>
+<li><p>Rewrite <code>map(x, function(df) lm(mpg ~ wt, data = df))</code> to eliminate the anonymous function.</p>
+<pre class="r"><code># map(x, function(df) lm(mpg ~ wt, data = df))
+
+map(x, ~lm(mpg~wt, data = .))</code></pre></li>
+</ol>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()
+#&gt; R version 3.6.3 (2020-02-29)
+#&gt; Platform: x86_64-w64-mingw32/x64 (64-bit)
+#&gt; Running under: Windows 10 x64 (build 18363)
+#&gt; 
+#&gt; Matrix products: default
+#&gt; 
+#&gt; locale:
+#&gt; [1] LC_COLLATE=English_South Africa.1252  LC_CTYPE=English_South Africa.1252   
+#&gt; [3] LC_MONETARY=English_South Africa.1252 LC_NUMERIC=C                         
+#&gt; [5] LC_TIME=English_South Africa.1252    
+#&gt; 
+#&gt; attached base packages:
+#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
+#&gt; 
+#&gt; other attached packages:
+#&gt;  [1] palmerpenguins_0.1.0 werpals_0.1.0        lubridate_1.7.9     
+#&gt;  [4] magrittr_1.5         flair_0.0.2          forcats_0.5.0       
+#&gt;  [7] stringr_1.4.0        dplyr_1.0.2          purrr_0.3.4         
+#&gt; [10] readr_1.4.0          tidyr_1.1.2          tibble_3.0.3        
+#&gt; [13] ggplot2_3.3.2        tidyverse_1.3.0      workflowr_1.6.2     
+#&gt; 
+#&gt; loaded via a namespace (and not attached):
+#&gt;  [1] Rcpp_1.0.4.6       ps_1.3.2           assertthat_0.2.1   rprojroot_1.3-2   
+#&gt;  [5] digest_0.6.27      utf8_1.1.4         R6_2.4.1           cellranger_1.1.0  
+#&gt;  [9] backports_1.1.6    reprex_0.3.0       evaluate_0.14      httr_1.4.2        
+#&gt; [13] pillar_1.4.6       rlang_0.4.8        readxl_1.3.1       rstudioapi_0.11   
+#&gt; [17] whisker_0.4        rmarkdown_2.4      nycflights13_1.0.1 munsell_0.5.0     
+#&gt; [21] broom_0.7.2        compiler_3.6.3     httpuv_1.5.2       modelr_0.1.8      
+#&gt; [25] xfun_0.13          pkgconfig_2.0.3    htmltools_0.5.0    tidyselect_1.1.0  
+#&gt; [29] emo_0.0.0.9000     fansi_0.4.1        crayon_1.3.4       dbplyr_2.0.0      
+#&gt; [33] withr_2.2.0        later_1.0.0        grid_3.6.3         jsonlite_1.7.1    
+#&gt; [37] gtable_0.3.0       lifecycle_0.2.0    DBI_1.1.0          git2r_0.26.1      
+#&gt; [41] scales_1.1.0       cli_2.1.0          stringi_1.5.3      fs_1.5.0          
+#&gt; [45] promises_1.1.0     xml2_1.3.2         ellipsis_0.3.1     generics_0.0.2    
+#&gt; [49] vctrs_0.3.2        tools_3.6.3        glue_1.4.2         hms_0.5.3         
+#&gt; [53] yaml_2.2.1         colorspace_1.4-1   rvest_0.3.6        knitr_1.28        
+#&gt; [57] haven_2.3.1</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
