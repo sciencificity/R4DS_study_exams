@@ -48,6 +48,7 @@ fundamentally flawed, so please do let [me](https://twitter.com/sciencificity) k
 [Chapter 14:  Pipes](ch14_pipes.html) <br>
 [Chapter 15:  Functions](ch15_functions.html) <br>
 [Chapter 16:  Vectors](ch16_vectors.html) <br>
+[Chapter 17:  Iteration with purrr](ch17_iteration.html) <br>
 [Chapter 21:  RMarkdown](ch21_rmd.html) <br>
 [Chapter 22:  Graphics for communication with ggplot](ch22_graphics_for_comms.html) <br>
 [Chapter 23:  RMarkdown Formats](ch23_rmd_formats.html) <br>
