@@ -414,7 +414,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-11-10
+<strong>Last updated:</strong> 2020-11-21
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -505,16 +505,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree8864bd0c4383ec6f797c857c22fea24b837fad65targetblank8864bd0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/8864bd0c4383ec6f797c857c22fea24b837fad65" target="_blank">8864bd0</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree6e7b3db6d0e7fa527d843407cafe965d5f7acd67targetblank6e7b3dba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/6e7b3db6d0e7fa527d843407cafe965d5f7acd67" target="_blank">6e7b3db</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree8864bd0c4383ec6f797c857c22fea24b837fad65targetblank8864bd0a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree6e7b3db6d0e7fa527d843407cafe965d5f7acd67targetblank6e7b3dba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/8864bd0c4383ec6f797c857c22fea24b837fad65" target="_blank">8864bd0</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/6e7b3db6d0e7fa527d843407cafe965d5f7acd67" target="_blank">6e7b3db</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -528,10 +528,10 @@ Untracked files:
     Untracked:  code_snipp.txt
     Untracked:  data/at_health_facilities.csv
     Untracked:  data/infant_hiv.csv
+    Untracked:  data/measurements.csv
+    Untracked:  data/person.csv
     Untracked:  data/ranking.csv
-
-Unstaged changes:
-    Modified:   analysis/sample_exam1.Rmd
+    Untracked:  data/visited.csv
 
 </code></pre>
 <p>
@@ -570,6 +570,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/7ed0458900c1f46198c63e4abf18223bec6e4a2f/docs/ch13_datetimes.html" target="_blank">7ed0458</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -691,9 +708,9 @@ Create Date and Times
 <div id="create-date-and-times" class="section level2">
 <h2>Create Date and Times</h2>
 <pre class="r"><code>today()
-#&gt; [1] &quot;2020-11-10&quot;
+#&gt; [1] &quot;2020-11-21&quot;
 now()
-#&gt; [1] &quot;2020-11-10 14:58:27 SAST&quot;</code></pre>
+#&gt; [1] &quot;2020-11-21 20:25:48 SAST&quot;</code></pre>
 <div id="from-strings" class="section level3">
 <h3>From Strings</h3>
 <div id="dates" class="section level4">
@@ -734,7 +751,7 @@ dmy(31012017, tz = &quot;Africa/Johannesburg&quot;)
 <div id="from-other-types" class="section level3">
 <h3>From other types</h3>
 <p>You may want to switch between a <strong>date-time</strong> and a <strong>date</strong>. That’s the job of <span style="color: #008080;background-color:#9FDDBA"><code>as_datetime()</code></span> and <span style="color: #008080;background-color:#9FDDBA"><code>as_date()</code></span>.</p>
-<pre><code class='language-r'><code><span style='background-color:#9FDDBA;color:#008080'><span style='background-color:#9FDDBA;color:#008080'>as_date</span>time</span>(today()) # today() returns a date, convert to dttm<br>#> [1] "2020-11-10 UTC"<br><span style='background-color:#9FDDBA;color:#008080'>as_date</span>(now()) # now() returns a dttm, convert to date<br>#> [1] "2020-11-10"</code></code></pre>
+<pre><code class='language-r'><code><span style='background-color:#9FDDBA;color:#008080'><span style='background-color:#9FDDBA;color:#008080'>as_date</span>time</span>(today()) # today() returns a date, convert to dttm<br>#> [1] "2020-11-21 UTC"<br><span style='background-color:#9FDDBA;color:#008080'>as_date</span>(now()) # now() returns a dttm, convert to date<br>#> [1] "2020-11-21"</code></code></pre>
 <p>Sometimes you’ll get date/times as numeric offsets from the “Unix Epoch”, 1970-01-01. If the offset is in seconds, use <code>as_datetime()</code>; if it’s in days, use <code>as_date()</code>.</p>
 <pre><code class='language-r'><code>as_datetime(60 * 60 * 10) # add 10 hours to default dttm <span style='background-color:#cfdad4;color:#6d6875'>1970-01-01</span> UTC<br>#> [1] "<span style='background-color:#cfdad4;color:#6d6875'>1970-01-01</span> 10:00:00 UTC"<br>as_datetime(0) # default dttm<br>#> [1] "<span style='background-color:#cfdad4;color:#6d6875'>1970-01-01</span> UTC"<br>as_date(365 * 10 + 2) # add 10 years (365 * 10) + 2 days to get to 1980-01-01<br>#> [1] "1980-01-01"<br>as_date(365 * 10) # add 10 years - 365 days per year * 10<br>#> [1] "1979-12-30"<br>as_date(0) # default date (add 0 days)<br>#> [1] "<span style='background-color:#cfdad4;color:#6d6875'>1970-01-01</span>"<br>as_date(10) # add 10 days to default<br>#> [1] "1970-01-11"<br>make_date() # default == Unix Epoch Date<br>#> [1] "<span style='background-color:#cfdad4;color:#6d6875'>1970-01-01</span>"<br>make_datetime() # default == Unix Epoch Date<br>#> [1] "<span style='background-color:#cfdad4;color:#6d6875'>1970-01-01</span> UTC"</code></code></pre>
 </div>
@@ -751,17 +768,17 @@ dmy(31012017, tz = &quot;Africa/Johannesburg&quot;)
 <p>The <code>today()</code> and <code>now()</code> uses your computer’s time and date. This is usually accurate for your timezone. For example I am in South Africa so you would see <em>SAST</em> when I call <code>now()</code>.</p>
 <p>But you may want to do analyses that involve other timezones, or UTC itself. You can use this argument to adjust to the timezone you’re interested in.</p>
 <pre class="r"><code>today()
-#&gt; [1] &quot;2020-11-10&quot;
+#&gt; [1] &quot;2020-11-21&quot;
 (utc_today &lt;- today(tzone = &quot;UTC&quot;))
-#&gt; [1] &quot;2020-11-10&quot;
+#&gt; [1] &quot;2020-11-21&quot;
 utc_today == today()
 #&gt; [1] TRUE
 utc_today == today(tzone = &quot;GMT&quot;)
 #&gt; [1] TRUE
 now()
-#&gt; [1] &quot;2020-11-10 14:58:31 SAST&quot;
+#&gt; [1] &quot;2020-11-21 20:25:54 SAST&quot;
 now(&quot;UTC&quot;)
-#&gt; [1] &quot;2020-11-10 12:58:31 UTC&quot;</code></pre></li>
+#&gt; [1] &quot;2020-11-21 18:25:54 UTC&quot;</code></pre></li>
 <li><p>Use the appropriate lubridate function to parse each of the following dates:</p>
 <pre class="r"><code>d1 &lt;- &quot;January 1, 2010&quot;
 mdy(d1)
@@ -799,32 +816,32 @@ Date-time components
 </ul>
 <pre><code class='language-r'><code>(datetime <- ymd_hms("2016-07-08 12:34:56"))<br>#> [1] "2016-07-08 12:34:56 UTC"<br><span style='background-color:#9FDDBA;color:#008080'>year</span>(datetime)<br>#> [1] 2016<br><br><span style='background-color:#9FDDBA;color:#008080'>month</span>(datetime)<br>#> [1] 7<br><br><span style='background-color:#9FDDBA;color:#008080'>mday</span>(datetime)<br>#> [1] 8<br><br><span style='background-color:#9FDDBA;color:#008080'>yday</span>(datetime)<br>#> [1] 190<br><br><span style='background-color:#9FDDBA;color:#008080'>wday</span>(datetime)<br>#> [1] 6<br><br><span style='background-color:#9FDDBA;color:#008080'>wday</span>(datetime, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#cfdad4;color:#6d6875'>label = TRUE</span>) # abbreviated weekday day instead of number<br>#> [1] Fri<br>#> Levels: Sun < Sat<br><br>wday(datetime, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label = TRUE, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abbr = FALSE) # full weekday name <br>#> [1] Friday<br>#> 7 Levels: Sunday < Saturday<br><br>hour(datetime)<br>#> [1] 12<br><br><span style='background-color:#9FDDBA;color:#008080'>minute</span>(datetime)<br>#> [1] 34<br><br><span style='background-color:#9FDDBA;color:#008080'>second</span>(datetime)<br>#> [1] 56<br><br><span style='background-color:#9FDDBA;color:#008080'>month</span>(datetime, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='background-color:#cfdad4;color:#6d6875'>label = TRUE</span>) # abbreviated <span style='background-color:#9FDDBA;color:#008080'>month</span> name instead of number<br>#> [1] Jul<br>#> 12 Levels: Jan < Dec<br><br>month(datetime, label = TRUE, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abbr = FALSE) # full month name instead of number<br>#> [1] July<br>#> 12 Levels: January</code></code></pre>
 <pre class="r"><code>(current_dt &lt;- now())
-#&gt; [1] &quot;2020-11-10 14:58:32 SAST&quot;
+#&gt; [1] &quot;2020-11-21 20:25:54 SAST&quot;
 year(current_dt)
 #&gt; [1] 2020
 month(current_dt)
 #&gt; [1] 11
 mday(current_dt)
-#&gt; [1] 10
+#&gt; [1] 21
 yday(current_dt)
-#&gt; [1] 315
+#&gt; [1] 326
 wday(current_dt) # sunday
-#&gt; [1] 3
+#&gt; [1] 7
 wday(current_dt, 
      label = TRUE) # abbreviated weekday day instead of number
-#&gt; [1] Tue
+#&gt; [1] Sat
 #&gt; Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat
 wday(current_dt, 
      label = TRUE, 
      abbr = FALSE) # full weekday name 
-#&gt; [1] Tuesday
+#&gt; [1] Saturday
 #&gt; 7 Levels: Sunday &lt; Monday &lt; Tuesday &lt; Wednesday &lt; Thursday &lt; ... &lt; Saturday
 hour(current_dt)
-#&gt; [1] 14
+#&gt; [1] 20
 minute(current_dt)
-#&gt; [1] 58
+#&gt; [1] 25
 second(current_dt)
-#&gt; [1] 32.39264
+#&gt; [1] 54.85329
 month(current_dt, 
       label = TRUE) # abbreviated month name instead of number
 #&gt; [1] Nov
@@ -1118,7 +1135,7 @@ Time spans
 <p>When we subtract two dates, we get a <code>difftime</code> object.</p>
 <pre class="r"><code># How old is Hadley?
 (h_age &lt;- today() - ymd(19791014))
-#&gt; Time difference of 15003 days</code></pre>
+#&gt; Time difference of 15014 days</code></pre>
 <p>A <code>difftime</code> class object records a time span of</p>
 <ul>
 <li>seconds,</li>
@@ -1129,7 +1146,7 @@ Time spans
 </ul>
 <p>The ambiguity can make <code>difftimes</code> painful to work with, so {lubridate} provides an alternative which always uses seconds: the <strong>duration</strong>.</p>
 <pre class="r"><code>as.duration(h_age)
-#&gt; [1] &quot;1296259200s (~41.08 years)&quot;</code></pre>
+#&gt; [1] &quot;1297209600s (~41.11 years)&quot;</code></pre>
 <div id="duration-constructors" class="section level4">
 <h4>Duration constructors</h4>
 <pre><code class='language-r'><code><span style='background-color:#9FDDBA;color:#008080'>ds</span>econ<span style='background-color:#9FDDBA;color:#008080'>ds</span>(15)<br>#> [1] "15s"<br><br><span style='background-color:#9FDDBA;color:#008080'>dm</span>inutes(10)<br>#> [1] "600s (~10 minutes)"<br><br><span style='background-color:#9FDDBA;color:#008080'>dh</span>ours(c(12,24))<br>#> [1] "43200s (~12 hours)" "86400s (~1 days)"<br><br><span style='background-color:#9FDDBA;color:#008080'>dd</span>ays(0:5)<br>#> [1] "0s" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"86400s (~1 days)" &nbsp;"172800s (~2 days)"<br>#> [4] "259200s (~3 days)" "345600s (~4 days)" "432000s (~5 days)"<br><br><span style='background-color:#9FDDBA;color:#008080'>dw</span>eeks(3)<br>#> [1] "1814400s (~3 weeks)"<br><br><span style='background-color:#9FDDBA;color:#008080'>dw</span>eeks(3) == 24 * 60 * 60 * 7 * 3 # 24 hrs, 60 min, 60 s in each min, 7 days, 3 weeks<br>#> [1] TRUE<br><br><span style='background-color:#9FDDBA;color:#008080'>dy</span>ears(1)<br>#> [1] "31557600s (~1 years)"</code></code></pre>
@@ -1147,7 +1164,7 @@ dyears(1)  + dweeks(12) + dhours(15)
 #&gt; [1] &quot;38869200s (~1.23 years)&quot;</code></pre>
 <p>We can also add and subtract durations to and from dates.</p>
 <pre class="r"><code>(tomorrow &lt;- today() + ddays(1))
-#&gt; [1] &quot;2020-11-11&quot;
+#&gt; [1] &quot;2020-11-22&quot;
 (last_yr &lt;- year(today() - dyears(1)))
 #&gt; [1] 2019</code></pre>
 <p>But durations represent an exact number of seconds, and hence sometimes you might get unexpected results, especially with daylight savings etc. that complicate date time arithmetic.</p>
@@ -1290,10 +1307,10 @@ years(1) / days(1)
 #&gt; [1] 365.25</code></pre>
 <p>For more accurate measurements, use an <strong>interval</strong>. An interval is a duration with a starting point and hence you can determine how long it is.</p>
 <pre class="r"><code>(next_yr &lt;- today() + years(1))
-#&gt; [1] &quot;2021-11-10&quot;
+#&gt; [1] &quot;2021-11-21&quot;
  
 (today() %--% next_yr)
-#&gt; [1] 2020-11-10 UTC--2021-11-10 UTC
+#&gt; [1] 2020-11-21 UTC--2021-11-21 UTC
 
 # to find how many periods in an _interval_ use integer division
 (today() %--% next_yr) %/% days(1)
@@ -1350,7 +1367,7 @@ floor_date(today(), &quot;year&quot;) + months(0:11)
 }
 
 age(ymd(20140612))
-#&gt; [1] &quot;6.41917808219178s&quot;</code></pre></li>
+#&gt; [1] &quot;6.44931506849315s&quot;</code></pre></li>
 <li><p>Why can’t <code>(today() %--% (today() + years(1))) / months(1)</code> work?</p>
 <p>It works but I suspect that the <code>/</code> should be replaced by <code>%/%</code> integer division.</p>
 <pre class="r"><code># how many months in the timespan today - next_yr_this_time
@@ -1423,7 +1440,7 @@ x4b - x4
 <pre class="r"><code>sessionInfo()
 #&gt; R version 3.6.3 (2020-02-29)
 #&gt; Platform: x86_64-w64-mingw32/x64 (64-bit)
-#&gt; Running under: Windows 10 x64 (build 18363)
+#&gt; Running under: Windows 10 x64 (build 19042)
 #&gt; 
 #&gt; Matrix products: default
 #&gt; 

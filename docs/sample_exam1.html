@@ -396,7 +396,7 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -405,7 +405,7 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -414,10 +414,10 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-11-10
+<strong>Last updated:</strong> 2020-11-21
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>r4ds_book/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -433,12 +433,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
@@ -505,16 +505,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree8864bd0c4383ec6f797c857c22fea24b837fad65targetblank8864bd0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/8864bd0c4383ec6f797c857c22fea24b837fad65" target="_blank">8864bd0</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree6e7b3db6d0e7fa527d843407cafe965d5f7acd67targetblank6e7b3dba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/6e7b3db6d0e7fa527d843407cafe965d5f7acd67" target="_blank">6e7b3db</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree8864bd0c4383ec6f797c857c22fea24b837fad65targetblank8864bd0a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree6e7b3db6d0e7fa527d843407cafe965d5f7acd67targetblank6e7b3dba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/8864bd0c4383ec6f797c857c22fea24b837fad65" target="_blank">8864bd0</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/6e7b3db6d0e7fa527d843407cafe965d5f7acd67" target="_blank">6e7b3db</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -528,10 +528,10 @@ Untracked files:
     Untracked:  code_snipp.txt
     Untracked:  data/at_health_facilities.csv
     Untracked:  data/infant_hiv.csv
+    Untracked:  data/measurements.csv
+    Untracked:  data/person.csv
     Untracked:  data/ranking.csv
-
-Unstaged changes:
-    Modified:   analysis/sample_exam1.Rmd
+    Untracked:  data/visited.csv
 
 </code></pre>
 <p>
@@ -570,6 +570,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/sciencificity/R4DS_study_exams/blob/6e7b3db6d0e7fa527d843407cafe965d5f7acd67/analysis/sample_exam1.Rmd" target="_blank">6e7b3db</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-21
+</td>
+<td>
+started creating some
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/7ed0458900c1f46198c63e4abf18223bec6e4a2f/docs/sample_exam1.html" target="_blank">7ed0458</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -964,6 +998,146 @@ $ rank &lt;chr&gt; &quot;positive&quot;, &quot;negative&quot;, &quot;positive&qu
 <p>Create a tibble containing only family and personal names, in that order. You do not need to assign this tibble or any others to variables unless explicitly asked to do so. However, as noted in the introduction, you must use the pipe operator %&gt;% and code that follows the tidyverse style guide.</p>
 <p>Create a new tibble containing only the rows in which family names come before the letter M. Your solution should work for tables with more rows than the example, i.e., you cannot rely on row numbers or select specific names.</p>
 <p>Display all the rows in person sorted by family name length with the longest name first</p>
+<pre class="r"><code>person &lt;- read_csv(&quot;./data/person.csv&quot;)
+
+person %&gt;%
+  select(family_name, personal_name)</code></pre>
+<pre><code># A tibble: 5 x 2
+  family_name personal_name
+  &lt;chr&gt;       &lt;chr&gt;        
+1 Dyer        William      
+2 Pabodie     Frank        
+3 Lake        Anderson     
+4 Roerich     Valentina    
+5 Danforth    Frank        </code></pre>
+<pre class="r"><code>person %&gt;% 
+  filter(family_name &lt; &quot;M&quot;)</code></pre>
+<pre><code># A tibble: 3 x 3
+  person_id personal_name family_name
+  &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;      
+1 dyer      William       Dyer       
+2 lake      Anderson      Lake       
+3 danforth  Frank         Danforth   </code></pre>
+<pre class="r"><code>person %&gt;% 
+  mutate(len_name = str_length(family_name)) %&gt;% 
+  arrange(desc(len_name)) %&gt;% 
+  select(person_id:family_name)</code></pre>
+<pre><code># A tibble: 5 x 3
+  person_id personal_name family_name
+  &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;      
+1 danforth  Frank         Danforth   
+2 pb        Frank         Pabodie    
+3 roe       Valentina     Roerich    
+4 dyer      William       Dyer       
+5 lake      Anderson      Lake       </code></pre>
+</div>
+<div id="cleaning-and-counting" class="section level2">
+<h2>Cleaning and Counting</h2>
+<p>Read the file measurements.csv to create a tibble called measurements. (The strings “rad”, “sal”, and “temp” in the quantity column stand for “radiation”, “salinity”, and “temperature” respectively.)</p>
+<p>Create a tibble containing only rows where none of the values are NA and save in a tibble called cleaned.</p>
+<p>Count the number of measurements of each type of quantity in cleaned. Your result should have one row for each quantity “rad”, “sal”, and “temp”.</p>
+<p>Display the minimum and maximum value of reading separately for each quantity in cleaned. Your result should have one row for each quantity “rad”, “sal”, and “temp”.</p>
+<p>Create a tibble in which all salinity (“sal”) readings greater than 1 are divided by 100. (This is needed because some people wrote percentages as numbers from 0.0 to 1.0, but others wrote them as 0.0 to 100.0.)</p>
+<pre class="r"><code>measurements &lt;- read_csv(&quot;./data/measurements.csv&quot;)
+glimpse(measurements)</code></pre>
+<pre><code>Rows: 21
+Columns: 4
+$ visit_id &lt;dbl&gt; 619, 619, 622, 622, 734, 734, 734, 735, 735, 735, 751, 751...
+$ visitor  &lt;chr&gt; &quot;dyer&quot;, &quot;dyer&quot;, &quot;dyer&quot;, &quot;dyer&quot;, &quot;pb&quot;, &quot;lake&quot;, &quot;pb&quot;, &quot;pb&quot;, ...
+$ quantity &lt;chr&gt; &quot;rad&quot;, &quot;sal&quot;, &quot;rad&quot;, &quot;sal&quot;, &quot;rad&quot;, &quot;sal&quot;, &quot;temp&quot;, &quot;rad&quot;, &quot;...
+$ reading  &lt;dbl&gt; 9.82, 0.13, 7.80, 0.09, 8.41, 0.05, -21.50, 7.22, 0.06, -2...</code></pre>
+<pre class="r"><code>cleaned &lt;- measurements %&gt;% 
+  drop_na()
+
+cleaned %&gt;% 
+  count(quantity)</code></pre>
+<pre><code># A tibble: 3 x 2
+  quantity     n
+  &lt;chr&gt;    &lt;int&gt;
+1 rad          8
+2 sal          7
+3 temp         3</code></pre>
+<pre class="r"><code>cleaned %&gt;% 
+  group_by(quantity) %&gt;% 
+  summarise(min_reading = min(reading),
+            max_reading = max(reading))</code></pre>
+<pre><code># A tibble: 3 x 3
+  quantity min_reading max_reading
+  &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt;
+1 rad             1.46        11.2
+2 sal             0.05        41.6
+3 temp          -21.5        -16  </code></pre>
+<pre class="r"><code>cleaned %&gt;% 
+  mutate(reading = ifelse((quantity == &quot;sal&quot; &amp; reading &gt; 1), 
+                          reading / 100, 
+                          reading))</code></pre>
+<pre><code># A tibble: 18 x 4
+   visit_id visitor quantity reading
+      &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt;
+ 1      619 dyer    rad        9.82 
+ 2      619 dyer    sal        0.13 
+ 3      622 dyer    rad        7.8  
+ 4      622 dyer    sal        0.09 
+ 5      734 pb      rad        8.41 
+ 6      734 lake    sal        0.05 
+ 7      734 pb      temp     -21.5  
+ 8      735 pb      rad        7.22 
+ 9      751 pb      rad        4.35 
+10      751 pb      temp     -18.5  
+11      752 lake    rad        2.19 
+12      752 lake    sal        0.09 
+13      752 lake    temp     -16    
+14      752 roe     sal        0.416
+15      837 lake    rad        1.46 
+16      837 lake    sal        0.21 
+17      837 roe     sal        0.225
+18      844 roe     rad       11.2  </code></pre>
+</div>
+<div id="combining-data" class="section level2">
+<h2>Combining Data</h2>
+<p>Read visited.csv and drop rows containing any NAs, assigning the result to a new tibble called visited.</p>
+<p>Use an inner join to combine visited with cleaned using the visit_id column for matches.</p>
+<p>Find the highest radiation (“rad”) reading at each site. (Sites are identified by values in the site_id column.)</p>
+<p>Find the date of the highest radiation reading at each site.</p>
+<pre class="r"><code>visited &lt;- read_csv(&quot;./data/visited.csv&quot;)
+visited &lt;- visited %&gt;% 
+  drop_na()
+
+(combined_tbl &lt;- visited %&gt;% 
+  inner_join(cleaned, by = c(&quot;visit_id&quot; = &quot;visit_id&quot;)))</code></pre>
+<pre><code># A tibble: 14 x 6
+   visit_id site_id visit_date visitor quantity reading
+      &lt;dbl&gt; &lt;chr&gt;   &lt;date&gt;     &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt;
+ 1      619 DR-1    1927-02-08 dyer    rad         9.82
+ 2      619 DR-1    1927-02-08 dyer    sal         0.13
+ 3      622 DR-1    1927-02-10 dyer    rad         7.8 
+ 4      622 DR-1    1927-02-10 dyer    sal         0.09
+ 5      734 DR-3    1930-01-07 pb      rad         8.41
+ 6      734 DR-3    1930-01-07 lake    sal         0.05
+ 7      734 DR-3    1930-01-07 pb      temp      -21.5 
+ 8      735 DR-3    1930-01-12 pb      rad         7.22
+ 9      751 DR-3    1930-02-26 pb      rad         4.35
+10      751 DR-3    1930-02-26 pb      temp      -18.5 
+11      837 MSK-4   1932-01-14 lake    rad         1.46
+12      837 MSK-4   1932-01-14 lake    sal         0.21
+13      837 MSK-4   1932-01-14 roe     sal        22.5 
+14      844 DR-1    1932-03-22 roe     rad        11.2 </code></pre>
+<pre class="r"><code>max_rad &lt;- combined_tbl %&gt;% 
+  filter(quantity == &quot;rad&quot;) %&gt;% 
+  group_by(site_id) %&gt;% 
+  summarise(max_rad = max(reading))
+
+max_rad %&gt;% 
+  inner_join(combined_tbl) %&gt;% 
+  filter(quantity == &quot;rad&quot;,
+         reading == max_rad) %&gt;% 
+  select(site_id, visit_date, reading)</code></pre>
+<pre><code># A tibble: 3 x 3
+  site_id visit_date reading
+  &lt;chr&gt;   &lt;date&gt;       &lt;dbl&gt;
+1 DR-1    1932-03-22   11.2 
+2 DR-3    1930-01-07    8.41
+3 MSK-4   1932-01-14    1.46</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -974,7 +1148,7 @@ $ rank &lt;chr&gt; &quot;positive&quot;, &quot;negative&quot;, &quot;positive&qu
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 3.6.3 (2020-02-29)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
-Running under: Windows 10 x64 (build 18363)
+Running under: Windows 10 x64 (build 19042)
 
 Matrix products: default
 

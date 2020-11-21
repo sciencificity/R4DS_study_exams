@@ -413,7 +413,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-11-10
+<strong>Last updated:</strong> 2020-11-21
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree8864bd0c4383ec6f797c857c22fea24b837fad65targetblank8864bd0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/8864bd0c4383ec6f797c857c22fea24b837fad65" target="_blank">8864bd0</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree6e7b3db6d0e7fa527d843407cafe965d5f7acd67targetblank6e7b3dba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/sciencificity/R4DS_study_exams/tree/6e7b3db6d0e7fa527d843407cafe965d5f7acd67" target="_blank">6e7b3db</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree8864bd0c4383ec6f797c857c22fea24b837fad65targetblank8864bd0a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomsciencificityR4DSstudyexamstree6e7b3db6d0e7fa527d843407cafe965d5f7acd67targetblank6e7b3dba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/8864bd0c4383ec6f797c857c22fea24b837fad65" target="_blank">8864bd0</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/sciencificity/R4DS_study_exams/tree/6e7b3db6d0e7fa527d843407cafe965d5f7acd67" target="_blank">6e7b3db</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -527,10 +527,10 @@ Untracked files:
     Untracked:  code_snipp.txt
     Untracked:  data/at_health_facilities.csv
     Untracked:  data/infant_hiv.csv
+    Untracked:  data/measurements.csv
+    Untracked:  data/person.csv
     Untracked:  data/ranking.csv
-
-Unstaged changes:
-    Modified:   analysis/sample_exam1.Rmd
+    Untracked:  data/visited.csv
 
 </code></pre>
 <p>
@@ -569,6 +569,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/sciencificity/R4DS_study_exams/7ed0458900c1f46198c63e4abf18223bec6e4a2f/docs/ch7_tibbles.html" target="_blank">7ed0458</a>
+</td>
+<td>
+sciencificity
+</td>
+<td>
+2020-11-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1056,21 +1073,21 @@ SO Post: https://stackoverflow.com/questions/24472114/use-a-variable-name-with-s
 <pre><code># A tibble: 1,000 x 5
    a                   b              c      d e    
    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt;
- 1 2020-11-11 02:35:10 2020-12-07     1 0.445  s    
- 2 2020-11-10 21:09:39 2020-11-12     2 0.637  b    
- 3 2020-11-10 22:13:19 2020-11-20     3 0.621  f    
- 4 2020-11-11 00:19:29 2020-12-07     4 0.925  w    
- 5 2020-11-10 21:08:54 2020-11-10     5 0.678  k    
- 6 2020-11-11 14:43:18 2020-11-14     6 0.643  a    
- 7 2020-11-11 06:48:36 2020-12-06     7 0.169  k    
- 8 2020-11-10 16:38:22 2020-11-13     8 0.681  q    
- 9 2020-11-10 21:33:58 2020-11-19     9 0.767  u    
-10 2020-11-10 15:24:16 2020-11-17    10 0.645  h    
-11 2020-11-11 11:00:40 2020-11-29    11 0.954  g    
-12 2020-11-11 14:03:37 2020-12-04    12 0.0452 t    
-13 2020-11-10 16:59:12 2020-12-07    13 0.679  l    
-14 2020-11-11 09:54:20 2020-11-15    14 0.543  e    
-15 2020-11-11 13:28:11 2020-11-12    15 0.731  a    
+ 1 2020-11-22 08:01:05 2020-12-18     1 0.445  s    
+ 2 2020-11-22 02:35:33 2020-11-23     2 0.637  b    
+ 3 2020-11-22 03:39:14 2020-12-01     3 0.621  f    
+ 4 2020-11-22 05:45:23 2020-12-18     4 0.925  w    
+ 5 2020-11-22 02:34:48 2020-11-21     5 0.678  k    
+ 6 2020-11-22 20:09:12 2020-11-25     6 0.643  a    
+ 7 2020-11-22 12:14:31 2020-12-17     7 0.169  k    
+ 8 2020-11-21 22:04:16 2020-11-24     8 0.681  q    
+ 9 2020-11-22 02:59:52 2020-11-30     9 0.767  u    
+10 2020-11-21 20:50:10 2020-11-28    10 0.645  h    
+11 2020-11-22 16:26:34 2020-12-10    11 0.954  g    
+12 2020-11-22 19:29:32 2020-12-15    12 0.0452 t    
+13 2020-11-21 22:25:07 2020-12-18    13 0.679  l    
+14 2020-11-22 15:20:14 2020-11-26    14 0.543  e    
+15 2020-11-22 18:54:06 2020-11-23    15 0.731  a    
 # ... with 985 more rows</code></pre>
 </div>
 <div id="subsetting" class="section level2">
@@ -1375,7 +1392,7 @@ will print information about at most tibble.max_extra_cols extra columns.</code>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 3.6.3 (2020-02-29)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
-Running under: Windows 10 x64 (build 18363)
+Running under: Windows 10 x64 (build 19042)
 
 Matrix products: default
 
