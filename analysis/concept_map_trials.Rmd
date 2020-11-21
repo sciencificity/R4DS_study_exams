@@ -1,0 +1,107 @@
+---
+title: "Practise Concept Maps"
+author: "Vebash Naidoo"
+date: "21/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning=FALSE, message=FALSE,
+                      comment = "#>", 
+                      collapse = TRUE)
+
+options(scipen=10000)
+library(tidyverse)
+library(DiagrammeR)
+```
+
+```{r trial1, eval=FALSE}
+grViz("
+      digraph rmarkdown {
+      A -> B
+      }", height = 200)
+```
+
+
+```{r ggplot}
+grViz("
+      digraph ggplot {
+      graph [layout = dot, rankdir = LR]
+
+      node [shape = oval,
+        fixedsize = true,
+        fontname = Helvetica, 
+        fontcolor = darkslategray,
+        fillcolor = lightsteelblue,
+        style = filled,
+        width = 2,
+        height = 2] 
+      circlemain [label = '@@1']
+      
+      # several 'node' statements
+      node [shape = rectangle,
+        fontname = Helvetica,
+        fillcolor = ghostwhite,
+        width = 1.5,
+        height = 1]
+        box7 [label = '@@7']
+        box4 [label = '@@4']
+        box3 [label = '@@3']
+        box2 [label = '@@2']
+        box5 [label = '@@5']
+        box6 [label = '@@6']
+        box9 [label = '@@9']
+        box10 [label = '@@10']
+        box11 [label = '@@11']
+        box12 [label = '@@12']
+        box8 [label = '@@8']
+        box13 [label = '@@13']
+        
+        
+      edge [color = grey,
+        arrowhead = normal,
+        arrowtail = none]
+
+      circlemain -> box7 [label = 'must have',
+      fontname = Baskerville] ;
+      circlemain -> box3 [label = 'must have',
+      fontname = Baskerville];
+      circlemain -> box4 [label = 'must have',
+      fontname = Baskerville]; 
+      circlemain -> box2 [label = 'may have',
+      fontname = Baskerville] ;
+      circlemain -> box5 [label = 'may have',
+      fontname = Baskerville];
+      {box2 box9 box10 box11 box12} -> 
+      box6 [label = 'adds info',
+      fontname = Baskerville];
+      box5  -> {box9 box10 box11 box12} 
+      [label = 'such as',
+      fontname = Baskerville];
+      box2 -> box8 [label = 
+        'splits graph into',
+      fontname = Baskerville]
+      circlemain -> box13 [label = 
+        'adds layers together',
+      fontname = Baskerville] ;
+      }
+      
+      [1]: 'ggplot'
+      [2]: 'facets'
+      [3]: 'geometry\\n(geom_)' 
+      [4]: 'one of\\nx or y'
+      [5]: 'other\\naesthetics'
+      [6]: 'plots'
+      [7]: 'data'
+      [8]: 'sub plots'
+      [9]: 'size'
+      [10]: 'shape'
+      [11]: 'fill'
+      [12]: 'colour'
+      [13]: '+ operator'
+      ")
+```
+
+
+

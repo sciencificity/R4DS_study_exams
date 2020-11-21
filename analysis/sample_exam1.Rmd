@@ -174,3 +174,91 @@ rankings %>%
 
 ```
 
+# Sample exam 2
+
+## Basic Operations 
+Read the file person.csv and store the result in a tibble called person.
+
+Create a tibble containing only family and personal names, in that order. You do not need to assign this tibble or any others to variables unless explicitly asked to do so. However, as noted in the introduction, you must use the pipe operator %>% and code that follows the tidyverse style guide.
+
+Create a new tibble containing only the rows in which family names come before the letter M. Your solution should work for tables with more rows than the example, i.e., you cannot rely on row numbers or select specific names.
+
+Display all the rows in person sorted by family name length with the longest name first
+
+```{r}
+person <- read_csv("./data/person.csv")
+
+person %>%
+  select(family_name, personal_name)
+
+person %>% 
+  filter(family_name < "M")
+
+person %>% 
+  mutate(len_name = str_length(family_name)) %>% 
+  arrange(desc(len_name)) %>% 
+  select(person_id:family_name)
+```
+
+
+## Cleaning and Counting 
+Read the file measurements.csv to create a tibble called measurements. (The strings "rad", "sal", and "temp" in the quantity column stand for “radiation”, “salinity”, and “temperature” respectively.)
+
+Create a tibble containing only rows where none of the values are NA and save in a tibble called cleaned.
+
+Count the number of measurements of each type of quantity in cleaned. Your result should have one row for each quantity "rad", "sal", and "temp".
+
+Display the minimum and maximum value of reading separately for each quantity in cleaned. Your result should have one row for each quantity "rad", "sal", and "temp".
+
+Create a tibble in which all salinity ("sal") readings greater than 1 are divided by 100. (This is needed because some people wrote percentages as numbers from 0.0 to 1.0, but others wrote them as 0.0 to 100.0.)
+
+```{r}
+measurements <- read_csv("./data/measurements.csv")
+glimpse(measurements)
+
+cleaned <- measurements %>% 
+  drop_na()
+
+cleaned %>% 
+  count(quantity)
+
+cleaned %>% 
+  group_by(quantity) %>% 
+  summarise(min_reading = min(reading),
+            max_reading = max(reading))
+
+cleaned %>% 
+  mutate(reading = ifelse((quantity == "sal" & reading > 1), 
+                          reading / 100, 
+                          reading))
+```
+
+## Combining Data 
+Read visited.csv and drop rows containing any NAs, assigning the result to a new tibble called visited.
+
+Use an inner join to combine visited with cleaned using the visit_id column for matches.
+
+Find the highest radiation ("rad") reading at each site. (Sites are identified by values in the site_id column.)
+
+Find the date of the highest radiation reading at each site.
+
+```{r}
+visited <- read_csv("./data/visited.csv")
+visited <- visited %>% 
+  drop_na()
+
+(combined_tbl <- visited %>% 
+  inner_join(cleaned, by = c("visit_id" = "visit_id")))
+
+max_rad <- combined_tbl %>% 
+  filter(quantity == "rad") %>% 
+  group_by(site_id) %>% 
+  summarise(max_rad = max(reading))
+
+max_rad %>% 
+  inner_join(combined_tbl) %>% 
+  filter(quantity == "rad",
+         reading == max_rad) %>% 
+  select(site_id, visit_date, reading)
+```
+
